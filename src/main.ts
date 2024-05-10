@@ -1,7 +1,7 @@
 import './assets/main.css'
 
 import { createApp } from 'vue'
-import { Quasar } from 'quasar'
+import { Quasar, QInput } from 'quasar'
 
 
 import '@quasar/extras/material-icons/material-icons.css'
@@ -11,8 +11,11 @@ import router from './router'
 const app = createApp(App)
 
 app.use(router)
+app.component('q-input',QInput)
 app.use(Quasar, {
-    plugins: {}
+    plugins: {
+      
+    }
 })
 
 app.mount('#app')
