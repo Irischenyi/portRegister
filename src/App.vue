@@ -16,7 +16,10 @@ import HelloWorld from './components/HelloWorld.vue'
         >
         <RouterLink class="routey" to="/securityTraining">安全培训</RouterLink>
       </div>
-      <div>数据出境公共服务平台</div>
+      <div>
+        <q-btn color="white" text-color="black" label="调研填表" />
+        <q-btn color="primary" label="登陆注册" />
+      </div>
     </div>
     <div class="public">
       <RouterView />
@@ -33,7 +36,7 @@ import HelloWorld from './components/HelloWorld.vue'
   top: 0; */
   display: flex;
   padding: 20px 50px;
-  background-color: red;
+  background-color: #fff;
   width: 100%;
   margin: 0 auto;
 }
