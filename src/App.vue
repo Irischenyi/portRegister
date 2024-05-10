@@ -4,7 +4,7 @@ import MainBody from '@/views/main/MainBody.vue'
 
 <template>
   <div>
-    <MainBody></MainBody>
+    <RouterView />
   </div>
 </template>
 

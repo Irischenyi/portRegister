@@ -24,7 +24,7 @@ import InputTemplate from './components/InputTemplate.vue'
       </div>
     </div>
     <div class="public">
-      <RouterView />
+      
     </div>
   </div>
 
