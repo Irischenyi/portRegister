@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import InputTemplate from '../components/InputTemplate.vue'
+import InputTemplate from '@/components/InputTemplate.vue'
 defineProps<{
  
 }>()
@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-    <div>
+    <div class="right">
         <InputTemplate name="用户名"/>
         <InputTemplate name="密码"/>
         <InputTemplate name="验证码"/>
@@ -15,6 +15,12 @@ defineProps<{
 </template>
 
 <style scoped>
-
+.right{
+    width: 450px;
+    height: 400px;
+    background-color: rgba(1,1,1,0.02);
+    position: absolute;
+    right: 150px;
+}
 </style>
 

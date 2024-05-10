@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import InputTemplate from '../components/InputTemplate.vue'
+import InputTemplate from '@/components/InputTemplate.vue'
 defineProps<{
-  msg: string
+ 
 }>()
 const list = [
     {
@@ -38,12 +38,31 @@ const list = [
 </script>
 
 <template>
-    <div>
-        <InputTemplate v-for="(item,key) in list" :key="key" :name="item.name" />
+    <div class="rest-password">
+        <div class="center">
+            <div class="inline">
+                <InputTemplate v-for="(item,key) in list" :key="key" :name="item.name" />
+            </div>
+        </div>
     </div>
 </template>
 
 <style scoped>
+.center{
+   width: 900px;
+   margin: 0 auto;
+}
+.rest-password{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
 
+.inline{
+    display: inline-block;
+
+}
 </style>
 
