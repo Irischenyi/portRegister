@@ -20,6 +20,7 @@ import InputTemplate from './components/InputTemplate.vue'
       <div>
         <q-btn color="white" text-color="black" label="调研填表" />
         <q-btn color="primary" label="登陆注册" />
+        <!--  -->
       </div>
     </div>
     <div class="public">
