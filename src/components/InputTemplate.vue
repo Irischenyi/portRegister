@@ -1,11 +1,11 @@
 <script setup lang="ts">
 defineProps<{
-  msg: string
+  name: string
 }>()
 </script>
 
 <template>
-  <q-input filled  label="Filled" />
+  <q-input filled  :label="name" />
 </template>
 
 <style scoped>
