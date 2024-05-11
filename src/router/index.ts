@@ -5,38 +5,39 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path:'/index',
-      name:'index',
+      path: '/index',
+      name: 'index',
+      redirect: '/index/home',
       component: import('@/views/main/MainBody.vue'),
-      children:[
+      children: [
         {
-          path: 'home',//首页
+          path: 'home', //首页
           name: 'home',
           component: import('@/views/HomeView.vue')
         },
         {
-          path: 'serviceHall',//服务大厅
+          path: 'serviceHall', //服务大厅
           name: 'serviceHall',
           component: () => import('@/views/serviceHallView.vue')
         },
         {
-          path: 'complianCetopics',//合规专题
+          path: 'complianCetopics', //合规专题
           name: 'complianCetopics',
           component: () => import('@/views/complianCetopicsView.vue')
         },
         {
-          path: 'policyconSultation',//政策咨讯
+          path: 'policyconSultation', //政策咨讯
           name: 'policyconSultation',
           component: () => import('@/views/policyconSultationView.vue')
         },
         {
-          path: '/securityTraining',//安全培训
+          path: '/securityTraining', //安全培训
           name: 'securityTraining',
           component: () => import('@/views/securityTrainingView.vue')
-        },
+        }
       ]
     },
-    
+
     {
       path: '/login',
       name: 'login',
