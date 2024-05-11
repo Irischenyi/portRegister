@@ -36,7 +36,7 @@ defineProps<{
 }
 
 .input-set{
-  width: 400px;
+  width: 340px;
   display: inline-block;
 }
 </style>
