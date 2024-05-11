@@ -3,34 +3,31 @@ import InputTemplate from '@/components/InputTemplate.vue'
 defineProps<{
  
 }>()
-const remember = false
 </script>
 
 <template>
     <div class="bg"></div>
-    <div class="right">
+    <div class="center">
         <div class="title">欢迎登录 !</div>
         <InputTemplate name="用户名"/>
         <InputTemplate name="密码"/>
-        <div class="remember-box"><q-checkbox v-model="remember" />记住密码</div>
         <div style="position: relative;">
             <InputTemplate class="check-value" name="验证码"/>
             <q-btn class="get-code" outline rounded color="primary" label="获取验证码" />
         </div>
-        <q-btn class="glossy login" rounded color="primary" label="登录" />
-        <div class="bottom"> 
-            <div>
-                <div>返回页面</div>
-                <div>忘记密码</div>
-            </div>
-            <div>免费注册</div>
+        <InputTemplate name="新密码"/>
+        <InputTemplate name="确认密码"/>
+        <div class="bottom-btn">
+            <q-btn unelevated rounded color="grey-5" label="返回" />
+            <q-btn unelevated rounded color="primary" label="提交" />
         </div>
     </div>
 </template>
 
 <style scoped>
-.right{
-    width: 450px;
+.center{
+    width: 400px;
+    height: auto;
     background: linear-gradient(to bottom,#99caf9,white,white, #ffffff);
     position: absolute;
     right: 150px;
@@ -42,16 +39,6 @@ const remember = false
     font-weight: 400;
     padding: 20px 20px;
     font-size: 20px;
-}
-
-.bottom{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 0px 5px;
-    margin-top: 20px;
-    font-size: 14px;
-    color: #0179FF;
 }
 
 .bottom *, .bottom div div{
@@ -95,6 +82,18 @@ const remember = false
     left: 220px;
     top: 40px;
     height: 40px;
+}
+
+.bottom-btn{
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0px;
+    padding-top: 20px;
+}
+
+.q-btn{
+    padding: 0px 40px;
+    margin: 0px 10px;
 }
 </style>
 
