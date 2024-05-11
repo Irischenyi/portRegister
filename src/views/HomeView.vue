@@ -43,7 +43,7 @@
 }
 .num_text {
   display: flex;
-  padding: 50px 0;
+  padding: 30px 0;
   justify-content: space-between;
 }
 .num {

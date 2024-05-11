@@ -9,10 +9,12 @@ import InputTemplate from './components/InputTemplate.vue'
     <div class="footer_wrap">
       <div class="title">数据出境公共服务平台</div>
       <div style="margin-right: 600px">
-        <RouterLink class="routey" to="/home">首页</RouterLink>
-        <RouterLink class="routey" to="/serviceHall">服务大厅</RouterLink>
-        <RouterLink class="routey" to="/complianCetopics">合规专题</RouterLink>
-        <RouterLink class="routey" to="/policyconSultation"
+        <RouterLink class="routey" to="/index/home">首页</RouterLink>
+        <RouterLink class="routey" to="/index/serviceHall">服务大厅</RouterLink>
+        <RouterLink class="routey" to="/index/complianCetopics"
+          >合规专题</RouterLink
+        >
+        <RouterLink class="routey" to="/index/policyconSultation"
           >政策咨讯</RouterLink
         >
         <RouterLink class="routey" to="/securityTraining">安全培训</RouterLink>
@@ -23,12 +25,10 @@ import InputTemplate from './components/InputTemplate.vue'
         <!--  -->
       </div>
     </div>
-    <div class="public">
-      
-    </div>
+    <div class="public"></div>
   </div>
 
-  <!-- <RouterView /> -->
+  <RouterView />
 </template>
 
 <style scoped>
