@@ -49,7 +49,10 @@ const list = [
                 <InputTemplate  name="邮箱" />
                 <InputTemplate  name="联系人" />
                 <InputTemplate  name="联系电话" />
-                <InputTemplate  name="验证码" />
+                <div class="check-code" style="position: relative;width:340px;">
+                    <InputTemplate class="check-value" name="验证码"/>
+                    <q-btn class="get-code" outline rounded color="primary" label="获取验证码" />
+                </div>
                 <InputTemplate  name="用户名" />
                 <InputTemplate  name="密码" />
                 <InputTemplate  name="上传营业执照" />
@@ -91,6 +94,9 @@ const list = [
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
+.inline div{
+    display: inline-block;
+}
 .welcome-register{
     font-size: 18px;
     padding: 15px 20px;
@@ -104,6 +110,24 @@ const list = [
     justify-content: end;
     padding: 10px 0px;
     padding-top: 20px;
+}
+
+::v-deep .check-value .q-input{
+    width: 160px;
+}
+
+.check-code{
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+.get-code{
+    position: absolute;
+    width: 150px;
+    left: 180px;
+    top: 40px;
+    height: 40px;
 }
 </style>
 

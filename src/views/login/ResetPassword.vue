@@ -6,20 +6,22 @@ defineProps<{
 </script>
 
 <template>
-    <div class="bg"></div>
-    <div class="center">
-        <div class="title">欢迎登录 !</div>
-        <InputTemplate name="用户名"/>
-        <InputTemplate name="密码"/>
-        <div style="position: relative;">
-            <InputTemplate class="check-value" name="验证码"/>
-            <q-btn class="get-code" outline rounded color="primary" label="获取验证码" />
-        </div>
-        <InputTemplate name="新密码"/>
-        <InputTemplate name="确认密码"/>
-        <div class="bottom-btn">
-            <q-btn unelevated rounded color="grey-5" label="返回" />
-            <q-btn unelevated rounded color="primary" label="提交" />
+    <div class="bg">
+        <div class="center">
+            <div class="title">重置密码 !</div>
+            <InputTemplate name="企业名称"/>
+            <InputTemplate name="用户名"/>
+            <InputTemplate name="联系电话"/>
+            <div style="position: relative;">
+                <InputTemplate class="check-value" name="验证码"/>
+                <q-btn class="get-code" outline rounded color="primary" label="获取验证码" />
+            </div>
+            <InputTemplate name="新密码"/>
+            <InputTemplate name="确认密码"/>
+            <div class="bottom-btn">
+                <q-btn unelevated rounded color="grey-5" label="返回" />
+                <q-btn unelevated rounded color="primary" label="提交" />
+            </div>
         </div>
     </div>
 </template>
@@ -29,11 +31,11 @@ defineProps<{
     width: 400px;
     height: auto;
     background: linear-gradient(to bottom,#99caf9,white,white, #ffffff);
-    position: absolute;
-    right: 150px;
     padding: 40px 20px;
     border-top: 3px #2ef3fd solid;
-    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 .title{
     font-weight: 400;
@@ -61,6 +63,9 @@ defineProps<{
     height: 100%;
     left: 0px;
     top: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-image: url("@/assets/login.png");
     background-size: 100% 100%;
 }
@@ -73,13 +78,13 @@ defineProps<{
     align-items: center;
 }
 ::v-deep .check-value .q-input{
-    width: 200px;
+    width: 180px;
 }
 
 .get-code{
     position: absolute;
-    width: 180px;
-    left: 220px;
+    width: 150px;
+    left: 182px;
     top: 40px;
     height: 40px;
 }
@@ -87,7 +92,7 @@ defineProps<{
 .bottom-btn{
     display: flex;
     justify-content: space-around;
-    padding: 10px 0px;
+    padding: 0px 0px;
     padding-top: 20px;
 }
 
