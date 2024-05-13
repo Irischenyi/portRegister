@@ -86,8 +86,36 @@
         </q-tab-panel>
 
         <q-tab-panel name="zcfg1">
-          <div class="text-h6">申报材料</div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          <div>
+            <div style="display: flex; justify-content: space-between">
+              <div style="position: relative">
+                <img src="../assets//images/sbckpg1.png" alt="" />
+                <div class="imgs">
+                  <div style="margin-bottom: 30px">
+                    数据出境安全评估材料 完备性预检查
+                  </div>
+                  <el-button
+                    @click="goCheck"
+                    style="color: #4984ff; border-radius: 50px"
+                    >进入检查</el-button
+                  >
+                </div>
+              </div>
+              <div style="position: relative">
+                <img src="../assets//images/sbclpg2.png" alt="" />
+                <div class="imgs">
+                  <div style="margin-bottom: 30px">
+                    个人信息出境标准合同 备案材料完备性预检查
+                  </div>
+                  <el-button
+                    @click="goChecks"
+                    style="color: #4984ff; border-radius: 50px"
+                    >进入检查</el-button
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -106,6 +134,17 @@ const btnStep = () => {
     path: '/index/dataProcessing'
   })
 }
+
+const goCheck = () => {
+  router.push({
+    path: '/index/securityAssessment'
+  })
+}
+const goChecks = () => {
+  router.push({
+    path: '/index/contractFiling'
+  })
+}
 </script>
 <style lang="scss" scoped>
 .contain {
@@ -122,5 +161,13 @@ const btnStep = () => {
   top: 100px;
   left: 320px;
   width: 530px;
+}
+
+.imgs {
+  position: absolute;
+  width: 200px;
+  font-size: 20px;
+  top: 120px;
+  left: 50px;
 }
 </style>
