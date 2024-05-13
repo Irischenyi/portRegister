@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
-
 const router = createRouter({
-  history: createWebHistory('./'),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      redirect: '/login'
+      redirect: '/login',
     },
     {
       path: '/index',
       name: 'index',
+      redirect: '/index/home',
       component: import('@/views/main/MainBody.vue'),
       children: [
         {
