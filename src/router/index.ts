@@ -34,6 +34,11 @@ const router = createRouter({
           path: '/securityTraining', //安全培训
           name: 'securityTraining',
           component: () => import('@/views/securityTrainingView.vue')
+        },
+        {
+          path: 'dataProcessing', //数据处理页面
+          name: 'dataProcessing',
+          component: import('@/views/dataProcessing.vue')
         }
       ]
     },
@@ -49,7 +54,7 @@ const router = createRouter({
       component: () => import('@/views/login/register.vue')
     },
     {
-      path:'/ResetPassword',
+      path: '/ResetPassword',
       name: 'ResetPassword',
       component: () => import('@/views/login/ResetPassword.vue')
     }
