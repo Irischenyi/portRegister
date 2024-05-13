@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 defineProps<{
   name: string
 }>()
+const value = ref('')
 </script>
 
 <template>
   <div class="input-set">
     <div class="title"><span class="tips">*</span>{{ name }}</div>
-    <q-input  rounded outlined  :placeholder="'请填写'+ name"/>
+    <q-input  rounded outlined  :placeholder="'请填写'+ name" v-model="value"/>
   </div>
 </template>
 
