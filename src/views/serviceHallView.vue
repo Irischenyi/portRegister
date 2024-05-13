@@ -6,7 +6,7 @@
           <q-tab name="pool" label="服务商资源池" />
       </template>
       <template #body>
-          <div class="card" v-for="item in [1,2,3,4,5,6]">
+          <div class="card" v-for="item in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
               <div class="card-box">
                   <div class="pic"></div>
                   <div class="title">数据安全风险评估</div>

@@ -47,6 +47,7 @@
     margin-left: 240px;
     display: flex;
     flex-wrap: wrap;
+    padding-bottom: 20px;
   }
   
   ::v-deep .q-tabs{
