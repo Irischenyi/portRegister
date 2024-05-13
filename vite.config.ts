@@ -25,13 +25,17 @@ export default defineConfig({
         chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',
         assetFileNames:'static/[ext]/[name]-[hash].[ext]',
-        sanitizeFileName(name: any){
-          const match = DRIVE_LETTER_REGEX.exec(name);
-	        const driveLetter = match ? match[0] : '';
-
+        sanitizeFileName(name: any) {
+          const match = DRIVE_LETTER_REGEX.exec(name)
+          const driveLetter = match ? match[0] : ''
           // A `:` is only allowed as part of a windows drive letter (ex: C:\foo)
           // Otherwise, avoid them because they can refer to NTFS alternate data streams.
-          return driveLetter + name.slice(driveLetter.length).replace(INVALID_CHAR_REGEX, '_');
+          return driveLetter + name.slice(driveLetter.length).replace(INVALID_CHAR_REGEX, '')
+        },
+        manualChunks(id: any) {
+          if (id.includes('node_modules')) {
+            return id.toString().match(/\/node_modules\/(?!.pnpm)(?<moduleName>[^\/]*)\//)?.groups!.moduleName ?? 'vender'
+          }
         }
       }
     }
