@@ -5,6 +5,18 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/',
+      redirect: '/index/home',
+      component: import('@/views/main/MainBody.vue'),
+      children: [
+        {
+          path: 'home', //首页
+          name: 'home',
+          component: import('@/views/HomeView.vue')
+        }
+      ]
+    },
+    {
       path: '/index',
       name: 'index',
       redirect: '/index/home',
@@ -39,7 +51,19 @@ const router = createRouter({
           path: 'dataProcessing', //数据处理页面
           name: 'dataProcessing',
           component: import('@/views/dataProcessing.vue')
+        },
+
+        {
+          path: 'securityAssessment', //数据出境安全评估
+          name: 'securityAssessment',
+          component: import('@/views/securityAssessment.vue')
+        },
+        {
+          path: 'contractFiling', //合同备案
+          name: 'contractFiling',
+          component: import('@/views/contractFiling.vue')
         }
+        
       ]
     },
 
