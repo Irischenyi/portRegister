@@ -7,19 +7,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/index/home',
-      component: import('@/views/main/MainBody.vue'),
-      children: [
-        {
-          path: 'home', //首页
-          name: 'home',
-          component: import('@/views/HomeView.vue')
-        }]
+      redirect: '/login'
     },
     {
       path: '/index',
       name: 'index',
-      redirect: '/index/home',
       component: import('@/views/main/MainBody.vue'),
       children: [
         {
