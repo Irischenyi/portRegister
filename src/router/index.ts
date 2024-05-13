@@ -63,7 +63,6 @@ const router = createRouter({
           name: 'contractFiling',
           component: import('@/views/contractFiling.vue')
         }
-        
       ]
     },
 
