@@ -15,7 +15,7 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink class="routey" to="/index/policyconSultation"
           >政策咨讯</RouterLink
         >
-        <RouterLink class="routey" to="/securityTraining">安全培训</RouterLink>
+        <RouterLink class="routey" to="/index/securityTraining">安全培训</RouterLink>
       </div>
       <div>
         <q-btn color="white" text-color="black" label="调研填表" />

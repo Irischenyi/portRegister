@@ -7,15 +7,19 @@ defineProps<{
  
 }>()
 
-axios.get(http.baseUrl+'/tag/province-list').then(response => {
-    const data = response.data.data;
-    data.forEach((item: {tagName: string, id: string})  => {
+http.get('/tag/province-list').then((data) => {
+    (data as unknown as []).forEach((item: {tagName: string, id: string})  => {
         cityGroup.value.push({
             label: item.tagName,
             value: item.id
         })
     });
 })
+
+// axios.get(http.baseUrl+).then(response => {
+//     const data = response.data.data;
+
+// })
 
 const getCity = (value:string, type: string) => {
     if(type == 'city'){
@@ -24,9 +28,8 @@ const getCity = (value:string, type: string) => {
         area.value = []
     }
     
-    axios.get(http.baseUrl+'/tag/child-list/'+value).then(response => {
-        const data = response.data.data;
-        data.forEach((item: {tagName: string, id: string})  => {
+    http.get('/tag/child-list/'+value).then((response) => {
+        (response as unknown as []).forEach((item: {tagName: string, id: string})  => {
             if(type == 'city'){
                 city.value.push({
                     label: item.tagName,
