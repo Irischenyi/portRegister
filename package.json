@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.11",
+    "axios": "^1.6.8",
     "element-plus": "^2.7.2",
     "quasar": "^2.16.1",
     "vue": "^3.4.21",

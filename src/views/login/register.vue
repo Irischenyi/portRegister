@@ -1,8 +1,76 @@
 <script setup lang="ts">
 import InputTemplate from '@/components/InputTemplate.vue'
+import axios from 'axios'
+import http from '@/http/httpContentMain'
+import { ref, watch } from 'vue'
 defineProps<{
  
 }>()
+
+axios.get(http.baseUrl+'/tag/province-list').then(response => {
+    const data = response.data.data;
+    data.forEach((item: {tagName: string, id: string})  => {
+        cityGroup.value.push({
+            label: item.tagName,
+            value: item.id
+        })
+    });
+})
+
+const getCity = (value:string, type: string) => {
+    if(type == 'city'){
+        city.value = []
+    } else {
+        area.value = []
+    }
+    
+    axios.get(http.baseUrl+'/tag/child-list/'+value).then(response => {
+        const data = response.data.data;
+        data.forEach((item: {tagName: string, id: string})  => {
+            if(type == 'city'){
+                city.value.push({
+                    label: item.tagName,
+                    value: item.id
+                })
+            } else {
+                area.value.push({
+                    label: item.tagName,
+                    value: item.id
+                })
+            }
+        });
+    })
+}
+
+
+
+const cityGroup = ref([
+] as {value: string, label: string}[])
+
+const city = ref([
+] as {value: string, label: string}[])
+
+const area = ref([
+] as {value: string, label: string}[])
+
+const provinceValue = ref()
+const cityValue = ref()
+const areaValue = ref()
+
+const model = ref('')
+const options = ['1',2,3,5]
+
+
+
+watch(provinceValue, (value: {value: string}) => {
+    cityValue.value = '';
+    getCity(value.value, 'city')
+})
+
+watch(cityValue, (value: {value: string}) => {
+    areaValue.value = '';
+    getCity(value.value, 'area')
+})
 </script>
 
 <template>
@@ -13,7 +81,13 @@ defineProps<{
                 <InputTemplate  name="企业名称" />
                 <InputTemplate  name="统一社会信用代码" />
                 <InputTemplate  name="地址" />
-                <InputTemplate  name="注册地" />
+                <InputTemplate  name="注册地">
+                    <div class="group">
+                        <q-select rounded outlined v-model="provinceValue" :options="cityGroup" label="省份" />
+                        <q-select rounded outlined v-model="cityValue" :options="city" label="市级" />
+                        <q-select rounded outlined v-model="areaValue" :options="area" label="区级" />
+                    </div>
+                </InputTemplate>
                 <InputTemplate  name="邮箱" />
                 <InputTemplate  name="联系人" />
                 <InputTemplate  name="联系电话" />
@@ -34,7 +108,7 @@ defineProps<{
     </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .center{
    width: 840px;
    margin: 0 auto;
@@ -96,6 +170,43 @@ defineProps<{
     left: 180px;
     top: 40px;
     height: 40px;
+}
+
+.group{
+    width: 100%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+::v-deep .group .q-field--auto-height .q-field__control,
+::v-deep .group .q-field__marginal
+{
+    height: 40px;
+    padding-top: 0px;
+    min-height: 40px;
+    white-space: nowrap;
+    // width: 50px;
+    // width: 100px;
+}
+::v-deep .q-field__label{
+    padding-top: 0px;
+    top: 10px;
+}
+
+::v-deep .q-field--float .q-field__label{
+    transform: translateY(-40%) scale(0);
+}
+
+::v-deep .q-field--auto-height.q-field--labeled .q-field__control-container{
+    padding-top: 8px;
+}
+
+::v-deep .group .q-select{
+    margin-right: 11px;
+    display: inline-block;
+    width: 30%;
+    font-size: 12px;
 }
 </style>
 

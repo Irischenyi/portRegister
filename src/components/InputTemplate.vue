@@ -9,7 +9,8 @@ const value = ref('')
 <template>
   <div class="input-set">
     <div class="title"><span class="tips">*</span>{{ name }}</div>
-    <q-input  rounded outlined  :placeholder="'请填写'+ name" v-model="value"/>
+    <slot v-if="$slots.default"> </slot>
+    <q-input v-else rounded outlined  :placeholder="'请填写'+ name" v-model="value"/>
   </div>
 </template>
 
