@@ -1,26 +1,31 @@
-<template>
-  <div>
-      <TemplateFrame>
-        <template #header>
-          <div class="topImg" style="width: 100%">
-            <img style="width: 100%" src="../assets/images/hgztbjt.png" alt="" />
-            <div class="topImgText">
-              <div style="color: #fff; font-size: 23px; font-weight: 500">
-                合规专题
-              </div>
-              <div style="color: #fff">
-                提供工业互联网安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目；
-                基于行业内最新动态的梳理与汇聚
-              </div>
-            </div>
+  <template>
+    <div>
+      <div class="topImg" style="width: 100%">
+        <img style="width: 100%" src="../assets/images/hgztbjt.png" alt="" />
+        <div class="topImgText">
+          <div style="color: #fff; font-size: 23px; font-weight: 500">
+            合规专题
           </div>
-        </template>
-        <template #tabs>
+          <div style="color: #fff">
+            提供工业互联网安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目；
+            基于行业内最新动态的梳理与汇聚
+          </div>
+        </div>
+      </div>
+      <div class="contain">
+        <q-tabs
+          v-model="tab"
+          dense
+          active-color="primary"
+          indicator-color="primary"
+          narrow-indicator
+          align="left"
+        >
           <q-tab name="hydt1" label="合规专题评估" />
-          <q-tab name="zcfg1" label="申报材料评估" />
-        </template>
-        <template #body>
-          <q-tab-panels style="margin-top: 10px" v-model="tab" animated>
+          <!-- <q-tab name="zcfg1" label="申报材料评估" /> -->
+        </q-tabs>
+
+        <q-tab-panels style="margin-top: 10px" v-model="tab" animated>
           <q-tab-panel name="hydt1">
             <!-- 合规专题 -->
             <div class="hgzt">
@@ -41,7 +46,7 @@
                         @click="btnStep"
                         rounded
                         color="primary"
-                        label="查看详情"
+                        label="去评估"
                       />
                     </div>
                   </div>
@@ -57,7 +62,12 @@
                       数据出境合规自评估数据出境合规自评估数据出境合规自评估
                     </div>
                     <div style="display: flex; justify-content: end">
-                      <q-btn rounded color="primary" label="查看详情" />
+                      <q-btn
+                        @click="goCheck"
+                        rounded
+                        color="primary"
+                        label="进入检查"
+                      />
                     </div>
                   </div>
                 </div>
@@ -72,7 +82,12 @@
                       数据出境合规自评估数据出境合规自评估数据出境合规自评估
                     </div>
                     <div style="display: flex; justify-content: end">
-                      <q-btn rounded color="primary" label="查看详情" />
+                      <q-btn
+                        @click="goChecks"
+                        rounded
+                        color="primary"
+                        label="进入检查"
+                      />
                     </div>
                   </div>
                 </div>
@@ -113,60 +128,56 @@
             </div>
           </q-tab-panel>
         </q-tab-panels>
-        </template>
-    </TemplateFrame>
+      </div>
+    </div>
+  </template>
+  <script setup lang="ts">
+  import { useRouter } from 'vue-router'
+  import { ref } from 'vue'
 
-      
-  </div>
-</template>
-<script setup lang="ts">
-import { useRouter } from 'vue-router'
-import { ref } from 'vue'
-import TemplateFrame from '@/components/TemplateFrame.vue'
+  const router = useRouter()
+  const tab = ref('hydt1')
+  const current = ref(1)
 
-const router = useRouter()
-const tab = ref('hydt1')
-const current = ref(1)
+  const btnStep = () => {
+    router.push({
+      path: '/index/dataProcessing'
+    })
+  }
 
-const btnStep = () => {
-  router.push({
-    path: '/index/dataProcessing'
-  })
-}
+  const goCheck = () => {
+    router.push({
+      path: '/index/securityAssessment'
+    })
+  }
+  const goChecks = () => {
+    router.push({
+      path: '/index/contractFiling'
+    })
+  }
+  </script>
+  <style lang="scss" scoped>
+  .contain {
+    padding: 10px;
+    width: 1300px;
+    margin: 0 auto;
+  }
+  .topImg {
+    position: relative;
+  }
 
-const goCheck = () => {
-  router.push({
-    path: '/index/securityAssessment'
-  })
-}
-const goChecks = () => {
-  router.push({
-    path: '/index/contractFiling'
-  })
-}
-</script>
-<style lang="scss" scoped>
-.contain {
-  padding: 10px;
-  width: 1300px;
-  margin: 0 auto;
-}
-.topImg {
-  position: relative;
-}
+  .topImgText {
+    position: absolute;
+    top: 100px;
+    left: 320px;
+    width: 530px;
+  }
 
-.topImgText {
-  position: absolute;
-  top: 100px;
-  left: 320px;
-  width: 530px;
-}
-
-.imgs {
-  position: absolute;
-  width: 200px;
-  font-size: 20px;
-  top: 120px;
-  left: 50px;
-}
-</style>
+  .imgs {
+    position: absolute;
+    width: 200px;
+    font-size: 20px;
+    top: 120px;
+    left: 50px;
+  }
+  </style>

@@ -66,6 +66,7 @@
 
             <el-row style="margin: 30px 0 10px 0">
               <el-button
+                @click="securityAdd"
                 style="
                   border-radius: 30px;
                   background-color: #fff;
@@ -127,6 +128,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
+const router = useRouter()
 import { ref } from 'vue'
 import {
   Search,
@@ -165,6 +168,11 @@ const tableData = [
     address: 'No. 189, Grove St, Los Angeles'
   }
 ]
+const securityAdd = () => {
+  router.push({
+    path: '/index/securityAssessmentAdd'
+  })
+}
 </script>
 <style lang="scss" scoped>
 .contain {
