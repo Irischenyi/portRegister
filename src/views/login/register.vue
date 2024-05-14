@@ -59,7 +59,15 @@ const areaValue = ref()
 
 const model = ref('')
 const options = ['1',2,3,5]
-
+const form = ref({} as {
+    provinceValue: '',
+    provinceName: '',
+    cityValue: '',
+    cityName: '',
+    areaValue: '',
+    areaName: '',
+    [name:string]: any
+})
 
 
 watch(provinceValue, (value: {value: string}) => {
@@ -71,6 +79,23 @@ watch(cityValue, (value: {value: string}) => {
     areaValue.value = '';
     getCity(value.value, 'area')
 })
+
+const changeFormValue = (code: string, value: string) => {
+    form.value[code] = value
+}
+
+const saveForm = () => {
+    form.value['provinceValue'] = provinceValue.value.value
+    form.value['provinceName'] = provinceValue.value.label
+
+    form.value['cityValue'] = cityValue.value.value
+    form.value['cityName'] = cityValue.value.label
+
+    form.value['areaValue'] = areaValue.value.value
+    form.value['areaName'] = areaValue.value.label
+    console.log(form.value)
+}
+
 </script>
 
 <template>
@@ -78,9 +103,9 @@ watch(cityValue, (value: {value: string}) => {
         <div class="center">
             <div class="welcome-register">欢迎企业注册！</div>
             <div class="inline">
-                <InputTemplate  name="企业名称" />
-                <InputTemplate  name="统一社会信用代码" />
-                <InputTemplate  name="地址" />
+                <InputTemplate  name="企业名称" code="entName" @changeFormValue="changeFormValue"/>
+                <InputTemplate  name="统一社会信用代码" code="creditCode" @changeFormValue="changeFormValue"/>
+                <InputTemplate  name="地址" code="address" @changeFormValue="changeFormValue"/>
                 <InputTemplate  name="注册地">
                     <div class="group">
                         <q-select rounded outlined v-model="provinceValue" :options="cityGroup" label="省份" />
@@ -88,21 +113,21 @@ watch(cityValue, (value: {value: string}) => {
                         <q-select rounded outlined v-model="areaValue" :options="area" label="区级" />
                     </div>
                 </InputTemplate>
-                <InputTemplate  name="邮箱" />
-                <InputTemplate  name="联系人" />
-                <InputTemplate  name="联系电话" />
+                <InputTemplate  name="邮箱" code="email" @changeFormValue="changeFormValue"/>
+                <InputTemplate  name="联系人" code="contact" @changeFormValue="changeFormValue"/>
+                <InputTemplate  name="登录账号（手机号码）" code="mobile" @changeFormValue="changeFormValue"/>
                 <div class="check-code" style="position: relative;width:340px;">
-                    <InputTemplate class="check-value" name="验证码"/>
+                    <InputTemplate class="check-value" name="验证码" code="mobileVerifyCode" @changeFormValue="changeFormValue"/>
                     <q-btn class="get-code" outline rounded color="primary" label="获取验证码" />
                 </div>
-                <InputTemplate  name="用户名" />
-                <InputTemplate  name="密码" />
+                <!-- <InputTemplate  name="用户名" /> -->
+                <InputTemplate  name="密码" code="password" @changeFormValue="changeFormValue"/>
+                <InputTemplate  name="确认密码" @changeFormValue="changeFormValue"/>
                 <InputTemplate  name="上传营业执照" />
-                <InputTemplate  name="确认密码" />
             </div>
             <div class="bottom-btn">
                 <q-btn unelevated rounded color="grey-5" label="返回" />
-                <q-btn unelevated rounded color="primary" label="提交" />
+                <q-btn unelevated rounded @click="saveForm" color="primary" label="提交" />
             </div>
         </div>
     </div>

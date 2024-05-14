@@ -35,7 +35,7 @@ const router = createRouter({
           component: () => import('@/views/policyconSultationView.vue')
         },
         {
-          path: '/securityTraining', //安全培训
+          path: 'securityTraining', //安全培训
           name: 'securityTraining',
           component: () => import('@/views/securityTrainingView.vue')
         },

@@ -1,7 +1,7 @@
 <template>
     <div class="service">
-      <div class="head">
-  
+      <div class="head" >
+        <slot name="header"></slot>
       </div>
       <div class="tabber-list">
         <q-tabs
@@ -28,7 +28,8 @@
   }
   .head{
     width: 100%;
-    padding-top: 15%;
+    min-height: 200px;
+    // padding-top: 15%;
     background-size: cover;
     display: flex;
     align-items: center;

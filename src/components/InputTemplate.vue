@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-defineProps<{
-  name: string
+import { ref, watch , defineEmits} from 'vue';
+const props = defineProps<{
+  name: string,
+  code?: string
 }>()
 const value = ref('')
+watch(value, () => {
+  emit('changeFormValue', props.code, value.value)
+})
+
+const emit = defineEmits(['changeFormValue'])
 </script>
 
 <template>
