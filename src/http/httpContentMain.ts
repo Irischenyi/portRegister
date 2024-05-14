@@ -9,11 +9,32 @@ interface httpConnect{
     post: () => {}
 }
 
-class mainHttpConnect{
+
+class httpConnectMain{
+    constructor(){
+        this.interceptor()
+    }
+
+    interceptor(){
+        axios.interceptors.response.use((response) => {
+            return response
+        }, function(error){
+            return Promise.reject(error)
+        })
+    }
+
+    errorFun(error:any){
+
+    }
+}
+
+class mainHttpConnect extends httpConnectMain{
     private baseUrl
     private successCode
     private backValue
-    constructor(url: string){
+
+    constructor(url:string){
+        super()
         this.baseUrl = url
         this.successCode = 200
         this.backValue = null as any
@@ -47,6 +68,8 @@ class mainHttpConnect{
     get(url:string, param?: any) {
         axios.get(this.baseUrl+url, param).then(response => {
             this.commonResolve(response)
+        }).catch((error) => {
+            this.errorFun(error)
         })
         return this
     }
@@ -54,6 +77,8 @@ class mainHttpConnect{
     post(url:string, param?: any){
         axios.post(this.baseUrl+url, param).then(response => {
             this.commonResolve(response)
+        }).catch((error) => {
+            this.errorFun(error)
         })
     }
 
