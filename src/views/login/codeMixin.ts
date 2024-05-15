@@ -25,10 +25,13 @@ const codeMixinHook = (picRef:any) => {
         } 
     }
 
+    const failMessage = ref('')
+
     return {
         codeValue,
         getCode,
-        closeCodeFun
+        closeCodeFun,
+        failMessage
     }
 }
 

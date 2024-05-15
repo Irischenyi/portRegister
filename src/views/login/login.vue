@@ -9,7 +9,7 @@ defineProps<{
  
 }>()
 const picRef = ref()
-const { codeValue, getCode, closeCodeFun } = codeMixinHook(picRef)
+const { codeValue, getCode, closeCodeFun, failMessage } = codeMixinHook(picRef)
 
 
 const form = reactive({
@@ -18,9 +18,9 @@ const form = reactive({
     mobileCode: '',
 } as {[code: string]: any})
 
-const {loginName, password, mobileCode, closeCode }  = toRefs(form)
+const {loginName, password, mobileCode }  = toRefs(form)
 
-const failMessage = ref('')
+
 const login = () => {
     failMessage.value = ''
     http.post('enterprise/login',{
@@ -72,11 +72,11 @@ const setUser = () => {
     <div class="bg">
         <div class="right">
             <div class="title">欢迎登录 !</div>
-            <InputTemplate name="手机号码" v-model="loginName" code="loginName" @changeFormValue="changeFormValue"/>
-            <InputTemplate name="密码" type="password" v-model="password" code="password" @changeFormValue="changeFormValue"/>
+            <InputTemplate name="手机号码"  code="loginName" @changeFormValue="changeFormValue"/>
+            <InputTemplate name="密码" type="password"  code="password" @changeFormValue="changeFormValue"/>
             <div class="remember-box"><q-checkbox v-model="remember" />记住密码</div>
             <div style="position: relative;">
-                <InputTemplate class="check-value" v-model="mobileCode"  @changeFormValue="changeFormValue" code="mobileCode" name="验证码"/>
+                <InputTemplate class="check-value"  @changeFormValue="changeFormValue" code="mobileCode" name="验证码"/>
                 <q-btn :disable="codeValue.buttonDis" class="get-code" outline rounded color="primary" @click="getCode" label="获取验证码" />
             </div>
             <div class="tips">{{ failMessage }}</div>

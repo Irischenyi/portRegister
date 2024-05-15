@@ -11,6 +11,7 @@
 
    
     const img = ref('')
+    const standard = ref(0)
     const srcImg = ref('')
     const picInfo = ref({
         srcImageHeight: 0,
@@ -24,13 +25,14 @@
     const getPic = () => {
         srcImg.value = ''
         img.value = ''
+        picInfo.value.left = -6;
+        standard.value = 0
         http.get('k2401-enterprise/verify-image').then((value) => {
             const valueInt = value as unknown as { uuid: string, yposition: number, cutImage: string, srcImage: string, srcImageHeight: number, srcImageWidth: number}
             img.value = 'data:image/png;base64,'+valueInt.srcImage
             picInfo.value.srcImageHeight = valueInt.srcImageHeight
             picInfo.value.srcImageWidth = valueInt.srcImageWidth
             picInfo.value.top = valueInt.yposition;
-            picInfo.value.left = -6;
             picInfo.value.uuid = valueInt.uuid;
             srcImg.value = 'data:image/png;base64,'+valueInt.cutImage
         })
@@ -44,7 +46,6 @@
         emit('postCheck', picInfo.value.uuid, picInfo.value.left+6)
     }
     
-    const standard = ref(0)
 
     let TimeIn:number
     watch(standard, (value) => {
