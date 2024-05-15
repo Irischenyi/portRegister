@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import InputTemplate from '@/components/InputTemplate.vue'
-import axios from 'axios'
 import http from '@/http/httpContentMain'
 import { ref, watch } from 'vue'
 defineProps<{

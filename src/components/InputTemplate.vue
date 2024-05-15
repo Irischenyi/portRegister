@@ -2,7 +2,8 @@
 import { ref, watch , defineEmits} from 'vue';
 const props = defineProps<{
   name: string,
-  code?: string
+  code?: string,
+  type?: 'password'
 }>()
 const value = ref('')
 watch(value, () => {
@@ -16,7 +17,7 @@ const emit = defineEmits(['changeFormValue'])
   <div class="input-set">
     <div class="title"><span class="tips">*</span>{{ name }}</div>
     <slot v-if="$slots.default"> </slot>
-    <q-input v-else rounded outlined  :placeholder="'请填写'+ name" v-model="value"/>
+    <q-input v-else rounded outlined  :type ="type?type:'text'" :placeholder="'请填写'+ name" v-model="value"/>
   </div>
 </template>
 

@@ -1,24 +1,71 @@
 <script setup lang="ts">
 import InputTemplate from '@/components/InputTemplate.vue'
+import { ref, reactive, toRefs } from 'vue'
+import http from '@/http/httpContentMain'
+import picSlider from '@/components/picSlider.vue';
 defineProps<{
  
 }>()
-const remember = false
+
+const form = reactive({
+    loginName: '',
+    password: '',
+    mobileCode: '',
+} as {[code: string]: any})
+const {loginName, password, mobileCode }  = toRefs(form)
+
+const failMessage = ref('')
+const login = () => {
+    failMessage.value = ''
+    http.post('enterprise/login',{
+        ...form
+    }).then(() =>{
+        console.log('====')
+    }).fail((value) => {
+        failMessage.value = value
+    })
+}
+
+
+const codeValue = ref({
+    show: false,
+    buttonDis: false
+})
+
+const getCode = () => {
+    codeValue.value.show = true;
+}
+
+let timeTag:number
+const closeCode = ()=>{
+    codeValue.value.show = false
+    codeValue.value.buttonDis = true
+    timeTag = setTimeout(()=>{
+        codeValue.value.buttonDis = false
+        clearTimeout(timeTag)
+    }, 60000)
+}
+const changeFormValue = (code: string, value: string) => {
+    form[code] = value
+}
+
+const remember = ref(false)
 </script>
 
 <template>
     <div class="bg">
         <div class="right">
             <div class="title">欢迎登录 !</div>
-            <InputTemplate name="用户名"/>
-            <InputTemplate name="密码"/>
+            <InputTemplate name="手机号码" v-model="loginName" code="loginName" @changeFormValue="changeFormValue"/>
+            <InputTemplate name="密码" type="password" v-model="password"/>
             <div class="remember-box"><q-checkbox v-model="remember" />记住密码</div>
             <div style="position: relative;">
-                <InputTemplate class="check-value" name="验证码"/>
-                <q-btn class="get-code" outline rounded color="primary" label="获取验证码" />
+                <InputTemplate class="check-value" v-model="mobileCode" name="验证码"/>
+                <q-btn :disable="codeValue.buttonDis" class="get-code" outline rounded color="primary" @click="getCode" label="获取验证码" />
             </div>
-            <q-btn class="glossy login" rounded color="primary" label="登录" />
-            <div class="bottom"> 
+            <div class="tips">{{ failMessage }}</div>
+            <q-btn class="glossy login" rounded color="primary" label="登录" @click="login"/>
+            <div class="bottom">
                 <div>
                     <div>返回页面</div>
                     <div>忘记密码</div>
@@ -26,6 +73,7 @@ const remember = false
                 <div>免费注册</div>
             </div>
         </div>
+        <picSlider :show="codeValue.show" @closeCode="closeCode" :tel="loginName"/>
     </div>
 </template>
 
@@ -107,6 +155,13 @@ const remember = false
     left: 210px;
     top: 40px;
     height: 40px;
+}
+
+.tips{
+    position: absolute;
+    bottom: 130px;
+    color: #b73232;
+    font-size: 12px;
 }
 </style>
 

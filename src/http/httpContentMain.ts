@@ -44,9 +44,13 @@ class mainHttpConnect extends httpConnectMain{
         console.log('回调')
     }
 
-    failFun() {
+    failBack(value: string){}
+
+    fail(fun: (value: string) => void) {
         //DIAOLOG
-        console.log('接口返回提示报错:'+this.backValue)
+        this.failBack = fun
+        return this
+        // console.log('接口返回提示报错:'+JSON.stringify(this.backValue))
     }
 
     then(fun: (value: string) => void){
@@ -60,8 +64,8 @@ class mainHttpConnect extends httpConnectMain{
             this.backValue = response.data.data;
             this.callBack(response.data.data)
         }else{
-            this.backValue = response.data
-            this.failFun()
+            this.backValue = response.data as unknown as {msg: string}
+            this.failBack(this.backValue.msg)
         }
     }
 
@@ -80,6 +84,7 @@ class mainHttpConnect extends httpConnectMain{
         }).catch((error) => {
             this.errorFun(error)
         })
+        return this
     }
 
 }
