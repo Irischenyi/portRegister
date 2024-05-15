@@ -4,16 +4,21 @@ import { ref, reactive, toRefs } from 'vue'
 import http from '@/http/httpContentMain'
 import picSlider from '@/components/picSlider.vue';
 import { useRouter } from 'vue-router'
+import codeMixinHook from './codeMixin'
 defineProps<{
  
 }>()
+const picRef = ref()
+const { codeValue, getCode, closeCodeFun } = codeMixinHook(picRef)
+
 
 const form = reactive({
     loginName: '',
     password: '',
     mobileCode: '',
 } as {[code: string]: any})
-const {loginName, password, mobileCode }  = toRefs(form)
+
+const {loginName, password, mobileCode, closeCode }  = toRefs(form)
 
 const failMessage = ref('')
 const login = () => {
@@ -28,28 +33,7 @@ const login = () => {
 }
 
 
-const codeValue = ref({
-    show: false,
-    buttonDis: false
-})
 
-const getCode = () => {
-    codeValue.value.show = true;
-}
-
-let timeTag: any
-const closeCode = (isSuccess: boolean|string)=>{
-    codeValue.value.show = false
-    if(isSuccess == true){
-        codeValue.value.buttonDis = true
-        timeTag = setTimeout(()=>{
-            codeValue.value.buttonDis = false
-            clearTimeout(timeTag)
-        }, 60000)
-    } else {
-        failMessage.value = isSuccess as string
-    }
-}
 const changeFormValue = (code: string, value: string) => {
     form[code] = value
 }
@@ -57,6 +41,19 @@ const changeFormValue = (code: string, value: string) => {
 const router = useRouter()
 
 const remember = ref(false)
+
+const postCheck = (uuid: string, left: number ) => {
+    http.post('k2401-enterprise/reg-mobile-code', {
+            uuid: uuid,
+            mobile: form.loginName,
+            xposition: left
+    }).then((value) => {
+        closeCodeFun(true)
+    }).fail((value) => {
+        closeCodeFun(value)
+        failMessage.value = value as string
+    })
+}
 
 const forgetPassword = () => {
     router.push({
@@ -92,7 +89,7 @@ const setUser = () => {
                 <div @click="setUser">免费注册</div>
             </div>
         </div>
-        <picSlider :show="codeValue.show" @closeCode="closeCode" :tel="loginName"/>
+        <picSlider ref="picRef" :show="codeValue.show" @postCheck="postCheck" />
     </div>
 </template>
 

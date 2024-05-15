@@ -1,21 +1,15 @@
 <script setup lang="ts">
-    import { ref, onMounted, onBeforeMount, watch, defineEmits } from 'vue'
+    import { ref, defineExpose, onBeforeMount, watch, defineEmits, watchEffect } from 'vue'
     
     import http from '@/http/httpContentMain'
 
 
+
     const props = defineProps<{
         show: boolean,
-        tel: string
     }>()
 
-    onBeforeMount(() => {
-        getPic()
-    })
-
-    onMounted(() =>{
-    })
-    // 
+   
     const img = ref('')
     const srcImg = ref('')
     const picInfo = ref({
@@ -25,9 +19,11 @@
         left: 0,
         uuid: ''
     })
-    const emit = defineEmits(['closeCode'])
+    const emit = defineEmits(['postCheck'])
 
     const getPic = () => {
+        srcImg.value = ''
+        img.value = ''
         http.get('k2401-enterprise/verify-image').then((value) => {
             const valueInt = value as unknown as { uuid: string, yposition: number, cutImage: string, srcImage: string, srcImageHeight: number, srcImageWidth: number}
             img.value = 'data:image/png;base64,'+valueInt.srcImage
@@ -40,16 +36,12 @@
         })
     }
 
+    defineExpose({
+        getPic
+    })
+
     const postCheck = () => {
-        http.post('k2401-enterprise/reg-mobile-code', {
-            uuid: picInfo.value.uuid,
-            mobile: props.tel,
-            xposition: picInfo.value.left+6
-        }).then((value) => {
-            emit('closeCode', true)
-        }).fail((value) => {
-            emit('closeCode', value)
-        })
+        emit('postCheck', picInfo.value.uuid, picInfo.value.left+6)
     }
     
     const standard = ref(0)
@@ -61,6 +53,11 @@
         TimeIn = setTimeout(()=>{
             postCheck()
         }, 2000)
+    })
+
+
+    watchEffect(() => {
+        img.value = props.show?img.value: ''
     })
 
 </script>
