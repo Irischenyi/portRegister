@@ -3,6 +3,7 @@ import InputTemplate from '@/components/InputTemplate.vue'
 import { ref, reactive, toRefs } from 'vue'
 import http from '@/http/httpContentMain'
 import picSlider from '@/components/picSlider.vue';
+import { useRouter } from 'vue-router'
 defineProps<{
  
 }>()
@@ -36,20 +37,38 @@ const getCode = () => {
     codeValue.value.show = true;
 }
 
-let timeTag:number
-const closeCode = ()=>{
+let timeTag: any
+const closeCode = (isSuccess: boolean|string)=>{
     codeValue.value.show = false
-    codeValue.value.buttonDis = true
-    timeTag = setTimeout(()=>{
-        codeValue.value.buttonDis = false
-        clearTimeout(timeTag)
-    }, 60000)
+    if(isSuccess == true){
+        codeValue.value.buttonDis = true
+        timeTag = setTimeout(()=>{
+            codeValue.value.buttonDis = false
+            clearTimeout(timeTag)
+        }, 60000)
+    } else {
+        failMessage.value = isSuccess as string
+    }
 }
 const changeFormValue = (code: string, value: string) => {
     form[code] = value
 }
 
+const router = useRouter()
+
 const remember = ref(false)
+
+const forgetPassword = () => {
+    router.push({
+      path: '/ResetPassword'
+    })
+}
+
+const setUser = () => {
+    router.push({
+      path: '/register'
+    })
+}
 </script>
 
 <template>
@@ -57,20 +76,20 @@ const remember = ref(false)
         <div class="right">
             <div class="title">欢迎登录 !</div>
             <InputTemplate name="手机号码" v-model="loginName" code="loginName" @changeFormValue="changeFormValue"/>
-            <InputTemplate name="密码" type="password" v-model="password"/>
+            <InputTemplate name="密码" type="password" v-model="password" code="password" @changeFormValue="changeFormValue"/>
             <div class="remember-box"><q-checkbox v-model="remember" />记住密码</div>
             <div style="position: relative;">
-                <InputTemplate class="check-value" v-model="mobileCode" name="验证码"/>
+                <InputTemplate class="check-value" v-model="mobileCode"  @changeFormValue="changeFormValue" code="mobileCode" name="验证码"/>
                 <q-btn :disable="codeValue.buttonDis" class="get-code" outline rounded color="primary" @click="getCode" label="获取验证码" />
             </div>
             <div class="tips">{{ failMessage }}</div>
             <q-btn class="glossy login" rounded color="primary" label="登录" @click="login"/>
             <div class="bottom">
                 <div>
-                    <div>返回页面</div>
-                    <div>忘记密码</div>
+                    <div @click="router.back()">返回页面</div>
+                    <div @click="forgetPassword">忘记密码</div>
                 </div>
-                <div>免费注册</div>
+                <div @click="setUser">免费注册</div>
             </div>
         </div>
         <picSlider :show="codeValue.show" @closeCode="closeCode" :tel="loginName"/>

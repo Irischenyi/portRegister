@@ -46,7 +46,9 @@
             mobile: props.tel,
             xposition: picInfo.value.left+6
         }).then((value) => {
-            emit('closeCode')
+            emit('closeCode', true)
+        }).fail((value) => {
+            emit('closeCode', value)
         })
     }
     
