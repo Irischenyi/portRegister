@@ -51,15 +51,20 @@ const router = createRouter({
           component: import('@/views/securityAssessment.vue')
         },
         {
+          path: 'contractFiling', //合同备案
+          name: 'contractFiling',
+          component: import('@/views/contractFiling.vue')
+        },
+        {
           path: 'securityAssessmentAdd', //数据出境安全评估新增
           name: 'securityAssessmentAdd',
           component: import('@/views/securityAssessmentAdd.vue')
         },
 
         {
-          path: 'contractFiling', //合同备案
-          name: 'contractFiling',
-          component: import('@/views/contractFiling.vue')
+          path: 'personalInformationAdd', //个人信息新增
+          name: 'personalInformationAdd',
+          component: import('@/views/personalInformationAdd.vue')
         }
       ]
     },
