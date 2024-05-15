@@ -68,6 +68,12 @@ const router = createRouter({
           path: 'contractFiling', //合同备案
           name: 'contractFiling',
           component: import('@/views/contractFiling.vue')
+        },
+
+        {
+          path: 'personalInformationAdd', //个人信息新增
+          name: 'personalInformationAdd',
+          component: import('@/views/personalInformationAdd.vue')
         }
       ]
     },

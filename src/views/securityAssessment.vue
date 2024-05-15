@@ -128,8 +128,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-const router = useRouter()
 import { ref } from 'vue'
 import {
   Search,
@@ -138,6 +136,8 @@ import {
   Upload,
   Download
 } from '@element-plus/icons-vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const form = ref({
   xmbh: '',
   lsh: '',
