@@ -66,6 +66,7 @@
 
             <el-row style="margin: 30px 0 10px 0">
               <el-button
+                @click="peADD"
                 style="
                   border-radius: 30px;
                   background-color: #fff;
@@ -135,6 +136,8 @@ import {
   Upload,
   Download
 } from '@element-plus/icons-vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const form = ref({
   xmbh: '',
   lsh: '',
@@ -165,6 +168,12 @@ const tableData = [
     address: 'No. 189, Grove St, Los Angeles'
   }
 ]
+
+const peADD = () => {
+  router.push({
+    path: '/index/personalInformationAdd'
+  })
+}
 </script>
 <style lang="scss" scoped>
 .contain {
