@@ -1,10 +1,18 @@
 <script setup lang="ts">
 import InputTemplate from '@/components/InputTemplate.vue'
+import picSlider from '@/components/picSlider.vue';
 import http from '@/http/httpContentMain'
+import codeMixinHook from './codeMixin'
 import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { Loading } from 'quasar'
 defineProps<{
  
 }>()
+const picRef = ref()
+const { codeValue, getCode, closeCodeFun, failMessage } = codeMixinHook(picRef)
+const file = ref()
+const router = useRouter()
 
 http.get('/tag/province-list').then((data) => {
     (data as unknown as []).forEach((item: {tagName: string, id: string})  => {
@@ -15,10 +23,6 @@ http.get('/tag/province-list').then((data) => {
     });
 })
 
-// axios.get(http.baseUrl+).then(response => {
-//     const data = response.data.data;
-
-// })
 
 const getCity = (value:string, type: string) => {
     if(type == 'city'){
@@ -82,6 +86,18 @@ watch(cityValue, (value: {value: string}) => {
     getCity(value.value, 'area')
 })
 
+watch(file, (value) => {
+    console.log(value.name)
+    const formData = new FormData()
+    formData.append('file', value)
+    http.post('k2401-enterprise/upload-business-license', formData , {
+    'Content-Type': 'multipart/form-data'
+    }).then((response) => {
+        const id = (response as unknown as {id: string}).id;
+        form.value.businessLicenseAttachIdList = [id]
+    })
+})
+
 const changeFormValue = (code: string, value: string) => {
     form.value[code] = value
 }
@@ -95,7 +111,35 @@ const saveForm = () => {
 
     form.value['areaValue'] = areaValue.value.value
     form.value['areaName'] = areaValue.value.label
-    console.log(form.value)
+
+    submitForm()
+}
+
+const submitForm = () => {
+    http.post('k2401-enterprise/reg', {
+        ...form.value
+    }).then((value) => {
+        Loading.show();
+        setTimeout(() => {
+            router.push('./login')
+        }, 2000)
+        Loading.hide()
+    }).fail((value) => {
+        console.log(value)
+    })
+}
+
+const postCheck = (uuid: string, left: number ) => {
+    http.post('k2401-enterprise/reg-mobile-code', {
+            uuid: uuid,
+            mobile: form.value.mobile,
+            xposition: left
+    }).then((value) => {
+        closeCodeFun(true)
+    }).fail((value) => {
+        closeCodeFun(value)
+        failMessage.value = value as string
+    })
 }
 
 </script>
@@ -120,18 +164,25 @@ const saveForm = () => {
                 <InputTemplate  name="登录账号（手机号码）" code="mobile" @changeFormValue="changeFormValue"/>
                 <div class="check-code" style="position: relative;width:340px;">
                     <InputTemplate class="check-value" name="验证码" code="mobileVerifyCode" @changeFormValue="changeFormValue"/>
-                    <q-btn class="get-code" outline rounded color="primary" label="获取验证码" />
+                    <q-btn class="get-code" outline rounded color="primary" label="获取验证码" @click="getCode" />
                 </div>
                 <!-- <InputTemplate  name="用户名" /> -->
-                <InputTemplate  name="密码" code="password" @changeFormValue="changeFormValue"/>
-                <InputTemplate  name="确认密码" @changeFormValue="changeFormValue"/>
-                <InputTemplate  name="上传营业执照" />
+                <InputTemplate  name="密码" type="password" code="password" @changeFormValue="changeFormValue"/>
+                <InputTemplate  name="确认密码" type="password" @changeFormValue="changeFormValue"/>
+                <InputTemplate  name="上传营业执照">
+                    <q-file
+                        v-model="file"
+                        filled
+                        style="max-width: 300px"
+                        />
+                </InputTemplate>
             </div>
             <div class="bottom-btn">
                 <q-btn unelevated rounded color="grey-5" label="返回" />
                 <q-btn unelevated rounded @click="saveForm" color="primary" label="提交" />
             </div>
         </div>
+        <picSlider ref="picRef" :show="codeValue.show" @postCheck="postCheck" />
     </div>
 </template>
 
@@ -140,7 +191,7 @@ const saveForm = () => {
    width: 840px;
    margin: 0 auto;
    background: linear-gradient(to bottom,#99caf9,white,white, #ffffff);
-   padding: 20px 10px;
+   padding: 20px 55px;
    border-top: 2px solid #2ef3fd;
 }
 .rest-password{
@@ -160,7 +211,7 @@ const saveForm = () => {
 
 .inline{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 .inline div{
@@ -234,6 +285,34 @@ const saveForm = () => {
     display: inline-block;
     width: 30%;
     font-size: 12px;
+}
+
+.q-file{
+    background-color: white;
+    border: 1px solid #c7c7c7;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    &::before, &::after{
+        content: '';
+        width: 60px;
+        height: 1px;
+        background: #c7c7c7;
+        position: absolute;
+        left: 20px;
+        top: 50px;
+        z-index: 1;
+    }
+    &::after{
+        width: 1px;
+        height: 60px;
+        left: 50px;
+        top: 20px;
+    }
+}
+:deep(.q-field--filled .q-field__control){
+    background: white;
+    height: 100%;
 }
 </style>
 

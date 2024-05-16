@@ -78,8 +78,8 @@ class mainHttpConnect extends httpConnectMain{
         return this
     }
 
-    post(url:string, param?: any){
-        axios.post(this.baseUrl+url, param).then(response => {
+    post(url:string, param?: any, headers?: {}){
+        axios.post(this.baseUrl+url, param, { headers }).then(response => {
             this.commonResolve(response)
         }).catch((error) => {
             this.errorFun(error)

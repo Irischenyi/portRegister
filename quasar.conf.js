@@ -13,6 +13,7 @@ return {
       // (Optional) If not present, will look for package.json > description
       description: '...', // string
       framework: [
+        plugins: [ 'Loading'],
         components: ['Qbtn', 'Qinput']
       ]
     }
