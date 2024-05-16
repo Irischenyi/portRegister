@@ -15,10 +15,15 @@
       </div>
     </template>
     <template #tabs>
+        <q-tabs
+          v-model="tab"
+          class="text-teal"
+        >
         <q-tab name="hydt1" label="行业动态" />
         <q-tab name="zcfg1" label="政策法规" />
         <q-tab name="hydt2" label="优秀表彰" />
         <q-tab name="zcfg2" label="通知公告" />
+      </q-tabs>
     </template>
   
     <template #body>

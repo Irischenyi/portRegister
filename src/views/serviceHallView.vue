@@ -1,9 +1,15 @@
 <template>
   <TemplateFrame>
       <template #tabs>
+        <q-tabs
+          v-model="tab"
+          @update:model-value="changeTab"
+          class="text-teal"
+        >
           <q-tab name="assess"  label="数据安全评估" />
           <q-tab name="govern" label="数据安全治理" />
           <q-tab name="pool" label="服务商资源池" />
+        </q-tabs>
       </template>
       <template #body>
           <div class="card" v-for="item in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
@@ -43,6 +49,9 @@
 import { ref } from 'vue';
 import TemplateFrame from '@/components/TemplateFrame.vue'
 const tab = ref('assess')
+const changeTab = () => {
+  console.log('======')
+}
 </script>
 <style lang="scss" scoped>
 .card{

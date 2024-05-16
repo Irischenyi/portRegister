@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const setBaseInf =  {
-    baseUrl: 'http://47.100.234.98:18766/data-exit-mobileapi/'
+    baseUrl: 'http://47.100.234.98:18766/data-exit-mobileapi/',
+    picUrl: 'http://47.100.234.98:18766'
 }
 
 interface httpConnect{
@@ -96,5 +97,5 @@ class mainHttpConnect extends httpConnectMain{
  */
 
 
-
 export default new mainHttpConnect(setBaseInf.baseUrl)
+export const picUrl = setBaseInf.picUrl

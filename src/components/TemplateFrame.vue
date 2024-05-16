@@ -4,12 +4,7 @@
         <slot name="header"></slot>
       </div>
       <div class="tabber-list">
-        <q-tabs
-          v-model="tab"
-          class="text-teal"
-        >
-          <slot name="tabs"></slot>
-        </q-tabs>
+        <slot name="tabs"></slot>
       </div>
       <div class="body">
           <slot name="body"></slot>
@@ -19,7 +14,7 @@
   </template>
   <script setup lang="ts">
   import { ref } from 'vue';
-  const tab = ref('assess')
+
   </script>
   <style lang="scss" scoped>
   .service{
@@ -28,7 +23,7 @@
   }
   .head{
     width: 100%;
-    min-height: 200px;
+    height: auto;
     // padding-top: 15%;
     background-size: cover;
     display: flex;
