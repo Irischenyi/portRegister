@@ -24,6 +24,7 @@ const changeFormValue = (code: string, value: string) => {
 }
 
 const postCheck = (uuid: string, left: number ) => {
+    failMessage.value = ''
     http.post('k2401-enterprise/reset-pwd-mobile-code', {
             uuid: uuid,
             mobile: form.mobile,

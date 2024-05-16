@@ -66,7 +66,7 @@
 <div class="back" v-if="show">
     <div class="center">
         <div class="img-center">
-            <img :src="img" :width="picInfo.srcImageWidth" :height="picInfo.srcImageHeight"/>
+            <img :src="img" :class="{'disbale':img?false:true}":width="picInfo.srcImageWidth" :height="picInfo.srcImageHeight"/>
             <img :src="srcImg" :style="'position:absolute;left:'+picInfo.left+'px;top:'+picInfo.top+'px'"/>
             <q-slider v-model="standard" :min="0" :max="picInfo.srcImageWidth" style="width: 200px;"/>
         </div>
@@ -93,6 +93,11 @@
     width: 300px;
     height: 180px;
     background-color: white;
+}
+
+.disbale{
+    visibility: hidden;
+    min-height: 200px;
 }
 
 .img-center{
