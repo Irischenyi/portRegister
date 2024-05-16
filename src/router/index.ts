@@ -51,9 +51,9 @@ const router = createRouter({
           component: import('@/views/securityAssessment.vue')
         },
         {
-          path: 'contractFiling', //合同备案
-          name: 'contractFiling',
-          component: import('@/views/contractFiling.vue')
+          path: 'conFilings', //合同备案
+          name: 'conFilings',
+          component: import('@/views/conFilings.vue')
         },
         {
           path: 'securityAssessmentAdd', //数据出境安全评估新增
