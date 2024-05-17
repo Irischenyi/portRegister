@@ -2,8 +2,8 @@
   <TemplateFrame>
     <template #header>
       <div class="topImg" style="width: 100%">
-        <img style="width: 100%" src="../assets/images/zczxbjt.png" alt="" />
-        <div class="topImgText">
+        <img style="width: 100%; height: 300px" :src="bannerSy" alt="" />
+        <!-- <div class="topImgText">
           <div style="color: #fff; font-size: 23px; font-weight: 500">
             政策咨询
           </div>
@@ -11,268 +11,148 @@
             提供工业互联网安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目；
             基于行业内最新动态的梳理与汇聚
           </div>
-        </div>
+        </div> -->
       </div>
     </template>
     <template #tabs>
-        <q-tab name="hydt1" label="行业动态" />
-        <q-tab name="zcfg1" label="政策法规" />
-        <q-tab name="hydt2" label="优秀表彰" />
-        <q-tab name="zcfg2" label="通知公告" />
+      <q-tabs
+        @update:model-value="btns"
+        v-model="tab"
+        dense
+        active-color="primary"
+        indicator-color="primary"
+        narrow-indicator
+        align="left"
+        style="margin-left: 0px"
+      >
+        <q-tab name="1" :label="tabsChange1" />
+        <q-tab name="2" :label="tabsChange2" />
+        <q-tab name="3" :label="tabsChange3" />
+        <q-tab name="4" :label="tabsChange4" />
+      </q-tabs>
     </template>
-  
-    <template #body>
-        <q-tab-panels style="margin-top: 10px" v-model="tab" animated>
-          <q-tab-panel name="hydt1">
-            <!-- 列表 -->
-            <div>
-              <!-- 第一行列表 -->
-              <div style="padding: 20px 10px">
-                <div style="display: flex">
-                  <div style="width: 20%; margin-right: 20px">
-                    <img
-                      style="width: 100%"
-                      src="../assets/images/zczx.png"
-                      alt=""
-                      srcset=""
-                    />
-                  </div>
-                  <div style="width: 60%">
-                    <div style="font-size: 20px; font-weight: 500">
-                      建设新能源之都 新能源行业网络安全培训会成功举办
-                    </div>
-                    <div style="margin-top: 10px">
-                      近日，常州市新能源行业网络安全培训会成功举办
-                    </div>
-                    <div style="margin-top: 30px">来源：常州工业信息安全联盟</div>
-                  </div>
-                  <div
-                    style="
-                      display: flex;
-                      justify-content: end;
-                      align-items: end;
-                      width: 20%;
-                    "
-                  >
-                    2023-09-27 15:10:21
-                  </div>
-                </div>
-                <div style="margin-top: 20px">
-                  <q-separator />
-                </div>
-              </div>
-              <!-- 第二行列表 -->
-              <div style="padding: 20px 10px">
-                <div style="display: flex">
-                  <div style="width: 20%; margin-right: 20px">
-                    <img
-                      style="width: 100%"
-                      src="../assets/images/zczx.png"
-                      alt=""
-                      srcset=""
-                    />
-                  </div>
-                  <div style="width: 60%">
-                    <div style="font-size: 20px; font-weight: 500">
-                      建设新能源之都 新能源行业网络安全培训会成功举办
-                    </div>
-                    <div style="margin-top: 10px">
-                      近日，常州市新能源行业网络安全培训会成功举办
-                    </div>
-                    <div style="margin-top: 30px">来源：常州工业信息安全联盟</div>
-                  </div>
-                  <div
-                    style="
-                      display: flex;
-                      justify-content: end;
-                      align-items: end;
-                      width: 20%;
-                    "
-                  >
-                    2023-09-27 15:10:21
-                  </div>
-                </div>
-                <div style="margin-top: 20px">
-                  <q-separator />
-                </div>
-              </div>
-              <!-- 第三行列表 -->
-              <div style="padding: 20px 10px">
-                <div style="display: flex">
-                  <div style="width: 20%; margin-right: 20px">
-                    <img
-                      style="width: 100%"
-                      src="../assets/images/zczx.png"
-                      alt=""
-                      srcset=""
-                    />
-                  </div>
-                  <div style="width: 60%">
-                    <div style="font-size: 20px; font-weight: 500">
-                      建设新能源之都 新能源行业网络安全培训会成功举办
-                    </div>
-                    <div style="margin-top: 10px">
-                      近日，常州市新能源行业网络安全培训会成功举办
-                    </div>
-                    <div style="margin-top: 30px">来源：常州工业信息安全联盟</div>
-                  </div>
-                  <div
-                    style="
-                      display: flex;
-                      justify-content: end;
-                      align-items: end;
-                      width: 20%;
-                    "
-                  >
-                    2023-09-27 15:10:21
-                  </div>
-                </div>
-                <div style="margin-top: 20px">
-                  <q-separator />
-                </div>
-              </div>
-              <!-- 第四行列表 -->
-              <div style="padding: 20px 10px">
-                <div style="display: flex">
-                  <div style="width: 20%; margin-right: 20px">
-                    <img
-                      style="width: 100%"
-                      src="../assets/images/zczx.png"
-                      alt=""
-                      srcset=""
-                    />
-                  </div>
-                  <div style="width: 60%">
-                    <div style="font-size: 20px; font-weight: 500">
-                      建设新能源之都 新能源行业网络安全培训会成功举办
-                    </div>
-                    <div style="margin-top: 10px">
-                      近日，常州市新能源行业网络安全培训会成功举办
-                    </div>
-                    <div style="margin-top: 30px">来源：常州工业信息安全联盟</div>
-                  </div>
-                  <div
-                    style="
-                      display: flex;
-                      justify-content: end;
-                      align-items: end;
-                      width: 20%;
-                    "
-                  >
-                    2023-09-27 15:10:21
-                  </div>
-                </div>
-                <div style="margin-top: 20px">
-                  <q-separator />
-                </div>
-              </div>
-              <!-- 第五行列表 -->
-              <div style="padding: 20px 10px">
-                <div style="display: flex">
-                  <div style="width: 20%; margin-right: 20px">
-                    <img
-                      style="width: 100%"
-                      src="../assets/images/zczx.png"
-                      alt=""
-                      srcset=""
-                    />
-                  </div>
-                  <div style="width: 60%">
-                    <div style="font-size: 20px; font-weight: 500">
-                      建设新能源之都 新能源行业网络安全培训会成功举办
-                    </div>
-                    <div style="margin-top: 10px">
-                      近日，常州市新能源行业网络安全培训会成功举办
-                    </div>
-                    <div style="margin-top: 30px">来源：常州工业信息安全联盟</div>
-                  </div>
-                  <div
-                    style="
-                      display: flex;
-                      justify-content: end;
-                      align-items: end;
-                      width: 20%;
-                    "
-                  >
-                    2023-09-27 15:10:21
-                  </div>
-                </div>
-                <div style="margin-top: 20px">
-                  <q-separator />
-                </div>
-              </div>
-              <!-- 第六行列表 -->
-              <div style="padding: 20px 10px">
-                <div style="display: flex">
-                  <div style="width: 20%; margin-right: 20px">
-                    <img
-                      style="width: 100%"
-                      src="../assets/images/zczx.png"
-                      alt=""
-                      srcset=""
-                    />
-                  </div>
-                  <div style="width: 60%">
-                    <div style="font-size: 20px; font-weight: 500">
-                      建设新能源之都 新能源行业网络安全培训会成功举办
-                    </div>
-                    <div style="margin-top: 10px">
-                      近日，常州市新能源行业网络安全培训会成功举办
-                    </div>
-                    <div style="margin-top: 30px">来源：常州工业信息安全联盟</div>
-                  </div>
-                  <div
-                    style="
-                      display: flex;
-                      justify-content: end;
-                      align-items: end;
-                      width: 20%;
-                    "
-                  >
-                    2023-09-27 15:10:21
-                  </div>
-                </div>
-                <div style="margin-top: 20px">
-                  <q-separator />
-                </div>
-              </div>
 
-              <div style="display: flex; justify-content: end">
-                <q-pagination
-                  v-model="current"
-                  max="5"
-                  direction-links
-                  flat
-                  color="grey"
-                  active-color="primary"
-                />
+    <template #body>
+      <q-tab-panels
+        style="width: 100%; margin-top: 10px"
+        v-model="tab"
+        animated
+      >
+        <q-tab-panel :name="tabsValue">
+          <!-- 列表 -->
+
+          <div>
+            <div
+              v-for="(item, index) in tabsLists"
+              :key="index"
+              style="padding: 20px 10px"
+            >
+              <div style="display: flex">
+                <div style="width: 20%; margin-right: 20px">
+                  <img
+                    style="width: 100%"
+                    :src="setBaseInf.baseUrl + item.attach.storagePath"
+                  />
+                </div>
+                <div style="width: 60%">
+                  <div style="font-size: 20px; font-weight: 500">
+                    {{ item.title }}
+                  </div>
+                  <div style="margin-top: 10px">
+                    {{ item.summary }}
+                  </div>
+                  <div style="margin-top: 80px">{{ item.sourceFrom }}</div>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: end;
+                    align-items: end;
+                    width: 20%;
+                  "
+                >
+                  {{ item.publishDate }}
+                </div>
+              </div>
+              <div style="margin-top: 20px">
+                <q-separator />
               </div>
             </div>
-          </q-tab-panel>
-
-          <q-tab-panel name="zcfg1">
-            <div class="text-h6">政策法规</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </q-tab-panel>
-
-          <q-tab-panel name="hydt2">
-            <div class="text-h6">行业动态</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </q-tab-panel>
-          <q-tab-panel name="zcfg2">
-            <div class="text-h6">政策法规</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </q-tab-panel>
-        </q-tab-panels>
+          </div>
+        </q-tab-panel>
+      </q-tab-panels>
     </template>
   </TemplateFrame>
-  <div>
-</div>
+  <div></div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import http, { setBaseInf } from '@/http/httpContentMain'
 import TemplateFrame from '@/components/TemplateFrame.vue'
-const tab = ref('hydt1')
+onMounted(async () => {
+  console.log(setBaseInf.baseUrl, 'setBaseInf.baseUrl')
+
+  await getBanner() //获取 Banner 图
+  await getCategoryTabs() //获取政策资讯类别
+  //指定政策资讯下的分页列表
+  await getArticlePaged()
+})
+
+//  获取 Banner 图
+const bannerSy = ref('')
+const getBanner = async () => {
+  const res = await http.get('/k2401-banner/list', { params: { category: 1 } })
+  bannerSy.value = `${setBaseInf.baseUrl}` + res[0].storagePath
+  console.log(res, 'res+++11111111+++++')
+}
+
+//获取政策资讯类别
+const tabsChange = ref([])
+const tabsChange1 = ref('')
+const tabsChange2 = ref('')
+const tabsChange3 = ref('')
+const tabsChange4 = ref('')
+const getCategoryTabs = async () => {
+  const res = await http.get('/k2401-article/article-category-list')
+  console.log(res, 'res+++222222222+++++')
+  tabsChange.value = res
+  // console.log(tabsChange.value[0].name, 'tabsChange.value[0].name')
+  tabsChange1.value = tabsChange.value[0].name
+  tabsChange2.value = tabsChange.value[1].name
+  tabsChange3.value = tabsChange.value[2].name
+  tabsChange4.value = tabsChange.value[3].name
+}
+
+const tabsLists = ref([])
+
+const imgTabs = ref('')
+
+const getArticlePaged = async () => {
+  const res = await http.get('/k2401-article/article/paged', {
+    params: {
+      category: tabsValue.value || 1,
+      current: 1, //当前页码
+      size: 10 //每页多少条数据
+    }
+  })
+  console.log(res, '66666++++')
+
+  tabsLists.value = res.items
+
+  imgTabs.value = `${setBaseInf.baseUrl}` + res.items[0].attach.storagePath
+
+  console.log(res, 'res+++333333333+++++')
+  console.log(tabsLists.value, 'tabsLists.value')
+}
+
+const tab = ref('1')
+const tabsValue = ref('1')
+const btns = (value) => {
+  console.log(value, 'val++++++')
+  tabsValue.value = value
+  getArticlePaged()
+}
+
 const current = ref(1)
 </script>
 <style lang="scss" scoped>
