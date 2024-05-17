@@ -50,17 +50,17 @@
                 <div style="width: 20%; margin-right: 20px">
                   <img
                     style="width: 100%"
-                    :src="setBaseInf.baseUrl + item.attach.storagePath"
+                    :src="setBaseInf.baseUrl + (item as any).attach.storagePath"
                   />
                 </div>
                 <div style="width: 60%">
                   <div style="font-size: 20px; font-weight: 500">
-                    {{ item.title }}
+                    {{ (item as any).title }}
                   </div>
                   <div style="margin-top: 10px">
-                    {{ item.summary }}
+                    {{ (item as any).summary }}
                   </div>
-                  <div style="margin-top: 80px">{{ item.sourceFrom }}</div>
+                  <div style="margin-top: 80px">{{ (item as any).sourceFrom }}</div>
                 </div>
                 <div
                   style="
@@ -70,7 +70,7 @@
                     width: 20%;
                   "
                 >
-                  {{ item.publishDate }}
+                  {{ (item as any).publishDate }}
                 </div>
               </div>
               <div style="margin-top: 20px">
@@ -100,7 +100,7 @@ onMounted(async () => {
 //  获取 Banner 图
 const bannerSy = ref('')
 const getBanner = async () => {
-  const res = await http.get('/k2401-banner/list', { params: { category: 1 } })
+  const res = await http.get('/k2401-banner/list', { params: { category: 1 } }) as any
   bannerSy.value = `${setBaseInf.baseUrl}` + res[0].storagePath
   console.log(res, 'res+++11111111+++++')
 }
@@ -112,14 +112,14 @@ const tabsChange2 = ref('')
 const tabsChange3 = ref('')
 const tabsChange4 = ref('')
 const getCategoryTabs = async () => {
-  const res = await http.get('/k2401-article/article-category-list')
+  const res = await http.get('/k2401-article/article-category-list') as any
   console.log(res, 'res+++222222222+++++')
   tabsChange.value = res
   // console.log(tabsChange.value[0].name, 'tabsChange.value[0].name')
-  tabsChange1.value = tabsChange.value[0].name
-  tabsChange2.value = tabsChange.value[1].name
-  tabsChange3.value = tabsChange.value[2].name
-  tabsChange4.value = tabsChange.value[3].name
+  tabsChange1.value = res[0].name
+  tabsChange2.value = res[1].name
+  tabsChange3.value = res[2].name
+  tabsChange4.value = res[3].name
 }
 
 const tabsLists = ref([])
@@ -133,7 +133,7 @@ const getArticlePaged = async () => {
       current: 1, //当前页码
       size: 10 //每页多少条数据
     }
-  })
+  }) as any
   console.log(res, '66666++++')
 
   tabsLists.value = res.items
@@ -146,7 +146,7 @@ const getArticlePaged = async () => {
 
 const tab = ref('1')
 const tabsValue = ref('1')
-const btns = (value) => {
+const btns = (value:any) => {
   console.log(value, 'val++++++')
   tabsValue.value = value
   getArticlePaged()

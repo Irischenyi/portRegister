@@ -490,12 +490,12 @@
                 style="margin-right: 20px; background-color: #c0c0c0"
                 v-if="step > 1"
                 rounded
-                @click="$refs.stepper.previous()"
+                @click="($refs.stepper as any).previous()"
                 label="上一步"
                 color="#c0c0c0"
               />
               <q-btn
-                @click="$refs.stepper.next()"
+                @click="($refs.stepper as any).next()"
                 rounded
                 color="primary"
                 :label="step === 3 ? '提交' : '下一步'"

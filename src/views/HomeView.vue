@@ -212,12 +212,12 @@
                     >
                       <div style="display: flex; align-items: center">
                         <div class="yuan"></div>
-                        <div class="moreText" :title="item.title">
-                          {{ item.title }}
+                        <div class="moreText" :title="(item as any).title">
+                          {{ (item as any).title }}
                         </div>
                       </div>
                       <div>
-                        {{ item.publishDate }}
+                        {{ (item as any).publishDate }}
                       </div>
                     </div>
                     <div style="margin-top: -20px">
@@ -480,7 +480,9 @@ onMounted(async () => {
 //  获取 Banner 图
 const bannerSy = ref('')
 const getBanner = async () => {
-  const res = await http.get('/k2401-banner/list', { params: { category: 1 } })
+  const res = (await http.get('/k2401-banner/list', {
+    params: { category: 1 }
+  })) as any
   bannerSy.value = `${setBaseInf.baseUrl}` + res[0].storagePath
   console.log(res, 'res+++11111111+++++')
 }
@@ -492,14 +494,14 @@ const tabsChange3 = ref('')
 const tabsChange4 = ref('')
 
 const getCategoryTabs = async () => {
-  const res = await http.get('/k2401-article/article-category-list')
+  const res = (await http.get('/k2401-article/article-category-list')) as any
   console.log(res, 'res+++222222222+++++')
-  tabsChange.value = res
+  tabsChange.value = res as any
   // console.log(tabsChange.value[0].name, 'tabsChange.value[0].name')
-  tabsChange1.value = tabsChange.value[0].name
-  tabsChange2.value = tabsChange.value[1].name
-  tabsChange3.value = tabsChange.value[2].name
-  tabsChange4.value = tabsChange.value[3].name
+  tabsChange1.value = res[0].name
+  tabsChange2.value = res[1].name
+  tabsChange3.value = res[2].name
+  tabsChange4.value = res[3].name
 }
 const tabsLists = ref([])
 const titleTabs = ref('')
@@ -507,13 +509,13 @@ const timeTabs = ref('')
 const summaryTabs = ref('')
 const imgTabs = ref('')
 const getArticlePaged = async () => {
-  const res = await http.get('/k2401-article/article/paged', {
+  const res = (await http.get('/k2401-article/article/paged', {
     params: {
       category: tabsValue.value || 1,
       current: 1, //当前页码
       size: 10 //每页多少条数据
     }
-  })
+  })) as any
 
   tabsLists.value = res.items
   titleTabs.value = res.items[0].title
@@ -526,7 +528,7 @@ const getArticlePaged = async () => {
 }
 const tab = ref('1')
 const tabsValue = ref('1')
-const btns = (value) => {
+const btns = (value: any) => {
   console.log(value, 'val++++++')
   tabsValue.value = value
   getArticlePaged()
@@ -601,5 +603,4 @@ const btns = (value) => {
   max-width: 30em; /* 设置需要显示的最大宽度，10em 约等于10个中文字的宽度 */
   margin-left: 10px;
 }
-
 </style>
