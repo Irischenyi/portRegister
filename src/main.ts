@@ -1,7 +1,7 @@
 // import './assets/main.css'
 
 import { createApp } from 'vue'
-import { Quasar, QInput } from 'quasar'
+import { Quasar, QInput, Loading } from 'quasar'
 
 console.log('test')
 //
@@ -19,7 +19,10 @@ app.use(router)
 app.use(ElementPlus)
 app.component('q-input', QInput)
 app.use(Quasar, {
-  plugins: {}
+  plugins: {
+    Loading
+  },
+ 
 })
 
 app.mount('#app')

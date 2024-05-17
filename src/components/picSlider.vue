@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, defineExpose, onBeforeMount, watch, defineEmits, watchEffect } from 'vue'
+    import { ref, defineExpose, onBeforeMount, watch, watchEffect } from 'vue'
     
     import http from '@/http/httpContentMain'
 

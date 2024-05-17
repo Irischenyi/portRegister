@@ -1,7 +1,8 @@
 import axios from 'axios'
 
-const setBaseInf = {
-  baseUrl: 'http://47.100.234.98:18766/data-exit-mobileapi/'
+export const setBaseInf =  {
+    baseUrl: 'http://47.100.234.98:18766/data-exit-mobileapi/',
+    picUrl: 'http://47.100.234.98:18766'
 }
 
 interface httpConnect {
@@ -40,57 +41,53 @@ class mainHttpConnect extends httpConnectMain {
     this.backValue = null as any
   }
 
-  callBack(value: string) {
-    console.log('回调')
+  callBack(value: string){
+      console.log('回调')
   }
 
-  failBack(value: string) {}
+  failBack(value: string){}
 
   fail(fun: (value: string) => void) {
-    //DIAOLOG
-    this.failBack = fun
-    return this
-    // console.log('接口返回提示报错:'+JSON.stringify(this.backValue))
+      //DIAOLOG
+      this.failBack = fun
+      return this
+      // console.log('接口返回提示报错:'+JSON.stringify(this.backValue))
   }
 
-  then(fun: (value: string) => void) {
-    this.callBack = fun
-    return this
+  then(fun: (value: string) => void){
+      this.callBack = fun
+      return this
   }
 
-  commonResolve(response: { data: { code: number; data: any } }) {
-    if (response.data.code == this.successCode) {
-      this.backValue = response.data.data
-      this.callBack(response.data.data)
-    } else {
-      this.backValue = response.data as unknown as { msg: string }
-      this.failBack(this.backValue.msg)
-    }
+
+  commonResolve(response: { data: { code: number, data: any}}){
+      if(response.data.code == this.successCode){
+          this.backValue = response.data.data;
+          this.callBack(response.data.data)
+      }else{
+          this.backValue = response.data as unknown as {msg: string}
+          this.failBack(this.backValue.msg)
+      }
   }
 
-  get(url: string, param?: any) {
-    axios
-      .get(this.baseUrl + url, param)
-      .then((response) => {
-        this.commonResolve(response)
+  get(url:string, param?: any) {
+      axios.get(this.baseUrl+url, param).then(response => {
+          this.commonResolve(response)
+      }).catch((error) => {
+          this.errorFun(error)
       })
-      .catch((error) => {
-        this.errorFun(error)
-      })
-    return this
+      return this
   }
 
-  post(url: string, param?: any) {
-    axios
-      .post(this.baseUrl + url, param)
-      .then((response) => {
-        this.commonResolve(response)
+  post(url:string, param?: any, headers?: {}){
+      axios.post(this.baseUrl+url, param, { headers }).then(response => {
+          this.commonResolve(response)
+      }).catch((error) => {
+          this.errorFun(error)
       })
-      .catch((error) => {
-        this.errorFun(error)
-      })
-    return this
+      return this
   }
+
 }
 
 // example
@@ -98,5 +95,7 @@ class mainHttpConnect extends httpConnectMain {
  * http.get('/tag/child-list/'+value).then((response) => {})
  */
 
+
 export default new mainHttpConnect(setBaseInf.baseUrl)
-export { setBaseInf }
+export const picUrl = setBaseInf.picUrl
+
