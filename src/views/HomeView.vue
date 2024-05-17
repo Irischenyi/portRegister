@@ -212,12 +212,12 @@
                     >
                       <div style="display: flex; align-items: center">
                         <div class="yuan"></div>
-                        <div class="moreText" :title="item?.title">
-                          {{ item?.title }}
+                        <div class="moreText" :title="item.title">
+                          {{ item.title }}
                         </div>
                       </div>
                       <div>
-                        {{ item?.publishDate }}
+                        {{ item.publishDate }}
                       </div>
                     </div>
                     <div style="margin-top: -20px">
@@ -473,19 +473,19 @@ import { ref, onMounted } from 'vue'
 import http, { setBaseInf } from '@/http/httpContentMain'
 onMounted(async () => {
   await getBanner() //获取 Banner 图
-  // await getCategoryTabs() //获取政策资讯类别
+  await getCategoryTabs() //获取政策资讯类别
   //指定政策资讯下的分页列表
-  // await getArticlePaged()
+  await getArticlePaged()
 })
 //  获取 Banner 图
 const bannerSy = ref('')
 const getBanner = async () => {
-  const res = await http.get('/k2401-banner/list', { params: { category: 1 } }) as unknown as {storagePath:string}[]
+  const res = await http.get('/k2401-banner/list', { params: { category: 1 } })
   bannerSy.value = `${setBaseInf.baseUrl}` + res[0].storagePath
   console.log(res, 'res+++11111111+++++')
 }
 //获取政策资讯类别
-const tabsChange = ref([] as {name: string}[])
+const tabsChange = ref([])
 const tabsChange1 = ref('')
 const tabsChange2 = ref('')
 const tabsChange3 = ref('')
@@ -494,22 +494,18 @@ const tabsChange4 = ref('')
 const getCategoryTabs = async () => {
   const res = await http.get('/k2401-article/article-category-list')
   console.log(res, 'res+++222222222+++++')
-  tabsChange.value = res as unknown as  {name: string}[]
+  tabsChange.value = res
   // console.log(tabsChange.value[0].name, 'tabsChange.value[0].name')
   tabsChange1.value = tabsChange.value[0].name
   tabsChange2.value = tabsChange.value[1].name
   tabsChange3.value = tabsChange.value[2].name
   tabsChange4.value = tabsChange.value[3].name
 }
-const tabsLists = ref()
+const tabsLists = ref([])
 const titleTabs = ref('')
 const timeTabs = ref('')
 const summaryTabs = ref('')
 const imgTabs = ref('')
-interface ItemITO {title:string, summary: string,publishDate: string, attach: { storagePath: string}}
-interface listIto {
-    items:  ItemITO[]
-}
 const getArticlePaged = async () => {
   const res = await http.get('/k2401-article/article/paged', {
     params: {
@@ -517,12 +513,10 @@ const getArticlePaged = async () => {
       current: 1, //当前页码
       size: 10 //每页多少条数据
     }
-  }) as unknown as listIto
-
-  
+  })
 
   tabsLists.value = res.items
-  titleTabs.value = (res.items[0]).title
+  titleTabs.value = res.items[0].title
   summaryTabs.value = res.items[0].summary
   timeTabs.value = res.items[0].publishDate
   imgTabs.value = `${setBaseInf.baseUrl}` + res.items[0].attach.storagePath
@@ -532,11 +526,11 @@ const getArticlePaged = async () => {
 }
 const tab = ref('1')
 const tabsValue = ref('1')
-// const btns = (value) => {
-//   console.log(value, 'val++++++')
-//   tabsValue.value = value
-//   getArticlePaged()
-// }
+const btns = (value) => {
+  console.log(value, 'val++++++')
+  tabsValue.value = value
+  getArticlePaged()
+}
 </script>
 <style lang="scss" scoped>
 .contain {
