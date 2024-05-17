@@ -173,7 +173,6 @@
             <q-tab name="3" :label="tabsChange3" />
             <q-tab name="4" :label="tabsChange4" />
           </q-tabs>
-
           <q-tab-panels style="margin-top: 10px" v-model="tab" animated>
             <q-tab-panel :name="tabsValue">
               <div style="display: flex; justify-content: space-between">
@@ -602,4 +601,5 @@ const btns = (value) => {
   max-width: 30em; /* 设置需要显示的最大宽度，10em 约等于10个中文字的宽度 */
   margin-left: 10px;
 }
+
 </style>
