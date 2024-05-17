@@ -23,7 +23,6 @@
         indicator-color="primary"
         narrow-indicator
         align="left"
-        style="margin-left: 0px"
       >
         <q-tab name="1" :label="tabsChange1" />
         <q-tab name="2" :label="tabsChange2" />
