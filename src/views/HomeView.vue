@@ -1,12 +1,13 @@
 <template>
   <div>
     <!-- 背景图片 -->
-    <img
+    <!-- <img
       style="width: 100%; height: 400px"
       src="../assets//images/shujufuwu.png"
       alt=""
       srcset=""
-    />
+    /> -->
+    <img style="width: 100%; height: 400px" :src="bannerSy" alt="" srcset="" />
     <!-- 版心 -->
     <div class="contain">
       <!-- 数量 -->
@@ -159,6 +160,7 @@
         </div>
         <div>
           <q-tabs
+            @update:model-value="btns"
             v-model="tab"
             dense
             active-color="primary"
@@ -166,156 +168,228 @@
             narrow-indicator
             align="left"
           >
-            <q-tab name="hydt1" label="行业动态" />
-            <q-tab name="zcfg1" label="政策法规" />
-            <q-tab name="hydt2" label="行业动态" />
-            <q-tab name="zcfg2" label="政策法规" />
+            <q-tab name="1" :label="tabsChange1" />
+            <q-tab name="2" :label="tabsChange2" />
+            <q-tab name="3" :label="tabsChange3" />
+            <q-tab name="4" :label="tabsChange4" />
           </q-tabs>
 
           <q-tab-panels style="margin-top: 10px" v-model="tab" animated>
-            <q-tab-panel name="hydt1">
+            <q-tab-panel :name="tabsValue">
               <div style="display: flex; justify-content: space-between">
                 <div style="width: 49%">
                   <div style="background-color: #fafafa">
                     <div>
                       <div>
-                        <img
-                          style="width: 100%"
-                          src="../assets/images/zczx.png"
-                        />
+                        <img style="width: 100%" :src="imgTabs" />
                       </div>
                       <div
                         style="display: flex; justify-content: space-between"
                       >
-                        <div style="font-size: 20px">数据出境合规自评估</div>
-                        <div>2024年04月15日</div>
+                        <div
+                          class="moreText"
+                          :title="titleTabs"
+                          style="font-size: 16px"
+                        >
+                          {{ titleTabs }}
+                        </div>
+                        <div>{{ timeTabs }}</div>
                       </div>
-                      <div>
-                        数据出境合规自评估数据出境合规自评估数据出境合规自评估
+                      <div class="moreText" :title="summaryTabs">
+                        {{ summaryTabs }}
                       </div>
                       <div style="text-align: end">查看详情</div>
                     </div>
                   </div>
                 </div>
                 <div style="width: 49%">
-                  <div
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      padding: 10px;
-                    "
-                  >
-                    <div style="display: flex; align-items: center">
-                      <div class="yuan"></div>
-                      <div style="margin-left: 20px; font-size: 20px">
-                        建设新能源之都 新能源行业网络安全
+                  <div v-for="(item, index) in tabsLists" :key="index">
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        font-size: 16px;
+                      "
+                    >
+                      <div style="display: flex; align-items: center">
+                        <div class="yuan"></div>
+                        <div class="moreText" :title="item.title">
+                          {{ item.title }}
+                        </div>
+                      </div>
+                      <div>
+                        {{ item.publishDate }}
                       </div>
                     </div>
-                    <div>2024年04月15日</div>
-                  </div>
-                  <q-separator />
-
-                  <div
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      padding: 10px;
-                    "
-                  >
-                    <div style="display: flex; align-items: center">
-                      <div class="yuan"></div>
-                      <div style="margin-left: 20px; font-size: 20px">
-                        建设新能源之都 新能源行业网络安全
-                      </div>
+                    <div style="margin-top: -20px">
+                      <el-divider />
                     </div>
-                    <div>2024年04月15日</div>
                   </div>
-                  <q-separator />
-
-                  <div
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      padding: 10px;
-                    "
-                  >
-                    <div style="display: flex; align-items: center">
-                      <div class="yuan"></div>
-                      <div style="margin-left: 20px; font-size: 20px">
-                        建设新能源之都 新能源行业网络安全
-                      </div>
-                    </div>
-                    <div>2024年04月15日</div>
-                  </div>
-                  <q-separator />
-
-                  <div
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      padding: 10px;
-                    "
-                  >
-                    <div style="display: flex; align-items: center">
-                      <div class="yuan"></div>
-                      <div style="margin-left: 20px; font-size: 20px">
-                        建设新能源之都 新能源行业网络安全
-                      </div>
-                    </div>
-                    <div>2024年04月15日</div>
-                  </div>
-                  <q-separator />
-
-                  <div
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      padding: 10px;
-                    "
-                  >
-                    <div style="display: flex; align-items: center">
-                      <div class="yuan"></div>
-                      <div style="margin-left: 20px; font-size: 20px">
-                        建设新能源之都 新能源行业网络安全
-                      </div>
-                    </div>
-                    <div>2024年04月15日</div>
-                  </div>
-                  <q-separator />
-
-                  <div
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      padding: 10px;
-                    "
-                  >
-                    <div style="display: flex; align-items: center">
-                      <div class="yuan"></div>
-                      <div style="margin-left: 20px; font-size: 20px">
-                        建设新能源之都 新能源行业网络安全
-                      </div>
-                    </div>
-                    <div>2024年04月15日</div>
-                  </div>
-                  <q-separator />
                 </div>
               </div>
             </q-tab-panel>
 
-            <q-tab-panel name="zcfg1">
-              <div class="text-h6">政策法规</div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <!-- <q-tab-panel name="2">
+              <div style="display: flex; justify-content: space-between">
+                <div style="width: 49%">
+                  <div style="background-color: #fafafa">
+                    <div>
+                      <div>
+                        <img style="width: 100%" :src="imgTabs" />
+                      </div>
+                      <div
+                        style="display: flex; justify-content: space-between"
+                      >
+                        <div
+                          class="moreText"
+                          :title="titleTabs"
+                          style="font-size: 16px"
+                        >
+                          {{ titleTabs }}
+                        </div>
+                        <div>{{ timeTabs }}</div>
+                      </div>
+                      <div class="moreText" :title="summaryTabs">
+                        {{ summaryTabs }}
+                      </div>
+                      <div style="text-align: end">查看详情</div>
+                    </div>
+                  </div>
+                </div>
+                <div style="width: 49%">
+                  <div v-for="(item, index) in tabsLists" :key="index">
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        font-size: 16px;
+                      "
+                    >
+                      <div style="display: flex; align-items: center">
+                        <div class="yuan"></div>
+                        <div class="moreText" :title="item.title">
+                          {{ item.title }}
+                        </div>
+                      </div>
+                      <div>
+                        {{ item.publishDate }}
+                      </div>
+                    </div>
+                    <div style="margin-top: -20px">
+                      <el-divider />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </q-tab-panel>
 
-            <q-tab-panel name="hydt2">
-              <div class="text-h6">行业动态</div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <q-tab-panel name="3">
+              <div style="display: flex; justify-content: space-between">
+                <div style="width: 49%">
+                  <div style="background-color: #fafafa">
+                    <div>
+                      <div>
+                        <img style="width: 100%" :src="imgTabs" />
+                      </div>
+                      <div
+                        style="display: flex; justify-content: space-between"
+                      >
+                        <div
+                          class="moreText"
+                          :title="titleTabs"
+                          style="font-size: 16px"
+                        >
+                          {{ titleTabs }}
+                        </div>
+                        <div>{{ timeTabs }}</div>
+                      </div>
+                      <div class="moreText" :title="summaryTabs">
+                        {{ summaryTabs }}
+                      </div>
+                      <div style="text-align: end">查看详情</div>
+                    </div>
+                  </div>
+                </div>
+                <div style="width: 49%">
+                  <div v-for="(item, index) in tabsLists" :key="index">
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        font-size: 16px;
+                      "
+                    >
+                      <div style="display: flex; align-items: center">
+                        <div class="yuan"></div>
+                        <div class="moreText" :title="item.title">
+                          {{ item.title }}
+                        </div>
+                      </div>
+                      <div>
+                        {{ item.publishDate }}
+                      </div>
+                    </div>
+                    <div style="margin-top: -20px">
+                      <el-divider />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </q-tab-panel>
-            <q-tab-panel name="zcfg2">
-              <div class="text-h6">政策法规</div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </q-tab-panel>
+
+            <q-tab-panel name="4">
+              <div style="display: flex; justify-content: space-between">
+                <div style="width: 49%">
+                  <div style="background-color: #fafafa">
+                    <div>
+                      <div>
+                        <img style="width: 100%" :src="imgTabs" />
+                      </div>
+                      <div
+                        style="display: flex; justify-content: space-between"
+                      >
+                        <div
+                          class="moreText"
+                          :title="titleTabs"
+                          style="font-size: 16px"
+                        >
+                          {{ titleTabs }}
+                        </div>
+                        <div>{{ timeTabs }}</div>
+                      </div>
+                      <div class="moreText" :title="summaryTabs">
+                        {{ summaryTabs }}
+                      </div>
+                      <div style="text-align: end">查看详情</div>
+                    </div>
+                  </div>
+                </div>
+                <div style="width: 49%">
+                  <div v-for="(item, index) in tabsLists" :key="index">
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        font-size: 16px;
+                      "
+                    >
+                      <div style="display: flex; align-items: center">
+                        <div class="yuan"></div>
+                        <div class="moreText" :title="item.title">
+                          {{ item.title }}
+                        </div>
+                      </div>
+                      <div>
+                        {{ item.publishDate }}
+                      </div>
+                    </div>
+                    <div style="margin-top: -20px">
+                      <el-divider />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </q-tab-panel> -->
           </q-tab-panels>
         </div>
       </div>
@@ -396,8 +470,68 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
-const tab = ref('hydt1')
+import { ref, onMounted } from 'vue'
+import http, { setBaseInf } from '@/http/httpContentMain'
+onMounted(async () => {
+  await getBanner() //获取 Banner 图
+  await getCategoryTabs() //获取政策资讯类别
+  //指定政策资讯下的分页列表
+  await getArticlePaged()
+})
+//  获取 Banner 图
+const bannerSy = ref('')
+const getBanner = async () => {
+  const res = await http.get('/k2401-banner/list', { params: { category: 1 } })
+  bannerSy.value = `${setBaseInf.baseUrl}` + res[0].storagePath
+  console.log(res, 'res+++11111111+++++')
+}
+//获取政策资讯类别
+const tabsChange = ref([])
+const tabsChange1 = ref('')
+const tabsChange2 = ref('')
+const tabsChange3 = ref('')
+const tabsChange4 = ref('')
+
+const getCategoryTabs = async () => {
+  const res = await http.get('/k2401-article/article-category-list')
+  console.log(res, 'res+++222222222+++++')
+  tabsChange.value = res
+  // console.log(tabsChange.value[0].name, 'tabsChange.value[0].name')
+  tabsChange1.value = tabsChange.value[0].name
+  tabsChange2.value = tabsChange.value[1].name
+  tabsChange3.value = tabsChange.value[2].name
+  tabsChange4.value = tabsChange.value[3].name
+}
+const tabsLists = ref([])
+const titleTabs = ref('')
+const timeTabs = ref('')
+const summaryTabs = ref('')
+const imgTabs = ref('')
+const getArticlePaged = async () => {
+  const res = await http.get('/k2401-article/article/paged', {
+    params: {
+      category: tabsValue.value || 1,
+      current: 1, //当前页码
+      size: 10 //每页多少条数据
+    }
+  })
+
+  tabsLists.value = res.items
+  titleTabs.value = res.items[0].title
+  summaryTabs.value = res.items[0].summary
+  timeTabs.value = res.items[0].publishDate
+  imgTabs.value = `${setBaseInf.baseUrl}` + res.items[0].attach.storagePath
+
+  console.log(res, 'res+++333333333+++++')
+  console.log(tabsLists.value, 'tabsLists.value')
+}
+const tab = ref('1')
+const tabsValue = ref('1')
+const btns = (value) => {
+  console.log(value, 'val++++++')
+  tabsValue.value = value
+  getArticlePaged()
+}
 </script>
 <style lang="scss" scoped>
 .contain {
@@ -459,5 +593,13 @@ const tab = ref('hydt1')
 }
 .bottom_texts {
   margin-right: 50px;
+}
+.moreText {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 30em; /* 设置需要显示的最大宽度，10em 约等于10个中文字的宽度 */
+  margin-left: 10px;
 }
 </style>
