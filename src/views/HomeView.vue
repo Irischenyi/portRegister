@@ -175,25 +175,28 @@
           </q-tabs>
 
           <q-tab-panels style="margin-top: 10px" v-model="tab" animated>
-            <q-tab-panel name="1">
+            <q-tab-panel :name="tabsValue">
               <div style="display: flex; justify-content: space-between">
                 <div style="width: 49%">
                   <div style="background-color: #fafafa">
                     <div>
                       <div>
-                        <img
-                          style="width: 100%"
-                          src="../assets/images/zczx.png"
-                        />
+                        <img style="width: 100%" :src="imgTabs" />
                       </div>
                       <div
                         style="display: flex; justify-content: space-between"
                       >
-                        <div style="font-size: 20px">数据出境合规自评估</div>
-                        <div>2024年04月15日</div>
+                        <div
+                          class="moreText"
+                          :title="titleTabs"
+                          style="font-size: 16px"
+                        >
+                          {{ titleTabs }}
+                        </div>
+                        <div>{{ timeTabs }}</div>
                       </div>
-                      <div>
-                        数据出境合规自评估数据出境合规自评估数据出境合规自评估
+                      <div class="moreText" :title="summaryTabs">
+                        {{ summaryTabs }}
                       </div>
                       <div style="text-align: end">查看详情</div>
                     </div>
@@ -205,38 +208,188 @@
                       style="
                         display: flex;
                         justify-content: space-between;
-                        padding: 10px;
+                        font-size: 16px;
                       "
                     >
-                      <div>
-                        <div style="display: flex; align-items: center">
-                          <div class="yuan"></div>
-                          <div style="margin-left: 20px; font-size: 16px">
-                            {{ item.title }}
-                          </div>
-                          <div>{{ item.publishDate }}</div>
+                      <div style="display: flex; align-items: center">
+                        <div class="yuan"></div>
+                        <div class="moreText" :title="item.title">
+                          {{ item.title }}
                         </div>
                       </div>
+                      <div>
+                        {{ item.publishDate }}
+                      </div>
                     </div>
-                    <el-divider />
+                    <div style="margin-top: -20px">
+                      <el-divider />
+                    </div>
                   </div>
                 </div>
               </div>
             </q-tab-panel>
 
-            <q-tab-panel name="2">
-              <div class="text-h6">政策法规</div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <!-- <q-tab-panel name="2">
+              <div style="display: flex; justify-content: space-between">
+                <div style="width: 49%">
+                  <div style="background-color: #fafafa">
+                    <div>
+                      <div>
+                        <img style="width: 100%" :src="imgTabs" />
+                      </div>
+                      <div
+                        style="display: flex; justify-content: space-between"
+                      >
+                        <div
+                          class="moreText"
+                          :title="titleTabs"
+                          style="font-size: 16px"
+                        >
+                          {{ titleTabs }}
+                        </div>
+                        <div>{{ timeTabs }}</div>
+                      </div>
+                      <div class="moreText" :title="summaryTabs">
+                        {{ summaryTabs }}
+                      </div>
+                      <div style="text-align: end">查看详情</div>
+                    </div>
+                  </div>
+                </div>
+                <div style="width: 49%">
+                  <div v-for="(item, index) in tabsLists" :key="index">
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        font-size: 16px;
+                      "
+                    >
+                      <div style="display: flex; align-items: center">
+                        <div class="yuan"></div>
+                        <div class="moreText" :title="item.title">
+                          {{ item.title }}
+                        </div>
+                      </div>
+                      <div>
+                        {{ item.publishDate }}
+                      </div>
+                    </div>
+                    <div style="margin-top: -20px">
+                      <el-divider />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </q-tab-panel>
 
             <q-tab-panel name="3">
-              <div class="text-h6">行业动态</div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <div style="display: flex; justify-content: space-between">
+                <div style="width: 49%">
+                  <div style="background-color: #fafafa">
+                    <div>
+                      <div>
+                        <img style="width: 100%" :src="imgTabs" />
+                      </div>
+                      <div
+                        style="display: flex; justify-content: space-between"
+                      >
+                        <div
+                          class="moreText"
+                          :title="titleTabs"
+                          style="font-size: 16px"
+                        >
+                          {{ titleTabs }}
+                        </div>
+                        <div>{{ timeTabs }}</div>
+                      </div>
+                      <div class="moreText" :title="summaryTabs">
+                        {{ summaryTabs }}
+                      </div>
+                      <div style="text-align: end">查看详情</div>
+                    </div>
+                  </div>
+                </div>
+                <div style="width: 49%">
+                  <div v-for="(item, index) in tabsLists" :key="index">
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        font-size: 16px;
+                      "
+                    >
+                      <div style="display: flex; align-items: center">
+                        <div class="yuan"></div>
+                        <div class="moreText" :title="item.title">
+                          {{ item.title }}
+                        </div>
+                      </div>
+                      <div>
+                        {{ item.publishDate }}
+                      </div>
+                    </div>
+                    <div style="margin-top: -20px">
+                      <el-divider />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </q-tab-panel>
+
             <q-tab-panel name="4">
-              <div class="text-h6">政策法规</div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </q-tab-panel>
+              <div style="display: flex; justify-content: space-between">
+                <div style="width: 49%">
+                  <div style="background-color: #fafafa">
+                    <div>
+                      <div>
+                        <img style="width: 100%" :src="imgTabs" />
+                      </div>
+                      <div
+                        style="display: flex; justify-content: space-between"
+                      >
+                        <div
+                          class="moreText"
+                          :title="titleTabs"
+                          style="font-size: 16px"
+                        >
+                          {{ titleTabs }}
+                        </div>
+                        <div>{{ timeTabs }}</div>
+                      </div>
+                      <div class="moreText" :title="summaryTabs">
+                        {{ summaryTabs }}
+                      </div>
+                      <div style="text-align: end">查看详情</div>
+                    </div>
+                  </div>
+                </div>
+                <div style="width: 49%">
+                  <div v-for="(item, index) in tabsLists" :key="index">
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        font-size: 16px;
+                      "
+                    >
+                      <div style="display: flex; align-items: center">
+                        <div class="yuan"></div>
+                        <div class="moreText" :title="item.title">
+                          {{ item.title }}
+                        </div>
+                      </div>
+                      <div>
+                        {{ item.publishDate }}
+                      </div>
+                    </div>
+                    <div style="margin-top: -20px">
+                      <el-divider />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </q-tab-panel> -->
           </q-tab-panels>
         </div>
       </div>
@@ -350,6 +503,10 @@ const getCategoryTabs = async () => {
   tabsChange4.value = tabsChange.value[3].name
 }
 const tabsLists = ref([])
+const titleTabs = ref('')
+const timeTabs = ref('')
+const summaryTabs = ref('')
+const imgTabs = ref('')
 const getArticlePaged = async () => {
   const res = await http.get('/k2401-article/article/paged', {
     params: {
@@ -360,12 +517,16 @@ const getArticlePaged = async () => {
   })
 
   tabsLists.value = res.items
+  titleTabs.value = res.items[0].title
+  summaryTabs.value = res.items[0].summary
+  timeTabs.value = res.items[0].publishDate
+  imgTabs.value = `${setBaseInf.baseUrl}` + res.items[0].attach.storagePath
 
   console.log(res, 'res+++333333333+++++')
   console.log(tabsLists.value, 'tabsLists.value')
 }
 const tab = ref('1')
-const tabsValue = ref('')
+const tabsValue = ref('1')
 const btns = (value) => {
   console.log(value, 'val++++++')
   tabsValue.value = value
@@ -432,5 +593,13 @@ const btns = (value) => {
 }
 .bottom_texts {
   margin-right: 50px;
+}
+.moreText {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 30em; /* 设置需要显示的最大宽度，10em 约等于10个中文字的宽度 */
+  margin-left: 10px;
 }
 </style>
