@@ -3,7 +3,8 @@ import { ref, watch } from 'vue';
 const props = defineProps<{
   name: string,
   code?: string,
-  type?: 'password'
+  type?: 'password',
+  size?: string
 }>()
 const value = ref('')
 watch(value, () => {
@@ -14,7 +15,7 @@ const emit = defineEmits(['changeFormValue'])
 </script>
 
 <template>
-  <div class="input-set">
+  <div :class="{'input-set':true, 'min': size?true:false}">
     <div class="title"><span class="tips">*</span>{{ name }}</div>
     <slot v-if="$slots.default"> </slot>
     <q-input v-else rounded outlined  :type ="type?type:'text'" :placeholder="'请填写'+ name" v-model="value"/>
@@ -22,18 +23,31 @@ const emit = defineEmits(['changeFormValue'])
 </template>
 
 <style type="scss" scoped>
-.tips{
+.input-set .tips{
   color: red;
   margin-left: 10px;
   margin-right: 10px;
 }
-.title{
+.input-set .title{
   margin-top: 10px;
   margin-bottom: 10px;
 }
-::v-deep .q-input .q-field__control{
+.input-set ::v-deep .q-input .q-field__control{
     height: 40px;
     border-radius: 17px;
+}
+
+.min.input-set .title{
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.min.input-set ::v-deep .q-input .q-field__control{
+  height: 36px;
+}
+
+.min.input-set{
+  width: 300px;
 }
 
 ::v-deep .q-input .q-field__control input{
