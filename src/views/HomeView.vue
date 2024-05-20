@@ -307,7 +307,7 @@
 
     <!-- 智能客服模块 -->
     <div class="fuwu_f">
-      <div class="fuwu">
+      <div @click="khfwBtn" class="fuwu">
         <img
           style="width: 35%; margin-bottom: 5px"
           src="../assets/images/kehufuwu.png"
@@ -323,7 +323,7 @@
         />
         <div style="color: #fff">在线服务</div>
       </div>
-      <div class="fuwu">
+      <div @click="lxfsBtn" class="fuwu">
         <img
           style="width: 35%; margin-bottom: 5px"
           src="../assets/images/lianxifangshi.png"
@@ -333,12 +333,32 @@
       </div>
     </div>
   </div>
+  <!-- 客户服务弹框 -->
+  <el-dialog
+    style="padding: 20px; background-color: #eaeff9"
+    v-model="khfwDialog"
+    width="25%"
+    :before-close="handleClose1"
+  >
+    <div style="font-size: 18px; font-weight: 600">
+      <div>客服电话</div>
+      <div>
+        <span style="margin-right: 30px">0519-12345678</span>
+        <span>0519-12345678</span>
+      </div>
+      <div style="margin-top: 10px">工作时间</div>
+      <div>
+        <span style="margin-right: 50px">8:30-11:30</span>
+        <span>13:00-17:00</span>
+      </div>
+    </div>
+  </el-dialog>
   <!-- 在线服务弹框 -->
   <el-dialog
     style="height: 500px; background-color: #eaeff9"
     v-model="zxfwDialog"
     width="35%"
-    :before-close="handleClose"
+    :before-close="handleClose2"
   >
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="常见问题" name="first">
@@ -390,6 +410,30 @@
         </div>
       </el-tab-pane>
     </el-tabs>
+  </el-dialog>
+
+  <!-- 联系方式弹框 -->
+  <el-dialog
+    style="padding: 20px 30px; background-color: #eaeff9"
+    v-model="lxfsDialog"
+    width="18%"
+    :before-close="handleClose3"
+  >
+    <div style="display: flex; justify-content: space-around">
+      <div style="margin-right: 10px">
+        <span>企业客服二维码</span>
+        <div style="width: 100px; height: 100px; background-color: #000">
+          <img style="" src="" alt="" />
+        </div>
+      </div>
+
+      <div>
+        <span style="display: block; text-align: center">公众号二维码</span>
+        <div style="width: 100px; height: 100px; background-color: #000">
+          <img style="" src="" alt="" />
+        </div>
+      </div>
+    </div>
   </el-dialog>
 </template>
 <script setup lang="ts">
@@ -462,7 +506,7 @@ const zxfwDialog = ref(false)
 const zxlyBtn = () => {
   zxfwDialog.value = true
 }
-const handleClose = () => {
+const handleClose2 = () => {
   zxfwDialog.value = false
 }
 
@@ -505,6 +549,21 @@ const formRules = ref({
     trigger: 'blur'
   }
 })
+const khfwDialog = ref(false)
+const khfwBtn = () => {
+  khfwDialog.value = true
+}
+const handleClose1 = () => {
+  khfwDialog.value = false
+}
+
+const lxfsDialog = ref(false)
+const lxfsBtn = () => {
+  lxfsDialog.value = true
+}
+const handleClose3 = () => {
+  lxfsDialog.value = false
+}
 </script>
 <style lang="scss" scoped>
 .contain {
