@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="position: relative">
     <!-- 背景图片 -->
     <!-- <img
       style="width: 100%; height: 400px"
@@ -227,168 +227,6 @@
                 </div>
               </div>
             </q-tab-panel>
-
-            <!-- <q-tab-panel name="2">
-              <div style="display: flex; justify-content: space-between">
-                <div style="width: 49%">
-                  <div style="background-color: #fafafa">
-                    <div>
-                      <div>
-                        <img style="width: 100%" :src="imgTabs" />
-                      </div>
-                      <div
-                        style="display: flex; justify-content: space-between"
-                      >
-                        <div
-                          class="moreText"
-                          :title="titleTabs"
-                          style="font-size: 16px"
-                        >
-                          {{ titleTabs }}
-                        </div>
-                        <div>{{ timeTabs }}</div>
-                      </div>
-                      <div class="moreText" :title="summaryTabs">
-                        {{ summaryTabs }}
-                      </div>
-                      <div style="text-align: end">查看详情</div>
-                    </div>
-                  </div>
-                </div>
-                <div style="width: 49%">
-                  <div v-for="(item, index) in tabsLists" :key="index">
-                    <div
-                      style="
-                        display: flex;
-                        justify-content: space-between;
-                        font-size: 16px;
-                      "
-                    >
-                      <div style="display: flex; align-items: center">
-                        <div class="yuan"></div>
-                        <div class="moreText" :title="item.title">
-                          {{ item.title }}
-                        </div>
-                      </div>
-                      <div>
-                        {{ item.publishDate }}
-                      </div>
-                    </div>
-                    <div style="margin-top: -20px">
-                      <el-divider />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </q-tab-panel>
-
-            <q-tab-panel name="3">
-              <div style="display: flex; justify-content: space-between">
-                <div style="width: 49%">
-                  <div style="background-color: #fafafa">
-                    <div>
-                      <div>
-                        <img style="width: 100%" :src="imgTabs" />
-                      </div>
-                      <div
-                        style="display: flex; justify-content: space-between"
-                      >
-                        <div
-                          class="moreText"
-                          :title="titleTabs"
-                          style="font-size: 16px"
-                        >
-                          {{ titleTabs }}
-                        </div>
-                        <div>{{ timeTabs }}</div>
-                      </div>
-                      <div class="moreText" :title="summaryTabs">
-                        {{ summaryTabs }}
-                      </div>
-                      <div style="text-align: end">查看详情</div>
-                    </div>
-                  </div>
-                </div>
-                <div style="width: 49%">
-                  <div v-for="(item, index) in tabsLists" :key="index">
-                    <div
-                      style="
-                        display: flex;
-                        justify-content: space-between;
-                        font-size: 16px;
-                      "
-                    >
-                      <div style="display: flex; align-items: center">
-                        <div class="yuan"></div>
-                        <div class="moreText" :title="item.title">
-                          {{ item.title }}
-                        </div>
-                      </div>
-                      <div>
-                        {{ item.publishDate }}
-                      </div>
-                    </div>
-                    <div style="margin-top: -20px">
-                      <el-divider />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </q-tab-panel>
-
-            <q-tab-panel name="4">
-              <div style="display: flex; justify-content: space-between">
-                <div style="width: 49%">
-                  <div style="background-color: #fafafa">
-                    <div>
-                      <div>
-                        <img style="width: 100%" :src="imgTabs" />
-                      </div>
-                      <div
-                        style="display: flex; justify-content: space-between"
-                      >
-                        <div
-                          class="moreText"
-                          :title="titleTabs"
-                          style="font-size: 16px"
-                        >
-                          {{ titleTabs }}
-                        </div>
-                        <div>{{ timeTabs }}</div>
-                      </div>
-                      <div class="moreText" :title="summaryTabs">
-                        {{ summaryTabs }}
-                      </div>
-                      <div style="text-align: end">查看详情</div>
-                    </div>
-                  </div>
-                </div>
-                <div style="width: 49%">
-                  <div v-for="(item, index) in tabsLists" :key="index">
-                    <div
-                      style="
-                        display: flex;
-                        justify-content: space-between;
-                        font-size: 16px;
-                      "
-                    >
-                      <div style="display: flex; align-items: center">
-                        <div class="yuan"></div>
-                        <div class="moreText" :title="item.title">
-                          {{ item.title }}
-                        </div>
-                      </div>
-                      <div>
-                        {{ item.publishDate }}
-                      </div>
-                    </div>
-                    <div style="margin-top: -20px">
-                      <el-divider />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </q-tab-panel> -->
           </q-tab-panels>
         </div>
       </div>
@@ -466,7 +304,93 @@
         </div>
       </div>
     </div>
+
+    <!-- 智能客服模块 -->
+    <div class="fuwu_f">
+      <div class="fuwu">
+        <img
+          style="width: 35%; margin-bottom: 5px"
+          src="../assets/images/kehufuwu.png"
+          alt=""
+        />
+        <div style="color: #fff">客户服务</div>
+      </div>
+      <div @click="zxlyBtn" class="fuwu">
+        <img
+          style="width: 35%; margin-bottom: 5px"
+          src="../assets/images/zaixianfuwu.png"
+          alt=""
+        />
+        <div style="color: #fff">在线服务</div>
+      </div>
+      <div class="fuwu">
+        <img
+          style="width: 35%; margin-bottom: 5px"
+          src="../assets/images/lianxifangshi.png"
+          alt=""
+        />
+        <div style="color: #fff">联系方式</div>
+      </div>
+    </div>
   </div>
+  <!-- 在线服务弹框 -->
+  <el-dialog
+    style="height: 500px; background-color: #eaeff9"
+    v-model="zxfwDialog"
+    width="35%"
+    :before-close="handleClose"
+  >
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="常见问题" name="first">
+        <div class="tabPane">
+          <div class="cjwt">(一).常见问题1</div>
+          <div class="cjwt">(二).常见问题2</div>
+          <div class="cjwt">(三).常见问题3</div>
+          <div class="cjwt">(四).常见问题4</div>
+        </div>
+        <div style="display: flex; margin-top: 20px">
+          <el-input v-model="cjwtInput" style="height: 40px"></el-input>
+          <el-button class="elBtn">发送</el-button>
+        </div>
+      </el-tab-pane>
+
+      <el-tab-pane label="智能咨询" name="second">
+        <div class="tabPane"></div>
+        <div style="display: flex; margin-top: 20px">
+          <el-input v-model="cjwtInput" style="height: 40px"></el-input>
+          <el-button class="elBtn1">发送</el-button>
+        </div>
+      </el-tab-pane>
+
+      <el-tab-pane label="在线留言" name="third">
+        <div class="tabPane">
+          <el-form
+            ref="formRef"
+            :model="formModel"
+            :rules="formRules"
+            label-width="60px"
+          >
+            <el-form-item label="单位" prop="dw1">
+              <el-input style="width: 60%"></el-input>
+            </el-form-item>
+            <el-form-item label="姓名" prop="xm">
+              <el-input style="width: 60%"></el-input>
+            </el-form-item>
+            <el-form-item label="单位" prop="dw2">
+              <el-input style="width: 60%"></el-input>
+            </el-form-item>
+            <el-form-item label="留言" prop="ly">
+              <el-input type="textarea" :rows="4"></el-input>
+            </el-form-item>
+          </el-form>
+        </div>
+        <div style="display: flex; margin-top: 20px">
+          <el-input v-model="cjwtInput" style="height: 40px"></el-input>
+          <el-button class="elBtn1">发送</el-button>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+  </el-dialog>
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
@@ -477,6 +401,7 @@ onMounted(async () => {
   //指定政策资讯下的分页列表
   await getArticlePaged()
 })
+import type { TabsPaneContext } from 'element-plus'
 //  获取 Banner 图
 const bannerSy = ref('')
 const getBanner = async () => {
@@ -533,6 +458,53 @@ const btns = (value: any) => {
   tabsValue.value = value
   getArticlePaged()
 }
+const zxfwDialog = ref(false)
+const zxlyBtn = () => {
+  zxfwDialog.value = true
+}
+const handleClose = () => {
+  zxfwDialog.value = false
+}
+
+const activeName = ref('first')
+
+const handleClick = (tab: TabsPaneContext, event: Event) => {
+  console.log(tab, event)
+}
+
+const cjwtInput = ref('')
+
+const formModel = ref({
+  dw1: '',
+  xm: '',
+  dw2: '',
+  ly: ''
+})
+
+const formRules = ref({
+  dw1: [
+    {
+      required: 'true',
+      message: '请填写单位',
+      trigger: 'blur'
+    }
+  ],
+  xm: {
+    required: 'true',
+    message: '请填写姓名',
+    trigger: 'blur'
+  },
+  dw2: {
+    required: 'true',
+    message: '请填写单位',
+    trigger: 'blur'
+  },
+  ly: {
+    required: 'true',
+    message: '请填写留言',
+    trigger: 'blur'
+  }
+})
 </script>
 <style lang="scss" scoped>
 .contain {
@@ -602,5 +574,65 @@ const btns = (value: any) => {
   text-overflow: ellipsis;
   max-width: 30em; /* 设置需要显示的最大宽度，10em 约等于10个中文字的宽度 */
   margin-left: 10px;
+}
+.fuwu_f {
+  position: absolute;
+  top: 400px;
+  right: 0;
+}
+.fuwu {
+  background-color: #6cabf8;
+  display: flex;
+  width: 80px;
+  height: 80px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+::v-deep .el-tabs__nav-wrap:after {
+  background-color: #eaeff9;
+  bottom: 0;
+  content: '';
+  height: 2px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  z-index: var(--el-index-normal);
+}
+.tabPane {
+  padding: 20px;
+  background-color: #fff;
+  height: 300px;
+  border-radius: 10px;
+}
+
+.cjwt {
+  margin-bottom: 10px;
+  color: #409eff;
+}
+
+::v-deep .el-input__wrapper {
+  border-radius: 50px;
+}
+
+.elBtn {
+  padding: 10px 30px;
+  border-radius: 50px;
+  background-color: #c0c0c0;
+  color: #fff;
+  height: 40px;
+  margin-left: 20px;
+}
+
+.elBtn1 {
+  padding: 10px 30px;
+  border-radius: 50px;
+  background-color: #2d91f3;
+  color: #fff;
+  height: 40px;
+  margin-left: 20px;
 }
 </style>
