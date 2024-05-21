@@ -31,6 +31,11 @@ const router = createRouter({
           component: () => import('@/views/policyconSultationView.vue')
         },
         {
+          path: 'policyconSultationDetail', //政策咨讯详情页面
+          name: 'policyconSultationDetail',
+          component: () => import('@/views/policyconSultationDetail.vue')
+        },
+        {
           path: 'securityTraining', //安全培训
           name: 'securityTraining',
           component: () => import('@/views/securityTrainingView.vue')

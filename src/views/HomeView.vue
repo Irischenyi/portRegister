@@ -197,7 +197,9 @@
                       <div class="moreText" :title="summaryTabs">
                         {{ summaryTabs }}
                       </div>
-                      <div style="text-align: end">查看详情</div>
+                      <div @click="searchDetail" style="text-align: end">
+                        查看详情
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -438,7 +440,11 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+
 import http, { setBaseInf } from '@/http/httpContentMain'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 onMounted(async () => {
   await getBanner() //获取 Banner 图
   await getCategoryTabs() //获取政策资讯类别
@@ -477,6 +483,7 @@ const titleTabs = ref('')
 const timeTabs = ref('')
 const summaryTabs = ref('')
 const imgTabs = ref('')
+const ids = ref('')
 const getArticlePaged = async () => {
   const res = (await http.get('/k2401-article/article/paged', {
     params: {
@@ -485,15 +492,14 @@ const getArticlePaged = async () => {
       size: 10 //每页多少条数据
     }
   })) as any
+  console.log(res, 'resttttttttttt')
 
   tabsLists.value = res.items
   titleTabs.value = res.items[0].title
   summaryTabs.value = res.items[0].summary
   timeTabs.value = res.items[0].publishDate
+  ids.value = res.items[0].id
   imgTabs.value = `${setBaseInf.baseUrl}` + res.items[0].attach.storagePath
-
-  console.log(res, 'res+++333333333+++++')
-  console.log(tabsLists.value, 'tabsLists.value')
 }
 const tab = ref('1')
 const tabsValue = ref('1')
@@ -563,6 +569,27 @@ const lxfsBtn = () => {
 }
 const handleClose3 = () => {
   lxfsDialog.value = false
+}
+
+const itemDetail = ref('')
+const getArticleDetail = async (id: any) => {
+  const res = await http.get(`k2401-article/article/${id}`)
+  console.log(res, '政策咨询详情++')
+  console.log(itemDetail.value, 'itemDetail.value')
+
+  itemDetail.value = res
+  router.push({
+    path: '/index/policyconSultationDetail',
+    query: {
+      value: JSON.stringify(itemDetail?.value)
+    }
+  })
+}
+const searchDetail = () => {
+  console.log(ids.value, 'idsssssss')
+
+  // 获取指定政策的详情
+  getArticleDetail(ids.value)
 }
 </script>
 <style lang="scss" scoped>
