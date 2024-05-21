@@ -16,5 +16,8 @@ return {
         plugins: [ 'Loading'],
         components: ['Qbtn', 'Qinput']
       ]
-    }
+    },
+    extras: [
+      'material-icons'
+    ]
   }

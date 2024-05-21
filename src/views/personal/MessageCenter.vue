@@ -13,22 +13,23 @@
             align="justify"
             narrow-indicator
           >
-            <q-tab name="mails" label="全部(10)" />
-            <q-tab name="alarms" label="未读(06)" />
-            <q-tab name="movies" label="已读(04)" />
+            <q-tab name="all" label="全部 (10)" />
+            <q-tab name="unread" label="未读 (06)" />
+            <q-tab name="readed" label="已读 (04)" />
           </q-tabs>
           <q-separator />
       </div>
       
       <q-select
-        filled
         v-model="model"
         :options="options"
+        rounded 
+        outline
         style="width: 250px"
       />
 
       <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="mails">
+        <q-tab-panel name="all">
           <el-table
             ref="multipleTable"
             :data="tableData"
@@ -37,21 +38,30 @@
             @selection-change="handleSelectionChange"
           >
             <el-table-column type="selection" width="55"> </el-table-column>
-            <el-table-column label="日期" width="120">
+            <el-table-column label="消息编号" width="120">
               <template #default="scope">{{ scope.row.date }}</template>
             </el-table-column>
-            <el-table-column prop="name" label="姓名" width="120"> </el-table-column>
-            <el-table-column prop="address" label="地址" show-overflow-tooltip>
+            <el-table-column prop="name" label="消息标题" width="120"> </el-table-column>
+            <el-table-column prop="address" label="消息内容" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="address" label="消息分类" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="address" label="消息状态" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="address" label="发送时间" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column  label="操作" show-overflow-tooltip>
+              详情
             </el-table-column>
           </el-table>
         </q-tab-panel>
 
-        <q-tab-panel name="alarms">
+        <q-tab-panel name="unread">
           <div class="text-h6">Alarms</div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </q-tab-panel>
 
-        <q-tab-panel name="movies">
+        <q-tab-panel name="readed">
           <div class="text-h6">Movies</div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </q-tab-panel>
@@ -99,9 +109,9 @@
       address: '上海市普陀区金沙江路 1518 弄',
     }])
   const handleSelectionChange = () =>{}
-  const tab = ref('mails')
+  const tab = ref('all')
   const model = ref('')
-  const options = ref(['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'])
+  const options = ref(['全部','未读','已读'])
 
   </script>
   <style lang="scss" scoped>

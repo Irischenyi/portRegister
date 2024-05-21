@@ -4,7 +4,8 @@ const props = defineProps<{
   name: string,
   code?: string,
   type?: 'password',
-  size?: string
+  size?: string,
+  ismust?: 'no'
 }>()
 const value = ref('')
 watch(value, () => {
@@ -16,7 +17,7 @@ const emit = defineEmits(['changeFormValue'])
 
 <template>
   <div :class="{'input-set':true, 'min': size?true:false}">
-    <div class="title"><span class="tips">*</span>{{ name }}</div>
+    <div class="title"><span class="tips" v-if="ismust!='no'">*</span>{{ name }}</div>
     <slot v-if="$slots.default"> </slot>
     <q-input v-else rounded outlined  :type ="type?type:'text'" :placeholder="'请填写'+ name" v-model="value"/>
   </div>
@@ -38,8 +39,10 @@ const emit = defineEmits(['changeFormValue'])
 }
 
 .min.input-set .title{
-  margin-top: 8px;
+  margin-top: 10px;
   margin-bottom: 8px;
+  font-size: 14px;
+  padding-left: 5px;
 }
 
 .min.input-set ::v-deep .q-input .q-field__control{

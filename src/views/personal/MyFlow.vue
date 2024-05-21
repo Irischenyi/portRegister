@@ -18,12 +18,12 @@
         </q-tabs>
         <q-separator />
     </div>
-    
     <q-select
-      filled
       v-model="model"
       :options="options"
       style="width: 250px"
+      rounded 
+      outline
     />
 
     <q-tab-panels v-model="tab" animated>
@@ -36,11 +36,24 @@
           @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="55"> </el-table-column>
-          <el-table-column label="日期" width="120">
+          <el-table-column label="需求名称" width="120">
             <template #default="scope">{{ scope.row.date }}</template>
           </el-table-column>
-          <el-table-column prop="name" label="姓名" width="120"> </el-table-column>
-          <el-table-column prop="address" label="地址" show-overflow-tooltip>
+          <el-table-column prop="name" label="概述" width="120"> </el-table-column>
+          <el-table-column prop="address" label="所属行业" show-overflow-tooltip>
+          </el-table-column>
+          <el-table-column prop="address" label="附件" show-overflow-tooltip>
+          </el-table-column>
+          <el-table-column prop="address" label="状态" show-overflow-tooltip>
+          </el-table-column>
+          <el-table-column prop="address" label="更新时间" show-overflow-tooltip>
+          </el-table-column>
+          <el-table-column  label="操作" show-overflow-tooltip>
+              <div class="button-list">
+                <div>详情</div>
+                <div>提交</div>
+                <div>编辑</div>
+              </div>
           </el-table-column>
         </el-table>
       </q-tab-panel>
@@ -138,6 +151,14 @@ const options = ref(['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'])
   right: 15px;
   button{
     margin-left: 10px;
+  }
+}
+
+.button-list{
+  display: flex;
+  div{
+    margin-right: 10px;
+    color: #4984FF;
   }
 }
 </style>
