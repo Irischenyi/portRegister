@@ -14,8 +14,10 @@
           <span style="margin-right: 30px">来源：{{ items.sourceFrom }}</span>
           <span>发布时间: {{ items.createDate }}</span>
         </div>
+        <!-- 内容 -->
         <div>
-          <img style="width: 100%" :src="bannerSy" alt="" />
+          <!-- <img style="width: 100%" :src="bannerSy" alt="" /> -->
+          <div v-html="items.content"></div>
         </div>
         <div style="margin: 10px">
           {{ items.summary }}
