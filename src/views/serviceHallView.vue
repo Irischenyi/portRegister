@@ -1,25 +1,36 @@
 <template>
   <TemplateFrame>
+    <template #header>
+        <div class="head-box">
+          <img class="header" src="@/assets/images/serviceBanner.png"/>
+          <div class="header-center">
+              <div>服务大厅</div>
+              <div>围绕工业互联网安全管理、安全技术、安全运营体系建设；通过线上线下联动、自动化与专家支撑结合，为客户提供一站式服务体验</div>
+          </div>
+        </div>
+      </template>
       <template #tabs>
         <q-tabs
           v-model="tab"
           @update:model-value="changeTab"
-          class="text-teal"
+          class="text-primary"
         >
-          <q-tab name="assess"  label="数据安全评估" />
-          <q-tab name="govern" label="数据安全治理" />
-          <q-tab name="pool" label="服务商资源池" />
+          <q-tab v-for="(item, key) in trainTabs" :key="key" :name="item.value" :label="item.name"/>
         </q-tabs>
       </template>
-      <template #body>
-          <div class="card" v-for="item in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
+      <template #body v-if="tab!='3'">
+          <div class="card" v-for="item in list">
               <div class="card-box">
-                  <div class="pic"></div>
-                  <div class="title">数据安全风险评估</div>
-                  <div class="content">会议由省本次会议由省本次会议由省本次会议由省本次会议由省本次会议由省本次会议由省本次会议由省本次会议由省本次会议由省。</div>
+                  <div class="pic">
+                    <img :src="picUrl+item.serviceHallAttach.previewUrl"/>
+                  </div>
+                  <div class="title">{{ item.title }}</div>
+                  <div class="content">{{ item.summary }}</div>
                   <div class="end">
-                    <div class="icon"></div>
-                    <div>中新科技股份有限公司</div>
+                    <div class="icon">
+                      <img :src="picUrl+item.serviceProviderAttach.previewUrl"/>
+                    </div>
+                    <div>{{ item.serviceProvider }}</div>
                   </div>
               </div>
           </div>
@@ -27,14 +38,18 @@
       <template #end>
         <div class="bottom-card">
           <div class="bottom-body">
-            <div class="card">
+            <div class="card" v-for="(item, key) in serviceList" :key="key">
               <div class="card-box">
-                <div class="pic"></div>
-                <div class="end">
-                    <div class="icon"></div>
-                    <div>中新科技股份有限公司</div>
+                <div class="pic">
+                  <img :src="picUrl+item.serviceHallAttach.previewUrl"/>
                 </div>
-                <div class="content">本次会议由省工信厅指导。市工信局主办。此次培训会旨在增强企业网络安全意识，构筑网络安全保障</div>
+                <div class="end">
+                    <div class="icon">
+                      <img :src="picUrl+item.serviceProviderAttach.previewUrl"/>
+                    </div>
+                    <div>{{ item.serviceProvider }}</div>
+                </div>
+                <div class="content">{{ item.summary }}</div>
                 <div>
                   <q-btn unelevated rounded color="primary" label="查看详情" />
                 </div>
@@ -47,13 +62,82 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
+import  http ,{ picUrl } from '@/http/httpContentMain'
 import TemplateFrame from '@/components/TemplateFrame.vue'
-const tab = ref('assess')
-const changeTab = () => {
-  console.log('======')
+interface itemInf {
+  title: string, 
+  serviceProvider: string, 
+  id: string, 
+  summary: string,
+  serviceHallAttach: {
+    previewUrl: string
+  },
+  serviceProviderAttach: {
+    previewUrl: string
+  }
 }
+const tab = ref('assess')
+const trainTabs = ref()
+const list = ref([] as itemInf[])
+const serviceList = ref([] as itemInf[])
+const changeTab = () => {
+  getFirstList(tab.value)
+  
+}
+
+http.get('k2401-service-hall/category-list').then((data) => {
+  const backValue = data as unknown as {value: string}[]
+  trainTabs.value = backValue 
+  tab.value = backValue[0]?.value as string
+  void getFirstList(tab.value);
+  setTimeout(() => {
+    getFirstList('3')
+  },600)
+})
+
+const getFirstList = (tabNumber: string) => {
+  // console.log(tabNumber)
+  http.get(`k2401-service-hall/service-hall/paged?current=1&size=10&category=${tabNumber}`).then((data) => {
+      const backList = data as unknown as { items: itemInf[], pages: string }
+      console.log(tabNumber)
+      if(tabNumber == '1' || tabNumber == '2'){
+        list.value = backList.items
+        
+      }else{
+        serviceList.value = backList.items
+        console.log(serviceList.value)
+      }
+  })
+  
+}
+
 </script>
 <style lang="scss" scoped>
+.head-box{
+  position: relative;
+}
+
+.header{
+  width: 100%;
+}
+
+.header-center{
+  width: calc(100% - 500px);
+  position: absolute;
+  left: 250px;
+  top: 50%;
+  height: 100px;
+  color: white;
+  transform: translateY(-50%);
+  div:nth-child(1){
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  div:nth-child(2){
+    font-size: 13px;
+    width: 400px;
+  }
+}
 .card{
     width: calc(33% - 30px);
     padding-top: 27%;
@@ -75,8 +159,15 @@ const changeTab = () => {
       justify-content: space-between;
       .pic{
         width: 100%;
-        padding-top: 40%;
-        background-color: #efefef;
+        padding-top: 49%;
+        position: relative;
+        overflow: hidden;
+        img{
+          position: absolute;
+          width: 100%;
+          left: 0px;
+          top: 0px;
+        }
       }
       .title{
         width: 100%;
@@ -102,8 +193,10 @@ const changeTab = () => {
         .icon{
           width: 40px;
           height: 20px;
-          background-color: #efefef;
           margin-right: 10px;
+          img{
+            width: 100%;
+          }
         }
         font-size: 13px;
       }
@@ -113,7 +206,6 @@ const changeTab = () => {
 .bottom-card{
   width: 100%;
   background-color: white;
-  margin-top: 30px;
   padding-bottom: 80px;
   padding-top: 10px;
   .bottom-body{

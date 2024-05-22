@@ -13,7 +13,7 @@
         <q-tabs
           v-model="tab"
           @update:model-value="changeTab"
-          class="text-teal"
+          class="text-primary"
         >
           <q-tab v-for="(item, key) in trainTabs" :key="key" :name="item.value" :label="item.name" />
         </q-tabs>
