@@ -72,22 +72,22 @@ const router = createRouter({
     {
       path: '/personalPlatform',
       name: 'personal',
-      component: import('@/views/personal/Main.vue'),
+      component: () => import('@/views/personal/Main.vue'),
       children: [
         {
           path: 'basic',// 基础信息
           name: 'basic',
-          component: import('@/views/personal/BasicInfo.vue')
+          component: () => import('@/views/personal/BasicInfo.vue')
         },
         {
           path: 'messagecenter',// 信息中心
           name: 'messagecenter',
-          component: import('@/views/personal/MessageCenter.vue')
+          component: () => import('@/views/personal/MessageCenter.vue')
         },
         {
           path: 'myflow',// 我的流程
           name: 'myflow',
-          component: import('@/views/personal/MyFlow.vue')
+          component: () => import('@/views/personal/MyFlow.vue')
         },
       ]
     },

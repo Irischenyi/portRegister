@@ -1,12 +1,18 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import InputTemplate from '@/components/InputTemplate.vue'
 import { ref, reactive, toRefs } from 'vue'
 import http from '@/http/httpContentMain'
 import picSlider from '@/components/picSlider.vue';
 import codeMixinHook from './codeMixin'
+import { Loading } from 'quasar'
+
+const router = useRouter()
 defineProps<{
  
 }>()
+const dialog = ref(false)
+const backdropFilter = ref(null)
 
 const picRef = ref()
 const form = reactive({
@@ -32,7 +38,10 @@ const postCheck = (uuid: string, left: number ) => {
             password: form.password,
             entName: form.entName
     }).then((value) => {
-        closeCodeFun(true)
+        const timeOut = setTimeOut(()=>{
+            closeCodeFun(true)
+            clearTimeout(timeOut)
+        }, 1000)
     }).fail((value) => {
         closeCodeFun(value)
         failMessage.value = value as string
@@ -44,13 +53,20 @@ const save = () => {
     http.post('k2401-enterprise/reset-pwd', {
            ...form
     }).then((value) => {
-        console.log(value)
-        //重置成功 dialog
-        /** 还没写完 */
+        Loading.show();
+        setTimeout(() => {
+            dialog.value = true;
+        }, 1000)
+        setTimeout(() => {
+            Loading.hide()
+            router.push('./login')
+        }, 3000)
     }).fail((value) => {
         failMessage.value = value as string
     })
 }
+
+
 </script>
 
 <template>
@@ -74,6 +90,13 @@ const save = () => {
         </div>
         <picSlider ref="picRef" :show="codeValue.show" @postCheck="postCheck" />
     </div>
+    <q-dialog v-model="dialog" :backdrop-filter="backdropFilter">
+      <q-card>
+        <q-card-section>
+            重置密码成功
+        </q-card-section>
+      </q-card>
+    </q-dialog>
 </template>
 
 <style scoped>

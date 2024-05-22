@@ -12,21 +12,21 @@
         <div class="body">
             <div class="left">
               <q-list bordered separator>
-                <q-item clickable v-ripple>
-                  <q-item-section>
-                    <q-icon name="hubs" />
+                <q-item clickable v-ripple @click="routerChange('basic')">
+                  <q-item-section >
+                    <q-icon name="dns"/>
                     基础信息
                   </q-item-section>
                 </q-item>
-                <q-item clickable v-ripple>
+                <q-item clickable v-ripple @click="routerChange('messagecenter')">
                   <q-item-section>
-                    <q-icon name="chats" />
+                    <q-icon name="article" />
                     消息中心
                   </q-item-section>
                 </q-item>
-                <q-item clickable v-ripple>
+                <q-item clickable v-ripple @click="routerChange('myflow')">
                   <q-item-section>
-                    <q-icon name="chats" />
+                    <q-icon name="auto_mode" />
                     我的流程
                   </q-item-section>
                 </q-item>
@@ -38,7 +38,16 @@
         </div>
     </div>
 </template>
-<script>
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const routerChange = (value: string) => {
+  router.push({
+    path: '/personalPlatform/'+value
+  })
+}
+
 </script>
 <style lang="scss" scoped>
 .header{

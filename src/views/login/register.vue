@@ -6,9 +6,7 @@ import codeMixinHook from './codeMixin'
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { Loading } from 'quasar'
-defineProps<{
- 
-}>()
+
 const picRef = ref()
 const { codeValue, getCode, closeCodeFun, failMessage } = codeMixinHook(picRef)
 const file = ref()
@@ -30,7 +28,7 @@ const getCity = (value:string, type: string) => {
     } else {
         area.value = []
     }
-    
+    if(!value) return false;
     http.get('/tag/child-list/'+value).then((response) => {
         (response as unknown as []).forEach((item: {tagName: string, id: string})  => {
             if(type == 'city'){
@@ -58,23 +56,61 @@ const city = ref([
 
 const area = ref([
 ] as {value: string, label: string}[])
+const repeatPassword = ref('')
 
 const provinceValue = ref()
 const cityValue = ref()
 const areaValue = ref()
+const buttonDis = ref(false)
 
 const model = ref('')
-const options = ['1',2,3,5]
-const form = ref({} as {
+const form = ref({
+    entName: '',
+    creditCode: '',
+    address: '',
+    email: '',
+    contact: '',
+    mobile: '',
+    mobileVerifyCode: '',
+    password: '',
+    repeatPassword: '',
     provinceValue: '',
     provinceName: '',
     cityValue: '',
     cityName: '',
     areaValue: '',
     areaName: '',
+} as {
+    cityValue: '',
+    cityName: '',
+    areaValue: '',
+    areaName: '',
+    entName: '',
+    creditCode: '',
+    address: '',
     [name:string]: any
 })
 
+
+const map = {
+    entName: '企业名称',
+    creditCode: '统一社会信用代码',
+    address: '地址',
+    email: '邮箱',
+    contact: '联系人',
+    mobile: '手机号码',
+    mobileVerifyCode: '手机验证码',
+    password: '密码',
+    repeatPassword: '确认密码',
+    provinceValue: '省份',
+    provinceName: '省份',
+    cityValue: '市区',
+    cityName: '市区',
+    areaValue: '地区',
+    areaName: '地区',
+} as {
+    [name:string]: any
+}
 
 watch(provinceValue, (value: {value: string}) => {
     cityValue.value = '';
@@ -87,7 +123,6 @@ watch(cityValue, (value: {value: string}) => {
 })
 
 watch(file, (value) => {
-    console.log(value.name)
     const formData = new FormData()
     formData.append('file', value)
     http.post('k2401-enterprise/upload-business-license', formData , {
@@ -102,15 +137,29 @@ const changeFormValue = (code: string, value: string) => {
     form.value[code] = value
 }
 
+
 const saveForm = () => {
-    form.value['provinceValue'] = provinceValue.value.value
-    form.value['provinceName'] = provinceValue.value.label
+    form.value['provinceValue'] = provinceValue.value?.value
+    form.value['provinceName'] = provinceValue.value?.label
 
-    form.value['cityValue'] = cityValue.value.value
-    form.value['cityName'] = cityValue.value.label
+    form.value['cityValue'] = cityValue.value?.value
+    form.value['cityName'] = cityValue.value?.label
 
-    form.value['areaValue'] = areaValue.value.value
-    form.value['areaName'] = areaValue.value.label
+    form.value['areaValue'] = areaValue.value?.value
+    form.value['areaName'] = areaValue.value?.label
+
+
+    const emptyNum = (Object.values(form.value)).indexOf('')
+    const valueList = Object.keys(form.value)
+    if(emptyNum >= 0){
+        const checkName = (map[valueList[emptyNum] as string])
+        failMessage.value = '请填写'+checkName
+        return false;
+    }
+    if(form.value.password != form.value.repeatPassword){
+        failMessage.value = '两次密码请保持一致'
+        return false;
+    }
 
     submitForm()
 }
@@ -121,15 +170,16 @@ const submitForm = () => {
     }).then((value) => {
         Loading.show();
         setTimeout(() => {
+            Loading.hide()
             router.push('./login')
-        }, 2000)
-        Loading.hide()
+        }, 13000)
     }).fail((value) => {
-        console.log(value)
+        failMessage.value = value
     })
 }
 
 const postCheck = (uuid: string, left: number ) => {
+    failMessage.value = ''
     http.post('k2401-enterprise/reg-mobile-code', {
             uuid: uuid,
             mobile: form.value.mobile,
@@ -168,7 +218,7 @@ const postCheck = (uuid: string, left: number ) => {
                 </div>
                 <!-- <InputTemplate  name="用户名" /> -->
                 <InputTemplate  name="密码" type="password" code="password" @changeFormValue="changeFormValue"/>
-                <InputTemplate  name="确认密码" type="password" @changeFormValue="changeFormValue"/>
+                <InputTemplate  name="确认密码" type="password" code="repeatPassword" @changeFormValue="changeFormValue"/>
                 <InputTemplate  name="上传营业执照">
                     <q-file
                         v-model="file"
@@ -176,6 +226,7 @@ const postCheck = (uuid: string, left: number ) => {
                         style="max-width: 300px"
                         />
                 </InputTemplate>
+                <div class="tips">{{ failMessage }}</div>
             </div>
             <div class="bottom-btn">
                 <q-btn unelevated rounded color="grey-5" label="返回" />
@@ -313,6 +364,14 @@ const postCheck = (uuid: string, left: number ) => {
 :deep(.q-field--filled .q-field__control){
     background: white;
     height: 100%;
+}
+
+.tips{
+    width: 100%;
+    height: 20px;
+    text-align: right;
+    color: #bf2222;
+    font-weight: bold;
 }
 </style>
 
