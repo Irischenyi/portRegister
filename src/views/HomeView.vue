@@ -197,7 +197,9 @@
                       <div class="moreText" :title="summaryTabs">
                         {{ summaryTabs }}
                       </div>
-                      <div style="text-align: end">查看详情</div>
+                      <div @click="searchDetail" style="text-align: end">
+                        查看详情
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -355,18 +357,28 @@
   </el-dialog>
   <!-- 在线服务弹框 -->
   <el-dialog
-    style="height: 500px; background-color: #eaeff9"
+    style="background-color: #eaeff9"
     v-model="zxfwDialog"
     width="35%"
+    maxHeight="400"
     :before-close="handleClose2"
   >
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="常见问题" name="first">
         <div class="tabPane">
-          <div class="cjwt">(一).常见问题1</div>
-          <div class="cjwt">(二).常见问题2</div>
-          <div class="cjwt">(三).常见问题3</div>
-          <div class="cjwt">(四).常见问题4</div>
+          <div
+            @click="questionBtn(item as any)"
+            class="cjwt"
+            v-for="item in questionList"
+            :key="(item as any).id"
+          >
+            {{ (item as any).question }}
+
+            <div
+              v-if="(item as any).showAnswer"
+              v-html="(item as any).showAnswerDetail"
+            ></div>
+          </div>
         </div>
         <div style="display: flex; margin-top: 20px">
           <el-input v-model="cjwtInput" style="height: 40px"></el-input>
@@ -375,10 +387,29 @@
       </el-tab-pane>
 
       <el-tab-pane label="智能咨询" name="second">
-        <div class="tabPane"></div>
+        <div class="tabPane">
+          <div class="chat-container">
+            <div
+              v-for="(message, index) in messages"
+              :key="index"
+              class="message"
+              :class="{
+                'sent-message': message.sent,
+                'received-message': !message.sent
+              }"
+            >
+              {{ message.text }}
+            </div>
+          </div>
+        </div>
         <div style="display: flex; margin-top: 20px">
-          <el-input v-model="cjwtInput" style="height: 40px"></el-input>
-          <el-button class="elBtn1">发送</el-button>
+          <el-input
+            v-model="question"
+            @keyup.enter="askQuestion"
+            placeholder="请输入您的问题..."
+            style="height: 40px"
+          ></el-input>
+          <el-button @click="askQuestion" class="elBtn1">发送</el-button>
         </div>
       </el-tab-pane>
 
@@ -437,8 +468,13 @@
   </el-dialog>
 </template>
 <script setup lang="ts">
+import type { Ref } from 'vue'
 import { ref, onMounted } from 'vue'
+
 import http, { setBaseInf } from '@/http/httpContentMain'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 onMounted(async () => {
   await getBanner() //获取 Banner 图
   await getCategoryTabs() //获取政策资讯类别
@@ -477,6 +513,7 @@ const titleTabs = ref('')
 const timeTabs = ref('')
 const summaryTabs = ref('')
 const imgTabs = ref('')
+const ids = ref('')
 const getArticlePaged = async () => {
   const res = (await http.get('/k2401-article/article/paged', {
     params: {
@@ -485,15 +522,14 @@ const getArticlePaged = async () => {
       size: 10 //每页多少条数据
     }
   })) as any
+  console.log(res, 'resttttttttttt')
 
   tabsLists.value = res.items
   titleTabs.value = res.items[0].title
   summaryTabs.value = res.items[0].summary
   timeTabs.value = res.items[0].publishDate
+  ids.value = res.items[0].id
   imgTabs.value = `${setBaseInf.baseUrl}` + res.items[0].attach.storagePath
-
-  console.log(res, 'res+++333333333+++++')
-  console.log(tabsLists.value, 'tabsLists.value')
 }
 const tab = ref('1')
 const tabsValue = ref('1')
@@ -502,9 +538,35 @@ const btns = (value: any) => {
   tabsValue.value = value
   getArticlePaged()
 }
+// 封装常见问题列表接口
+const questionList = ref([])
+const getQuestion = async () => {
+  const res = (await http.post('/k2401-question/question/paged', {
+    current: 1, // 第几页
+    size: 10, // 每页多少条数据
+    key: '' // 问题的关键字
+  })) as any
+  questionList.value = res.items
+  console.log(res, '常见问题列表接口')
+}
+// 封装指定常见问题的详情的接口
+let answerDetail = ref('')
+const getQuestionDetail = async (id: any) => {
+  const res = (await http.get(`k2401-question/question/${id}`)) as any
+  answerDetail.value = res.answer
+  console.log(answerDetail.value, 'answerDetail.value')
+}
+const questionBtn = async (item: any) => {
+  await getQuestionDetail(item.id)
+  item.showAnswer = !item.showAnswer
+  item.showAnswerDetail = answerDetail.value
+
+  console.log(item, 'item77777777')
+}
 const zxfwDialog = ref(false)
 const zxlyBtn = () => {
   zxfwDialog.value = true
+  getQuestion()
 }
 const handleClose2 = () => {
   zxfwDialog.value = false
@@ -563,6 +625,66 @@ const lxfsBtn = () => {
 }
 const handleClose3 = () => {
   lxfsDialog.value = false
+}
+
+const itemDetail = ref('')
+const getArticleDetail = async (id: any) => {
+  const res = await http.get(`k2401-article/article/${id}`)
+  console.log(res, '政策咨询详情++')
+  console.log(itemDetail.value, 'itemDetail.value')
+
+  itemDetail.value = res
+  router.push({
+    path: '/index/policyconSultationDetail',
+    query: {
+      value: JSON.stringify(itemDetail?.value)
+    }
+  })
+}
+const searchDetail = () => {
+  console.log(ids.value, 'idsssssss')
+
+  // 获取指定政策的详情
+  getArticleDetail(ids.value)
+}
+// 智能咨询接口封装
+const getQueryQusetion = async () => {
+  const res = (await http.post('/k2401-talk/question', {
+    question: '问题' // 输入的问题（必填）
+  })) as any
+
+  console.log(res, '智能咨询接口')
+}
+
+const zhinneg = () => {
+  getQueryQusetion()
+}
+const question = ref('')
+const messages: Ref<{ text: string; sent: boolean }[]> = ref([])
+const askQuestion = async () => {
+  if (question.value.trim() === '') return
+
+  messages.value.push({ text: question.value, sent: true }) // 将用户输入的问题显示在右上角
+
+  const res = (await http.post('/k2401-talk/question', {
+    question: question.value // 输入的问题（必填）
+  })) as any
+
+  console.log(res, '智能咨询接口')
+  setTimeout(() => {
+    console.log(res.length, 'res.length')
+
+    if (res.answer) {
+      messages.value.push({ text: res.answer, sent: false }) // 将服务端返回的答案显示在左上角
+    } else {
+      messages.value.push({
+        text: '抱歉，出现了一些问题，请重新提问',
+        sent: false
+      }) // 将服务端返回的答案显示在左上角
+    }
+  }, 500)
+
+  question.value = '' // 重置输入框
 }
 </script>
 <style lang="scss" scoped>
@@ -665,6 +787,7 @@ const handleClose3 = () => {
   padding: 20px;
   background-color: #fff;
   height: 300px;
+  overflow: auto;
   border-radius: 10px;
 }
 
@@ -693,5 +816,27 @@ const handleClose3 = () => {
   color: #fff;
   height: 40px;
   margin-left: 20px;
+}
+
+.chat-container {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.sent-message {
+  align-self: flex-end;
+  background-color: #90ee90;
+}
+
+.received-message {
+  align-self: flex-start;
+  background-color: #add8e6;
 }
 </style>
