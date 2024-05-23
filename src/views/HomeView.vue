@@ -334,6 +334,7 @@
         <div style="color: #fff">联系方式</div>
       </div>
     </div>
+    <!--  -->
   </div>
   <!-- 客户服务弹框 -->
   <el-dialog
@@ -414,7 +415,7 @@
       </el-tab-pane>
 
       <el-tab-pane label="在线留言" name="third">
-        <div class="tabPane">
+        <div style="position: relative" class="tabPane">
           <el-form
             ref="formRef"
             :model="formModel"
@@ -435,9 +436,25 @@
             </el-form-item>
           </el-form>
         </div>
-        <div style="display: flex; margin-top: 20px">
+        <div
+          style="
+            display: flex;
+
+            margin-top: 20px;
+          "
+        >
           <el-input v-model="cjwtInput" style="height: 40px"></el-input>
-          <el-button class="elBtn1">发送</el-button>
+
+          <el-button @click="getCode" class="elBtn1">发送</el-button>
+          <div
+            style="width: 10%; position: absolute; top: -200px; left: -800px"
+          >
+            <picSlider
+              ref="picRef"
+              :show="codeValue.show"
+              @postCheck="postCheck"
+            />
+          </div>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -473,7 +490,8 @@ import { ref, onMounted } from 'vue'
 
 import http, { setBaseInf } from '@/http/httpContentMain'
 import { useRouter } from 'vue-router'
-
+import picSlider from '@/components/picSlider.vue'
+import codeMixinHook from '../views/login/codeMixin.ts'
 const router = useRouter()
 onMounted(async () => {
   await getBanner() //获取 Banner 图
@@ -482,6 +500,9 @@ onMounted(async () => {
   await getArticlePaged()
 })
 import type { TabsPaneContext } from 'element-plus'
+
+const picRef = ref()
+const { codeValue, getCode, closeCodeFun, failMessage } = codeMixinHook(picRef)
 //  获取 Banner 图
 const bannerSy = ref('')
 const getBanner = async () => {
@@ -685,6 +706,24 @@ const askQuestion = async () => {
   }, 500)
 
   question.value = '' // 重置输入框
+}
+const postCheck = () => {
+  http
+    .post('k2401-online-message/message', {
+      unitName: '单位名称1', // 单位名称（必填）
+      userName: '姓名', // 姓名（必填）
+      mobile: '13111112222', // 手机号码（必填）
+      msgContent: '留言内容', // 留言内容（必填）
+      uuid: '1791133047567945730', // 1.9.1中的滑动验证码的唯一识别号（必填）
+      xposition: 70 // 1.9.1中滑动验证码的x坐标值
+    })
+    .then((value) => {
+      closeCodeFun(true)
+    })
+    .fail((value) => {
+      closeCodeFun(value)
+      failMessage.value = value as string
+    })
 }
 </script>
 <style lang="scss" scoped>
