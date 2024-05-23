@@ -20,9 +20,27 @@ const form = reactive({
 
 const {loginName, password, mobileCode }  = toRefs(form)
 
+const checkForm = {
+    loginName: '手机号码',
+    password: '密码',
+    mobileCode: '验证码'
+}  as {
+    [name: string]: string
+}
+
+const checkFormFun = () => {
+    const emptyNum = (Object.values(form)).indexOf('')
+    const valueList = Object.keys(form)
+    if(emptyNum >= 0){
+        const checkName = (checkForm[valueList[emptyNum] as string])
+        failMessage.value = '请填写'+checkName
+        return false;
+    }
+    return true
+}
 
 const login = () => {
-    failMessage.value = ''
+    if(!checkFormFun()) return false
     http.post('enterprise/login',{
         ...form
     }).then(() =>{
@@ -35,6 +53,7 @@ const login = () => {
 
 
 const changeFormValue = (code: string, value: string) => {
+    failMessage.value = ''
     form[code] = value
 }
 

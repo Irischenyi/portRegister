@@ -23,10 +23,38 @@ const form = reactive({
     reportPassword: ''
 } as {[code: string]: any})
 
+const checkList = {
+    entName: '企业名称',
+    mobile: '手机号码',
+    mobileCode: '验证码',
+    password: '新密码',
+    reportPassword: '确认密码'
+} as {
+    [name: string]: string
+}
+
 const { codeValue, getCode, closeCodeFun, failMessage } = codeMixinHook(picRef)
 
 const changeFormValue = (code: string, value: string) => {
+    failMessage.value = ''
     form[code] = value
+}
+
+const checkHaveValue = () => {
+    const emptyNum = (Object.values(form)).indexOf('')
+    const key = (Object.keys(form))[emptyNum]
+    failMessage.value = '请填写'+checkList[key]
+    if(form.password != form.reportPassword){
+        failMessage.value = '两次密码不一致'
+        return false
+    }
+    if(emptyNum>=0){
+        return false
+    }else{
+        return true
+    }
+    
+    
 }
 
 const postCheck = (uuid: string, left: number ) => {
@@ -38,7 +66,7 @@ const postCheck = (uuid: string, left: number ) => {
             password: form.password,
             entName: form.entName
     }).then((value) => {
-        const timeOut = setTimeOut(()=>{
+        const timeOut = setTimeout(()=>{
             closeCodeFun(true)
             clearTimeout(timeOut)
         }, 1000)
@@ -49,6 +77,7 @@ const postCheck = (uuid: string, left: number ) => {
 }
 
 const save = () => {
+    if(!checkHaveValue()) return false
     failMessage.value = '';
     http.post('k2401-enterprise/reset-pwd', {
            ...form
@@ -90,7 +119,7 @@ const save = () => {
         </div>
         <picSlider ref="picRef" :show="codeValue.show" @postCheck="postCheck" />
     </div>
-    <q-dialog v-model="dialog" :backdrop-filter="backdropFilter">
+    <q-dialog v-model="dialog">
       <q-card>
         <q-card-section>
             重置密码成功
