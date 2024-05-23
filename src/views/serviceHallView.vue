@@ -18,8 +18,8 @@
           <q-tab v-for="(item, key) in trainTabs" :key="key" :name="item.value" :label="item.name"/>
         </q-tabs>
       </template>
-      <template #body v-if="tab!='3'">
-          <div class="card" v-for="item in list">
+      <template #body>
+          <div :class="{'card': true, 'hiddens': tab == '3'}" v-for="item in list">
               <div class="card-box">
                   <div class="pic">
                     <img :src="picUrl+item.serviceHallAttach.previewUrl"/>
@@ -34,7 +34,19 @@
                   </div>
               </div>
           </div>
+          <div :class="{'page-list': true, 'hidden': tab == '3'}">
+            <q-pagination
+                v-model="current"
+                :max="totalPage"
+                @update:model-value="getFirstList(tab)"
+                direction-links
+                flat
+                color="grey"
+                active-color="primary"
+              />
+          </div>
       </template>
+      
       <template #end>
         <div class="bottom-card">
           <div class="bottom-body">
@@ -54,6 +66,17 @@
                   <q-btn unelevated rounded color="primary" label="查看详情" />
                 </div>
               </div>
+            </div>
+            <div class="page-list">
+              <q-pagination
+                  v-model="current2"
+                  :max="totalPage2"
+                  direction-links
+                  flat
+                  @update:model-value="getFirstList('3')"
+                  color="grey"
+                  active-color="primary"
+                />
             </div>
           </div>
         </div>
@@ -77,6 +100,10 @@ interface itemInf {
   }
 }
 const tab = ref('assess')
+const current = ref(1)
+const current2 = ref(1)
+const totalPage = ref(1)
+const totalPage2 = ref(1)
 const trainTabs = ref()
 const list = ref([] as itemInf[])
 const serviceList = ref([] as itemInf[])
@@ -96,19 +123,17 @@ http.get('k2401-service-hall/category-list').then((data) => {
 })
 
 const getFirstList = (tabNumber: string) => {
-  // console.log(tabNumber)
-  http.get(`k2401-service-hall/service-hall/paged?current=1&size=10&category=${tabNumber}`).then((data) => {
+  const currentPage = tabNumber == '3'?current2.value:current.value
+  http.get(`k2401-service-hall/service-hall/paged?current=${currentPage}&size=9&category=${tabNumber}`).then((data) => {
       const backList = data as unknown as { items: itemInf[], pages: string }
-      console.log(tabNumber)
       if(tabNumber == '1' || tabNumber == '2'){
+        totalPage.value = Number(backList.pages)
         list.value = backList.items
-        
       }else{
+        totalPage2.value = Number(backList.pages)
         serviceList.value = backList.items
-        console.log(serviceList.value)
       }
   })
-  
 }
 
 </script>
@@ -146,6 +171,7 @@ const getFirstList = (tabNumber: string) => {
     margin-right: 15px;
     margin-top: 30px;
     position: relative;
+    transition: all 0.25s ease-out;
     .card-box{
       position: absolute;
       width: 100%;
@@ -225,8 +251,22 @@ const getFirstList = (tabNumber: string) => {
     }
   }
 }
-::v-deep  button{
-  width: 130px;
+.bottom-body .card{
+  ::v-deep  button{
+    width: 130px;
+  }
 }
 
+
+.page-list{
+  width: 100%;
+  .q-pagination{
+    justify-content: flex-end;
+  }
+}
+
+.hiddens{
+  padding-top:0px;
+  overflow: hidden;
+}
 </style>

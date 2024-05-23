@@ -1,5 +1,21 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const routerChange = (value: string) => {
+  if(value == 'login') {
+    router.push({
+      path: '/login'
+    })
+  } else {
+    router.push({
+      path: '/index/quastionHome'
+    })
+  }
+  
+}
+
 </script>
 
 <template>
@@ -18,8 +34,8 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink class="routey" to="/index/securityTraining">安全培训</RouterLink>
       </div>
       <div>
-        <q-btn color="white" text-color="black" label="调研填表" />
-        <q-btn color="primary" label="登陆注册" />
+        <q-btn color="white" text-color="black" label="调研填表" @click="routerChange('question')"/>
+        <q-btn color="primary" label="登陆注册" @click="routerChange('login')"/>
         <!--  -->
       </div>
     </div>
