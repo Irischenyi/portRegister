@@ -20,7 +20,7 @@ import SelectDom from '@/components/basic/SelectDom.vue';
 import InputDom from '@/components/basic/InputDom.vue'
 import CheckBoxDom from '@/components/basic/CheckBoxDom.vue';
 import RadioBox from '@/components/basic/RadioBox.vue';
-import date from './test'
+// import date from './test'
 
 const stageList = ref([] as { nodeType: number, nodeName: string }[])
 const token = localStorage.getItem('token');
@@ -34,9 +34,10 @@ http.get('k2401-survey/survey', {
     console.log(value)
 })
 
-stageList.value = date
+// stageList.value = date
 
 const backComponent = (type: number) => {
+    console.log(type)
     switch(type){
         case 4:
             return RadioBox
@@ -47,6 +48,7 @@ const backComponent = (type: number) => {
         case 8:
             return InputDom
             break
+        
     }
 }
 

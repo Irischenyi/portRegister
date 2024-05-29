@@ -36,11 +36,12 @@ export class mainHttpConnect extends httpConnectMain {
   private baseUrl
   private successCode
   private backValue
-
+  private url
   constructor(url: string) {
     super()
     this.baseUrl = url
     this.successCode = 200
+    this.url = ''
     this.backValue = null as any
   }
 
@@ -63,17 +64,27 @@ export class mainHttpConnect extends httpConnectMain {
   }
 
 
-  commonResolve(response: { data: { code: number, data: any}}){
-      if(response.data.code == this.successCode){
+  commonResolve(response: { data: { code: number, data: any}}|''){
+      if(this.url.indexOf('file/download-file/')>=0) {
+        this.callBack(response as '') 
+        return false
+      }
+      
+      if(response != ''){
+        if(response.data.code == this.successCode){
           this.backValue = response.data.data;
           this.callBack(response.data.data)
-      }else{
-          this.backValue = response.data as unknown as {msg: string}
-          this.failBack(this.backValue.msg)
-      }
-  }
+        }else{
+            this.backValue = response.data as unknown as {msg: string}
+            this.failBack(this.backValue.msg)
+        }
+      } 
+}
+      
 
   get(url:string,  headers?: {}) {
+      // console.log(url)
+      this.url = url
       axios.get(this.baseUrl+url, {headers}).then(response => {
           this.commonResolve(response)
       }).catch((error) => {

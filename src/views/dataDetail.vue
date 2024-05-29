@@ -50,6 +50,11 @@ const name = computed(() => {
 })
 
 
+const getDate = () => {
+    console.log('======')
+}
+getDate()
+
 </script>
 <style lang="scss" scoped>
 .detail-title{

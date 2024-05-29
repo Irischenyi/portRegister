@@ -23,9 +23,9 @@ const attrValue = attrs.value as {
     dataSourceUrl: string
 }
 const token = localStorage.getItem('token');
-
+console.log('select 框');
 (new mainHttpConnect(setBaseInf.picUrl)).get(attrValue.dataSourceUrl , {
-    Authorization: token
+    Authorization: 'Bearer '+token
 }).then((data) => {
     console.log(data)
 })

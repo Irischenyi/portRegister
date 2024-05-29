@@ -87,23 +87,51 @@ const getFirstList = (tabNumber: string) => {
   })
 }
 
-
-const download = (id: string) => { // 下载这块还没做完
-  http.get('file/download-file/'+id, {
-    Authorization: 'Bearer '+  token
-  }).then((data) => {
+const getDetail = (id: string) => {
+  http.get('k2401-safety/safety/1789583984900997122?id='+id).then((data) => {
     console.log(data)
   })
 }
 
+
+const download = (id: string) => { // 下载这块还没做完
+  http.get('k2401-safety/safety/'+id).then((data) => {
+    const backData = data as unknown as {
+      contentFile: {
+        id: string
+      }
+    }
+    http.get('file/download-file/'+ backData.contentFile.id, {
+      Authorization: 'Bearer '+  token
+    }).then((dataDt) => {
+      console.log(dataDt)
+      const back = dataDt as unknown as {
+        data: BlobPart
+      }
+      const link = document.createElement('a')
+      let blob = new Blob([back.data], {type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8"})
+      let downloadElement = document.createElement('a')
+      let href = window.URL.createObjectURL(blob);
+      downloadElement.href = href;
+      downloadElement.download = id+'.pdf';
+      document.body.appendChild(downloadElement)
+      downloadElement.click();
+      document.body.removeChild(downloadElement);
+      window.URL.revokeObjectURL(href);
+    })
+  })
+}
+
 const goToDetail = (id: string) => {
-  router.push({
+  if(tab.value == '1'){
+    router.push({
       path: '/index/dataDetail',
       query: {
         type: 1,
         id: id
       }
-  })
+    })
+  }
 }
 
 </script>
