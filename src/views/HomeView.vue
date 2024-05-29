@@ -334,6 +334,7 @@
         <div style="color: #fff">联系方式</div>
       </div>
     </div>
+    <!--  -->
   </div>
   <!-- 客户服务弹框 -->
   <el-dialog
@@ -356,8 +357,14 @@
     </div>
   </el-dialog>
   <!-- 在线服务弹框 -->
+
   <el-dialog
-    style="background-color: #eaeff9"
+    style="
+      position: absolute;
+      right: 0px;
+      bottom: -50px;
+      background-color: #eaeff9;
+    "
     v-model="zxfwDialog"
     width="35%"
     maxHeight="400"
@@ -372,9 +379,12 @@
             v-for="item in questionList"
             :key="(item as any).id"
           >
-            {{ (item as any).question }}
+            <div style="font-size: 16px; margin-bottom: 5px">
+              {{ (item as any).question }}
+            </div>
 
             <div
+              style="margin-left: 20px; color: #000"
               v-if="(item as any).showAnswer"
               v-html="(item as any).showAnswerDetail"
             ></div>
@@ -414,7 +424,7 @@
       </el-tab-pane>
 
       <el-tab-pane label="在线留言" name="third">
-        <div class="tabPane">
+        <div style="position: relative" class="tabPane">
           <el-form
             ref="formRef"
             :model="formModel"
@@ -422,22 +432,42 @@
             label-width="60px"
           >
             <el-form-item label="单位" prop="dw1">
-              <el-input style="width: 60%"></el-input>
+              <el-input v-model="formModel.dw1" style="width: 60%"></el-input>
             </el-form-item>
             <el-form-item label="姓名" prop="xm">
-              <el-input style="width: 60%"></el-input>
+              <el-input v-model="formModel.xm" style="width: 60%"></el-input>
             </el-form-item>
-            <el-form-item label="单位" prop="dw2">
-              <el-input style="width: 60%"></el-input>
+            <el-form-item label="手机号" prop="dw2">
+              <el-input v-model="formModel.dw2" style="width: 60%"></el-input>
             </el-form-item>
             <el-form-item label="留言" prop="ly">
-              <el-input type="textarea" :rows="4"></el-input>
+              <el-input
+                v-model="formModel.ly"
+                type="textarea"
+                :rows="4"
+              ></el-input>
             </el-form-item>
           </el-form>
         </div>
-        <div style="display: flex; margin-top: 20px">
+        <div
+          style="
+            display: flex;
+
+            margin-top: 20px;
+          "
+        >
           <el-input v-model="cjwtInput" style="height: 40px"></el-input>
-          <el-button class="elBtn1">发送</el-button>
+
+          <el-button @click="getCodes" class="elBtn1">发送</el-button>
+          <div
+            style="width: 10%; position: absolute; top: -200px; left: -800px"
+          >
+            <picSlider
+              ref="picRef"
+              :show="codeValue.show"
+              @postCheck="postCheck"
+            />
+          </div>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -470,10 +500,11 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
 import { ref, onMounted } from 'vue'
-
+import { ElMessage } from 'element-plus'
 import http, { setBaseInf } from '@/http/httpContentMain'
 import { useRouter } from 'vue-router'
-
+import picSlider from '@/components/picSlider.vue'
+import codeMixinHook from '../views/login/codeMixin'
 const router = useRouter()
 onMounted(async () => {
   await getBanner() //获取 Banner 图
@@ -482,6 +513,9 @@ onMounted(async () => {
   await getArticlePaged()
 })
 import type { TabsPaneContext } from 'element-plus'
+
+const picRef = ref()
+const { codeValue, getCode, closeCodeFun, failMessage } = codeMixinHook(picRef)
 //  获取 Banner 图
 const bannerSy = ref('')
 const getBanner = async () => {
@@ -611,6 +645,7 @@ const formRules = ref({
     trigger: 'blur'
   }
 })
+
 const khfwDialog = ref(false)
 const khfwBtn = () => {
   khfwDialog.value = true
@@ -685,6 +720,31 @@ const askQuestion = async () => {
   }, 500)
 
   question.value = '' // 重置输入框
+}
+const getCodes = async () => {
+  await formRef.value.validate()
+  await getCode()
+}
+const formRef = ref()
+const postCheck = (uuid: string, left: number) => {
+  http
+    .post('k2401-online-message/message', {
+      unitName: formModel.value.dw1, // 单位名称（必填）
+      userName: formModel.value.xm, // 姓名（必填）
+      mobile: formModel.value.dw2, // 手机号码（必填）
+      msgContent: formModel.value.ly, // 留言内容（必填）
+      uuid: uuid, // 1.9.1中的滑动验证码的唯一识别号（必填）
+      xposition: left // 1.9.1中滑动验证码的x坐标值
+    })
+    .then((value) => {
+      closeCodeFun(true)
+    })
+    .fail((value) => {
+      console.log('失败 ++++++++')
+      ElMessage({ type: 'warning', message: value })
+      closeCodeFun(value)
+      failMessage.value = value as string
+    })
 }
 </script>
 <style lang="scss" scoped>
@@ -839,4 +899,9 @@ const askQuestion = async () => {
   align-self: flex-start;
   background-color: #add8e6;
 }
+
+// .dialogClass {
+//   top: 1000px;
+//   left: 1000px;
+// }
 </style>
