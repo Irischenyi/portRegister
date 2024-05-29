@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import http from '@/http/httpContentMain'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -9,6 +10,13 @@ const routerChange = (value: string) => {
       path: '/login'
     })
   } else {
+    // http.get('k2401-survey/check-submit', {
+    //   'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRlIjoiMjAyNC0wNS0wMiAyMjo1ODoyNiIsIm5pY2tOYW1lIjoi5LyB5Lia5ZCN56ewIiwibG9naW5OYW1lIjoiZGVtbzIiLCJ1c2VySWQiOjE3ODYwMjkzNzUwMzMwNDQ5OTR9.BsbPBttaiC9jtj_AjVXZnCvACA-QUN2pfCnbOWdzAq4'
+    // }).then((data) => {
+    //   console.log(data)
+    // }).fail(() => {
+
+    // })
     router.push({
       path: '/index/quastionHome'
     })

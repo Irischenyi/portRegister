@@ -71,6 +71,11 @@ const router = createRouter({
           path: 'quastionHome', //个人信息新增
           name: 'quastionHome',
           component: import('@/views/QuastionPage.vue')
+        },
+        {
+          path: 'dataDetail', //详情
+          name: 'dataDetail',
+          component: import('@/views/dataDetail.vue')
         }
       ]
     },

@@ -9,6 +9,7 @@ defineProps<{
  
 }>()
 const picRef = ref()
+const router = useRouter()
 const { codeValue, getCode, closeCodeFun, failMessage } = codeMixinHook(picRef)
 
 
@@ -39,12 +40,17 @@ const checkFormFun = () => {
     return true
 }
 
+
 const login = () => {
     if(!checkFormFun()) return false
-    http.post('enterprise/login',{
+    http.post('/k2401-enterprise/login',{
         ...form
-    }).then(() =>{
-        console.log('====')
+    }).then((data) =>{
+        const backData = data as unknown as { token: string }
+        localStorage.setItem('token', backData.token)
+        router.push({
+            path: '/index/home'
+        })
     }).fail((value) => {
         failMessage.value = value
     })
@@ -57,12 +63,10 @@ const changeFormValue = (code: string, value: string) => {
     form[code] = value
 }
 
-const router = useRouter()
-
 const remember = ref(false)
 
 const postCheck = (uuid: string, left: number ) => {
-    http.post('k2401-enterprise/reg-mobile-code', {
+    http.post('k2401-enterprise/login-mobile-code', {
             uuid: uuid,
             mobile: form.loginName,
             xposition: left

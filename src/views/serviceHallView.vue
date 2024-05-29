@@ -19,7 +19,7 @@
         </q-tabs>
       </template>
       <template #body>
-          <div :class="{'card': true, 'hiddens': tab == '3'}" v-for="item in list">
+          <div :class="{'card': true, 'hiddens': tab == '3'}" v-for="item in list" @click="goToDetail(item.id)">
               <div class="card-box">
                   <div class="pic">
                     <img :src="picUrl+item.serviceHallAttach.previewUrl"/>
@@ -86,6 +86,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import  http ,{ picUrl } from '@/http/httpContentMain'
+import { useRouter } from 'vue-router'
 import TemplateFrame from '@/components/TemplateFrame.vue'
 interface itemInf {
   title: string, 
@@ -105,6 +106,7 @@ const current2 = ref(1)
 const totalPage = ref(1)
 const totalPage2 = ref(1)
 const trainTabs = ref()
+const router = useRouter()
 const list = ref([] as itemInf[])
 const serviceList = ref([] as itemInf[])
 const changeTab = () => {
@@ -132,6 +134,16 @@ const getFirstList = (tabNumber: string) => {
       }else{
         totalPage2.value = Number(backList.pages)
         serviceList.value = backList.items
+      }
+  })
+}
+
+const goToDetail = (id: string) => {
+  router.push({
+      path: '/index/dataDetail',
+      query: {
+        type: 2,
+        id: id
       }
   })
 }

@@ -19,11 +19,21 @@
         </q-tabs>
       </template>
       <template #body>
-          <div class="card" v-for="item in list">
+          <div :class="{ 'card': true, 'tool': tab == '2' }" v-for="item in list" @click="goToDetail(item.id)" >
             <div class="bg">
               <img :src="picUrl+item.coverImage.previewUrl"/>
             </div>
-            <div class="bottom">{{ item.title }}</div>
+            <div class="bottom">
+              {{ item.title }}
+            </div>
+            <div class="bottom-tool" v-if="tab == '2'">
+                <div class="title">{{ item.title }}</div>
+                <div class="mid-title">{{ item?.summary }}</div>
+                <div class="bt-box">
+                  <div class="size">{{ item?.fileSizeKb }}kb</div>
+                  <q-btn color="primary" class="glossy login" rounded @click="download(item.id)">直接下载</q-btn>
+                </div>
+            </div>
           </div>
       </template>
       <template #end>
@@ -46,12 +56,15 @@
 import { ref } from 'vue';
 import TemplateFrame from '@/components/TemplateFrame.vue'
 import http , {picUrl} from '@/http/httpContentMain'
+import { useRouter } from 'vue-router'
 const current = ref(1)
 const trainTabs = ref()
 const tab = ref('')
+const router = useRouter()
+const token = localStorage.getItem('token');
 const list = ref([] as itemInf[])
 const totalPage = ref(1)
-interface itemInf {categoryName: string , previewUrl: string, title: string, id: string, coverImage: { storagePath : string, previewUrl: string} }
+interface itemInf {categoryName: string , previewUrl: string, title: string, fileSizeKb?: string,  id: string, summary?: string, coverImage: { storagePath : string, previewUrl: string} }
 
 
 const changeTab = ()=>{
@@ -74,6 +87,24 @@ const getFirstList = (tabNumber: string) => {
   })
 }
 
+
+const download = (id: string) => { // 下载这块还没做完
+  http.get('file/download-file/'+id, {
+    Authorization: 'Bearer '+  token
+  }).then((data) => {
+    console.log(data)
+  })
+}
+
+const goToDetail = (id: string) => {
+  router.push({
+      path: '/index/dataDetail',
+      query: {
+        type: 1,
+        id: id
+      }
+  })
+}
 
 </script>
 <style lang="scss" scoped>
@@ -144,5 +175,67 @@ const getFirstList = (tabNumber: string) => {
   margin-left: 240px;
   display: flex;
   justify-content: end;
+}
+
+.tool{
+  width: calc(33% - 20px);
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-top: 30%;
+  .bg{
+    width: 30%;
+    height: 31%;
+    left: 35%;
+    top: 10%;
+  }
+  .bottom{
+    background: none;
+    display: none;
+  }
+  .bottom-tool{
+    width: 100%;
+    height: 50%;
+    // background-color: grey;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+ 
+    .title{
+      text-align: center;
+      font-size: 13px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .mid-title{
+      text-align: center;
+      font-size: 12px;
+      color: #696969;
+      overflow-wrap: break-word;
+      white-space: nowrap;
+      text-overflow:ellipsis; 
+      width: 100%;
+      overflow: hidden;
+      box-sizing: border-box;
+      padding: 2px 15px;
+    }
+    .bt-box{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 0px 15px;
+      position: absolute;
+      width: 100%;
+      bottom: 15px;
+      .size{
+        font-size: 12px;
+        color: grey;
+        display: inline-block;
+      }
+      button{
+        font-size: 12px;
+      }
+    }
+  }
 }
 </style>

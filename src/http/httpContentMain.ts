@@ -26,10 +26,13 @@ class httpConnectMain {
     )
   }
 
-  errorFun(error: any) {}
+  errorFun(error: any) {
+
+  }
+  
 }
 
-class mainHttpConnect extends httpConnectMain {
+export class mainHttpConnect extends httpConnectMain {
   private baseUrl
   private successCode
   private backValue
@@ -70,8 +73,8 @@ class mainHttpConnect extends httpConnectMain {
       }
   }
 
-  get(url:string, param?: any) {
-      axios.get(this.baseUrl+url, param).then(response => {
+  get(url:string,  headers?: {}) {
+      axios.get(this.baseUrl+url, {headers}).then(response => {
           this.commonResolve(response)
       }).catch((error) => {
           this.errorFun(error)
@@ -95,7 +98,7 @@ class mainHttpConnect extends httpConnectMain {
  * http.get('/tag/child-list/'+value).then((response) => {})
  */
 
-
+ 
 export default new mainHttpConnect(setBaseInf.baseUrl)
 export const picUrl = setBaseInf.picUrl
 
