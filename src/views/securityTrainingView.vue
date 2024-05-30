@@ -54,6 +54,7 @@
 <script setup lang="ts">
 
 import { ref } from 'vue';
+import axios from 'axios';
 import TemplateFrame from '@/components/TemplateFrame.vue'
 import http , {picUrl} from '@/http/httpContentMain'
 import { useRouter } from 'vue-router'
@@ -66,6 +67,17 @@ const list = ref([] as itemInf[])
 const totalPage = ref(1)
 interface itemInf {categoryName: string , previewUrl: string, title: string, fileSizeKb?: string,  id: string, summary?: string, coverImage: { storagePath : string, previewUrl: string} }
 
+
+const service = axios.create({
+  baseURL: '/data-exit-webapi',
+  timeout: 60000
+});
+
+service.interceptors.request.use(
+  config => {
+    config.headers['Authorization'] = 'Bearer ' + token;
+    return config;
+})
 
 const changeTab = ()=>{
   getFirstList(tab.value)
@@ -101,23 +113,21 @@ const download = (id: string) => { // 下载这块还没做完
         id: string
       }
     }
-    http.get('file/download-file/'+ backData.contentFile.id, {
-      Authorization: 'Bearer '+  token
-    }).then((dataDt) => {
-      console.log(dataDt)
-      const back = dataDt as unknown as {
-        data: BlobPart
-      }
-      const link = document.createElement('a')
-      let blob = new Blob([back.data], {type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8"})
-      let downloadElement = document.createElement('a')
-      let href = window.URL.createObjectURL(blob);
-      downloadElement.href = href;
-      downloadElement.download = id+'.pdf';
-      document.body.appendChild(downloadElement)
-      downloadElement.click();
-      document.body.removeChild(downloadElement);
-      window.URL.revokeObjectURL(href);
+    service
+    .get('file/download-file/'+backData.contentFile.id, { responseType: 'blob' })
+    .then(res => {
+      const link = document.createElement('a');
+      const blob = new Blob([res.data], { type: res.data.type });
+      const fileName = res.headers['content-disposition'].split(';')[1].split('=')[1];
+      link.style.display = 'none';
+      const url = window.URL || window.webkitURL 
+      link.href = url.createObjectURL(blob);
+      const fileDownloadName = fileName
+      link.setAttribute('download', fileDownloadName);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      url.revokeObjectURL(link.href);
     })
   })
 }
