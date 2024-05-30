@@ -25,6 +25,4 @@ const attrValue = attrs.value as {
 }
 getValue.value = attrValue.optionList[0].optionCode
 
-console.log(attrValue)
-
 </script>

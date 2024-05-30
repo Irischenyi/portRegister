@@ -5,9 +5,8 @@
                 <div>{{ attrValue.nodeName }}</div>
                 <br/>
                 <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
-                <el-select style="width: 150px" clearable>
-                    <el-option label="单位性质1" value="单位性质1" />
-                    <el-option label="单位性质2" value="单位性质2" />
+                <el-select v-model="selectValue" style="width: 250px" clearable>
+                    <el-option v-for="item in selectContent" :label="item.tagName" :value="item.tagValue" />
                 </el-select>
             </div>
         </el-col>
@@ -15,19 +14,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref, useAttrs } from 'vue';
+import { ref, useAttrs, reactive } from 'vue';
 import http, { mainHttpConnect, setBaseInf } from '@/http/httpContentMain'
 const attrs = useAttrs()
 const attrValue = attrs.value as {
     nodeName: string,
     dataSourceUrl: string
 }
+interface child {
+    tagName: string
+    tagValue: string 
+}
+
+
+
+
+const selectContent = ref([] as child[])
+const selectValue = ref('')
+
 const token = localStorage.getItem('token');
-console.log('select 框');
-(new mainHttpConnect(setBaseInf.picUrl)).get(attrValue.dataSourceUrl , {
+
+(new mainHttpConnect(setBaseInf.baseUrl)).get('/'+attrValue.dataSourceUrl , {
     Authorization: 'Bearer '+token
 }).then((data) => {
-    console.log(data)
+    const back = data as unknown as { children: child[] }
+    selectContent.value = back?.children as child[]
 })
 
 

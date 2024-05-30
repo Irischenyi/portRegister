@@ -4,19 +4,23 @@
             <div class="detail-title"> {{ name }} </div>
             <div class="body-box">
                 <div class="top">
-                    <div class="pic"></div>
+                    <div class="pic">
+                        <img v-if="picUrlLink" :src="picUrlLink"/>
+                    </div>
                     <div class="right">
                         <div>
-                            <div class="title">数据安全风险评估</div>
+                            <div class="title">{{ detailText?.categoryName }}</div>
                             <div class="sub-title">
-                                风险评估由省公信厅指导.................
+                                {{ detailText?.summary }}
                             </div>
                         </div>
-                        <div>
+                        <div v-if="detailText?.serviceProvider">
                             <div class="service">
                                 服务商 
-                                <div class="pic2"></div>
-                                中新科技股份有限公司
+                                <div class="pic2">
+                                    <img :src="picUrl+detailText?.serviceProviderAttach.previewUrl"/>
+                                </div>
+                                {{ detailText?.serviceProvider }}
                             </div>
                             <q-btn class="glossy login" rounded color="primary" label="立即申请" />
                         </div>
@@ -24,8 +28,7 @@
                 </div>
                 <div class="detail">
                     <div class="title">详情介绍</div>
-                    <div class="in-text">
-                        1111111111111111111111111111111111
+                    <div class="in-text" v-html="detailText?.content">
                     </div>  
                 </div>
             </div>
@@ -38,20 +41,51 @@
 import { ref, computed} from 'vue';
 import TemplateFrame from '@/components/TemplateFrame.vue'
 import { useRouter, useRoute} from 'vue-router'
+import http , {picUrl} from '@/http/httpContentMain'
 const route = useRoute()
 const query = route.query as {
     type: string, // 1 数据安全
     id: string
 }
 
+interface detailInf  {
+    categoryName: string,
+    content: string,
+    summary: string,
+    serviceProvider?: string,
+    serviceProviderAttach: {
+        previewUrl?: string
+    },
+    serviceHallAttach?: {
+        previewUrl?: string
+    },
+    coverImage?: {
+        previewUrl: string
+    }
+}
+const detailText = ref({} as detailInf)
+const picUrlLink = ref('')
+
 const name = computed(() => {
-    if(query.type == '2') return '数据安全 > 信息安全培训'
     if(query.type == '1') return '安全培训 > 信息安全培训'
+    if(query.type == '2') return '数据安全 > 数据安全评估'
+    if(query.type == '3') return '数据安全 > 数据安全治理'
+    if(query.type == '4') return '数据安全 > 服务商资源池'
 })
 
 
 const getDate = () => {
-    console.log('======')
+    let link = ''
+    if(query.type == '1'){
+        link = 'k2401-safety/safety/'
+    }else{
+        link = 'k2401-service-hall/service-hall/'
+    }
+    http.get(link+query.id).then((data) => {
+        detailText.value = data as unknown as detailInf
+        picUrlLink.value = picUrl+(detailText.value?.coverImage?.previewUrl||detailText.value?.serviceHallAttach?.previewUrl)
+        console.log(picUrlLink.value)
+    })
 }
 getDate()
 
@@ -77,8 +111,16 @@ getDate()
         display: inline-block;
         width: 38%;
         padding-top: 23%;
-        background-color: #4a9da9;
+        background-color: #d1d1d1;
         box-shadow: 0 0 10px 0 rgba(0,0,0,0.3);
+        position: relative;
+        overflow: hidden;
+        img{
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+        }
     }
     .right{
         display: inline-block;
@@ -105,11 +147,18 @@ getDate()
             display: flex;
             align-items: center;
             .pic2{
-                width: 60px;
+                width: 70px;
                 height: 20px;
                 display: inline-block;
-                background-color: #3485FF;
                 margin: 0px 10px;
+                position: relative;
+                overflow: hidden;
+                img{
+                    position: absolute;
+                    left: 0px;
+                    width: 100%;
+                    top: 0px;
+                }
             }
         }
     }
@@ -126,7 +175,6 @@ getDate()
                 height: 15px;
                 content: '';
                 position: absolute;
-                background: #3485FF;
                 left: -1px;
                 top: 25px;
             }

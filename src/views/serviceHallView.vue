@@ -63,7 +63,7 @@
                 </div>
                 <div class="content">{{ item.summary }}</div>
                 <div>
-                  <q-btn unelevated rounded color="primary" label="查看详情" />
+                  <q-btn unelevated rounded color="primary" label="查看详情" @click="goToDetail(item.id)"/>
                 </div>
               </div>
             </div>
@@ -139,10 +139,22 @@ const getFirstList = (tabNumber: string) => {
 }
 
 const goToDetail = (id: string) => {
+  let type = 0;
+  switch(tab.value){
+        case '1':
+          type = 2
+          break;
+        case '2':
+          type = 3
+          break;
+        case '3':
+          type = 4
+          break;
+  }
   router.push({
       path: '/index/dataDetail',
       query: {
-        type: 2,
+        type: type,
         id: id
       }
   })

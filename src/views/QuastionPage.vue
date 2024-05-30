@@ -37,7 +37,6 @@ http.get('k2401-survey/survey', {
 // stageList.value = date
 
 const backComponent = (type: number) => {
-    console.log(type)
     switch(type){
         case 4:
             return RadioBox
@@ -48,7 +47,6 @@ const backComponent = (type: number) => {
         case 8:
             return InputDom
             break
-        
     }
 }
 
