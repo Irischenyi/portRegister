@@ -49,15 +49,17 @@
             </div>
       </template>
   </TemplateFrame>
+  <Bottom/>
 </template>
 
 <script setup lang="ts">
-
 import { ref } from 'vue';
 import axios from 'axios';
 import TemplateFrame from '@/components/TemplateFrame.vue'
 import http , {picUrl} from '@/http/httpContentMain'
 import { useRouter } from 'vue-router'
+import Bottom from '@/components/Bottom.vue'
+import { Loading } from 'quasar'
 const current = ref(1)
 const trainTabs = ref()
 const tab = ref('')
@@ -69,7 +71,7 @@ interface itemInf {categoryName: string , previewUrl: string, title: string, fil
 
 
 const service = axios.create({
-  baseURL: '/data-exit-webapi',
+  baseURL: 'http://47.100.234.98:18766/data-exit-mobileapi/',
   timeout: 60000
 });
 
@@ -92,16 +94,13 @@ http.get('k2401-safety/category-list').then((data) => {
 })
 
 const getFirstList = (tabNumber: string) => {
+  list.value = []
+  Loading.show()
   http.get(`k2401-safety/safety/paged?current=1&size=8&category=${tabNumber}`).then((data) => {
     const backList = data as unknown as { items: itemInf[], pages: string }
     list.value = backList.items
     totalPage.value = Number(backList.pages)
-  })
-}
-
-const getDetail = (id: string) => {
-  http.get('k2401-safety/safety/1789583984900997122?id='+id).then((data) => {
-    console.log(data)
+    Loading.hide()
   })
 }
 
@@ -118,7 +117,8 @@ const download = (id: string) => { // 下载这块还没做完
     .then(res => {
       const link = document.createElement('a');
       const blob = new Blob([res.data], { type: res.data.type });
-      const fileName = res.headers['content-disposition'].split(';')[1].split('=')[1];
+      // const fileName = res.headers['content-disposition'].split(';')[1].split('=')[1]; // 这个是取真实的名字，如果是跨域的话会取不到相应头中的信息，下面那句代码用一个时间戳还代替真实的文件名，后面最好代码优化下
+      const fileName = new Date().getTime() + "";
       link.style.display = 'none';
       const url = window.URL || window.webkitURL 
       link.href = url.createObjectURL(blob);

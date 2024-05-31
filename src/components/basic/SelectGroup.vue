@@ -5,9 +5,21 @@
                 <div>{{ attrValue.sequence + ' . ' + attrValue.nodeName }}</div>
                 <br/>
                 <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
-                <el-select v-model="selectValue" style="width: 250px" clearable>
-                    <el-option v-for="item in selectContent" :label="item.tagName" :value="item.tagValue" />
+                <el-select v-model="selectValue" placeholder="Select" style="width: 240px">
+                    <el-option-group
+                        v-for="item in selectContent"
+                        :key="item.tagValue"
+                        :label="item.tagName"
+                        >
+                        <el-option
+                            v-for="item in item.children"
+                            :key="item.tagValue"
+                            :label="item.tagName"
+                            :value="item.tagValue"
+                        />
+                    </el-option-group>
                 </el-select>
+                
             </div>
         </el-col>
     </el-row>

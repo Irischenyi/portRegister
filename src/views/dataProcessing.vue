@@ -506,9 +506,11 @@
       </q-stepper>
     </div>
   </div>
+  <Bottom/>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
+import Bottom from '@/components/Bottom.vue'
 const step = ref(1)
 const ruleForm = ref({
   // 第一部分

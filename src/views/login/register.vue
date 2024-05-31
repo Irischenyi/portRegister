@@ -229,7 +229,7 @@ const postCheck = (uuid: string, left: number ) => {
                 <div class="tips">{{ failMessage }}</div>
             </div>
             <div class="bottom-btn">
-                <q-btn unelevated rounded color="grey-5" label="返回" />
+                <q-btn unelevated rounded color="grey-5" label="返回" @click="router.go(-1)"/>
                 <q-btn unelevated rounded @click="saveForm" color="primary" label="提交" />
             </div>
         </div>

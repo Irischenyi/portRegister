@@ -82,12 +82,14 @@
         </div>
       </template>
   </TemplateFrame>
+  <Bottom/>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
 import  http ,{ picUrl } from '@/http/httpContentMain'
 import { useRouter } from 'vue-router'
 import TemplateFrame from '@/components/TemplateFrame.vue'
+import Bottom from '@/components/Bottom.vue'
 interface itemInf {
   title: string, 
   serviceProvider: string, 

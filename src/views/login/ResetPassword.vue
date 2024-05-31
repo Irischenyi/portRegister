@@ -113,7 +113,7 @@ const save = () => {
             <InputTemplate type="password" code="reportPassword" @changeFormValue="changeFormValue" name="确认密码"/>
             <div class="failMessage">{{ failMessage }}</div>
             <div class="bottom-btn">
-                <q-btn unelevated rounded color="grey-5" label="返回" />
+                <q-btn unelevated rounded color="grey-5" label="返回" @click="router.go(-1)"/>
                 <q-btn unelevated rounded color="primary" @click="save" label="提交" />
             </div>
         </div>

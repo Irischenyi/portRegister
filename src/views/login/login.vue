@@ -106,7 +106,7 @@ const setUser = () => {
             <q-btn class="glossy login" rounded color="primary" label="登录" @click="login"/>
             <div class="bottom">
                 <div>
-                    <div @click="router.back()">返回页面</div>
+                    <div @click="router.push('/index/home')">返回页面</div>
                     <div @click="forgetPassword">忘记密码</div>
                 </div>
                 <div @click="setUser">免费注册</div>

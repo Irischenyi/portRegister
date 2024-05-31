@@ -2,7 +2,7 @@
     <el-row>
         <el-col>
             <div>
-                {{ attrValue.nodeName}}
+                {{ attrValue.sequence + ' . ' +attrValue.nodeName}}
             </div>
             <br/>
             <div>
@@ -13,16 +13,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, useAttrs } from 'vue';
+import { ref, useAttrs, watch } from 'vue';
 const attrs = useAttrs()
 const getValue = ref('')
 const attrValue = attrs.value as {
     nodeName: string,
+    id: string,
+    sequence: number,
     optionList: {
         optionCode: string,
         optionName: string
     }[]
 }
+const emit = defineEmits(['set-Value']);
+watch(getValue,() => {
+    emit('set-Value', attrValue.id, getValue.value)
+})
 getValue.value = attrValue.optionList[0].optionCode
 
 </script>

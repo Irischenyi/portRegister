@@ -34,7 +34,7 @@
             </div>
         </template>
     </TemplateFrame>
-
+    <Bottom/>
 </template>
 
 <script setup lang="ts">
@@ -42,6 +42,7 @@ import { ref, computed} from 'vue';
 import TemplateFrame from '@/components/TemplateFrame.vue'
 import { useRouter, useRoute} from 'vue-router'
 import http , {picUrl} from '@/http/httpContentMain'
+import Bottom from '@/components/Bottom.vue'
 const route = useRoute()
 const query = route.query as {
     type: string, // 1 数据安全
