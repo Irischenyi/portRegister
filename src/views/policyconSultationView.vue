@@ -2,8 +2,8 @@
   <TemplateFrame>
     <template #header>
       <div class="topImg" style="width: 100%">
-        <img style="width: 100%; height: 300px" :src="bannerSy" alt="" />
-        <!-- <div class="topImgText">
+        <img style="width: 100%; height: 300px" src="@/assets/images/aqpx.png" alt="" />
+        <div class="topImgText">
           <div style="color: #fff; font-size: 23px; font-weight: 500">
             政策咨询
           </div>
@@ -11,7 +11,7 @@
             提供工业互联网安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目；
             基于行业内最新动态的梳理与汇聚
           </div>
-        </div> -->
+        </div>
       </div>
     </template>
     <template #tabs>
@@ -91,7 +91,7 @@ import TemplateFrame from '@/components/TemplateFrame.vue'
 onMounted(async () => {
   console.log(setBaseInf.baseUrl, 'setBaseInf.baseUrl')
 
-  await getBanner() //获取 Banner 图
+  // await getBanner() //获取 Banner 图
   await getCategoryTabs() //获取政策资讯类别
   //指定政策资讯下的分页列表
   await getArticlePaged()
@@ -112,7 +112,7 @@ const tabsChange2 = ref('')
 const tabsChange3 = ref('')
 const tabsChange4 = ref('')
 const getCategoryTabs = async () => {
-  const res = await http.get('/k2401-article/article-category-list') as any
+  const res = await http.get('/k2401-service-hall/service-hall/hot-list') as any
   console.log(res, 'res+++222222222+++++')
   tabsChange.value = res
   // console.log(tabsChange.value[0].name, 'tabsChange.value[0].name')

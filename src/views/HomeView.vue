@@ -7,34 +7,70 @@
       alt=""
       srcset=""
     /> -->
-    <img style="width: 100%; height: 400px" :src="bannerSy" alt="" srcset="" />
-    <!-- 版心 -->
-    <div class="contain">
+    <!-- <img style="width: 100%; height: 400px" :src="bannerSy" alt="" srcset="" /> -->
+    
+    <div class="slider-box">
+      <q-carousel
+        animated
+        v-model="slide"
+        arrows
+        navigation
+        infinite
+        :autoplay="autoplay"
+        @mouseenter="autoplay = false"
+        @mouseleave="autoplay = true"
+      >
+        <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" />
+        <q-carousel-slide :name="2" img-src="https://cdn.quasar.dev/img/parallax1.jpg" />
+        <q-carousel-slide :name="3" img-src="https://cdn.quasar.dev/img/parallax2.jpg" />
+        <q-carousel-slide :name="4" img-src="https://cdn.quasar.dev/img/quasar.jpg" />
+      </q-carousel>
+    </div>
+    <div class="num-box">
       <!-- 数量 -->
-      <div class="num_text">
+      <div class="contain">
+        <div class="num_text">
         <div>
           <div class="num">1000+</div>
-          <div>注册用户</div>
+          <div class="text">注册用户</div>
         </div>
         <div>
           <div class="num">32+</div>
-          <div>专家入驻</div>
+          <div class="text">专家入驻</div>
         </div>
         <div>
           <div class="num">800+</div>
-          <div>上架服务</div>
+          <div class="text">上架服务</div>
         </div>
         <div>
           <div class="num">2500+</div>
-          <div>服务用户</div>
+          <div class="text">服务用户</div>
         </div>
       </div>
+      </div>
+    </div>
+    <!-- 版心 -->
+    <div class="contain">
+      
 
       <!-- 服务简介 -->
       <div class="fwjj">
         <div class="fw">服务简介</div>
         <!-- 图片展示 -->
-        <div style="display: flex">
+        <div class="fwjj-main"> 
+          <!--  -->
+          <!-- active -->
+          <div class="item1 active" :style="activeInt"></div>
+          <div class="item-line" style="order: 1;">
+            <div  class="item1" @mouseenter="changeActive(1)"></div>
+            <div  class="item1 item2" @mouseenter="changeActive(2)"></div>
+          </div>
+          <div class="item-line" style="order: 2;">
+            <div  class="item1 item2" @mouseenter="changeActive(3)"></div>
+            <div  class="item1" @mouseenter="changeActive(4)"></div>
+          </div>
+        </div>
+        <!-- <div style="display: flex">
           <div style="flex: 1; position: relative">
             <img
               class="fwjj_img1"
@@ -113,42 +149,20 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <!-- 合规专题 -->
       <div class="hgzt">
         <div class="fw">合规专题</div>
-        <div style="display: flex; justify-content: space-between; width: 100%">
-          <div style="width: 33%; padding: 10px; background-color: #fafafa">
-            <div>
+        <div class="hgzt-main">
+            <div class="simple-line" v-for="item in [1,2,3]">
               <div>
                 <img style="width: 100%" src="../assets/images/hgzt1.png" />
               </div>
-              <div style="font-size: 20px">数据出境合规自评估</div>
-              <div>数据出境合规自评估数据出境合规自评估数据出境合规自评估</div>
+              <div class="title">数据出境合规自评估</div>
+              <div class="content">数据出境合规自评估数据出境合规自评估数据出境合规自评估</div>
             </div>
-          </div>
-
-          <div style="width: 33%; padding: 10px; background-color: #fafafa">
-            <div>
-              <div>
-                <img style="width: 100%" src="../assets/images/hgzt2.png" />
-              </div>
-              <div style="font-size: 20px">数据出境合规自评估</div>
-              <div>数据出境合规自评估数据出境合规自评估数据出境合规自评估</div>
-            </div>
-          </div>
-
-          <div style="width: 33%; padding: 10px; background-color: #fafafa">
-            <div>
-              <div>
-                <img style="width: 100%" src="../assets/images/hgzt3.png" />
-              </div>
-              <div style="font-size: 20px">数据出境合规自评估</div>
-              <div>数据出境合规自评估数据出境合规自评估数据出境合规自评估</div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -158,7 +172,7 @@
         <div style="text-align: right; color: #1f71ff; margin-top: -40px">
           查看更多
         </div>
-        <div>
+        <div class="police-main">
           <q-tabs
             @update:model-value="btns"
             v-model="tab"
@@ -180,7 +194,8 @@
                   <div style="background-color: #fafafa">
                     <div>
                       <div>
-                        <img style="width: 100%" :src="imgTabs" />
+                        <!-- imgTabs -->
+                        <img style="width: 100%" :src="'@/assets/images/aqpx.png'" />
                       </div>
                       <div
                         style="display: flex; justify-content: space-between"
@@ -215,7 +230,7 @@
                       <div style="display: flex; align-items: center">
                         <div class="yuan"></div>
                         <div class="moreText" :title="(item as any).title">
-                          {{ (item as any).title }}
+                          {{ (item as any).title}}
                         </div>
                       </div>
                       <div>
@@ -239,46 +254,14 @@
         <div style="text-align: right; color: #1f71ff; margin: -40px 0 20px 0">
           查看更多
         </div>
-        <div style="display: flex; justify-content: space-between">
-          <div style="width: 24%">
-            <img
-              style="width: 100%"
-              src="../assets/images/aqpx1.png"
-              alt=""
-              srcset=""
-            />
-          </div>
-
-          <div style="width: 24%">
-            <img
-              style="width: 100%"
-              src="../assets/images/aqpx2.png"
-              alt=""
-              srcset=""
-            />
-          </div>
-
-          <div style="width: 24%">
-            <img
-              style="width: 100%"
-              src="../assets/images/aqpx3.png"
-              alt=""
-              srcset=""
-            />
-          </div>
-
-          <div style="width: 24%">
-            <img
-              style="width: 100%"
-              src="../assets/images/aqpx4.png"
-              alt=""
-              srcset=""
-            />
+        <div class="train-mian">
+          <div class="item" v-for="item in 4">
+              <div class="img"></div>
+              <div class="bottom">安全培训</div>
           </div>
         </div>
       </div>
     </div>
-
     <Bottom/>
 
     <!-- 智能客服模块 -->
@@ -312,9 +295,8 @@
   </div>
   <!-- 客户服务弹框 -->
   <el-dialog
-    style="padding: 20px; background-color: #eaeff9"
+    class="service-dialog"
     v-model="khfwDialog"
-    width="25%"
     :before-close="handleClose1"
   >
     <div style="font-size: 18px; font-weight: 600">
@@ -353,7 +335,7 @@
             v-for="item in questionList"
             :key="(item as any).id"
           >
-            <div style="font-size: 16px; margin-bottom: 5px">
+            <div style="font-size: 14px; margin-bottom: 15px">
               {{ (item as any).question }}
             </div>
 
@@ -451,10 +433,10 @@
   <el-dialog
     style="padding: 20px 30px; background-color: #eaeff9"
     v-model="lxfsDialog"
-    width="18%"
+    width="25%"
     :before-close="handleClose3"
   >
-    <div style="display: flex; justify-content: space-around">
+    <div style="display: flex; justify-content: space-around;">
       <div style="margin-right: 10px">
         <span>企业客服二维码</span>
         <div style="width: 100px; height: 100px; background-color: #000">
@@ -502,20 +484,20 @@ const getBanner = async () => {
 }
 //获取政策资讯类别
 const tabsChange = ref([])
-const tabsChange1 = ref('')
-const tabsChange2 = ref('')
-const tabsChange3 = ref('')
-const tabsChange4 = ref('')
+const tabsChange1 = ref('政策咨询')
+const tabsChange2 = ref('政策咨询')
+const tabsChange3 = ref('政策咨询')
+const tabsChange4 = ref('政策咨询')
 
 const getCategoryTabs = async () => {
   const res = (await http.get('/k2401-article/article-category-list')) as any
   console.log(res, 'res+++222222222+++++')
   tabsChange.value = res as any
   // console.log(tabsChange.value[0].name, 'tabsChange.value[0].name')
-  tabsChange1.value = res[0].name
-  tabsChange2.value = res[1].name
-  tabsChange3.value = res[2].name
-  tabsChange4.value = res[3].name
+  // tabsChange1.value = res[0].name
+  // tabsChange2.value = res[1].name
+  // tabsChange3.value = res[2].name
+  // tabsChange4.value = res[3].name
 }
 const tabsLists = ref([])
 const titleTabs = ref('')
@@ -541,7 +523,9 @@ const getArticlePaged = async () => {
   imgTabs.value = `${setBaseInf.baseUrl}` + res.items[0].attach.storagePath
 }
 const tab = ref('1')
+const slide = ref(1)
 const tabsValue = ref('1')
+const autoplay = ref(true)
 const btns = (value: any) => {
   console.log(value, 'val++++++')
   tabsValue.value = value
@@ -586,6 +570,8 @@ const activeName = ref('first')
 const handleClick = (tab: TabsPaneContext, event: Event) => {
   console.log(tab, event)
 }
+
+const isAcitive = ref(0);
 
 const cjwtInput = ref('')
 
@@ -696,6 +682,20 @@ const askQuestion = async () => {
 
   question.value = '' // 重置输入框
 }
+
+const activeInt = ref('order: 0;')
+const changeActive = (key: number) => {
+  console.log(key)
+  if(key == 1){
+    activeInt.value = 'order: 1;';
+  } else if(key == 2 || key == 3){
+    activeInt.value = 'order: 2;';
+  } else if(key == 4 || key == 5){
+    activeInt.value = 'order: 3;';
+  }
+  isAcitive.value = key;
+}
+
 const getCodes = async () => {
   await formRef.value.validate()
   await getCode()
@@ -724,29 +724,91 @@ const postCheck = (uuid: string, left: number) => {
 </script>
 <style lang="scss" scoped>
 .contain {
+  width: 70%;
   padding: 10px;
-  width: 1300px;
+  max-width: 1300px;
+  min-width: 800px;
   margin: 0 auto;
+}
+.num-box{
+  background-color: #eef1f6;
+  max-width: auto;
+  width: 100%;
 }
 .num_text {
   display: flex;
   padding: 30px 0;
   justify-content: space-between;
-  background-color: #f9f9f9;
 }
 .num {
-  font-size: 40px;
+  font-size: 45px;
   font-weight: 600;
   color: #4893ff;
 }
+.text{
+  margin-top: 10px;
+  color: grey;
+  position: relative;
+  transform: scale(0.9);
+  &::after{
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 3px;
+    left: 0px;
+    bottom: -10px;
+    background: #4893FF;
+  }
+}
 .fwjj {
   width: 100%;
-  height: 300px;
+  .fwjj-main{
+    width: 100%;
+    font-size: 0px;
+    display: flex;
+    .item-line{
+      width: 25%;
+    }
+    .item1{
+      width: 100%;
+      padding-top: 90%;
+      background: #525B75;
+      box-sizing: border-box;
+      display: inline-block;
+      transition: all ease 0.2;
+    }
+    .item2{
+      background: #454D62;
+    }
+    .active{
+        width: 50%;
+        padding-top: 40%;
+        background: #146AFF;
+        order: 3;
+    }
+    &::after{
+      content: '';
+      display: block;
+      clear: both;
+    }
+  }
 }
 .fw {
-  margin: 20px 0;
+  margin-top: 10px;
+  padding: 50px 0;
   font-size: 18px;
   text-align: center;
+  position: relative;
+  &::after{
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 5px;
+    bottom: 40px;
+    border-radius: 10px;
+    background-color: #1b6fff;
+    left: calc(50% - 10px);
+  }
 }
 .fwjj_img1 {
   height: 400px;
@@ -764,8 +826,26 @@ const postCheck = (uuid: string, left: number) => {
   border-radius: 50%;
   background-color: #1b6fff;
 }
-.hgzt {
-  margin-top: 180px;
+.hgzt-main{
+  display: flex;
+  justify-content: space-between;
+  .simple-line{
+    border: 1px dashed #b3b3b3;
+    box-sizing: border-box;
+    padding: 12px;
+    width: calc(33% - 10px);
+    padding-bottom: 5px;
+    .title{
+      font-weight: bold;
+      margin: 2px 0px;
+    }
+    .content{
+      color: grey;
+      font-size: 12px;
+      margin: 5px 0px;
+    }
+  }
+  
 }
 
 .moreText {
@@ -777,20 +857,23 @@ const postCheck = (uuid: string, left: number) => {
   margin-left: 10px;
 }
 .fuwu_f {
-  position: absolute;
+  position: fixed;
   top: 400px;
-  right: 0;
+  right: 10px;
+  transition: all ease 0.5s;
 }
 .fuwu {
   background-color: #6cabf8;
   display: flex;
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
+  transform: scale(0.9);
+  right: 20px;
 }
 
 ::v-deep .el-tabs__nav-wrap:after {
@@ -864,4 +947,44 @@ const postCheck = (uuid: string, left: number) => {
 //   top: 1000px;
 //   left: 1000px;
 // }
+
+.slider-box{
+  width: 100%;
+}
+
+.train-mian{
+  display: flex;
+  margin-bottom: 80px;
+  justify-content: space-between;
+  .item{
+    width: calc(25% - 19px);
+    padding-top: 28%;
+    background: #1b6fff;
+    position: relative;
+    .img{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+    }
+    .bottom{
+      position: absolute;
+      width: 100%;
+      bottom: 0px;
+      padding: 10px 0px;
+      text-align: center;
+      color: white;
+      background-color: rgba(0,0,0,0.2);
+    }
+  }
+}
+
+.police-main{
+  min-height: 400px;
+}
+
+::v-deep .el-overlay-dialog .service-dialog{
+  width: 300px;
+}
 </style>
