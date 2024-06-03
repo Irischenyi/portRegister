@@ -208,64 +208,26 @@
           >
             <q-tab v-for="(item, key) in tabsChange" :name="key" :label="item.name" />
           </q-tabs>
-          <q-tab-panels style="margin-top: 10px" v-model="tab" animated>
-            <q-tab-panel :name="tabsValue">
-              <div style="display: flex; justify-content: space-between">
-                <div style="width: 49%">
-                  <div style="background-color: #fafafa">
-                    <div>
-                      <div>
-                        <!-- imgTabs -->
-                        <img style="width: 100%" :src="'@/assets/images/aqpx.png'" />
-                      </div>
-                      <div
-                        style="display: flex; justify-content: space-between"
-                      >
-                        <div
-                          class="moreText"
-                          :title="titleTabs"
-                          style="font-size: 16px"
-                        >
-                          {{ titleTabs }}
-                        </div>
-                        <div>{{ timeTabs }}</div>
-                      </div>
-                      <div class="moreText" :title="summaryTabs">
-                        {{ summaryTabs }}
-                      </div>
-                      <div @click="searchDetail" style="text-align: end">
-                        查看详情
-                      </div>
-                    </div>
-                  </div>
+          <div class="police-detail">
+            <div class="left">
+                <div class="pic">
+                  <img :src="setBaseInf.picUrl + tabsLists?.[0]?.attach.previewUrl"/>
                 </div>
-                <div style="width: 49%">
-                  <div v-for="(item, index) in tabsLists" :key="index">
-                    <div
-                      style="
-                        display: flex;
-                        justify-content: space-between;
-                        font-size: 16px;
-                      "
-                    >
-                      <div style="display: flex; align-items: center">
-                        <div class="yuan"></div>
-                        <div class="moreText" :title="(item as any).title">
-                          {{ (item as any).title}}
-                        </div>
-                      </div>
-                      <div>
-                        {{ (item as any).publishDate }}
-                      </div>
-                    </div>
-                    <div style="margin-top: -20px">
-                      <el-divider />
-                    </div>
-                  </div>
+                <div class="content">
+                  <div class="title">{{tabsLists?.[0]?.title}}</div>
+                  <div class="content-detail">{{tabsLists?.[0]?.summary}}</div>
+                  <div class="detail">查看详情</div>
                 </div>
-              </div>
-            </q-tab-panel>
-          </q-tab-panels>
+            </div>
+            <div class="right">
+              <ul>
+                  <li v-for="item in tabsLists">
+                    <div class="title">{{item.title }}</div>
+                    <i>{{ item.publishDate }}</i>
+                  </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -276,9 +238,11 @@
           查看更多
         </div>
         <div class="train-mian">
-          <div class="item" v-for="item in 4">
-              <div class="img"></div>
-              <div class="bottom">安全培训</div>
+          <div class="item" v-for="item in safeList">
+              <div class="img">
+                <img :src="setBaseInf.picUrl + item.coverImage.previewUrl"/>
+              </div>
+              <div class="bottom">{{  item.title }}</div>
           </div>
         </div>
       </div>
@@ -489,6 +453,7 @@ onMounted(async () => {
   await getCategoryTabs() //获取政策资讯类别
   //指定政策资讯下的分页列表
   await getArticlePaged()
+  await safeService()
 })
 import type { TabsPaneContext } from 'element-plus'
 
@@ -503,55 +468,41 @@ const getBanner = async () => {
 }
 //获取政策资讯类别
 const tabsChange = ref([] as { name: string, value: string}[])
-const tabsChange1 = ref('')
-const tabsChange2 = ref('')
-const tabsChange3 = ref('')
-const tabsChange4 = ref('')
 
 const getCategoryTabs = async () => {
   const http = setHttp();
   const res = (await http.get('/k2401-article/article-category-list')) as any
-  console.log(res, 'res+++222222222+++++')
   tabsChange.value = res as { name: string, value: string}[]
-  // console.log(tabsChange.value[0].name, 'tabsChange.value[0].name')
-  // tabsChange1.value = res[0].name
-  // tabsChange2.value = res[1].name
-  // tabsChange3.value = res[2].name
-  // tabsChange4.value = res[3].name
 }
-const tabsLists = ref([])
-const titleTabs = ref('')
-const timeTabs = ref('')
-const summaryTabs = ref('')
-const imgTabs = ref('')
+const tabsLists = ref([] as {title: string , publishDate: string, id: string, summary: string}[])
 const ids = ref('')
 const getArticlePaged = async () => {
   const http = setHttp();
-  const res = (await http.get('/k2401-article/article/paged', {
-    params: {
-      category: tabsValue.value || 1,
-      current: 1, //当前页码
-      size: 10 //每页多少条数据
-    }
-  })) as any
-  console.log(res, 'resttttttttttt')
+  const res = (await http.get('k2401-article/article/paged?current=1&size=8&category='+(tab.value+1))) as any
 
-  tabsLists.value = res.items
-  titleTabs.value = res.items[0].title
-  summaryTabs.value = res.items[0].summary
-  timeTabs.value = res.items[0].publishDate
-  ids.value = res.items[0].id
-  imgTabs.value = `${setBaseInf.baseUrl}` + res.items[0].attach.storagePath
+  tabsLists.value = res.items as {title: string , publishDate: string, id: string, summary: string}[]
+
 }
-const tab = ref('1')
+const tab = ref(0)
 const slide = ref(1)
 const tabsValue = ref('1')
 const autoplay = ref(true)
 const btns = (value: any) => {
-  console.log(value, 'val++++++')
   tabsValue.value = value
   getArticlePaged()
 }
+
+interface itemInf {
+  title: string, 
+  coverImage: { previewUrl: string}
+}
+const safeList = ref([] as itemInf[])
+const safeService = async () => {
+  const http = setHttp();
+  const res = await http.get('k2401-safety/safety/paged?current=1&size=4&category=1') as unknown  as { items : itemInf[]}
+  safeList.value = res.items as itemInf[]
+}
+
 // 封装常见问题列表接口
 const questionList = ref([])
 const getQuestion = async () => {
@@ -1031,7 +982,6 @@ const postCheck = (uuid: string, left: number) => {
   .item{
     width: calc(25% - 19px);
     padding-top: 28%;
-    background: #1b6fff;
     position: relative;
     .img{
       width: 100%;
@@ -1039,6 +989,13 @@ const postCheck = (uuid: string, left: number) => {
       position: absolute;
       left: 0px;
       top: 0px;
+      img{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+      }
     }
     .bottom{
       position: absolute;
@@ -1054,6 +1011,82 @@ const postCheck = (uuid: string, left: number) => {
 
 .police-main{
   min-height: 400px;
+}
+.police-detail{
+  display: flex;
+  .left{
+    width: 50%;
+    height: 350px;
+    box-sizing: border-box;
+    padding: 20px;
+    .pic{
+      width: 100%;
+      padding-top: 55%;
+      overflow: hidden;
+      position: relative;
+      img{
+        position: absolute;
+        left: 0px;
+        top: 0px;
+      }
+    }
+    .title{
+      font-size: 15px;
+      color: black;
+      padding: 5px 0px;
+      text-wrap: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .content{
+      color: grey;
+      font-size: 13px;
+      padding: 10px;
+    }
+    
+    .detail{
+      text-align: right;
+      color: grey;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+  }
+  .right{
+    width: 50%;
+    height:100%;
+    li{
+      padding: 10px 0px;
+      border-bottom: 1px solid #ededed;
+      position: relative;
+      display: flex;
+      &::marker{
+        color: #146AFF;
+      }
+      &::after{
+        content: '';
+        width: 5px;
+        height: 5px;
+        background-color: #146AFF;
+        border-radius: 5px;
+        position: absolute;
+        left: -15px;
+        top: 16px;
+      }
+      .title{
+        width: 70%;
+        text-wrap: nowrap;
+        overflow: hidden;
+        display: inline-block;
+        text-overflow: ellipsis;
+      }
+      i{
+        position: absolute;
+        right: 0px;
+        font-size: 12px;
+        color: grey;
+      }
+    }
+  }
 }
 
 ::v-deep .el-overlay-dialog .service-dialog{

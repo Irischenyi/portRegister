@@ -85,7 +85,6 @@ export class mainHttpConnect extends httpConnectMain {
   get(url:string,  headers?: {}) {
       this.url = url
       axios.get(this.baseUrl+url, {headers}).then(response => {
-          console.log(response)
           this.commonResolve(response)
       }).catch((error) => {
           this.errorFun(error)
