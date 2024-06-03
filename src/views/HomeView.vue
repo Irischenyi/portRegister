@@ -1028,6 +1028,7 @@ const postCheck = (uuid: string, left: number) => {
         position: absolute;
         left: 0px;
         top: 0px;
+        width: 100%;
       }
     }
     .title{
