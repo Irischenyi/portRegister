@@ -109,7 +109,11 @@ export class mainHttpConnect extends httpConnectMain {
  * http.get('/tag/child-list/'+value).then((response) => {})
  */
 
- 
+export const setHttp = () => {
+  return new mainHttpConnect(setBaseInf.baseUrl)
+} 
+
 export default new mainHttpConnect(setBaseInf.baseUrl)
 export const picUrl = setBaseInf.picUrl
+
 

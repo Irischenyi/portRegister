@@ -19,14 +19,11 @@
         :autoplay="autoplay"
         @mouseenter="autoplay = false"
         @mouseleave="autoplay = true"
-      >
-        <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" />
-        <q-carousel-slide :name="2" img-src="https://cdn.quasar.dev/img/parallax1.jpg" />
-        <q-carousel-slide :name="3" img-src="https://cdn.quasar.dev/img/parallax2.jpg" />
-        <q-carousel-slide :name="4" img-src="https://cdn.quasar.dev/img/quasar.jpg" />
+      >7yue
+        <q-carousel-slide v-for="(item, key) in bannerSy" :name="key" :img-src="setBaseInf.picUrl + item?.previewUrl" />
       </q-carousel>
     </div>
-    <div class="num-box">
+    <div class="num-box" style="display: none;">
       <!-- 数量 -->
       <div class="contain">
         <div class="num_text">
@@ -60,14 +57,41 @@
         <div class="fwjj-main"> 
           <!--  -->
           <!-- active -->
-          <div class="item1 active" :style="activeInt"></div>
+          <div class="item1 active" :style="activeInt">
+            <div class="content">
+                <div class="title">数据安全能力成熟度评估</div>
+                <div class="sub-title" style="width: 230px;">从数据安全管理的角度，以及企业组织的数据为核心，微软数据安全生命周期进行分析发现苏剧安全风险。</div>
+                <div class="click-button">立即体验</div>
+              </div>
+          </div>
           <div class="item-line" style="order: 1;">
-            <div  class="item1" @mouseenter="changeActive(1)"></div>
-            <div  class="item1 item2" @mouseenter="changeActive(2)"></div>
+            <div  class="item1">
+              <div class="content">
+                 <div class="title">安全评估</div>
+                 <div class="sub-title">专业的评估团队</div>
+              </div>
+            </div>
+            <!-- @mouseenter="changeActive(2)" -->
+            <div  class="item1 item2" >
+              <div class="content">
+                 <div class="title">安全评估</div>
+                 <div class="sub-title">专业的评估团队</div>
+              </div>
+            </div>
           </div>
           <div class="item-line" style="order: 2;">
-            <div  class="item1 item2" @mouseenter="changeActive(3)"></div>
-            <div  class="item1" @mouseenter="changeActive(4)"></div>
+            <div  class="item1 item2">
+              <div class="content">
+                 <div class="title">安全评估</div>
+                 <div class="sub-title">专业的评估团队</div>
+              </div>
+            </div>
+            <div  class="item1" >
+              <div class="content">
+                 <div class="title">安全评估</div>
+                 <div class="sub-title">专业的评估团队</div>
+              </div>
+            </div>
           </div>
         </div>
         <!-- <div style="display: flex">
@@ -182,10 +206,7 @@
             narrow-indicator
             align="left"
           >
-            <q-tab name="1" :label="tabsChange1" />
-            <q-tab name="2" :label="tabsChange2" />
-            <q-tab name="3" :label="tabsChange3" />
-            <q-tab name="4" :label="tabsChange4" />
+            <q-tab v-for="(item, key) in tabsChange" :name="key" :label="item.name" />
           </q-tabs>
           <q-tab-panels style="margin-top: 10px" v-model="tab" animated>
             <q-tab-panel :name="tabsValue">
@@ -457,7 +478,7 @@
 import type { Ref } from 'vue'
 import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import http, { setBaseInf } from '@/http/httpContentMain'
+import { setBaseInf, setHttp } from '@/http/httpContentMain'
 import { useRouter } from 'vue-router'
 import picSlider from '@/components/picSlider.vue'
 import codeMixinHook from '../views/login/codeMixin'
@@ -474,25 +495,24 @@ import type { TabsPaneContext } from 'element-plus'
 const picRef = ref()
 const { codeValue, getCode, closeCodeFun, failMessage } = codeMixinHook(picRef)
 //  获取 Banner 图
-const bannerSy = ref('')
+const bannerSy = ref([] as {previewUrl: string}[])
 const getBanner = async () => {
-  const res = (await http.get('/k2401-banner/list', {
-    params: { category: 1 }
-  })) as any
-  bannerSy.value = `${setBaseInf.baseUrl}` + res[0].storagePath
-  console.log(res, 'res+++11111111+++++')
+  const http = setHttp();
+  const res = (await http.get('/k2401-banner/list?category=1')) as any
+  bannerSy.value = res as {previewUrl: string}[]
 }
 //获取政策资讯类别
-const tabsChange = ref([])
-const tabsChange1 = ref('政策咨询')
-const tabsChange2 = ref('政策咨询')
-const tabsChange3 = ref('政策咨询')
-const tabsChange4 = ref('政策咨询')
+const tabsChange = ref([] as { name: string, value: string}[])
+const tabsChange1 = ref('')
+const tabsChange2 = ref('')
+const tabsChange3 = ref('')
+const tabsChange4 = ref('')
 
 const getCategoryTabs = async () => {
+  const http = setHttp();
   const res = (await http.get('/k2401-article/article-category-list')) as any
   console.log(res, 'res+++222222222+++++')
-  tabsChange.value = res as any
+  tabsChange.value = res as { name: string, value: string}[]
   // console.log(tabsChange.value[0].name, 'tabsChange.value[0].name')
   // tabsChange1.value = res[0].name
   // tabsChange2.value = res[1].name
@@ -506,6 +526,7 @@ const summaryTabs = ref('')
 const imgTabs = ref('')
 const ids = ref('')
 const getArticlePaged = async () => {
+  const http = setHttp();
   const res = (await http.get('/k2401-article/article/paged', {
     params: {
       category: tabsValue.value || 1,
@@ -534,6 +555,7 @@ const btns = (value: any) => {
 // 封装常见问题列表接口
 const questionList = ref([])
 const getQuestion = async () => {
+  const http = setHttp();
   const res = (await http.post('/k2401-question/question/paged', {
     current: 1, // 第几页
     size: 10, // 每页多少条数据
@@ -545,6 +567,7 @@ const getQuestion = async () => {
 // 封装指定常见问题的详情的接口
 let answerDetail = ref('')
 const getQuestionDetail = async (id: any) => {
+  const http = setHttp();
   const res = (await http.get(`k2401-question/question/${id}`)) as any
   answerDetail.value = res.answer
   console.log(answerDetail.value, 'answerDetail.value')
@@ -625,6 +648,7 @@ const handleClose3 = () => {
 
 const itemDetail = ref('')
 const getArticleDetail = async (id: any) => {
+  const http = setHttp();
   const res = await http.get(`k2401-article/article/${id}`)
   console.log(res, '政策咨询详情++')
   console.log(itemDetail.value, 'itemDetail.value')
@@ -645,6 +669,7 @@ const searchDetail = () => {
 }
 // 智能咨询接口封装
 const getQueryQusetion = async () => {
+  const http = setHttp();
   const res = (await http.post('/k2401-talk/question', {
     question: '问题' // 输入的问题（必填）
   })) as any
@@ -661,7 +686,7 @@ const askQuestion = async () => {
   if (question.value.trim() === '') return
 
   messages.value.push({ text: question.value, sent: true }) // 将用户输入的问题显示在右上角
-
+  const http = setHttp();
   const res = (await http.post('/k2401-talk/question', {
     question: question.value // 输入的问题（必填）
   })) as any
@@ -702,6 +727,7 @@ const getCodes = async () => {
 }
 const formRef = ref()
 const postCheck = (uuid: string, left: number) => {
+  const http = setHttp();
   http
     .post('k2401-online-message/message', {
       unitName: formModel.value.dw1, // 单位名称（必填）
@@ -776,6 +802,52 @@ const postCheck = (uuid: string, left: number) => {
       box-sizing: border-box;
       display: inline-block;
       transition: all ease 0.2;
+      position: relative;
+      .content{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        .sub-title{
+          color: white;
+          margin-top: 10px;
+          font-size: 13px;
+          margin-left: 30px;
+        }
+        .title{
+          color: white;
+          font-weight: bold;
+          margin-left: 30px;
+          font-size: 15px;
+          position: relative;
+          &::after{
+            content: '';
+            width: 5px;
+            height: 5px;
+            background-color: #146AFF;
+            position: absolute;
+            left: -15px;
+            top: 9px;
+          }
+        }
+        .click-button{
+          display: inline-block;
+          padding: 8px 10px;
+          border: 1px solid white;
+          border-radius: 20px;
+          font-size: 14px;
+          color: white;
+          text-align:center;
+          width: 120px;
+          margin-top: 100px;
+          margin-left: 30px;
+          cursor: pointer;
+        }
+      }
     }
     .item2{
       background: #454D62;
