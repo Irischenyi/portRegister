@@ -15,7 +15,14 @@
       </div>
     </template>
     <template #tabs>
-      <q-tabs v-model="tab" dense active-color="primary" indicator-color="primary" narrow-indicator align="left">
+      <q-tabs
+        v-model="tab"
+        dense
+        active-color="primary"
+        indicator-color="primary"
+        narrow-indicator
+        align="left"
+      >
         <q-tab name="hydt1" label="合规专题评估" />
         <!-- <q-tab name="zcfg1" label="申报材料评估" /> -->
       </q-tabs>
@@ -26,48 +33,87 @@
           <q-tab-panel name="hydt1">
             <!-- 合规专题 -->
             <div class="hgzt">
-              <div style="display: flex; justify-content: space-between; width: 100%">
-                <div style="width: 33%; padding: 10px; background-color: #fafafa">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  width: 100%;
+                "
+              >
+                <div
+                  style="width: 33%; padding: 10px; background-color: #fafafa"
+                >
                   <div>
                     <div>
-                      <img style="width: 100%" src="../assets/images/hgzt1.png" />
+                      <img
+                        style="width: 100%"
+                        src="../assets/images/hgzt1.png"
+                      />
                     </div>
                     <div style="font-size: 20px">数据出境合规自评估</div>
                     <div>
                       数据出境合规自评估数据出境合规自评估数据出境合规自评估
                     </div>
                     <div style="display: flex; justify-content: end">
-                      <q-btn @click="btnStep" rounded color="primary" label="去评估" />
+                      <q-btn
+                        @click="btnStep"
+                        rounded
+                        color="primary"
+                        label="去评估"
+                        class="btns"
+                      />
                     </div>
                   </div>
                 </div>
 
-                <div style="width: 33%; padding: 10px; background-color: #fafafa">
+                <div
+                  style="width: 33%; padding: 10px; background-color: #fafafa"
+                >
                   <div>
                     <div>
-                      <img style="width: 100%" src="../assets/images/hgzt2.png" />
+                      <img
+                        style="width: 100%"
+                        src="../assets/images/hgzt2.png"
+                      />
                     </div>
                     <div style="font-size: 20px">数据出境合规自评估</div>
                     <div>
                       数据出境合规自评估数据出境合规自评估数据出境合规自评估
                     </div>
                     <div style="display: flex; justify-content: end">
-                      <q-btn @click="goCheck" rounded color="primary" label="进入检查" />
+                      <q-btn
+                        @click="goCheck"
+                        rounded
+                        color="primary"
+                        label="进入检查"
+                        class="btns"
+                      />
                     </div>
                   </div>
                 </div>
 
-                <div style="width: 33%; padding: 10px; background-color: #fafafa">
+                <div
+                  style="width: 33%; padding: 10px; background-color: #fafafa"
+                >
                   <div>
                     <div>
-                      <img style="width: 100%" src="../assets/images/hgzt3.png" />
+                      <img
+                        style="width: 100%"
+                        src="../assets/images/hgzt3.png"
+                      />
                     </div>
                     <div style="font-size: 20px">数据出境合规自评估</div>
                     <div>
                       数据出境合规自评估数据出境合规自评估数据出境合规自评估
                     </div>
                     <div style="display: flex; justify-content: end">
-                      <q-btn @click="goChecks" rounded color="primary" label="进入检查" />
+                      <q-btn
+                        @click="goChecks"
+                        rounded
+                        color="primary"
+                        label="进入检查"
+                        class="btns"
+                      />
                     </div>
                   </div>
                 </div>
@@ -84,7 +130,11 @@
                     <div style="margin-bottom: 30px">
                       数据出境安全评估材料 完备性预检查
                     </div>
-                    <el-button @click="goCheck" style="color: #4984ff; border-radius: 50px">进入检查</el-button>
+                    <el-button
+                      @click="goCheck"
+                      style="color: #4984ff; border-radius: 50px"
+                      >进入检查</el-button
+                    >
                   </div>
                 </div>
                 <div style="position: relative">
@@ -93,7 +143,11 @@
                     <div style="margin-bottom: 30px">
                       个人信息出境标准合同 备案材料完备性预检查
                     </div>
-                    <el-button @click="goChecks" style="color: #4984ff; border-radius: 50px">进入检查</el-button>
+                    <el-button
+                      @click="goChecks"
+                      style="color: #4984ff; border-radius: 50px"
+                      >进入检查</el-button
+                    >
                   </div>
                 </div>
               </div>
@@ -103,38 +157,35 @@
       </div>
     </template>
   </TemplateFrame>
-  <div>
-
-
-  </div>
+  <div></div>
   <Bottom />
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import { ref } from 'vue'
-import Bottom from '@/components/Bottom.vue'
-import TemplateFrame from '@/components/TemplateFrame.vue'
-const router = useRouter()
-const tab = ref('hydt1')
-const current = ref(1)
+import { useRouter } from "vue-router";
+import { ref } from "vue";
+import Bottom from "@/components/Bottom.vue";
+import TemplateFrame from "@/components/TemplateFrame.vue";
+const router = useRouter();
+const tab = ref("hydt1");
+const current = ref(1);
 
 const btnStep = () => {
   router.push({
-    path: '/index/dataProcessing'
-  })
-}
+    path: "/index/dataProcessing",
+  });
+};
 
 const goCheck = () => {
   router.push({
-    path: '/index/securityAssessment'
-  })
-}
+    path: "/index/securityAssessment",
+  });
+};
 const goChecks = () => {
   router.push({
-    path: '/index/conFilings'
-  })
-}
+    path: "/index/conFilings",
+  });
+};
 </script>
 <style lang="scss" scoped>
 .contain {
@@ -160,5 +211,9 @@ const goChecks = () => {
   font-size: 20px;
   top: 120px;
   left: 50px;
+}
+.btns {
+  margin-left: auto;
+  background-color: #4984ff !important;
 }
 </style>
