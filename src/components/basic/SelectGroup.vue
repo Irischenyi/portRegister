@@ -12,10 +12,10 @@
                         :label="item.tagName"
                         >
                         <el-option
-                            v-for="item in item.children"
-                            :key="item.tagValue"
-                            :label="item.tagName"
-                            :value="item.tagValue"
+                            v-for="items in item.children"
+                            :key="items.tagValue"
+                            :label="items.tagName"
+                            :value="items.tagValue"
                         />
                     </el-option-group>
                 </el-select>
@@ -37,7 +37,11 @@ const attrValue = attrs.value as {
 }
 interface child {
     tagName: string
-    tagValue: string 
+    tagValue: string
+    children: {
+        tagValue: string 
+        tagName: string
+    }[]
 }
 
 const selectContent = ref([] as child[])

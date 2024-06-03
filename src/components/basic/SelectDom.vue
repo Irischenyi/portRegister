@@ -6,7 +6,7 @@
                 <br/>
                 <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
                 <el-select v-model="selectValue" style="width: 250px" clearable>
-                    <el-option v-for="item in selectContent" :label="item.tagName" :value="item.tagValue" />
+                    <el-option v-for="items in selectContent" :label="items.tagName" :value="items.tagValue" />
                 </el-select>
             </div>
         </el-col>
