@@ -11,15 +11,17 @@ import 'element-plus/dist/index.css'
 import '@quasar/extras/material-icons/material-icons.css'
 import 'quasar/src/css/index.sass'
 import App from './App.vue'
+import imgIn from './components/imgIn.vue'
 import router from './router'
-if (window.location.pathname === '/') {
-  window.location.href = '/index'
-}
+// if (window.location.pathname === '/') {
+//   window.location.href = '/index'
+// }
 const app = createApp(App)
 
 app.use(router)
 app.use(ElementPlus)
 app.component('q-input', QInput)
+app.component('imgIn', imgIn)
 app.use(Quasar, {
   plugins: {
     Loading
