@@ -2,7 +2,6 @@
 import { RouterLink, RouterView } from 'vue-router'
 import http from '@/http/httpContentMain'
 import { useRouter } from 'vue-router'
-import { link } from 'fs';
 
 const router = useRouter()
 const headers = [
@@ -62,7 +61,9 @@ const goTo = (link: string) => {
   <div>
     <div class="footer_wrap">
       <div class="title1">
-        <div class="pic-Logo"></div>
+        <div class="pic-Logo">
+          <img src="@/assets/images/selfLogo.png"/>
+        </div>
         数据出境公共服务平台
       </div>
       <div class="center-name">

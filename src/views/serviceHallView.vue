@@ -22,7 +22,7 @@
           <div :class="{'card': true, 'hiddens': tab == '3'}" v-for="item in list" @click="goToDetail(item.id)">
               <div class="card-box">
                   <div class="pic">
-                    <img :src="picUrl+item.serviceHallAttach.previewUrl"/>
+                    <imgIn :src="picUrl+item.serviceHallAttach.previewUrl"/>
                   </div>
                   <div class="title">{{ item.title }}</div>
                   <div class="content">{{ item.summary }}</div>

@@ -21,7 +21,7 @@
       <template #body>
           <div :class="{ 'card': true, 'tool': tab == '2' }" v-for="item in list" @click="goToDetail(item.id)" >
             <div class="bg">
-              <img :src="picUrl+item.coverImage.previewUrl"/>
+              <imgIn :src="picUrl+item.coverImage.previewUrl"/>
             </div>
             <div class="bottom">
               {{ item.title }}

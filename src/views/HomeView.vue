@@ -211,7 +211,8 @@
           <div class="police-detail">
             <div class="left">
                 <div class="pic">
-                  <img :src="setBaseInf.picUrl + tabsLists?.[0]?.attach.previewUrl"/>
+                  <imgIn :src="setBaseInf.picUrl + tabsLists?.[0]?.attach.previewUrl"/>
+                  <img />
                 </div>
                 <div class="content">
                   <div class="title">{{tabsLists?.[0]?.title}}</div>
@@ -240,7 +241,8 @@
         <div class="train-mian">
           <div class="item" v-for="item in safeList">
               <div class="img">
-                <img :src="setBaseInf.picUrl + item.coverImage.previewUrl"/>
+                <imgIn :src="setBaseInf.picUrl + item.coverImage.previewUrl"/>
+                <!-- <img :src="setBaseInf.picUrl + item.coverImage.previewUrl"/> -->
               </div>
               <div class="bottom">{{  item.title }}</div>
           </div>
@@ -474,13 +476,17 @@ const getCategoryTabs = async () => {
   const res = (await http.get('/k2401-article/article-category-list')) as any
   tabsChange.value = res as { name: string, value: string}[]
 }
-const tabsLists = ref([] as {title: string , publishDate: string, id: string, summary: string}[])
+const tabsLists = ref([] as {title: string , publishDate: string, id: string, summary: string, attach: {
+  previewUrl: string
+}}[])
 const ids = ref('')
 const getArticlePaged = async () => {
   const http = setHttp();
   const res = (await http.get('k2401-article/article/paged?current=1&size=8&category='+(tab.value+1))) as any
 
-  tabsLists.value = res.items as {title: string , publishDate: string, id: string, summary: string}[]
+  tabsLists.value = res.items as {title: string , publishDate: string, id: string, summary: string, attach: {
+  previewUrl: string
+}}[]
 
 }
 const tab = ref(0)
@@ -498,6 +504,7 @@ interface itemInf {
 }
 const safeList = ref([] as itemInf[])
 const safeService = async () => {
+  safeList.value = [];
   const http = setHttp();
   const res = await http.get('k2401-safety/safety/paged?current=1&size=4&category=1') as unknown  as { items : itemInf[]}
   safeList.value = res.items as itemInf[]
