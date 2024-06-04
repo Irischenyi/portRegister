@@ -16,12 +16,16 @@
         arrows
         navigation
         infinite
+        v-if="bannerSy.length > 1"
         :autoplay="autoplay"
         @mouseenter="autoplay = false"
         @mouseleave="autoplay = true"
-      >7yue
+      >
         <q-carousel-slide v-for="(item, key) in bannerSy" :name="key" :img-src="setBaseInf.picUrl + item?.previewUrl" />
       </q-carousel>
+      <div class="slider" v-else>
+          <imgIn :src="setBaseInf.picUrl+bannerSy[0]?.previewUrl"/>
+      </div>
     </div>
     <div class="num-box" style="display: none;">
       <!-- 数量 -->
@@ -59,6 +63,7 @@
           <!-- active -->
           <div class="item1 active" :style="activeInt">
             <div class="content">
+                <img src="@/assets/images/fwjj1.png"/>
                 <div class="title">数据安全能力成熟度评估</div>
                 <div class="sub-title" style="width: 230px;">从数据安全管理的角度，以及企业组织的数据为核心，微软数据安全生命周期进行分析发现苏剧安全风险。</div>
                 <div class="click-button">立即体验</div>
@@ -67,6 +72,7 @@
           <div class="item-line" style="order: 1;">
             <div  class="item1">
               <div class="content">
+                 <img src="@/assets/images/fwjj2.png"/>
                  <div class="title">安全评估</div>
                  <div class="sub-title">专业的评估团队</div>
               </div>
@@ -74,22 +80,25 @@
             <!-- @mouseenter="changeActive(2)" -->
             <div  class="item1 item2" >
               <div class="content">
-                 <div class="title">安全评估</div>
-                 <div class="sub-title">专业的评估团队</div>
+                 <img src="@/assets/images/fwjj3.png"/>
+                 <div class="title">安全服务商</div>
+                 <div class="sub-title">您身边的安全服务顾问</div>
               </div>
             </div>
           </div>
           <div class="item-line" style="order: 2;">
             <div  class="item1 item2">
               <div class="content">
-                 <div class="title">安全评估</div>
-                 <div class="sub-title">专业的评估团队</div>
+                <img src="@/assets/images/fwjj4.png"/>
+                 <div class="title">安全服务</div>
+                 <div class="sub-title">秒级部署 安全稳定</div>
               </div>
             </div>
             <div  class="item1" >
               <div class="content">
-                 <div class="title">安全评估</div>
-                 <div class="sub-title">专业的评估团队</div>
+                <img src="@/assets/images/fwjj5.png"/>
+                 <div class="title">安全培训</div>
+                 <div class="sub-title">您身边的安全服务顾问</div>
               </div>
             </div>
           </div>
@@ -239,7 +248,7 @@
           查看更多
         </div>
         <div class="train-mian">
-          <div class="item" v-for="item in safeList">
+          <div class="item" v-for="item in safeList" @click="safeRouterPush(item.id)">
               <div class="img">
                 <imgIn :src="setBaseInf.picUrl + item.coverImage.previewUrl"/>
                 <!-- <img :src="setBaseInf.picUrl + item.coverImage.previewUrl"/> -->
@@ -499,7 +508,8 @@ const btns = (value: any) => {
 }
 
 interface itemInf {
-  title: string, 
+  title: string;
+  id: string;
   coverImage: { previewUrl: string}
 }
 const safeList = ref([] as itemInf[])
@@ -666,6 +676,18 @@ const askQuestion = async () => {
   question.value = '' // 重置输入框
 }
 
+const safeRouterPush = (id: string) => {
+  const routerUrl = router.resolve({
+    path: 'dataDetail',
+    query: {
+      type: 1,
+      id: id
+    }
+  })
+
+  window.open(routerUrl.href, '_blank')
+}
+
 const activeInt = ref('order: 0;')
 const changeActive = (key: number) => {
   console.log(key)
@@ -770,11 +792,20 @@ const postCheck = (uuid: string, left: number) => {
         display: flex;
         justify-content: center;
         flex-direction: column;
+        overflow: hidden;
+        img{
+          position: absolute;
+          width: 120%;
+          z-index: 0;
+          bottom: 0px;
+          left: -20%;
+        }
         .sub-title{
           color: white;
           margin-top: 10px;
           font-size: 13px;
           margin-left: 30px;
+          z-index: 1;
         }
         .title{
           color: white;
@@ -793,6 +824,7 @@ const postCheck = (uuid: string, left: number) => {
           }
         }
         .click-button{
+          z-index: 1;
           display: inline-block;
           padding: 8px 10px;
           border: 1px solid white;
@@ -980,6 +1012,11 @@ const postCheck = (uuid: string, left: number) => {
 
 .slider-box{
   width: 100%;
+  .slider{
+    width: 100%;
+    padding-top: 35%;
+    position: relative;
+  }
 }
 
 .train-mian{

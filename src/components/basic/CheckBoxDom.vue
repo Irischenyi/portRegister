@@ -2,10 +2,10 @@
     <el-row>
         <el-col>
             <div>
-                {{ attrValue.nodeName + getValue}}
+                {{ attrValue.nodeName }}
             </div>
             <br/>
-            <el-checkbox-group v-model="getValue">
+            <el-checkbox-group v-model="value">
                 <el-checkbox v-for="item in attrValue.optionList" :label="item.optionName" :value="item.optionCode" />
             </el-checkbox-group>
         </el-col>
@@ -13,17 +13,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, useAttrs } from 'vue';
+import { ref, useAttrs, watch } from 'vue';
 const attrs = useAttrs()
-const getValue = ref('')
 const attrValue = attrs.value as {
     nodeName: string,
+    id: string,
     optionList: {
         optionCode: string,
         optionName: string
     }[]
 }
+const value = ref([])
 
-console.log(attrValue)
+const emit = defineEmits(['set-Value']);
+watch(value,() => {
+    emit('set-Value', attrValue.id, value.value)
+})
 
 </script>
