@@ -1,7 +1,7 @@
 <template>
   <TemplateFrame>
     <template #header>
-      <div class="topImg" style="width: 100%">
+      <!-- <div class="topImg" style="width: 100%">
         <img style="width: 100%" src="../assets/images/hgztbjt.png" alt="" />
         <div class="topImgText">
           <div style="color: #fff; font-size: 23px; font-weight: 500">
@@ -9,6 +9,16 @@
           </div>
           <div style="color: #fff">
             提供工业互联网安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目；
+            基于行业内最新动态的梳理与汇聚
+          </div>
+        </div>
+      </div> -->
+      <div class="head-box">
+        <img class="header" src="@/assets/images/hgztbjt.png" />
+        <div class="header-center">
+          <div>合规专题</div>
+          <div>
+            提供工业互联网安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目；<br />
             基于行业内最新动态的梳理与汇聚
           </div>
         </div>
@@ -51,7 +61,7 @@
                       />
                     </div>
                     <div style="font-size: 20px">数据出境合规自评估</div>
-                    <div>
+                    <div style="color: #696969">
                       数据出境合规自评估数据出境合规自评估数据出境合规自评估
                     </div>
                     <div style="display: flex; justify-content: end">
@@ -188,12 +198,42 @@ const goChecks = () => {
 };
 </script>
 <style lang="scss" scoped>
-.contain {
+::v-deep.contain {
   padding: 10px;
   width: 1300px;
   margin: 0 auto;
+  .q-tab-panel {
+    padding: 0;
+  }
+  .q-tab-panels {
+    background: none;
+  }
+}
+.head-box {
+  position: relative;
 }
 
+.header {
+  width: 100%;
+}
+
+.header-center {
+  width: calc(100% - 500px);
+  position: absolute;
+  left: 250px;
+  top: 50%;
+  height: 100px;
+  color: white;
+  transform: translateY(-50%);
+  div:nth-child(1) {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  div:nth-child(2) {
+    font-size: 13px;
+    // width: 400px;
+  }
+}
 .topImg {
   position: relative;
 }

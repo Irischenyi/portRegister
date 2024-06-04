@@ -2,26 +2,29 @@
   <div style="width: 100%; height: 100vh; background-color: #eaeff9">
     <div class="contain">
       <div>
-        <span style="font-size: 16px">行业动态</span> > {{ items.title }}
+        <span style="font-size: 16px">行业动态</span> >
+        {{ (items as any).title }}
       </div>
 
       <div style="padding: 20px; background-color: #fff">
-        <div style="font-size: 20px; margin-bottom: 20px">
-          {{ items.title }}
+        <div style="font-size: 20px; margin-bottom: 20px; font-weight: 600">
+          {{ (items as any).title }}
         </div>
 
         <div style="margin-bottom: 30px">
-          <span style="margin-right: 30px">来源：{{ items.sourceFrom }}</span>
-          <span>发布时间: {{ items.createDate }}</span>
+          <span style="margin-right: 30px"
+            >来源：{{ (items as any).sourceFrom }}</span
+          >
+          <span>发布时间: {{ (items as any).createDate }}</span>
         </div>
         <!-- 内容 -->
         <div>
-          <!-- <img style="width: 100%" :src="bannerSy" alt="" /> -->
-          <div v-html="items.content"></div>
+          <img style="width: 100%" :src="bannerSy" alt="" />
+          <div v-html="(items as any).content" style="margin: 10px"></div>
         </div>
-        <div style="margin: 10px">
-          {{ items.summary }}
-        </div>
+        <!-- <div style="margin: 10px">
+          {{ (items as any).summary }}
+        </div> -->
 
         <!-- <div>
           <img style="width: 100%" src="../assets/images/zczxxq2.png" alt="" />
@@ -32,18 +35,37 @@
         </div> -->
       </div>
     </div>
+    <Bottom />
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRoute } from 'vue-router'
-import http, { setBaseInf } from '@/http/httpContentMain'
+import { ref } from "vue";
+import { useRoute } from "vue-router";
+import http, { setBaseInf } from "@/http/httpContentMain";
+import Bottom from "@/components/Bottom.vue";
 
-const route = useRoute()
-const items = route.query.value ? JSON.parse(route.query.value as string) : null
-console.log(items, 'route.value')
-const bannerSy = `${setBaseInf.baseUrl}` + items.attach.storagePath
-console.log(bannerSy, 'bannerSy+++++++')
+const route = useRoute();
+const items = ref({});
+// 图片
+const bannerSy = ref("");
+// 获取id
+const query = route.query as {
+  id: string;
+};
+// 详情
+const getItems = async () => {
+  const baseUrl = "/k2401-article/article/";
+  const ids = query.id.replace(/"/g, "");
+  const url = `${baseUrl}${ids}`;
+
+  const res = (await http.get(url)) as any;
+
+  items.value = res;
+
+  bannerSy.value =
+    `${setBaseInf.baseUrl}` + (items as any).value.attach.storagePath;
+};
+getItems();
 </script>
 <style lang="scss" scoped>
 .contain {

@@ -1,9 +1,9 @@
 <template>
   <TemplateFrame>
     <template #header>
-      <div class="topImg" style="width: 100%">
+      <!-- <div class="topImg" style="width: 100%">
         <img
-          style="width: 100%; height: 300px"
+          style="width: 100%;"
           src="@/assets/images/zczxbjt.png"
           alt=""
         />
@@ -13,6 +13,16 @@
           </div>
           <div style="color: #fff">
             提供工业互联网安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目；
+            基于行业内最新动态的梳理与汇聚
+          </div>
+        </div>
+      </div> -->
+      <div class="head-box">
+        <img class="header" src="@/assets/images/zczxbjt.png" />
+        <div class="header-center">
+          <div>政策咨询</div>
+          <div>
+            提供工业互联网安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目；<br />
             基于行业内最新动态的梳理与汇聚
           </div>
         </div>
@@ -30,8 +40,8 @@
       >
         <q-tab
           v-for="(item, index) in tabsChange"
-          :name="item.category"
-          :label="item.categoryName"
+          :name="(item as any).category"
+          :label="(item as any).categoryName"
         />
         <!-- <q-tab name="2" :label="item.categoryName" />
         <q-tab name="3" :label="tabsChange3" />
@@ -53,7 +63,7 @@
               v-for="(item, index) in tabsLists"
               :key="index"
               style="padding: 20px 10px"
-              @click="goToDetail(item.id)"
+              @click="goToDetail((item as any).id)"
             >
               <div style="display: flex">
                 <div style="width: 20%; margin-right: 20px">
@@ -66,10 +76,10 @@
                   <div style="font-size: 20px; font-weight: 500">
                     {{ (item as any).title }}
                   </div>
-                  <div style="margin-top: 10px">
+                  <div style="margin-top: 10px; color: #696969">
                     {{ (item as any).summary }}
                   </div>
-                  <div style="margin-top: 80px">
+                  <div style="margin-top: 80px; color: #696969">
                     {{ (item as any).sourceFrom }}
                   </div>
                 </div>
@@ -79,9 +89,12 @@
                     justify-content: end;
                     align-items: end;
                     width: 20%;
+                    margin-top: auto;
                   "
                 >
-                  {{ (item as any).publishDate }}
+                  <span style="margin-left: auto; color: #696969">
+                    {{ (item as any).publishDate }}</span
+                  >
                 </div>
               </div>
               <div style="margin-top: 20px">
@@ -91,12 +104,32 @@
           </div>
         </q-tab-panel>
       </q-tab-panels>
+      <div
+        style="
+          display: flex;
+          justify-content: end;
+          background-color: #fff;
+          height: 80px;
+          width: 100%;
+          padding-right: 20px;
+        "
+      >
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="1000"
+          class="paginations"
+        />
+      </div>
     </template>
   </TemplateFrame>
+
   <div></div>
+  <Bottom />
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import Bottom from "@/components/Bottom.vue";
 import http, { setBaseInf } from "@/http/httpContentMain";
 import TemplateFrame from "@/components/TemplateFrame.vue";
 import { useRouter } from "vue-router";
@@ -173,10 +206,38 @@ const goToDetail = (id: string) => {
 };
 </script>
 <style lang="scss" scoped>
+.paginations {
+  margin-left: auto;
+}
 .contain {
   padding: 10px;
   width: 1300px;
   margin: 0 auto;
+}
+.head-box {
+  position: relative;
+}
+
+.header {
+  width: 100%;
+}
+
+.header-center {
+  width: calc(100% - 500px);
+  position: absolute;
+  left: 250px;
+  top: 50%;
+  height: 100px;
+  color: white;
+  transform: translateY(-50%);
+  div:nth-child(1) {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  div:nth-child(2) {
+    font-size: 13px;
+    // width: 400px;
+  }
 }
 .topImg {
   position: relative;
