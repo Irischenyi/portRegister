@@ -24,6 +24,8 @@ import InputDom from '@/components/basic/InputDom.vue'
 import CheckBoxDom from '@/components/basic/CheckBoxDom.vue';
 import SelectGroup from '@/components/basic/SelectGroup.vue';
 import RadioBox from '@/components/basic/RadioBox.vue';
+import DateDom from '@/components/basic/DateDom.vue';
+import TreeSelectDom from '@/components/basic/TreeSelectDom.vue';
 import { Loading } from 'quasar'
 // import date from './test'
 
@@ -73,7 +75,38 @@ const backComponent = (type: number) => {
         case 11:
             return SelectGroup
             break
+        case 2:
+            return InputDom
+            break
+        case 3:
+            return InputDom
+            break
+        case 5:
+            return CheckBoxDom
+            break
+        case 1:
+            return InputDom
+            break
+        case 10:
+            return SelectDom
+            break
+        case 13:
+            return DateDom
+            break
+        case 14:
+            return DateDom
+            break
+        case 15:
+            return DateDom
+            break
+        case 16:
+            return DateDom
+            break
+        case 12:
+            return TreeSelectDom
+            break
     }
+    console.log(type)
 }
 
 const submitFun = () => {

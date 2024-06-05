@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
 import http from '@/http/httpContentMain'
-import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
 const router = useRouter()
 const headers = [
@@ -27,11 +27,28 @@ const headers = [
   }
 ]
 const token = localStorage.getItem('token');
+const isShowQuestionButton = ref(false)
+http.get('k2401-survey/check-submit', {
+      'Authorization':  'Bearer ' + token
+    }).then((data) => {
+  if(!data){
+    isShowQuestionButton.value = true;
+  }
+}).fail(() => {
+  isShowQuestionButton.value = true;
+})
+
+
 const routerChange = (value: string) => {
   if(value == 'login') {
     router.push({
       path: '/login'
     })
+  } else if(value == 'center'){
+    const routerUrl = router.resolve({
+      path: '/personalPlatform/basic'
+    })
+    window.open(routerUrl.href, '_blank')
   } else {
     http.get('k2401-survey/check-submit', {
       'Authorization':  'Bearer ' + token
@@ -70,8 +87,9 @@ const goTo = (link: string) => {
         <div v-for="item in headers" @click="goTo(item.link)">{{item.name}}</div>
       </div>
       <div class="right">
-        <div class="form"  @click="routerChange('question')">调研填表</div>
-        <div class="login" @click="routerChange('login')">登录/注册</div>
+        <div class="form" v-if="isShowQuestionButton" @click="routerChange('question')">调研填表</div>
+        <div class="login" v-if="!token" @click="routerChange('login')">登录/注册</div>
+        <div class="head" v-if="token" @click="routerChange('center')"></div>
       </div>
     </div>
   </div>
@@ -138,7 +156,13 @@ const goTo = (link: string) => {
     border: 1px dashed #4984FF;
     color: #4984FF;
   }
-
+  .head{
+    width: 30px;
+    height: 30px;
+    background: grey;
+    border-radius: 40px;
+    margin-left: 20px;
+  }
 }
 .routey {
   color: #000;

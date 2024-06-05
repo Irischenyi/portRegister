@@ -116,19 +116,23 @@ const props = defineProps<{
 }>()
 
 const isShow = ref(false)
-
-if (props.src.indexOf('undefin')<=0) {
-    const imgDom = new Image();
-    imgDom.src = props.src;
-    imgDom.onload = () => {
-        console.log('加载完成')
-        isShow.value = true;
-    }
+if(props.src.indexOf('@')>=0){
+    console.log(props.src)
+    isShow.value = true;
 }else{
-    setTimeout(() => {
-        isShow.value = true;
-    }, 2000)
+    if (props.src && props.src.indexOf('undefin')<=0) {
+        const imgDom = new Image();
+        imgDom.src = props.src;
+        imgDom.onload = () => {
+            isShow.value = true;
+        }
+    }else{
+        setTimeout(() => {
+            isShow.value = true;
+        }, 2000)
+    }
 }
+
 
 
 

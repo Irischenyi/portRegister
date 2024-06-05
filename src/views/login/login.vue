@@ -43,6 +43,7 @@ const checkFormFun = () => {
 
 const login = () => {
     if(!checkFormFun()) return false
+    localStorage.setItem('close','')
     http.post('/k2401-enterprise/login',{
         ...form
     }).then((data) =>{

@@ -16,12 +16,16 @@
         arrows
         navigation
         infinite
+        v-if="bannerSy.length > 1"
         :autoplay="autoplay"
         @mouseenter="autoplay = false"
         @mouseleave="autoplay = true"
-      >7yue
+      >
         <q-carousel-slide v-for="(item, key) in bannerSy" :name="key" :img-src="setBaseInf.picUrl + item?.previewUrl" />
       </q-carousel>
+      <div class="slider" v-else>
+          <imgIn :src="setBaseInf.picUrl+bannerSy[0]?.previewUrl"/>
+      </div>
     </div>
     <div class="num-box" style="display: none;">
       <!-- 数量 -->
@@ -59,6 +63,7 @@
           <!-- active -->
           <div class="item1 active" :style="activeInt">
             <div class="content">
+                <img src="@/assets/images/fwjj1.png"/>
                 <div class="title">数据安全能力成熟度评估</div>
                 <div class="sub-title" style="width: 230px;">从数据安全管理的角度，以及企业组织的数据为核心，微软数据安全生命周期进行分析发现苏剧安全风险。</div>
                 <div class="click-button">立即体验</div>
@@ -67,6 +72,7 @@
           <div class="item-line" style="order: 1;">
             <div  class="item1">
               <div class="content">
+                 <img src="@/assets/images/fwjj2.png"/>
                  <div class="title">安全评估</div>
                  <div class="sub-title">专业的评估团队</div>
               </div>
@@ -74,106 +80,29 @@
             <!-- @mouseenter="changeActive(2)" -->
             <div  class="item1 item2" >
               <div class="content">
-                 <div class="title">安全评估</div>
-                 <div class="sub-title">专业的评估团队</div>
+                 <img src="@/assets/images/fwjj3.png"/>
+                 <div class="title">安全服务商</div>
+                 <div class="sub-title">您身边的安全服务顾问</div>
               </div>
             </div>
           </div>
           <div class="item-line" style="order: 2;">
             <div  class="item1 item2">
               <div class="content">
-                 <div class="title">安全评估</div>
-                 <div class="sub-title">专业的评估团队</div>
+                <img src="@/assets/images/fwjj4.png"/>
+                 <div class="title">安全服务</div>
+                 <div class="sub-title">秒级部署 安全稳定</div>
               </div>
             </div>
             <div  class="item1" >
               <div class="content">
-                 <div class="title">安全评估</div>
-                 <div class="sub-title">专业的评估团队</div>
+                <img src="@/assets/images/fwjj5.png"/>
+                 <div class="title">安全培训</div>
+                 <div class="sub-title">您身边的安全服务顾问</div>
               </div>
             </div>
           </div>
         </div>
-        <!-- <div style="display: flex">
-          <div style="flex: 1; position: relative">
-            <img
-              class="fwjj_img1"
-              style="width: 100%"
-              src="../assets//images/fwjj1.png"
-            />
-            <div style="position: absolute; top: 50px; left: 20px; width: 50%">
-              <div style="font-size: 20px; color: #fff">
-                数据安全能力成熟度评估
-              </div>
-              <div style="width: 60%; color: #fff; margin: 10px 0 50px 0">
-                从数据安全管理角度，以企业组织的数据为核心，围绕数据全生命周期进行分析，发现数据安全风险
-              </div>
-              <div>
-                <q-btn
-                  unelevated
-                  rounded
-                  color="rgba(255, 255, 255, 0.5)"
-                  label="立即体验"
-                  style="border: 1px solid #fff"
-                />
-              </div>
-            </div>
-          </div>
-          <div style="width: 50%">
-            <div style="display: flex">
-              <div style="width: 50%; position: relative">
-                <img class="fwjj_img" src="../assets//images/fwjj2.png" />
-                <div style="position: absolute; top: 70px; left: 50px">
-                  <div style="display: flex; align-items: center">
-                    <div style="font-size: 20px; color: #fff">
-                      <div class="yuan"></div>
-                      安全评估
-                    </div>
-                  </div>
-                  <div style="color: #fff; margin-left: 12px">专业评估团队</div>
-                </div>
-              </div>
-              <div style="width: 50%; position: relative">
-                <img class="fwjj_img" src="../assets//images/fwjj4.png" />
-                <div style="position: absolute; top: 70px; left: 50px">
-                  <div style="display: flex; align-items: center">
-                    <div style="font-size: 20px; color: #fff">
-                      <div class="yuan"></div>
-                      安全评估
-                    </div>
-                  </div>
-                  <div style="color: #fff; margin-left: 12px">专业评估团队</div>
-                </div>
-              </div>
-            </div>
-            <div style="display: flex">
-              <div style="width: 50%; position: relative">
-                <img class="fwjj_img" src="../assets//images/fwjj3.png" />
-                <div style="position: absolute; top: 70px; left: 50px">
-                  <div style="display: flex; align-items: center">
-                    <div style="font-size: 20px; color: #fff">
-                      <div class="yuan"></div>
-                      安全评估
-                    </div>
-                  </div>
-                  <div style="color: #fff; margin-left: 12px">专业评估团队</div>
-                </div>
-              </div>
-              <div style="width: 50%; position: relative">
-                <img class="fwjj_img" src="../assets//images/fwjj5.png" />
-                <div style="position: absolute; top: 70px; left: 50px">
-                  <div style="display: flex; align-items: center">
-                    <div style="font-size: 20px; color: #fff">
-                      <div class="yuan"></div>
-                      安全评估
-                    </div>
-                  </div>
-                  <div style="color: #fff; margin-left: 12px">专业评估团队</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
       </div>
 
       <!-- 合规专题 -->
@@ -234,12 +163,12 @@
 
       <!-- 安全培训 -->
       <div class="aqpx">
-        <div class="fw">安全培训</div>
+        <div class="fw"  @click="seeMore('safe')">安全培训</div>
         <div style="text-align: right; color: #1f71ff; margin: -40px 0 20px 0">
           查看更多
         </div>
         <div class="train-mian">
-          <div class="item" v-for="item in safeList">
+          <div class="item" v-for="item in safeList" @click="safeRouterPush(item.id)">
               <div class="img">
                 <imgIn :src="setBaseInf.picUrl + item.coverImage.previewUrl"/>
                 <!-- <img :src="setBaseInf.picUrl + item.coverImage.previewUrl"/> -->
@@ -439,6 +368,25 @@
       </div>
     </div>
   </el-dialog>
+  <q-dialog v-model="showQuestion">
+      <div class="question-dialog">
+        <q-card-section class="row q-pb-none" style="display: flex;flex-direction: row-reverse;">
+          <q-btn icon="close" flat round dense @click="closeQuestion"/>
+        </q-card-section>
+        <q-card-section>
+          <div class="question-main">
+            <div class="icons">
+              <q-icon name="report"/>
+            </div>
+            <div class="main">
+              <div class="title">跨境数据需求调研</div>
+              <div class="sub-title">您的需求调研任务未完成，需要尽快处理</div>
+            </div>
+          </div> 
+            <q-btn color="primary" @click="showQuestionPage" unelevated  rounded  class="button" label="立即查看" />
+        </q-card-section>
+      </div>
+    </q-dialog>
 </template>
 <script setup lang="ts">
 import type { Ref } from 'vue'
@@ -456,10 +404,12 @@ onMounted(async () => {
   //指定政策资讯下的分页列表
   await getArticlePaged()
   await safeService()
+  await isRegise()
 })
 import type { TabsPaneContext } from 'element-plus'
 
 const picRef = ref()
+const showQuestion = ref(false)
 const { codeValue, getCode, closeCodeFun, failMessage } = codeMixinHook(picRef)
 //  获取 Banner 图
 const bannerSy = ref([] as {previewUrl: string}[])
@@ -498,8 +448,30 @@ const btns = (value: any) => {
   getArticlePaged()
 }
 
+
+const isRegise = async  () => {
+  if(localStorage.getItem('close') == 'true') return
+  const token = localStorage.getItem('token');
+  const http = setHttp();
+  http.get('k2401-survey/check-submit', {
+      'Authorization':  'Bearer ' + token
+    }).then((data) => {
+      if(!data){
+        showQuestion.value = true;
+      }else{
+
+      }
+    })
+}
+
+const closeQuestion = () => {
+  showQuestion.value = false;
+  localStorage.setItem('close','true')
+}
+
 interface itemInf {
-  title: string, 
+  title: string;
+  id: string;
   coverImage: { previewUrl: string}
 }
 const safeList = ref([] as itemInf[])
@@ -550,6 +522,12 @@ const activeName = ref('first')
 
 const handleClick = (tab: TabsPaneContext, event: Event) => {
   console.log(tab, event)
+}
+
+const showQuestionPage = () => {
+  router.push({
+      path: '/index/quastionHome'
+    })
 }
 
 const isAcitive = ref(0);
@@ -635,9 +613,17 @@ const getQueryQusetion = async () => {
   console.log(res, '智能咨询接口')
 }
 
-const zhinneg = () => {
-  getQueryQusetion()
-}
+const seeMore = (type: string) => {
+    let routerUrl: {href: string}
+    if(type == 'safe'){
+      routerUrl = router.resolve({
+        path: '/index/securityTraining'
+      })
+      window.open(routerUrl?.href, '_blank')
+    }
+  }
+    
+
 const question = ref('')
 const messages: Ref<{ text: string; sent: boolean }[]> = ref([])
 const askQuestion = async () => {
@@ -664,6 +650,18 @@ const askQuestion = async () => {
   }, 500)
 
   question.value = '' // 重置输入框
+}
+
+const safeRouterPush = (id: string) => {
+  const routerUrl = router.resolve({
+    path: 'dataDetail',
+    query: {
+      type: 1,
+      id: id
+    }
+  })
+
+  window.open(routerUrl.href, '_blank')
 }
 
 const activeInt = ref('order: 0;')
@@ -770,11 +768,20 @@ const postCheck = (uuid: string, left: number) => {
         display: flex;
         justify-content: center;
         flex-direction: column;
+        overflow: hidden;
+        img{
+          position: absolute;
+          width: 120%;
+          z-index: 0;
+          bottom: 0px;
+          left: -20%;
+        }
         .sub-title{
           color: white;
           margin-top: 10px;
           font-size: 13px;
           margin-left: 30px;
+          z-index: 1;
         }
         .title{
           color: white;
@@ -793,6 +800,7 @@ const postCheck = (uuid: string, left: number) => {
           }
         }
         .click-button{
+          z-index: 1;
           display: inline-block;
           padding: 8px 10px;
           border: 1px solid white;
@@ -980,6 +988,11 @@ const postCheck = (uuid: string, left: number) => {
 
 .slider-box{
   width: 100%;
+  .slider{
+    width: 100%;
+    padding-top: 35%;
+    position: relative;
+  }
 }
 
 .train-mian{
@@ -1099,5 +1112,57 @@ const postCheck = (uuid: string, left: number) => {
 
 ::v-deep .el-overlay-dialog .service-dialog{
   width: 300px;
+}
+
+.question-dialog{
+  width: 400px;
+  height: 230px;
+  background: white;
+  .question-main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .icons{
+      font-size: 60px;
+      color: #ffc155;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 60px;
+      position: relative;
+      z-index: 10;
+      padding: 10px;
+      margin-right: 4px;
+      &::before{
+        content: '';
+        width: 65px;
+        height: 65px;
+        position: absolute;
+        background: #f9e1b6;
+        opacity: 0.4;
+        left: 7px;
+        z-index: 1;
+        top: 7px;
+        border-radius: 60px;
+      }
+    }
+    .main{
+      .title{
+        font-weight: bold;
+        font-size: 17px;
+      }
+      .sub-title{
+        font-size: 13px;
+        margin-top: 2px;
+      }
+    }
+  }
+  button.button{
+      margin: 0 auto;
+      position: relative;
+      left: 50%;
+      margin-left: -50px;
+      margin-top: 10px;
+    }
 }
 </style>

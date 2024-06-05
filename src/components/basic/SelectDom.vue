@@ -5,8 +5,8 @@
                 <div>{{ attrValue.sequence + ' . ' + attrValue.nodeName }}</div>
                 <br/>
                 <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
-                <el-select v-model="selectValue" style="width: 250px" clearable>
-                    <el-option v-for="items in selectContent" :label="items.tagName" :value="items.tagValue" />
+                <el-select :multiple="multiple" v-model="selectValue" style="width: 250px" clearable>
+                    <el-option v-for="items in selectContent" :label="items?.tagName||items.optionName" :value="items?.tagValue||items.optionCode" />
                 </el-select>
             </div>
         </el-col>
@@ -21,25 +21,40 @@ const attrValue = attrs.value as {
     nodeName: string,
     dataSourceUrl: string,
     sequence: number,
-    id: string
+    id: string,
+    optionList?: 
+    {
+        optionCode: string
+        optionName: string 
+    }[]
 }
 interface child {
-    tagName: string
-    tagValue: string 
+    tagName?: string
+    tagValue?: string 
+    optionCode?: string
+    optionName?: string 
 }
 
 const selectContent = ref([] as child[])
-const selectValue = ref('')
+const selectValue = ref('' as string|string[])
 
 const token = localStorage.getItem('token');
 const emit = defineEmits(['set-Value']);
+const multiple = ref(false)
 
-(new mainHttpConnect(setBaseInf.baseUrl)).get('/'+attrValue.dataSourceUrl , {
-    Authorization: 'Bearer '+token
-}).then((data) => {
-    const back = data as unknown as { children: child[] }
-    selectContent.value = back?.children as child[]
-})
+if(attrValue?.optionList){
+    selectContent.value = attrValue.optionList
+    selectValue.value = []
+    multiple.value = true
+}else{
+    (new mainHttpConnect(setBaseInf.baseUrl)).get('/'+attrValue.dataSourceUrl , {
+        Authorization: 'Bearer '+token
+    }).then((data) => {
+        const back = data as unknown as { children: child[] }
+        selectContent.value = back?.children as child[]
+    })
+}
+
 
 watch(selectValue,() => {
     emit('set-Value', attrValue.id, selectValue.value)
