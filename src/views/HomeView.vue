@@ -103,86 +103,6 @@
             </div>
           </div>
         </div>
-        <!-- <div style="display: flex">
-          <div style="flex: 1; position: relative">
-            <img
-              class="fwjj_img1"
-              style="width: 100%"
-              src="../assets//images/fwjj1.png"
-            />
-            <div style="position: absolute; top: 50px; left: 20px; width: 50%">
-              <div style="font-size: 20px; color: #fff">
-                数据安全能力成熟度评估
-              </div>
-              <div style="width: 60%; color: #fff; margin: 10px 0 50px 0">
-                从数据安全管理角度，以企业组织的数据为核心，围绕数据全生命周期进行分析，发现数据安全风险
-              </div>
-              <div>
-                <q-btn
-                  unelevated
-                  rounded
-                  color="rgba(255, 255, 255, 0.5)"
-                  label="立即体验"
-                  style="border: 1px solid #fff"
-                />
-              </div>
-            </div>
-          </div>
-          <div style="width: 50%">
-            <div style="display: flex">
-              <div style="width: 50%; position: relative">
-                <img class="fwjj_img" src="../assets//images/fwjj2.png" />
-                <div style="position: absolute; top: 70px; left: 50px">
-                  <div style="display: flex; align-items: center">
-                    <div style="font-size: 20px; color: #fff">
-                      <div class="yuan"></div>
-                      安全评估
-                    </div>
-                  </div>
-                  <div style="color: #fff; margin-left: 12px">专业评估团队</div>
-                </div>
-              </div>
-              <div style="width: 50%; position: relative">
-                <img class="fwjj_img" src="../assets//images/fwjj4.png" />
-                <div style="position: absolute; top: 70px; left: 50px">
-                  <div style="display: flex; align-items: center">
-                    <div style="font-size: 20px; color: #fff">
-                      <div class="yuan"></div>
-                      安全评估
-                    </div>
-                  </div>
-                  <div style="color: #fff; margin-left: 12px">专业评估团队</div>
-                </div>
-              </div>
-            </div>
-            <div style="display: flex">
-              <div style="width: 50%; position: relative">
-                <img class="fwjj_img" src="../assets//images/fwjj3.png" />
-                <div style="position: absolute; top: 70px; left: 50px">
-                  <div style="display: flex; align-items: center">
-                    <div style="font-size: 20px; color: #fff">
-                      <div class="yuan"></div>
-                      安全评估
-                    </div>
-                  </div>
-                  <div style="color: #fff; margin-left: 12px">专业评估团队</div>
-                </div>
-              </div>
-              <div style="width: 50%; position: relative">
-                <img class="fwjj_img" src="../assets//images/fwjj5.png" />
-                <div style="position: absolute; top: 70px; left: 50px">
-                  <div style="display: flex; align-items: center">
-                    <div style="font-size: 20px; color: #fff">
-                      <div class="yuan"></div>
-                      安全评估
-                    </div>
-                  </div>
-                  <div style="color: #fff; margin-left: 12px">专业评估团队</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
       </div>
 
       <!-- 合规专题 -->
@@ -448,6 +368,25 @@
       </div>
     </div>
   </el-dialog>
+  <q-dialog v-model="showQuestion">
+      <div class="question-dialog">
+        <q-card-section class="row q-pb-none" style="display: flex;flex-direction: row-reverse;">
+          <q-btn icon="close" flat round dense @click="closeQuestion"/>
+        </q-card-section>
+        <q-card-section>
+          <div class="question-main">
+            <div class="icons">
+              <q-icon name="report"/>
+            </div>
+            <div class="main">
+              <div class="title">跨境数据需求调研</div>
+              <div class="sub-title">您的需求调研任务未完成，需要尽快处理</div>
+            </div>
+          </div> 
+            <q-btn color="primary" @click="showQuestionPage" unelevated  rounded  class="button" label="立即查看" />
+        </q-card-section>
+      </div>
+    </q-dialog>
 </template>
 <script setup lang="ts">
 import type { Ref } from 'vue'
@@ -465,10 +404,12 @@ onMounted(async () => {
   //指定政策资讯下的分页列表
   await getArticlePaged()
   await safeService()
+  await isRegise()
 })
 import type { TabsPaneContext } from 'element-plus'
 
 const picRef = ref()
+const showQuestion = ref(false)
 const { codeValue, getCode, closeCodeFun, failMessage } = codeMixinHook(picRef)
 //  获取 Banner 图
 const bannerSy = ref([] as {previewUrl: string}[])
@@ -505,6 +446,27 @@ const autoplay = ref(true)
 const btns = (value: any) => {
   tabsValue.value = value
   getArticlePaged()
+}
+
+
+const isRegise = async  () => {
+  if(localStorage.getItem('close') == 'true') return
+  const token = localStorage.getItem('token');
+  const http = setHttp();
+  http.get('k2401-survey/check-submit', {
+      'Authorization':  'Bearer ' + token
+    }).then((data) => {
+      if(!data){
+        showQuestion.value = true;
+      }else{
+
+      }
+    })
+}
+
+const closeQuestion = () => {
+  showQuestion.value = false;
+  localStorage.setItem('close','true')
 }
 
 interface itemInf {
@@ -560,6 +522,12 @@ const activeName = ref('first')
 
 const handleClick = (tab: TabsPaneContext, event: Event) => {
   console.log(tab, event)
+}
+
+const showQuestionPage = () => {
+  router.push({
+      path: '/index/quastionHome'
+    })
 }
 
 const isAcitive = ref(0);
@@ -1136,5 +1104,57 @@ const postCheck = (uuid: string, left: number) => {
 
 ::v-deep .el-overlay-dialog .service-dialog{
   width: 300px;
+}
+
+.question-dialog{
+  width: 400px;
+  height: 230px;
+  background: white;
+  .question-main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .icons{
+      font-size: 60px;
+      color: #ffc155;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 60px;
+      position: relative;
+      z-index: 10;
+      padding: 10px;
+      margin-right: 4px;
+      &::before{
+        content: '';
+        width: 65px;
+        height: 65px;
+        position: absolute;
+        background: #f9e1b6;
+        opacity: 0.4;
+        left: 7px;
+        z-index: 1;
+        top: 7px;
+        border-radius: 60px;
+      }
+    }
+    .main{
+      .title{
+        font-weight: bold;
+        font-size: 17px;
+      }
+      .sub-title{
+        font-size: 13px;
+        margin-top: 2px;
+      }
+    }
+  }
+  button.button{
+      margin: 0 auto;
+      position: relative;
+      left: 50%;
+      margin-left: -50px;
+      margin-top: 10px;
+    }
 }
 </style>
