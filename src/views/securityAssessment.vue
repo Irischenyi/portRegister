@@ -56,7 +56,13 @@
 
             <el-col :span="8">
               <el-form-item label="起止时间">
-                <el-input v-model="form.qzsj"></el-input>
+                <!-- <el-input v-model="form.qzsj"></el-input> -->
+                <el-date-picker
+                  v-model="form.qzsj"
+                  type="daterange"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
+                />
               </el-form-item>
             </el-col>
 
@@ -140,8 +146,12 @@
         <div style="display: flex; justify-content: end; margin-top: 20px">
           <el-pagination
             background
+            :current-page="page.pageNum"
+            :page-size="page.pageSize"
             layout="prev, pager, next"
-            :total="1000"
+            :total="total"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
             class="paginations"
           />
         </div>
@@ -181,8 +191,16 @@ const reset = () => {
   };
   // form = form2;
   Object.assign(form, form2);
-
 };
+const page = reactive({
+  //配置对应的查询参数
+  pageNum: 1,
+  pageSize: 10,
+});
+const total = ref(0);
+
+const handleSizeChange = () => {};
+const handleCurrentChange = () => {};
 const tableData = [
   {
     date: "2016-05-03",

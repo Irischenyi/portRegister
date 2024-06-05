@@ -116,8 +116,12 @@
       >
         <el-pagination
           background
+          :current-page="page.pageNum"
+          :page-size="page.pageSize"
           layout="prev, pager, next"
-          :total="1000"
+          :total="total"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
           class="paginations"
         />
       </div>
@@ -128,7 +132,7 @@
   <Bottom />
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, reactive } from "vue";
 import Bottom from "@/components/Bottom.vue";
 import http, { setBaseInf } from "@/http/httpContentMain";
 import TemplateFrame from "@/components/TemplateFrame.vue";
@@ -144,7 +148,13 @@ onMounted(async () => {
   //指定政策资讯下的分页列表
   await getArticlePaged();
 });
-
+const page = reactive({
+  //配置对应的查询参数
+  pageNum: 1,
+  pageSize: 10,
+});
+const handleSizeChange = () => {};
+const handleCurrentChange = () => {};
 //  获取 Banner 图
 const bannerSy = ref("");
 const getBanner = async () => {
@@ -172,6 +182,7 @@ const getCategoryTabs = async () => {
 const tabsLists = ref([]);
 
 const imgTabs = ref("");
+const total = ref(0);
 
 const getArticlePaged = async () => {
   const res = (await http.get(
@@ -180,7 +191,7 @@ const getArticlePaged = async () => {
     }`
   )) as any;
   tabsLists.value = res.items;
-
+  total.value = parseInt(res.total);
   imgTabs.value = `${setBaseInf.baseUrl}` + res.items[0].attach.storagePath;
 };
 
