@@ -163,7 +163,7 @@
 
       <!-- 安全培训 -->
       <div class="aqpx">
-        <div class="fw">安全培训</div>
+        <div class="fw"  @click="seeMore('safe')">安全培训</div>
         <div style="text-align: right; color: #1f71ff; margin: -40px 0 20px 0">
           查看更多
         </div>
@@ -613,9 +613,17 @@ const getQueryQusetion = async () => {
   console.log(res, '智能咨询接口')
 }
 
-const zhinneg = () => {
-  getQueryQusetion()
-}
+const seeMore = (type: string) => {
+    let routerUrl: {href: string}
+    if(type == 'safe'){
+      routerUrl = router.resolve({
+        path: '/index/securityTraining'
+      })
+      window.open(routerUrl?.href, '_blank')
+    }
+  }
+    
+
 const question = ref('')
 const messages: Ref<{ text: string; sent: boolean }[]> = ref([])
 const askQuestion = async () => {

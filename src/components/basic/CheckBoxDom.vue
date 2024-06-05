@@ -2,7 +2,7 @@
     <el-row>
         <el-col>
             <div>
-                {{ attrValue.nodeName }}
+                {{ attrValue.sequence + '. ' + attrValue.nodeName }}
             </div>
             <br/>
             <el-checkbox-group v-model="value">
@@ -18,6 +18,7 @@ const attrs = useAttrs()
 const attrValue = attrs.value as {
     nodeName: string,
     id: string,
+    sequence: string,
     optionList: {
         optionCode: string,
         optionName: string

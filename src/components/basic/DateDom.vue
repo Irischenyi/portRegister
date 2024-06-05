@@ -2,7 +2,6 @@
     <el-row>
         <el-col>
             <div>
-                {{ attrValue.nodeType }}
                 {{ attrValue.sequence + ' . ' +attrValue.nodeName}}
             </div>
             <br/>
