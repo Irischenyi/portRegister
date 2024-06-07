@@ -117,7 +117,7 @@
         <div style="margin-top: 20px">
           <el-table :data="tableData" stripe style="width: 100%">
             <el-table-column prop="date" label="序号" />
-            <el-table-column prop="name" label="备案编号" />
+            <el-table-column prop="name" label="项目编号" />
             <el-table-column prop="address" label="流水号" />
             <el-table-column prop="date" label="省份" />
             <el-table-column prop="name" label="单位" />

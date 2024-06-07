@@ -34,7 +34,7 @@
         align="left"
       >
         <q-tab name="hydt1" label="合规专题评估" />
-        <!-- <q-tab name="zcfg1" label="申报材料评估" /> -->
+        <q-tab name="zcfg1" label="申报材料评估" />
       </q-tabs>
     </template>
     <template #body>
@@ -176,21 +176,23 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 import Bottom from "@/components/Bottom.vue";
 import TemplateFrame from "@/components/TemplateFrame.vue";
+
 const router = useRouter();
 const tab = ref("hydt1");
 const current = ref(1);
-
+// 评估
 const btnStep = () => {
   router.push({
     path: "/index/dataProcessing",
   });
 };
-
+// 数据出境安全评估
 const goCheck = () => {
   router.push({
     path: "/index/securityAssessment",
   });
 };
+// 个人信息出境标准合同备案
 const goChecks = () => {
   router.push({
     path: "/index/conFilings",
