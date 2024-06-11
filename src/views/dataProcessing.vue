@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="topImg" style="width: 100%">
+    <!-- <div class="topImg" style="width: 100%">
       <img style="width: 100%" src="../assets/images/hgztbjt.png" alt="" />
       <div class="topImgText">
         <div style="color: #fff; font-size: 23px; font-weight: 500">
@@ -8,6 +8,16 @@
         </div>
         <div style="color: #fff">
           提供工业互联网安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目；
+          基于行业内最新动态的梳理与汇聚
+        </div>
+      </div>
+    </div> -->
+    <div class="head-box">
+      <img class="header" src="@/assets/images/hgztbjt.png" />
+      <div class="header-center">
+        <div>合规专题</div>
+        <div>
+          提供工业互联网安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目；<br />
           基于行业内最新动态的梳理与汇聚
         </div>
       </div>
@@ -487,14 +497,20 @@
           >
             <q-stepper-navigation>
               <q-btn
-                style="margin-right: 20px; background-color: #c0c0c0"
                 v-if="step > 1"
+                style="
+                  margin-right: 20px;
+                  background-color: #c0c0c0;
+                  width: 140px;
+                  height: 50px;
+                "
                 rounded
                 @click="($refs.stepper as any).previous()"
                 label="上一步"
                 color="#c0c0c0"
               />
               <q-btn
+                style="width: 140px; height: 50px"
                 @click="($refs.stepper as any).next()"
                 rounded
                 color="primary"
@@ -506,17 +522,17 @@
       </q-stepper>
     </div>
   </div>
-  <Bottom/>
+  <Bottom />
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
-import Bottom from '@/components/Bottom.vue'
-const step = ref(1)
+import { ref } from "vue";
+import Bottom from "@/components/Bottom.vue";
+const step = ref(1);
 const ruleForm = ref({
   // 第一部分
-  qymc: '',
-  dz: '',
-  tyshxydm: '',
+  qymc: "",
+  dz: "",
+  tyshxydm: "",
   rygm: [],
   qyys: [],
   jcss: [],
@@ -534,14 +550,55 @@ const ruleForm = ref({
   // 第三部分
   fhcs: [],
   qdty: [],
-  sbgz: []
-})
+  sbgz: [],
+});
 </script>
 <style lang="scss" scoped>
-.contain {
+::v-deep.contain {
   padding: 10px;
-  width: 1300px;
+  // width: 1300px;
+  width: calc(100% - 480px);
   margin: 0 auto;
+  .q-stepper__nav {
+    margin-left: auto;
+  }
+  .bg-primary {
+    background: linear-gradient(180deg, #5db9f8, #006cee) !important;
+  }
+  .q-stepper__tab--active,
+  .q-stepper__tab--done {
+    color: #2977ff;
+  }
+  .q-stepper__dot {
+    font-size: 28px;
+    width: 60px;
+    height: 60px;
+  }
+}
+.head-box {
+  position: relative;
+}
+
+.header {
+  width: 100%;
+}
+
+.header-center {
+  width: calc(100% - 500px);
+  position: absolute;
+  left: 250px;
+  top: 50%;
+  height: 100px;
+  color: white;
+  transform: translateY(-50%);
+  div:nth-child(1) {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  div:nth-child(2) {
+    font-size: 13px;
+    // width: 400px;
+  }
 }
 .topImg {
   position: relative;
