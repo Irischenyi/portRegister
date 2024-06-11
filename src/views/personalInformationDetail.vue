@@ -43,7 +43,7 @@
               个人信息处理者情况
             </div>
             <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef1" :model="ruleForm1" :rules="rules1">
+              <el-form ref="ruleFormRef1" :model="ruleForm1" >
                 <el-row :gutter="20">
                   <el-col :span="8">
                     <el-form-item prop="unitName">
@@ -295,7 +295,7 @@
               size="large"
             />
             <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef2" :model="ruleForm2" :rules="rules2">
+              <el-form ref="ruleFormRef2" :model="ruleForm2">
                 <el-row :gutter="20">
                   <el-col :span="8">
                     <el-form-item prop="legal">
@@ -462,7 +462,7 @@
               经办人信息
             </div>
             <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef3" :model="ruleForm3" :rules="rules3">
+              <el-form ref="ruleFormRef3" :model="ruleForm3" >
                 <el-row :gutter="20">
                   <el-col :span="8">
                     <el-form-item prop="operator">
@@ -663,7 +663,7 @@
               承诺书
             </div>
             <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef4" :model="ruleForm4" :rules="rules4">
+              <el-form ref="ruleFormRef4" :model="ruleForm4" >
                 <el-row :gutter="20">
                   <el-col :span="12">
                     <el-form-item prop="promiseAttachIdList">
@@ -712,7 +712,7 @@
               个人信息出境场景描述
             </div>
             <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef5" :model="ruleForm5" :rules="rules5">
+              <el-form ref="ruleFormRef5" :model="ruleForm5" >
                 <el-row :gutter="20">
                   <el-col :span="24">
                     <el-form-item prop="summary">
@@ -1086,7 +1086,7 @@
               承诺书
             </div>
             <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef6" :model="ruleForm6" :rules="rules6">
+              <el-form ref="ruleFormRef6" :model="ruleForm6">
                 <el-row :gutter="20">
                   <el-col :span="8">
                     <el-form-item prop="contractMakeDate">
@@ -1207,7 +1207,7 @@
               个人信息保护影响评估报告
             </div>
             <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef7" :model="ruleForm7" :rules="rules7">
+              <el-form ref="ruleFormRef7" :model="ruleForm7">
                 <el-row :gutter="20">
                   <el-col :span="12">
                     <el-form-item prop="reportAttachIdList">
@@ -1259,7 +1259,7 @@
               承诺书
             </div>
             <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef8" :model="ruleForm8" :rules="ruleForm8">
+              <el-form ref="ruleFormRef8" :model="ruleForm8">
                 <el-row :gutter="20">
                   <el-col :span="12">
                     <el-form-item prop="delegateAttachIdList">
@@ -1542,7 +1542,7 @@ const getArea = async () => {
 };
 // 详情
 const getItems = async () => {
-  const baseUrl = "/k2401-personal-exit/exit/";
+  const baseUrl = "k2401-personal-exit/exit/";
   const ids = query.id.replace(/"/g, "");
   const url = `${baseUrl}${ids}`;
 

@@ -1134,223 +1134,276 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
-import { Download } from '@element-plus/icons-vue'
-const active = ref(0)
-const next = () => {
-  active.value++
-}
+import { ref, reactive, onMounted } from "vue";
+import { Download } from "@element-plus/icons-vue";
 
-const checkList = ref([])
+onMounted(async () => {
+  // await getUnitNatureValue(); //获取 Banner 图
+  // await getUnitCategoryValue(); //获取政策资讯类别
+  // //指定政策资讯下的分页列表
+  // await getUnitList();
+  // await getGuoji();
+  // await getCertificatetype();
+  // await getIndustryarea();
+  // await getArea();
+});
+
+const active = ref(0);
+// 下一步
+const next = () => {
+  // if (active.value == 0 && checkList.value.length == 0) {
+  //   return ElMessage({ type: "warning", message: "下列情形至少选择一项" });
+  // } else if (active.value == 0 && checkList.value.length == 3) {
+  //   active.value++;
+  // }
+  // if (active.value == 1) {
+  //   submitForm1(ruleFormRef1.value);
+  // }
+  // if (active.value == 2) {
+  //   submitForm2(ruleFormRef2.value);
+  // }
+  // if (active.value == 3) {
+  //   submitForm3(ruleFormRef3.value);
+  // }
+  // if (active.value == 4) {
+  //   // submitForm4(ruleFormRef4.value);
+  // }
+  // if (active.value == 5) {
+  //   submitForm5(ruleFormRef5.value);
+  // }
+  if (active.value == 6) {
+    // submitForm6(ruleFormRef6.value);
+  } else {
+    active.value++;
+  }
+};
+//  上一步
+const last = () => {
+  // if (active.value == 0 && checkList.value.length !== 3) {
+  //   return ElMessage({ type: "info", message: "第一步信息需要全部勾选" });
+  // }
+
+  active.value--;
+};
+
+const checkList = ref([]);
 // 表单1
 const ruleForm1 = ref({
-  dwmc: '',
-  dwxz1: '',
-  qt1: '',
-  dwxz2: '',
-  qt2: '',
-  tyshxydm: '',
-  dwmczcd: '',
-  bgszd: '',
-  jcxxyyz: '',
-  ygsl: '',
-  ygsldw: '',
-  clgrxxgm: '',
-  clgrxxgmdw: ''
-})
+  dwmc: "",
+  dwxz1: "",
+  qt1: "",
+  dwxz2: "",
+  qt2: "",
+  tyshxydm: "",
+  dwmczcd: "",
+  bgszd: "",
+  jcxxyyz: "",
+  ygsl: "",
+  ygsldw: "",
+  clgrxxgm: "",
+  clgrxxgmdw: "",
+});
 const rules1 = ref({
-  dwmc: [{ required: true, message: '请输入单位名称', trigger: 'blur' }],
-  dwxz1: [{ required: true, message: '请选择单位性质', trigger: 'change' }],
-  qt1: [{ required: true, message: '请输入其他', trigger: 'blur' }],
-  dwxz2: [{ required: true, message: '请选择单位性质', trigger: 'change' }],
-  qt2: [{ required: true, message: '请输入其他', trigger: 'blur' }],
+  dwmc: [{ required: true, message: "请输入单位名称", trigger: "blur" }],
+  dwxz1: [{ required: true, message: "请选择单位性质", trigger: "change" }],
+  qt1: [{ required: true, message: "请输入其他", trigger: "blur" }],
+  dwxz2: [{ required: true, message: "请选择单位性质", trigger: "change" }],
+  qt2: [{ required: true, message: "请输入其他", trigger: "blur" }],
   tyshxydm: [
-    { required: true, message: '请输入统一社会信用代码', trigger: 'blur' }
+    { required: true, message: "请输入统一社会信用代码", trigger: "blur" },
   ],
   dwmczcd: [
-    { required: true, message: '请输入单位名称注册地', trigger: 'blur' }
+    { required: true, message: "请输入单位名称注册地", trigger: "blur" },
   ],
-  bgszd: [{ required: true, message: '请输入办公所在地', trigger: 'blur' }],
+  bgszd: [{ required: true, message: "请输入办公所在地", trigger: "blur" }],
   jcxxyyz: [
     {
       required: true,
-      message: '请选择是否为关键信息基础设施运营者',
-      trigger: 'change'
-    }
+      message: "请选择是否为关键信息基础设施运营者",
+      trigger: "change",
+    },
   ],
-  ygsl: [{ required: true, message: '请选择员工数量', trigger: 'change' }],
-  ygsldw: [{ required: true, message: '请输入员工数量单位', trigger: 'blur' }],
+  ygsl: [{ required: true, message: "请选择员工数量", trigger: "change" }],
+  ygsldw: [{ required: true, message: "请输入员工数量单位", trigger: "blur" }],
   clgrxxgm: [
-    { required: true, message: '请选择处理个人信息规模', trigger: 'blur' }
+    { required: true, message: "请选择处理个人信息规模", trigger: "blur" },
   ],
   clgrxxgmdw: [
-    { required: true, message: '请选择处理个人信息规模单位', trigger: 'change' }
-  ]
-})
+    {
+      required: true,
+      message: "请选择处理个人信息规模单位",
+      trigger: "change",
+    },
+  ],
+});
 
 // 表单2
 const ruleForm2 = ref({
-  xm: '',
-  lxdh: '',
-  gj: '',
-  zw: '',
-  zjlx: '',
-  qt: '',
-  zjhm: '',
-  dzyx: ''
-})
+  xm: "",
+  lxdh: "",
+  gj: "",
+  zw: "",
+  zjlx: "",
+  qt: "",
+  zjhm: "",
+  dzyx: "",
+});
 const rules2 = ref({
-  xm: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-  lxdh: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
-  gj: [{ required: true, message: '请输入国籍', trigger: 'blur' }],
-  zw: [{ required: true, message: '请输入职务', trigger: 'blur' }],
-  zjlx: [{ required: true, message: '请选择证件类型', trigger: 'change' }],
-  qt: [{ required: true, message: '请输入其他', trigger: 'blur' }],
-  zjhm: [{ required: true, message: '请输入证件号码', trigger: 'blur' }],
-  dzyx: [{ required: true, message: '请选择电子邮箱', trigger: 'change' }]
-})
+  xm: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+  lxdh: [{ required: true, message: "请输入联系电话", trigger: "blur" }],
+  gj: [{ required: true, message: "请输入国籍", trigger: "blur" }],
+  zw: [{ required: true, message: "请输入职务", trigger: "blur" }],
+  zjlx: [{ required: true, message: "请选择证件类型", trigger: "change" }],
+  qt: [{ required: true, message: "请输入其他", trigger: "blur" }],
+  zjhm: [{ required: true, message: "请输入证件号码", trigger: "blur" }],
+  dzyx: [{ required: true, message: "请选择电子邮箱", trigger: "change" }],
+});
 
 // 表单3
 const ruleForm3 = ref({
-  xm: '',
-  lxdh: '',
-  gj: '',
-  zw: '',
-  zjlx: '',
-  qt: '',
-  zjhm: '',
-  gljgmc: '',
-  gljgrs: '',
-  gljgrsdw: '',
-  dzyx: ''
-})
+  xm: "",
+  lxdh: "",
+  gj: "",
+  zw: "",
+  zjlx: "",
+  qt: "",
+  zjhm: "",
+  gljgmc: "",
+  gljgrs: "",
+  gljgrsdw: "",
+  dzyx: "",
+});
 const rules3 = ref({
-  xm: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-  lxdh: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
-  gj: [{ required: true, message: '请输入国籍', trigger: 'blur' }],
-  zw: [{ required: true, message: '请输入职务', trigger: 'blur' }],
-  zjlx: [{ required: true, message: '请选择证件类型', trigger: 'change' }],
-  qt: [{ required: true, message: '请输入其他', trigger: 'blur' }],
-  zjhm: [{ required: true, message: '请输入证件号码', trigger: 'blur' }],
-  gljgmc: [{ required: true, message: '请输入管理机构名称', trigger: 'blur' }],
+  xm: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+  lxdh: [{ required: true, message: "请输入联系电话", trigger: "blur" }],
+  gj: [{ required: true, message: "请输入国籍", trigger: "blur" }],
+  zw: [{ required: true, message: "请输入职务", trigger: "blur" }],
+  zjlx: [{ required: true, message: "请选择证件类型", trigger: "change" }],
+  qt: [{ required: true, message: "请输入其他", trigger: "blur" }],
+  zjhm: [{ required: true, message: "请输入证件号码", trigger: "blur" }],
+  gljgmc: [{ required: true, message: "请输入管理机构名称", trigger: "blur" }],
   gljgrs: [
-    { required: true, message: '请选择管理机构人数', trigger: 'change' }
+    { required: true, message: "请选择管理机构人数", trigger: "change" },
   ],
   gljgrsdw: [
-    { required: true, message: '请输入管理机构人数单位', trigger: 'blur' }
+    { required: true, message: "请输入管理机构人数单位", trigger: "blur" },
   ],
-  dzyx: [{ required: true, message: '请输入电子邮箱', trigger: 'blur' }]
-})
+  dzyx: [{ required: true, message: "请输入电子邮箱", trigger: "blur" }],
+});
 
 // 表单4
 const ruleForm4 = ref({
-  xm: '',
-  lxdh: '',
-  gj: '',
-  zw: '',
-  zjlx: '',
-  qt: '',
-  zjhm: '',
-  dzyx: ''
-})
+  xm: "",
+  lxdh: "",
+  gj: "",
+  zw: "",
+  zjlx: "",
+  qt: "",
+  zjhm: "",
+  dzyx: "",
+});
 const rules4 = ref({
-  xm: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-  lxdh: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
-  gj: [{ required: true, message: '请输入国籍', trigger: 'blur' }],
-  zw: [{ required: true, message: '请输入职务', trigger: 'blur' }],
-  zjlx: [{ required: true, message: '请选择证件类型', trigger: 'change' }],
-  qt: [{ required: true, message: '请输入其他', trigger: 'blur' }],
-  zjhm: [{ required: true, message: '请输入证件号码', trigger: 'blur' }],
-  dzyx: [{ required: true, message: '请选择电子邮箱', trigger: 'blur' }]
-})
+  xm: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+  lxdh: [{ required: true, message: "请输入联系电话", trigger: "blur" }],
+  gj: [{ required: true, message: "请输入国籍", trigger: "blur" }],
+  zw: [{ required: true, message: "请输入职务", trigger: "blur" }],
+  zjlx: [{ required: true, message: "请选择证件类型", trigger: "change" }],
+  qt: [{ required: true, message: "请输入其他", trigger: "blur" }],
+  zjhm: [{ required: true, message: "请输入证件号码", trigger: "blur" }],
+  dzyx: [{ required: true, message: "请选择电子邮箱", trigger: "blur" }],
+});
 
 // 表单5
 const ruleForm5 = ref({
-  gzqk: ''
-})
+  gzqk: "",
+});
 const rules5 = ref({
-  gzqk: [{ required: true, message: '请输入内容', trigger: 'blur' }]
-})
+  gzqk: [{ required: true, message: "请输入内容", trigger: "blur" }],
+});
 
 // 表单6
 const ruleForm6 = ref({
-  cjms: '',
-  sjlx: '',
-  grxx: '',
-  sjhy: '',
-  qt: '',
-  sjzrr: '',
-  sldw: ''
-})
+  cjms: "",
+  sjlx: "",
+  grxx: "",
+  sjhy: "",
+  qt: "",
+  sjzrr: "",
+  sldw: "",
+});
 
 const rules6 = ref({
-  cjms: [{ required: true, message: '请输入内容', trigger: 'blur' }],
-  sjlx: [{ required: true, message: '请输入数据类型', trigger: 'blur' }],
+  cjms: [{ required: true, message: "请输入内容", trigger: "blur" }],
+  sjlx: [{ required: true, message: "请输入数据类型", trigger: "blur" }],
   grxx: [
-    { required: true, message: '请输入是否包含敏感个人信息', trigger: 'blur' }
+    { required: true, message: "请输入是否包含敏感个人信息", trigger: "blur" },
   ],
   sjhy: [
-    { required: true, message: '请选择*涉及行业/领域 ', trigger: 'change' }
+    { required: true, message: "请选择*涉及行业/领域 ", trigger: "change" },
   ],
-  qt: [{ required: true, message: '请输入其他', trigger: 'blur' }],
+  qt: [{ required: true, message: "请输入其他", trigger: "blur" }],
   sjzrr: [
-    { required: true, message: '请输入涉及自然人（去重）数量', trigger: 'blur' }
+    {
+      required: true,
+      message: "请输入涉及自然人（去重）数量",
+      trigger: "blur",
+    },
   ],
   sldw: [
     {
       required: true,
-      message: '请输入涉及自然人（去重）数量单位',
-      trigger: 'blur'
-    }
-  ]
-})
+      message: "请输入涉及自然人（去重）数量单位",
+      trigger: "blur",
+    },
+  ],
+});
 
 // 表单7
 const ruleForm7 = ref({
-  tysh: '',
-  sfbh: '',
-  jbr: '',
-  wts: '',
-  jggz: '',
-  cns: '',
-  sjcj: ''
-})
+  tysh: "",
+  sfbh: "",
+  jbr: "",
+  wts: "",
+  jggz: "",
+  cns: "",
+  sjcj: "",
+});
 const rules7 = ref({
   tysh: [
     {
       required: true,
-      message: '请输入统一社会信用代码证件影印件(加盖公章)',
-      trigger: 'blur'
-    }
+      message: "请输入统一社会信用代码证件影印件(加盖公章)",
+      trigger: "blur",
+    },
   ],
   sfbh: [
-    { required: true, message: '请输入是否包含敏感个人信息', trigger: 'blur' }
+    { required: true, message: "请输入是否包含敏感个人信息", trigger: "blur" },
   ],
   jbr: [
     {
       required: true,
-      message: '经办人身份证件影印件(加盖公章)',
-      trigger: 'blur'
-    }
+      message: "经办人身份证件影印件(加盖公章)",
+      trigger: "blur",
+    },
   ],
-  wts: [{ required: true, message: '请输入经办人授权委托书', trigger: 'blur' }],
+  wts: [{ required: true, message: "请输入经办人授权委托书", trigger: "blur" }],
   jggz: [
     {
       required: true,
       message:
-        '请输入与境外接收方拟订立的数据出境相关合同或其他具有法律效力影印件 (加盖公章)',
-      trigger: 'blur'
-    }
+        "请输入与境外接收方拟订立的数据出境相关合同或其他具有法律效力影印件 (加盖公章)",
+      trigger: "blur",
+    },
   ],
-  cns: [{ required: true, message: '请输入承诺书', trigger: 'blur' }],
+  cns: [{ required: true, message: "请输入承诺书", trigger: "blur" }],
   sjcj: [
     {
       required: true,
-      message: '请输入数据出境风险自评估报告 ',
-      trigger: 'blur'
-    }
-  ]
-})
+      message: "请输入数据出境风险自评估报告 ",
+      trigger: "blur",
+    },
+  ],
+});
 </script>
 <style lang="scss" scoped>
 .contain {

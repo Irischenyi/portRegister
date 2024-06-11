@@ -1240,7 +1240,7 @@
               <el-form ref="ruleFormRef7" :model="ruleForm7" :rules="rules7">
                 <el-row :gutter="20">
                   <el-col :span="12">
-                    <el-form-item prop="reportAttachList">
+                    <el-form-item prop="reportAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1255,7 +1255,7 @@
                         <div style="display: flex">
                           <el-input
                             style="margin-right: 50px"
-                            v-model="ruleForm7.reportAttachList"
+                            v-model="ruleForm7.reportAttachIdList"
                             placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
                           ></el-input>
                           <el-button
@@ -1292,7 +1292,7 @@
               <el-form ref="ruleFormRef8" :model="ruleForm8" :rules="ruleForm8">
                 <el-row :gutter="20">
                   <el-col :span="12">
-                    <el-form-item prop="delegateAttachList">
+                    <el-form-item prop="delegateAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1307,7 +1307,7 @@
                         <div style="display: flex">
                           <el-input
                             style="margin-right: 50px"
-                            v-model="ruleForm8.delegateAttachList"
+                            v-model="ruleForm8.delegateAttachIdList"
                           ></el-input>
                           <el-button
                             style="
@@ -1512,11 +1512,11 @@ const ruleForm6 = reactive({
 });
 // 表单7
 const ruleForm7 = reactive({
-  reportAttachList: [],
+  reportAttachIdList: [],// 个人信息保护影响评估报告
 });
 // 表单8
 const ruleForm8 = reactive({
-  delegateAttachList: "",
+  delegateAttachIdList: "",//其他相关证明材料
 });
 // 详情
 const getItems = async () => {
@@ -1698,13 +1698,13 @@ const getItems = async () => {
 
     // ruleForm7
     const ruleF7 = {
-      reportAttachList,
+      reportAttachIdList: reportAttachList,
     };
     Object.assign(ruleForm7, ruleF7);
 
     // ruleForm8
     const ruleF8 = {
-      delegateAttachList,
+      delegateAttachIdList: delegateAttachList,
     };
     Object.assign(ruleForm8, ruleF8);
 
@@ -1747,6 +1747,119 @@ const last = () => {
   // }
 
   active.value--;
+};
+// 提交
+const sumit = async (num: any) => {
+  let params = {
+    // 0 前提
+    conditionContent:
+      "（一）关键信息基础设施运营者以外的数据处理者；（二）自当年1月1日起，累计向境外提供10万人以上、不满100万人个人信息（不含敏感个人信息）的；（三）自当年1月1日起，累计向境外提供不满1万人敏感个人信息的；", // 前提
+    // 1 个人信息处理者基本情况
+    unitName: ruleForm1.unitName, // 单位名称
+    unitNatureValue: ruleForm1.unitNatureValue, // 单位性质标签（标签接口数据接口参见接口1.12.3），取tagValue字段，数据接口：tag/tag?tagCode=unitnature
+    unitNatureName: ruleForm1.unitNatureName, // 同上，取tagName字段
+    unitNatureOther: ruleForm1.unitNatureOther, // 其他单位性质
+    unitCategoryValue: ruleForm1.unitCategoryValue, // 单位类型标签，数据接口：tag/tag?tagCode=unitcategory
+    unitCategoryName: ruleForm1.unitCategoryName, // 同上
+    unitCategoryOther: ruleForm1.unitCategoryOther, // 其他单位类型
+    unitRegAddr: ruleForm1.unitRegAddr, // 单位注册地
+    unitOfficeAddr: ruleForm1.unitOfficeAddr, // 办公所在地
+    empCount: ruleForm1.empCount, // 员工数量
+    empCountUnitValue: ruleForm1.empCountUnitValue, // 员工数量单位标签，数据接口：tag/tag?tagCode=personunit
+    empCountUnitName: ruleForm1.empCountUnitName, // 同上
+    creditCode: ruleForm1.creditCode, // 统一社会信用代码
+    keyInfoOperatorFlag: ruleForm1.keyInfoOperatorFlag == "1" ? true : false, // 是否为关键信息基础设施运营者
+    infoSize: ruleForm1.infoSize, // 处理个人信息规模
+    infoSizeUnitValue: ruleForm1.infoSizeUnitValue, // 处理个人信息规模单位标签，数据接口：tag/tag?tagCode=personunit
+    infoSizeUnitName: ruleForm1.infoSizeUnitName, // 同上
+    // 2 法定代表人信息
+    legalFlag: ruleForm2.legalFlag, // 是否有法定代表人
+    legal: ruleForm2.legal, // 法人姓名
+    legalNationalValue: ruleForm2.legalNationalValue, // 法人国籍标签，数据接口：tag/tag?tagCode=guoji
+    legalNationalName: ruleForm2.legalNationalName, // 同上
+    legalTel: ruleForm2.legalTel, // 法人联系电话
+    legalEmail: ruleForm2.legalEmail, // 法人电子邮箱
+    legalCertificateTypeValue: ruleForm2.legalCertificateTypeValue, // 法人证件类型标签，数据接口：tag/tag?tagCode=certificatetype
+    legalCertificateTypeName: ruleForm2.legalCertificateTypeName, // 同上
+    legalCertificateTypeOther: ruleForm2.legalCertificateTypeOther, // 法人其他证件类型
+    legalCertificateCode: ruleForm2.legalCertificateCode, // 法人证件号码
+    legalJob: ruleForm2.legalJob, // 法人职务
+    // 3 经办人信息
+    operator: ruleForm3.operator, // 经办人姓名
+    operatorNationalValue: ruleForm3.operatorNationalValue, //  经办人国籍标签，数据接口：tag/tag?tagCode=guoji
+    operatorNationalName: ruleForm3.operatorNationalName, // 同上
+    operatorTel: ruleForm3.operatorTel, // 经办人联系电话
+    operatorEmail: ruleForm3.operatorEmail, // 经办人电子邮箱
+    operatorCertificateTypeValue: ruleForm3.operatorCertificateTypeValue, // 经办人证件类型标签，数据接口：tag/tag?tagCode=certificatetype
+    operatorCertificateTypeName: ruleForm3.operatorCertificateTypeName, // 同上
+    operatorCertificateTypeOther: ruleForm3.operatorCertificateTypeOther, // 经办人其他证件类型
+    operatorCertificateCode: ruleForm3.operatorCertificateCode, // 经办人证件号码
+    operatorJob: ruleForm3.operatorJob, // 经办人职务
+    // 4 承诺书 文件上传 - 文件上传均调用统一的上传接口（本文档接口1），获取其返回值对象中的id
+    promiseAttachIdList: ["1661290567658663937"], // 承诺书 附件id集合
+    // 5 个人信息出境场景 - 子对象集合
+    sceneList: [
+      {
+        summary: ruleForm5.summary, // 出境场景简述
+        dataTypeName: ruleForm5.dataTypeName, // 数据类型
+        containInfoFlag: ruleForm5.containInfoFlag ? true : false, // 是否包含敏感个人信息
+        industryValue: ruleForm5.industryValue, // 涉及行业/领域标签，数据接口：tag/tag?tagCode=industryarea
+        industryName: ruleForm5.industryName, // 同上
+        industryOther: ruleForm5.industryOther, // 涉及其他行业/领域
+        personCount: ruleForm5.personCount, // 涉及自然人（去重）数量
+        personCountUnitValue: ruleForm5.personCountUnitValue, // 涉及自然人（去重）数量单位标签，数据接口：tag/tag?tagCode=personunit
+        personCountUnitName: ruleForm5.personCountUnitName, // 同上
+        foreignReceiver: ruleForm5.foreignReceiver, // 境外接收方名称
+        areaValue: ruleForm5.areaValue, // 所在国家或地区标签，数据接口：tag/tag?tagCode=guoji
+        areaName: ruleForm5.areaName, // 同上
+        primaryBusiness: ruleForm5.primaryBusiness, // 主营业务
+        principalName: ruleForm5.principalName, // 负责人姓名
+        principalJob: ruleForm5.principalJob, // 负责人职务
+        contactTel: ruleForm5.contactTel, // 联系方式-电话
+        contactEmail: ruleForm5.contactEmail, // 联系方式-邮箱
+        addr: ruleForm5.addr, // 所在地址
+        statDescription: ruleForm5.statDescription, // 统计说明
+      },
+    ],
+    // 6 个人信息出境标准合同
+    contractMakeDate: ruleForm6.contractMakeDate, // 标准合同订立日期
+    contractValidDate: ruleForm6.contractValidDate, // 标准合同生效日期
+    contractContent: ruleForm6.contractContent, // 相关商业合同名称
+    standardContractAttachIdList: ["1661290578916175874"],
+    // 7 个人信息保护影响评估报告
+    reportAttachIdList: ["1661290608272109570"],
+    // 8 其他相关证明材料
+    delegateAttachIdList: ["1661291263745355777"],
+    otherAttachIdList: ["1661292619461849090"],
+    // 状态
+    status: num == 1 ? 1 : 0, // 枚举：0暂存、1填写完成
+  };
+  let res = "";
+  if (!query.id) {
+    res = (await http.post("/k2401-personal-exit/exit", params, {
+      Authorization: "Bearer " + token,
+    })) as any;
+  } else {
+    const baseUrl = "/k2401-personal-exit/exit/";
+    const ids = query.id.replace(/"/g, "");
+    const url = `${baseUrl}${ids}`;
+
+    res = (await http.put(url, params, {
+      Authorization: "Bearer " + token,
+    })) as any;
+  }
+  console.log(res, "resresres");
+  if (res) {
+    return ElMessage({
+      type: "success",
+      message: num == 1 ? "填写完成" : "暂存成功",
+    });
+  } else {
+    return ElMessage({
+      type: "warning",
+      message: num == 1 ? "填写失败" : "暂存失败",
+    });
+  }
 };
 // 校验表单1
 const submitForm1 = async (ruleFormRef1: FormInstance | undefined) => {
@@ -1906,119 +2019,6 @@ const submitForm6 = async (ruleFormRef6: FormInstance | undefined) => {
   });
 };
 
-// 提交
-const sumit = async (num: any) => {
-  let params = {
-    // 0 前提
-    conditionContent:
-      "（一）关键信息基础设施运营者以外的数据处理者；（二）自当年1月1日起，累计向境外提供10万人以上、不满100万人个人信息（不含敏感个人信息）的；（三）自当年1月1日起，累计向境外提供不满1万人敏感个人信息的；", // 前提
-    // 1 个人信息处理者基本情况
-    unitName: ruleForm1.unitName, // 单位名称
-    unitNatureValue: ruleForm1.unitNatureValue, // 单位性质标签（标签接口数据接口参见接口1.12.3），取tagValue字段，数据接口：tag/tag?tagCode=unitnature
-    unitNatureName: ruleForm1.unitNatureName, // 同上，取tagName字段
-    unitNatureOther: ruleForm1.unitNatureOther, // 其他单位性质
-    unitCategoryValue: ruleForm1.unitCategoryValue, // 单位类型标签，数据接口：tag/tag?tagCode=unitcategory
-    unitCategoryName: ruleForm1.unitCategoryName, // 同上
-    unitCategoryOther: ruleForm1.unitCategoryOther, // 其他单位类型
-    unitRegAddr: ruleForm1.unitRegAddr, // 单位注册地
-    unitOfficeAddr: ruleForm1.unitOfficeAddr, // 办公所在地
-    empCount: ruleForm1.empCount, // 员工数量
-    empCountUnitValue: ruleForm1.empCountUnitValue, // 员工数量单位标签，数据接口：tag/tag?tagCode=personunit
-    empCountUnitName: ruleForm1.empCountUnitName, // 同上
-    creditCode: ruleForm1.creditCode, // 统一社会信用代码
-    keyInfoOperatorFlag: ruleForm1.keyInfoOperatorFlag == "1" ? true : false, // 是否为关键信息基础设施运营者
-    infoSize: ruleForm1.infoSize, // 处理个人信息规模
-    infoSizeUnitValue: ruleForm1.infoSizeUnitValue, // 处理个人信息规模单位标签，数据接口：tag/tag?tagCode=personunit
-    infoSizeUnitName: ruleForm1.infoSizeUnitName, // 同上
-    // 2 法定代表人信息
-    legalFlag: ruleForm2.legalFlag, // 是否有法定代表人
-    legal: ruleForm2.legal, // 法人姓名
-    legalNationalValue: ruleForm2.legalNationalValue, // 法人国籍标签，数据接口：tag/tag?tagCode=guoji
-    legalNationalName: ruleForm2.legalNationalName, // 同上
-    legalTel: ruleForm2.legalTel, // 法人联系电话
-    legalEmail: ruleForm2.legalEmail, // 法人电子邮箱
-    legalCertificateTypeValue: ruleForm2.legalCertificateTypeValue, // 法人证件类型标签，数据接口：tag/tag?tagCode=certificatetype
-    legalCertificateTypeName: ruleForm2.legalCertificateTypeName, // 同上
-    legalCertificateTypeOther: ruleForm2.legalCertificateTypeOther, // 法人其他证件类型
-    legalCertificateCode: ruleForm2.legalCertificateCode, // 法人证件号码
-    legalJob: ruleForm2.legalJob, // 法人职务
-    // 3 经办人信息
-    operator: ruleForm3.operator, // 经办人姓名
-    operatorNationalValue: ruleForm3.operatorNationalValue, //  经办人国籍标签，数据接口：tag/tag?tagCode=guoji
-    operatorNationalName: ruleForm3.operatorNationalName, // 同上
-    operatorTel: ruleForm3.operatorTel, // 经办人联系电话
-    operatorEmail: ruleForm3.operatorEmail, // 经办人电子邮箱
-    operatorCertificateTypeValue: ruleForm3.operatorCertificateTypeValue, // 经办人证件类型标签，数据接口：tag/tag?tagCode=certificatetype
-    operatorCertificateTypeName: ruleForm3.operatorCertificateTypeName, // 同上
-    operatorCertificateTypeOther: ruleForm3.operatorCertificateTypeOther, // 经办人其他证件类型
-    operatorCertificateCode: ruleForm3.operatorCertificateCode, // 经办人证件号码
-    operatorJob: ruleForm3.operatorJob, // 经办人职务
-    // 4 承诺书 文件上传 - 文件上传均调用统一的上传接口（本文档接口1），获取其返回值对象中的id
-    promiseAttachIdList: ["1661290567658663937"], // 承诺书 附件id集合
-    // 5 个人信息出境场景 - 子对象集合
-    sceneList: [
-      {
-        summary: ruleForm5.summary, // 出境场景简述
-        dataTypeName: ruleForm5.dataTypeName, // 数据类型
-        containInfoFlag: ruleForm5.containInfoFlag ? true : false, // 是否包含敏感个人信息
-        industryValue: ruleForm5.industryValue, // 涉及行业/领域标签，数据接口：tag/tag?tagCode=industryarea
-        industryName: ruleForm5.industryName, // 同上
-        industryOther: ruleForm5.industryOther, // 涉及其他行业/领域
-        personCount: ruleForm5.personCount, // 涉及自然人（去重）数量
-        personCountUnitValue: ruleForm5.personCountUnitValue, // 涉及自然人（去重）数量单位标签，数据接口：tag/tag?tagCode=personunit
-        personCountUnitName: ruleForm5.personCountUnitName, // 同上
-        foreignReceiver: ruleForm5.foreignReceiver, // 境外接收方名称
-        areaValue: ruleForm5.areaValue, // 所在国家或地区标签，数据接口：tag/tag?tagCode=guoji
-        areaName: ruleForm5.areaName, // 同上
-        primaryBusiness: ruleForm5.primaryBusiness, // 主营业务
-        principalName: ruleForm5.principalName, // 负责人姓名
-        principalJob: ruleForm5.principalJob, // 负责人职务
-        contactTel: ruleForm5.contactTel, // 联系方式-电话
-        contactEmail: ruleForm5.contactEmail, // 联系方式-邮箱
-        addr: ruleForm5.addr, // 所在地址
-        statDescription: ruleForm5.statDescription, // 统计说明
-      },
-    ],
-    // 6 个人信息出境标准合同
-    contractMakeDate: ruleForm6.contractMakeDate, // 标准合同订立日期
-    contractValidDate: ruleForm6.contractValidDate, // 标准合同生效日期
-    contractContent: ruleForm6.contractContent, // 相关商业合同名称
-    standardContractAttachIdList: ["1661290578916175874"],
-    // 7 个人信息保护影响评估报告
-    reportAttachList: ["1661290608272109570"],
-    // 8 其他相关证明材料
-    delegateAttachList: ["1661291263745355777"],
-    otherAttachIdList: ["1661292619461849090"],
-    // 状态
-    status: num == 1 ? 1 : 0, // 枚举：0暂存、1填写完成
-  };
-  let res = "";
-  if (!query.id) {
-    res = (await http.post("/k2401-personal-exit/exit", params, {
-      Authorization: "Bearer " + token,
-    })) as any;
-  } else {
-    const baseUrl = "/k2401-personal-exit/exit/";
-    const ids = query.id.replace(/"/g, "");
-    const url = `${baseUrl}${ids}`;
-
-    res = (await http.put(url, params, {
-      Authorization: "Bearer " + token,
-    })) as any;
-  }
-  console.log(res, "resresres");
-  if (res) {
-    return ElMessage({
-      type: "success",
-      message: num == 1 ? "填写完成" : "暂存成功",
-    });
-  } else {
-    return ElMessage({
-      type: "warning",
-      message: num == 1 ? "填写失败" : "暂存失败",
-    });
-  }
-};
 const rules1 = reactive({
   unitName: [{ required: true, message: "请输入单位名称", trigger: "blur" }],
   unitCategoryValue: [
@@ -2170,13 +2170,13 @@ const rules6 = reactive({
 });
 
 const rules7 = reactive({
-  reportAttachList: [
+  reportAttachIdList: [
     { required: true, message: "请输入标准合同文件", trigger: "blur" },
   ],
 });
 
 const rules8 = reactive({
-  delegateAttachList: [
+  delegateAttachIdList: [
     { required: true, message: "请输入经办人授权委托书", trigger: "blur" },
   ],
 });
