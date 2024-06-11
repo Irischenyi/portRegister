@@ -14,61 +14,31 @@
 
       <!-- 页面 -->
       <div class="contain">
-        <div style="font-size: 20px">
-          个人信息出境标准合同备案材料完备性预检查
-        </div>
-
-        <div style="padding: 40px">
-          <el-steps
-            style="width: 100%"
-            :active="active"
-            align-center
-            process-status="finish"
-          >
-            <el-step title="个人信息出境标准合同备案适用场景"></el-step>
-            <el-step title="个人信息处理者情况" />
-            <el-step title="法定代表人 信息" />
-            <el-step title="经办人信息" />
-            <el-step title="承诺书" />
-            <el-step title="个人信息出境场景" />
-            <el-step title="个人信息出境标准合同" />
-            <el-step title="个人信息保护影响评估报告" />
-            <el-step title="其他相关证明材料" />
-          </el-steps>
-        </div>
+        <div style="font-size: 20px">个人信息出境标准合同备案项目预览</div>
 
         <!-- 页面 -->
         <div style="margin-top: 20px">
-          <div v-if="active == 0">
+          <div>
             <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
               个人信息处理者通过订立标准合同的方式向境外提供个人信息的，应当同时符合下列情形
             </div>
             <div style="margin-bottom: 20px">
-              <el-checkbox-group v-model="checkList">
+              <div style="margin-bottom: 20px">
+                <div>(一) 关键信息基础设施运营者以外的数据处理者</div>
                 <div>
-                  <el-checkbox
-                    label=" (一) 关键信息基础设施运营者以外的数据处理者             "
-                    value="1"
-                  />
+                  （二)
+                  自当年1月1日起，累计向境外提供10万人以上、不满100万人个人信
+                  (不含敏感个人信息) 的；
                 </div>
                 <div>
-                  <el-checkbox
-                    label="（二) 自当年1月1日起，累计向境外提供10万人以上、不满100万人个人信 (不含敏感个人信息) 的；"
-                    value="2"
-                  />
+                  （三) 自当年1月1日起，累计向境外提供不满1万人敏感个人信息的；
                 </div>
-                <div>
-                  <el-checkbox
-                    label="（三) 自当年1月1日起，累计向境外提供不满1万人敏感个人信息的；"
-                    value="3"
-                  />
-                </div>
-              </el-checkbox-group>
+              </div>
             </div>
             <div></div>
           </div>
 
-          <div v-if="active == 1">
+          <div>
             <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
               个人信息处理者情况
             </div>
@@ -315,12 +285,12 @@
             <div></div>
           </div>
 
-          <div v-if="active == 2">
+          <div>
             <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
               法定代表人信息
             </div>
             <el-checkbox
-              v-model="ruleForm2.legalFlag"
+              v-model="legalFlag"
               label="无法定代表人"
               size="large"
             />
@@ -487,7 +457,7 @@
             <div></div>
           </div>
 
-          <div v-if="active == 3">
+          <div>
             <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
               经办人信息
             </div>
@@ -688,7 +658,7 @@
             <div></div>
           </div>
 
-          <div v-if="active == 4">
+          <div>
             <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
               承诺书
             </div>
@@ -737,7 +707,7 @@
             </div>
           </div>
 
-          <div v-if="active == 5">
+          <div>
             <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
               个人信息出境场景描述
             </div>
@@ -948,7 +918,7 @@
                   </el-col>
 
                   <el-col :span="8">
-                    <el-form-item prop="areaValue">
+                    <el-form-item prop="countryValue">
                       <div
                         style="
                           display: flex;
@@ -961,7 +931,7 @@
                         </div>
                         <el-select
                           style="width: 150px"
-                          v-model="ruleForm5.areaValue"
+                          v-model="ruleForm5.countryValue"
                           clearable
                           placeholder="请选择所在国家或者地区"
                         >
@@ -1111,7 +1081,7 @@
             </div>
           </div>
 
-          <div v-if="active == 6">
+          <div>
             <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
               承诺书
             </div>
@@ -1232,7 +1202,7 @@
             </div>
           </div>
 
-          <div v-if="active == 7">
+          <div>
             <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
               个人信息保护影响评估报告
             </div>
@@ -1240,7 +1210,7 @@
               <el-form ref="ruleFormRef7" :model="ruleForm7" :rules="rules7">
                 <el-row :gutter="20">
                   <el-col :span="12">
-                    <el-form-item prop="reportAttachList">
+                    <el-form-item prop="reportAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1255,7 +1225,7 @@
                         <div style="display: flex">
                           <el-input
                             style="margin-right: 50px"
-                            v-model="ruleForm7.reportAttachList"
+                            v-model="ruleForm7.reportAttachIdList"
                             placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
                           ></el-input>
                           <el-button
@@ -1284,7 +1254,7 @@
             </div>
           </div>
 
-          <div v-if="active == 8">
+          <div>
             <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
               承诺书
             </div>
@@ -1292,7 +1262,7 @@
               <el-form ref="ruleFormRef8" :model="ruleForm8" :rules="ruleForm8">
                 <el-row :gutter="20">
                   <el-col :span="12">
-                    <el-form-item prop="delegateAttachList">
+                    <el-form-item prop="delegateAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1307,7 +1277,7 @@
                         <div style="display: flex">
                           <el-input
                             style="margin-right: 50px"
-                            v-model="ruleForm8.delegateAttachList"
+                            v-model="ruleForm8.delegateAttachIdList"
                           ></el-input>
                           <el-button
                             style="
@@ -1362,29 +1332,10 @@
         <!--  -->
         <div style="display: flex; justify-content: end">
           <el-button
-            v-if="active > 0"
             type="primary"
             style="border-radius: 50px; margin-top: 12px"
-            @click="last"
-            >上一步</el-button
-          >
-          <el-button
-            type="primary"
-            style="border-radius: 50px; margin-top: 12px"
-            @click="next"
-            >下一步</el-button
-          >
-          <el-button
-            type="primary"
-            style="border-radius: 50px; margin-top: 12px"
-            @click="sumit(0)"
-            >暂存</el-button
-          >
-          <el-button
-            type="primary"
-            style="border-radius: 50px; margin-top: 12px"
-            @click="sumit(1)"
-            >填写完成</el-button
+            @click="route.go(-1)"
+            >返回</el-button
           >
         </div>
       </div>
@@ -1403,10 +1354,15 @@ const route = useRoute();
 const query = route.query as {
   id: string;
 };
+const items = ref({});
+
+// watch(query, (newValue, oldValue) => {
+//   console.log("New value: ", newValue);
+//   console.log("Old value: ", oldValue);
+// });
 
 const token = localStorage.getItem("token");
 
-const active = ref(0);
 const ruleFormRef1 = ref<FormInstance>();
 const ruleFormRef2 = ref<FormInstance>();
 const ruleFormRef3 = ref<FormInstance>();
@@ -1416,19 +1372,19 @@ const ruleFormRef6 = ref<FormInstance>();
 const ruleFormRef7 = ref<FormInstance>();
 const ruleFormRef8 = ref<FormInstance>();
 
-onMounted(async () => {
-  await getItems(); //编辑详情
-  await getUnitNatureValue(); //单位性质
-  await getUnitCategoryValue(); //单位类型
-  await getUnitList(); //数量单位
-  await getGuoji(); //国籍
-  await getCertificatetype(); //证件类型
-  await getIndustryarea(); //涉及行业/领域
-  await getArea(); // 所在国家或地区
-});
+// onMounted(async () => {
+//   await getUnitNatureValue(); //获取 Banner 图
+//   await getUnitCategoryValue(); //获取政策资讯类别
+//   //指定政策资讯下的分页列表
+//   await getUnitList();
+//   await getGuoji();
+//   await getCertificatetype();
+//   await getIndustryarea();
+//   await getArea();
+// });
 
-const items = ref({});
 const checkList = ref([]);
+const legalFlag = ref(false);
 // 表单1
 const ruleForm1 = reactive({
   unitName: "", //单位名称
@@ -1449,9 +1405,9 @@ const ruleForm1 = reactive({
   infoSizeUnitValue: "", //处理个人信息规模单位  code
   infoSizeUnitName: "", //处理个人信息规模单位   name
 });
+
 // 表单2
 const ruleForm2 = reactive({
-  legalFlag: false,
   legal: "", //姓名
   legalTel: "", //联系电话
   legalNationalValue: "", //国籍 code
@@ -1477,10 +1433,12 @@ const ruleForm3 = reactive({
   operatorCertificateCode: "", //证件号码
   operatorEmail: "", //电子邮箱
 });
+
 // 表单4
 const ruleForm4 = reactive({
   promiseAttachIdList: "",
 });
+
 // 表单5
 const ruleForm5 = reactive({
   summary: "", //出境场景简述
@@ -1493,8 +1451,8 @@ const ruleForm5 = reactive({
   personCountUnitValue: "", //请输入涉及自然人（去重）数量单位 code
   personCountUnitName: "", //请输入涉及自然人（去重）数量单位 name
   foreignReceiver: "", //境外接收方名称
-  areaValue: "", //所在国家或地区标签 code
-  areaName: "", //所在国家或地区标签  name
+  countryValue: "", //所在国家或地区标签 code
+  countryName: "", //所在国家或地区标签  name
   primaryBusiness: "", //主营业务
   principalName: "", //负责人姓名
   principalJob: "", //负责人职务
@@ -1503,6 +1461,7 @@ const ruleForm5 = reactive({
   addr: "", //所在地址
   statDescription: "", //统计说明
 });
+
 // 表单6
 const ruleForm6 = reactive({
   contractMakeDate: "", //标准合同订立日期
@@ -1510,676 +1469,17 @@ const ruleForm6 = reactive({
   contractContent: "", //相关商业合同名称
   standardContractAttachIdList: [], //标准合同文件
 });
+
 // 表单7
 const ruleForm7 = reactive({
-  reportAttachList: [],
+  reportAttachIdList: [],
 });
+
 // 表单8
 const ruleForm8 = reactive({
-  delegateAttachList: "",
-});
-// 详情
-const getItems = async () => {
-  if (query.id) {
-    const baseUrl = "/k2401-personal-exit/exit/";
-    const ids = query.id.replace(/"/g, "");
-    const url = `${baseUrl}${ids}`;
-    const res = (await http.get(url, {
-      Authorization: "Bearer " + token,
-    })) as any;
-
-    items.value = res;
-    // console.log(res, "resresres--------------");
-    checkList.value = ["1", "2", "3"];
-
-    const {
-      // ruleForm1
-      unitName,
-      unitNatureValue,
-      unitNatureName,
-      unitNatureOther,
-      unitCategoryValue,
-      unitCategoryName,
-      unitCategoryOther,
-      creditCode,
-      unitRegAddr,
-      unitOfficeAddr,
-      keyInfoOperatorFlag,
-      empCount,
-      empCountUnitValue,
-      empCountUnitName,
-      infoSize,
-      infoSizeUnitValue,
-      infoSizeUnitName,
-      // ruleForm2
-      legal,
-      legalTel,
-      legalNationalValue,
-      legalNationalName,
-      legalJob,
-      legalCertificateTypeValue,
-      legalCertificateTypeName,
-      legalCertificateTypeOther,
-      legalCertificateCode,
-      legalEmail,
-      // ruleForm3
-      operator,
-      operatorTel,
-      operatorNationalValue,
-      operatorNationalName,
-      operatorJob,
-      operatorCertificateTypeValue,
-      operatorCertificateTypeName,
-      operatorCertificateTypeOther,
-      operatorCertificateCode,
-      operatorEmail,
-      // ruleForm4
-      promiseAttachIdList,
-      // ruleForm5
-      sceneList,
-      // ruleForm6
-      contractMakeDate,
-      contractValidDate,
-      contractContent,
-      standardContractAttachIdList,
-      // ruleForm7
-      reportAttachList,
-      // ruleForm8
-      delegateAttachList,
-    } = res; // 解构需要的属性
-
-    const ruleF1 = {
-      unitName,
-      unitNatureValue,
-      unitNatureName,
-      unitNatureOther,
-      unitCategoryValue,
-      unitCategoryName,
-      unitCategoryOther,
-      creditCode,
-      unitRegAddr,
-      unitOfficeAddr,
-      keyInfoOperatorFlag: keyInfoOperatorFlag ? "1" : "0",
-      empCount,
-      empCountUnitValue,
-      empCountUnitName,
-      infoSize,
-      infoSizeUnitValue,
-      infoSizeUnitName,
-    };
-    Object.assign(ruleForm1, ruleF1);
-
-    const ruleF2 = {
-      legal,
-      legalTel,
-      legalNationalValue,
-      legalNationalName,
-      legalJob,
-      legalCertificateTypeValue,
-      legalCertificateTypeName,
-      legalCertificateTypeOther,
-      legalCertificateCode,
-      legalEmail,
-    };
-    Object.assign(ruleForm2, ruleF2);
-    const ruleF3 = {
-      operator,
-      operatorTel,
-      operatorNationalValue,
-      operatorNationalName,
-      operatorJob,
-      operatorCertificateTypeValue,
-      operatorCertificateTypeName,
-      operatorCertificateTypeOther,
-      operatorCertificateCode,
-      operatorEmail,
-    };
-    Object.assign(ruleForm3, ruleF3);
-
-    // ruleForm4
-    const ruleF4 = {
-      promiseAttachIdList,
-    };
-    Object.assign(ruleForm4, ruleF4);
-
-    // ruleForm5
-    const {
-      summary,
-      dataTypeName,
-      containInfoFlag,
-      industryValue,
-      industryName,
-      industryOther,
-      personCount,
-      personCountUnitValue,
-      personCountUnitName,
-      foreignReceiver,
-      areaValue,
-      areaName,
-      primaryBusiness,
-      principalName,
-      principalJob,
-      contactTel,
-      contactEmail,
-      addr,
-      statDescription,
-    } = sceneList[0];
-    const ruleF5 = {
-      summary,
-      dataTypeName,
-      containInfoFlag: containInfoFlag ? "1" : "0",
-      industryValue,
-      industryName,
-      industryOther,
-      personCount,
-      personCountUnitValue,
-      personCountUnitName,
-      foreignReceiver,
-      areaValue,
-      areaName,
-      primaryBusiness,
-      principalName,
-      principalJob,
-      contactTel,
-      contactEmail,
-      addr,
-      statDescription,
-    };
-    Object.assign(ruleForm5, ruleF5);
-
-    // ruleForm6
-    const ruleF6 = {
-      contractMakeDate,
-      contractValidDate,
-      contractContent,
-      standardContractAttachIdList,
-    };
-    Object.assign(ruleForm6, ruleF6);
-
-    // ruleForm7
-    const ruleF7 = {
-      reportAttachList,
-    };
-    Object.assign(ruleForm7, ruleF7);
-
-    // ruleForm8
-    const ruleF8 = {
-      delegateAttachList,
-    };
-    Object.assign(ruleForm8, ruleF8);
-
-    console.log(ruleForm7, "ruleForm1ruleForm1");
-  }
-};
-
-// 下一步
-const next = () => {
-  // if (active.value == 0 && checkList.value.length !== 3) {
-  //   return ElMessage({ type: "warning", message: "第一步信息需要全部勾选" });
-  // } else if (active.value == 0 && checkList.value.length == 3) {
-  //   active.value++;
-  // }
-  // if (active.value == 1) {
-  //   submitForm1(ruleFormRef1.value);
-  // }
-  // if (active.value == 2) {
-  //   submitForm2(ruleFormRef2.value);
-  // }
-  // if (active.value == 3) {
-  //   submitForm3(ruleFormRef3.value);
-  // }
-  // if (active.value == 4) {
-  //   // submitForm4(ruleFormRef4.value);
-  // }
-  // if (active.value == 5) {
-  //   submitForm5(ruleFormRef5.value);
-  // }
-  if (active.value == 6) {
-    submitForm6(ruleFormRef6.value);
-  } else {
-    active.value++;
-  }
-};
-//  上一步
-const last = () => {
-  // if (active.value == 0 && checkList.value.length !== 3) {
-  //   return ElMessage({ type: "info", message: "第一步信息需要全部勾选" });
-  // }
-
-  active.value--;
-};
-// 校验表单1
-const submitForm1 = async (ruleFormRef1: FormInstance | undefined) => {
-  if (!ruleFormRef1) return;
-  await ruleFormRef1.validate((valid, fields) => {
-    if (valid) {
-      // 单位性质
-      unitNatureValuelist.value.map((item: any) => {
-        if (item.tagValue == ruleForm1.unitNatureValue) {
-          ruleForm1.unitNatureName = item.tagName;
-        }
-      });
-      // 单位类型
-      unitCategoryList.value.map((item: any) => {
-        if (item.tagValue == ruleForm1.unitCategoryValue) {
-          ruleForm1.unitCategoryName = item.tagName;
-        }
-      });
-      // 单位
-      unitList.value.map((item: any) => {
-        // 员工数量单位
-        if (item.tagValue == ruleForm1.empCountUnitValue) {
-          ruleForm1.empCountUnitName = item.tagName;
-        }
-        // 处理个人信息规模单位
-        if (item.tagValue == ruleForm1.infoSizeUnitValue) {
-          ruleForm1.infoSizeUnitName = item.tagName;
-        }
-      });
-      console.log(ruleForm1, "validvalidsubmit!");
-
-      active.value++;
-    } else {
-      return ElMessage({ type: "warning", message: "请补求信息" });
-    }
-  });
-};
-// 校验表单2
-const submitForm2 = async (ruleFormRef2: FormInstance | undefined) => {
-  if (!ruleFormRef2) return;
-  await ruleFormRef2.validate((valid, fields) => {
-    if (valid) {
-      // 国籍
-      guoji.value.map((item: any) => {
-        if (item.tagValue == ruleForm2.legalNationalValue) {
-          ruleForm2.legalNationalName = item.tagName;
-        }
-      });
-      // 证件类型
-      certificatetype.value.map((item: any) => {
-        if (item.tagValue == ruleForm2.legalCertificateTypeValue) {
-          ruleForm2.legalCertificateTypeName = item.tagName;
-        }
-      });
-      console.log("error submit!", ruleForm2);
-
-      active.value++;
-    } else {
-      console.log("error submit!", fields);
-      return ElMessage({ type: "warning", message: "请补求信息" });
-    }
-  });
-};
-// 校验表单3
-const submitForm3 = async (ruleFormRef3: FormInstance | undefined) => {
-  if (!ruleFormRef3) return;
-  await ruleFormRef3.validate((valid, fields) => {
-    if (valid) {
-      // 国籍
-      guoji.value.map((item: any) => {
-        if (item.tagValue == ruleForm3.operatorNationalValue) {
-          ruleForm3.operatorNationalName = item.tagName;
-        }
-      });
-      // 证件类型
-      certificatetype.value.map((item: any) => {
-        if (item.tagValue == ruleForm3.operatorCertificateTypeValue) {
-          ruleForm3.operatorCertificateTypeName = item.tagName;
-        }
-      });
-      console.log("error submit!", ruleForm3);
-      active.value++;
-    } else {
-      console.log("error submit!", fields);
-      return ElMessage({ type: "warning", message: "请补求信息" });
-    }
-  });
-};
-// 校验表单5
-const submitForm5 = async (ruleFormRef5: FormInstance | undefined) => {
-  if (!ruleFormRef5) return;
-  await ruleFormRef5.validate((valid, fields) => {
-    if (valid) {
-      // 涉及行业/领域
-      industryarea.value.map((item: any) => {
-        if (item.tagValue == ruleForm5.industryValue) {
-          ruleForm5.industryName = item.tagName;
-        }
-      });
-      // 单位
-      unitList.value.map((item: any) => {
-        // 员工数量单位
-        if (item.tagValue == ruleForm5.personCountUnitValue) {
-          ruleForm5.personCountUnitName = item.tagName;
-        }
-      });
-      // 所在国家或地区
-      area.value.map((item: any) => {
-        if (item.tagValue == ruleForm5.areaValue) {
-          ruleForm5.areaName = item.tagName;
-        }
-      });
-      console.log("error submit!", ruleForm5);
-      active.value++;
-    } else {
-      console.log("error submit!", fields);
-      return ElMessage({ type: "warning", message: "请补求信息" });
-    }
-  });
-};
-// 校验表单6
-const submitForm6 = async (ruleFormRef6: FormInstance | undefined) => {
-  if (!ruleFormRef6) return;
-  await ruleFormRef6.validate((valid, fields) => {
-    if (valid) {
-      let data1 = new Date(ruleForm6.contractMakeDate);
-
-      let year1 = data1.getFullYear();
-      let month1 = data1.getMonth() + 1;
-      let day1 = data1.getDate();
-
-      // 格式化为年月日格式
-      ruleForm6.contractMakeDate = `${year1}-${padZero(month1)}-${padZero(
-        day1
-      )}`;
-
-      let data2 = new Date(ruleForm6.contractValidDate);
-
-      let year2 = data2.getFullYear();
-      let month2 = data2.getMonth() + 1;
-      let day2 = data2.getDate();
-
-      // 格式化为年月日格式
-      ruleForm6.contractValidDate = `${year2}-${padZero(month2)}-${padZero(
-        day2
-      )}`;
-      // 将单个数字转换为两位数的格式（例如：1 变为 01）
-      function padZero(num) {
-        return (num < 10 ? "0" : "") + num;
-      }
-      console.log("error submit!", ruleForm6);
-      active.value++;
-    } else {
-      console.log("error submit!", fields);
-      return ElMessage({ type: "warning", message: "请补求信息" });
-    }
-  });
-};
-
-// 提交
-const sumit = async (num: any) => {
-  let params = {
-    // 0 前提
-    conditionContent:
-      "（一）关键信息基础设施运营者以外的数据处理者；（二）自当年1月1日起，累计向境外提供10万人以上、不满100万人个人信息（不含敏感个人信息）的；（三）自当年1月1日起，累计向境外提供不满1万人敏感个人信息的；", // 前提
-    // 1 个人信息处理者基本情况
-    unitName: ruleForm1.unitName, // 单位名称
-    unitNatureValue: ruleForm1.unitNatureValue, // 单位性质标签（标签接口数据接口参见接口1.12.3），取tagValue字段，数据接口：tag/tag?tagCode=unitnature
-    unitNatureName: ruleForm1.unitNatureName, // 同上，取tagName字段
-    unitNatureOther: ruleForm1.unitNatureOther, // 其他单位性质
-    unitCategoryValue: ruleForm1.unitCategoryValue, // 单位类型标签，数据接口：tag/tag?tagCode=unitcategory
-    unitCategoryName: ruleForm1.unitCategoryName, // 同上
-    unitCategoryOther: ruleForm1.unitCategoryOther, // 其他单位类型
-    unitRegAddr: ruleForm1.unitRegAddr, // 单位注册地
-    unitOfficeAddr: ruleForm1.unitOfficeAddr, // 办公所在地
-    empCount: ruleForm1.empCount, // 员工数量
-    empCountUnitValue: ruleForm1.empCountUnitValue, // 员工数量单位标签，数据接口：tag/tag?tagCode=personunit
-    empCountUnitName: ruleForm1.empCountUnitName, // 同上
-    creditCode: ruleForm1.creditCode, // 统一社会信用代码
-    keyInfoOperatorFlag: ruleForm1.keyInfoOperatorFlag == "1" ? true : false, // 是否为关键信息基础设施运营者
-    infoSize: ruleForm1.infoSize, // 处理个人信息规模
-    infoSizeUnitValue: ruleForm1.infoSizeUnitValue, // 处理个人信息规模单位标签，数据接口：tag/tag?tagCode=personunit
-    infoSizeUnitName: ruleForm1.infoSizeUnitName, // 同上
-    // 2 法定代表人信息
-    legalFlag: ruleForm2.legalFlag, // 是否有法定代表人
-    legal: ruleForm2.legal, // 法人姓名
-    legalNationalValue: ruleForm2.legalNationalValue, // 法人国籍标签，数据接口：tag/tag?tagCode=guoji
-    legalNationalName: ruleForm2.legalNationalName, // 同上
-    legalTel: ruleForm2.legalTel, // 法人联系电话
-    legalEmail: ruleForm2.legalEmail, // 法人电子邮箱
-    legalCertificateTypeValue: ruleForm2.legalCertificateTypeValue, // 法人证件类型标签，数据接口：tag/tag?tagCode=certificatetype
-    legalCertificateTypeName: ruleForm2.legalCertificateTypeName, // 同上
-    legalCertificateTypeOther: ruleForm2.legalCertificateTypeOther, // 法人其他证件类型
-    legalCertificateCode: ruleForm2.legalCertificateCode, // 法人证件号码
-    legalJob: ruleForm2.legalJob, // 法人职务
-    // 3 经办人信息
-    operator: ruleForm3.operator, // 经办人姓名
-    operatorNationalValue: ruleForm3.operatorNationalValue, //  经办人国籍标签，数据接口：tag/tag?tagCode=guoji
-    operatorNationalName: ruleForm3.operatorNationalName, // 同上
-    operatorTel: ruleForm3.operatorTel, // 经办人联系电话
-    operatorEmail: ruleForm3.operatorEmail, // 经办人电子邮箱
-    operatorCertificateTypeValue: ruleForm3.operatorCertificateTypeValue, // 经办人证件类型标签，数据接口：tag/tag?tagCode=certificatetype
-    operatorCertificateTypeName: ruleForm3.operatorCertificateTypeName, // 同上
-    operatorCertificateTypeOther: ruleForm3.operatorCertificateTypeOther, // 经办人其他证件类型
-    operatorCertificateCode: ruleForm3.operatorCertificateCode, // 经办人证件号码
-    operatorJob: ruleForm3.operatorJob, // 经办人职务
-    // 4 承诺书 文件上传 - 文件上传均调用统一的上传接口（本文档接口1），获取其返回值对象中的id
-    promiseAttachIdList: ["1661290567658663937"], // 承诺书 附件id集合
-    // 5 个人信息出境场景 - 子对象集合
-    sceneList: [
-      {
-        summary: ruleForm5.summary, // 出境场景简述
-        dataTypeName: ruleForm5.dataTypeName, // 数据类型
-        containInfoFlag: ruleForm5.containInfoFlag ? true : false, // 是否包含敏感个人信息
-        industryValue: ruleForm5.industryValue, // 涉及行业/领域标签，数据接口：tag/tag?tagCode=industryarea
-        industryName: ruleForm5.industryName, // 同上
-        industryOther: ruleForm5.industryOther, // 涉及其他行业/领域
-        personCount: ruleForm5.personCount, // 涉及自然人（去重）数量
-        personCountUnitValue: ruleForm5.personCountUnitValue, // 涉及自然人（去重）数量单位标签，数据接口：tag/tag?tagCode=personunit
-        personCountUnitName: ruleForm5.personCountUnitName, // 同上
-        foreignReceiver: ruleForm5.foreignReceiver, // 境外接收方名称
-        areaValue: ruleForm5.areaValue, // 所在国家或地区标签，数据接口：tag/tag?tagCode=guoji
-        areaName: ruleForm5.areaName, // 同上
-        primaryBusiness: ruleForm5.primaryBusiness, // 主营业务
-        principalName: ruleForm5.principalName, // 负责人姓名
-        principalJob: ruleForm5.principalJob, // 负责人职务
-        contactTel: ruleForm5.contactTel, // 联系方式-电话
-        contactEmail: ruleForm5.contactEmail, // 联系方式-邮箱
-        addr: ruleForm5.addr, // 所在地址
-        statDescription: ruleForm5.statDescription, // 统计说明
-      },
-    ],
-    // 6 个人信息出境标准合同
-    contractMakeDate: ruleForm6.contractMakeDate, // 标准合同订立日期
-    contractValidDate: ruleForm6.contractValidDate, // 标准合同生效日期
-    contractContent: ruleForm6.contractContent, // 相关商业合同名称
-    standardContractAttachIdList: ["1661290578916175874"],
-    // 7 个人信息保护影响评估报告
-    reportAttachList: ["1661290608272109570"],
-    // 8 其他相关证明材料
-    delegateAttachList: ["1661291263745355777"],
-    otherAttachIdList: ["1661292619461849090"],
-    // 状态
-    status: num == 1 ? 1 : 0, // 枚举：0暂存、1填写完成
-  };
-  let res = "";
-  if (!query.id) {
-    res = (await http.post("/k2401-personal-exit/exit", params, {
-      Authorization: "Bearer " + token,
-    })) as any;
-  } else {
-    const baseUrl = "/k2401-personal-exit/exit/";
-    const ids = query.id.replace(/"/g, "");
-    const url = `${baseUrl}${ids}`;
-
-    res = (await http.put(url, params, {
-      Authorization: "Bearer " + token,
-    })) as any;
-  }
-  console.log(res, "resresres");
-  if (res) {
-    return ElMessage({
-      type: "success",
-      message: num == 1 ? "填写完成" : "暂存成功",
-    });
-  } else {
-    return ElMessage({
-      type: "warning",
-      message: num == 1 ? "填写失败" : "暂存失败",
-    });
-  }
-};
-const rules1 = reactive({
-  unitName: [{ required: true, message: "请输入单位名称", trigger: "blur" }],
-  unitCategoryValue: [
-    { required: true, message: "请选择单位类型", trigger: "change" },
-  ],
-  unitOfficeAddr: [
-    { required: true, message: "请输入办公所在地", trigger: "blur" },
-  ],
-  keyInfoOperatorFlag: [
-    {
-      required: true,
-      message: "请选择是否为关键信息基础设施运营者",
-      trigger: "change",
-    },
-  ],
-  infoSize: [
-    { required: true, message: "请选择处理个人信息规模", trigger: "blur" },
-  ],
-  infoSizeUnitValue: [
-    {
-      required: true,
-      message: "请选择处理个人信息规模单位",
-      trigger: "change",
-    },
-  ],
+  delegateAttachIdList: "",
 });
 
-const rules2 = reactive({
-  legal: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-  legalTel: [{ required: true, message: "请输入联系电话", trigger: "blur" }],
-  legalNationalValue: [
-    { required: true, message: "请输入国籍", trigger: "blur" },
-  ],
-  legalJob: [{ required: true, message: "请输入职务", trigger: "blur" }],
-  legalCertificateTypeValue: [
-    { required: true, message: "请选择证件类型", trigger: "change" },
-  ],
-  legalCertificateCode: [
-    { required: true, message: "请输入证件号码", trigger: "blur" },
-  ],
-  legalEmail: [
-    { required: true, message: "请选择电子邮箱", trigger: "change" },
-  ],
-});
-
-const rules3 = reactive({
-  operator: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-  operatorTel: [{ required: true, message: "请输入联系电话", trigger: "blur" }],
-  operatorNationalValue: [
-    { required: true, message: "请输入国籍", trigger: "blur" },
-  ],
-  operatorJob: [{ required: true, message: "请输入职务", trigger: "blur" }],
-  operatorCertificateTypeValue: [
-    { required: true, message: "请选择证件类型", trigger: "change" },
-  ],
-  operatorCertificateCode: [
-    { required: true, message: "请输入证件号码", trigger: "blur" },
-  ],
-  operatorEmail: [
-    { required: true, message: "请输入电子邮箱", trigger: "blur" },
-  ],
-});
-
-const rules4 = reactive({
-  promiseAttachIdList: [
-    { required: true, message: "请上传承诺书", trigger: "blur" },
-  ],
-});
-
-const rules5 = reactive({
-  summary: [{ required: true, message: "请输入出境场景简述", trigger: "blur" }],
-  dataTypeName: [
-    { required: true, message: "请输入数据类型", trigger: "blur" },
-  ],
-  containInfoFlag: [
-    { required: true, message: "请输入是否包含敏感个人信息", trigger: "blur" },
-  ],
-  industryValue: [
-    { required: true, message: "请选择涉及行业/领域 ", trigger: "change" },
-  ],
-  personCount: [
-    {
-      required: true,
-      message: "请输入涉及自然人（去重）数量",
-      trigger: "blur",
-    },
-  ],
-  personCountUnitValue: [
-    {
-      required: true,
-      message: "请输入涉及自然人（去重）数量单位",
-      trigger: "blur",
-    },
-  ],
-  foreignReceiver: [
-    {
-      required: true,
-      message: "请输入境外接收方名称",
-      trigger: "blur",
-    },
-  ],
-  areaValue: [
-    {
-      required: true,
-      message: "请输入所在国家或地区",
-      trigger: "blur",
-    },
-  ],
-  primaryBusiness: [
-    {
-      required: true,
-      message: "请输入主营业务",
-      trigger: "blur",
-    },
-  ],
-  principalName: [
-    {
-      required: true,
-      message: "请输入负责人姓名",
-      trigger: "blur",
-    },
-  ],
-  principalJob: [
-    {
-      required: true,
-      message: "请输入负责人职务",
-      trigger: "blur",
-    },
-  ],
-  addr: [
-    {
-      required: true,
-      message: "请输入所在地址",
-      trigger: "blur",
-    },
-  ],
-});
-
-const rules6 = reactive({
-  contractMakeDate: [
-    { required: true, message: "请输入标准合同订立日期", trigger: "blur" },
-  ],
-  contractValidDate: [
-    { required: true, message: "请输入标准合同生效日期", trigger: "blur" },
-  ],
-  standardContractAttachIdList: [
-    { required: true, message: "请输入标准合同文件", trigger: "blur" },
-  ],
-});
-
-const rules7 = reactive({
-  reportAttachList: [
-    { required: true, message: "请输入标准合同文件", trigger: "blur" },
-  ],
-});
-
-const rules8 = reactive({
-  delegateAttachList: [
-    { required: true, message: "请输入经办人授权委托书", trigger: "blur" },
-  ],
-});
 // 单位性质
 const unitNatureValuelist = ref([]);
 const getUnitNatureValue = async () => {
@@ -2197,7 +1497,7 @@ const getUnitCategoryValue = async () => {
   })) as any;
   unitCategoryList.value = res.children;
 };
-// 数量单位   empCountUnitValue
+// 单位   empCountUnitValue
 const unitList = ref([]);
 const getUnitList = async () => {
   const res = (await http.get("/tag/tag?tagCode=personunit", {
@@ -2212,6 +1512,7 @@ const getGuoji = async () => {
     Authorization: "Bearer " + token,
   })) as any;
   guoji.value = res.children;
+  console.log(guoji.value, "empCountUnitValueList");
 };
 // 证件类型   legalCertificateTypeValue
 const certificatetype = ref([]);
@@ -2220,6 +1521,7 @@ const getCertificatetype = async () => {
     Authorization: "Bearer " + token,
   })) as any;
   certificatetype.value = res.children;
+  console.log(certificatetype.value, "empCountUnitValueList");
 };
 // 涉及行业/领域   industryValue
 const industryarea = ref([]);
@@ -2228,8 +1530,9 @@ const getIndustryarea = async () => {
     Authorization: "Bearer " + token,
   })) as any;
   industryarea.value = res.children;
+  console.log(industryarea.value, "industryarea");
 };
-// 所在国家或地区   areaValue
+// 所在国家或地区   countryValue
 const area = ref([]);
 const getArea = async () => {
   const res = (await http.get("/tag/tag?tagCode=area", {
@@ -2237,6 +1540,20 @@ const getArea = async () => {
   })) as any;
   area.value = res.children;
 };
+// 详情
+const getItems = async () => {
+  const baseUrl = "/k2401-personal-exit/exit/";
+  const ids = query.id.replace(/"/g, "");
+  const url = `${baseUrl}${ids}`;
+
+  const res = (await http.get(url, {
+    Authorization: "Bearer " + token,
+  })) as any;
+
+  items.value = res;
+  console.log(res, "resresresres");
+};
+getItems();
 </script>
 <style lang="scss" scoped>
 .contain {
