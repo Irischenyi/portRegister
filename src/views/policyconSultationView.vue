@@ -190,6 +190,7 @@ const getArticlePaged = async () => {
       tabsValue.value || 1
     }`
   )) as any;
+  console.log(res, "res");
   tabsLists.value = res.items;
   total.value = parseInt(res.total);
   imgTabs.value = `${setBaseInf.baseUrl}` + res.items[0].attach.storagePath;

@@ -43,7 +43,7 @@
               个人信息处理者情况
             </div>
             <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef1" :model="ruleForm1" >
+              <el-form ref="ruleFormRef1" :model="ruleForm1">
                 <el-row :gutter="20">
                   <el-col :span="8">
                     <el-form-item prop="unitName">
@@ -58,6 +58,7 @@
                         <el-input
                           v-model="ruleForm1.unitName"
                           placeholder="请输入单位名称"
+                          disabled
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -73,6 +74,7 @@
                           v-model="ruleForm1.unitNatureValue"
                           placeholder="请选择单位性质"
                           clearable
+                          disabled
                         >
                           <el-option
                             :label="(item as any).tagName"
@@ -94,6 +96,7 @@
                         <el-input
                           v-model="ruleForm1.unitNatureOther"
                           placeholder="请输入其他单位性质"
+                          disabled
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -108,6 +111,7 @@
                           v-model="ruleForm1.unitCategoryValue"
                           placeholder="请选择单位类型"
                           clearable
+                          disabled
                         >
                           <el-option
                             :label="(item as any).tagName"
@@ -125,6 +129,7 @@
                         <el-input
                           v-model="ruleForm1.unitCategoryOther"
                           placeholder="请输入其他单位性质"
+                          disabled
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -145,6 +150,7 @@
                         <el-input
                           v-model="ruleForm1.unitRegAddr"
                           placeholder="请输入单位注册地"
+                          disabled
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -162,6 +168,7 @@
                         <el-input
                           v-model="ruleForm1.unitOfficeAddr"
                           placeholder="请输入办公所在地"
+                          disabled
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -174,6 +181,7 @@
                         <el-input
                           v-model="ruleForm1.empCount"
                           placeholder="按自然人（去重统计数量）"
+                          disabled
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -186,6 +194,7 @@
                           v-model="ruleForm1.empCountUnitValue"
                           clearable
                           placeholder="请选择单位"
+                          disabled
                         >
                           <el-option
                             :label="(item as any).tagName"
@@ -215,6 +224,7 @@
                         <el-input
                           v-model="ruleForm1.creditCode"
                           placeholder="请输入统一社会信用代码"
+                          disabled
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -237,6 +247,7 @@
                           v-model="ruleForm1.keyInfoOperatorFlag"
                           clearable
                           placeholder="请选择是否为关键信息基础设施运营者"
+                          disabled
                         >
                           <el-option label="是" value="1" />
                           <el-option label="否" value="0" />
@@ -254,6 +265,7 @@
                         <el-input
                           v-model="ruleForm1.infoSize"
                           placeholder="按自然人（去重统计数量）"
+                          disabled
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -462,7 +474,7 @@
               经办人信息
             </div>
             <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef3" :model="ruleForm3" >
+              <el-form ref="ruleFormRef3" :model="ruleForm3">
                 <el-row :gutter="20">
                   <el-col :span="8">
                     <el-form-item prop="operator">
@@ -663,7 +675,7 @@
               承诺书
             </div>
             <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef4" :model="ruleForm4" >
+              <el-form ref="ruleFormRef4" :model="ruleForm4">
                 <el-row :gutter="20">
                   <el-col :span="12">
                     <el-form-item prop="promiseAttachIdList">
@@ -712,7 +724,7 @@
               个人信息出境场景描述
             </div>
             <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef5" :model="ruleForm5" >
+              <el-form ref="ruleFormRef5" :model="ruleForm5">
                 <el-row :gutter="20">
                   <el-col :span="24">
                     <el-form-item prop="summary">
@@ -1552,6 +1564,183 @@ const getItems = async () => {
 
   items.value = res;
   console.log(res, "resresresres");
+  const {
+    // ruleForm1
+    unitName,
+    unitNatureValue,
+    unitNatureName,
+    unitNatureOther,
+    unitCategoryValue,
+    unitCategoryName,
+    unitCategoryOther,
+    creditCode,
+    unitRegAddr,
+    unitOfficeAddr,
+    keyInfoOperatorFlag,
+    empCount,
+    empCountUnitValue,
+    empCountUnitName,
+    infoSize,
+    infoSizeUnitValue,
+    infoSizeUnitName,
+    // ruleForm2
+    legal,
+    legalTel,
+    legalNationalValue,
+    legalNationalName,
+    legalJob,
+    legalCertificateTypeValue,
+    legalCertificateTypeName,
+    legalCertificateTypeOther,
+    legalCertificateCode,
+    legalEmail,
+    // ruleForm3
+    operator,
+    operatorTel,
+    operatorNationalValue,
+    operatorNationalName,
+    operatorJob,
+    operatorCertificateTypeValue,
+    operatorCertificateTypeName,
+    operatorCertificateTypeOther,
+    operatorCertificateCode,
+    operatorEmail,
+    // ruleForm4
+    promiseAttachIdList,
+    // ruleForm5
+    sceneList,
+    // ruleForm6
+    contractMakeDate,
+    contractValidDate,
+    contractContent,
+    standardContractAttachIdList,
+    // ruleForm7
+    reportAttachList,
+    // ruleForm8
+    delegateAttachList,
+  } = res; // 解构需要的属性
+
+  const ruleF1 = {
+    unitName,
+    unitNatureValue,
+    unitNatureName,
+    unitNatureOther,
+    unitCategoryValue,
+    unitCategoryName,
+    unitCategoryOther,
+    creditCode,
+    unitRegAddr,
+    unitOfficeAddr,
+    keyInfoOperatorFlag: keyInfoOperatorFlag ? "1" : "0",
+    empCount,
+    empCountUnitValue,
+    empCountUnitName,
+    infoSize,
+    infoSizeUnitValue,
+    infoSizeUnitName,
+  };
+  Object.assign(ruleForm1, ruleF1);
+
+  const ruleF2 = {
+    legal,
+    legalTel,
+    legalNationalValue,
+    legalNationalName,
+    legalJob,
+    legalCertificateTypeValue,
+    legalCertificateTypeName,
+    legalCertificateTypeOther,
+    legalCertificateCode,
+    legalEmail,
+  };
+  Object.assign(ruleForm2, ruleF2);
+  const ruleF3 = {
+    operator,
+    operatorTel,
+    operatorNationalValue,
+    operatorNationalName,
+    operatorJob,
+    operatorCertificateTypeValue,
+    operatorCertificateTypeName,
+    operatorCertificateTypeOther,
+    operatorCertificateCode,
+    operatorEmail,
+  };
+  Object.assign(ruleForm3, ruleF3);
+
+  // ruleForm4
+  const ruleF4 = {
+    promiseAttachIdList,
+  };
+  Object.assign(ruleForm4, ruleF4);
+
+  // ruleForm5
+  const {
+    summary,
+    dataTypeName,
+    containInfoFlag,
+    industryValue,
+    industryName,
+    industryOther,
+    personCount,
+    personCountUnitValue,
+    personCountUnitName,
+    foreignReceiver,
+    areaValue,
+    areaName,
+    primaryBusiness,
+    principalName,
+    principalJob,
+    contactTel,
+    contactEmail,
+    addr,
+    statDescription,
+  } = sceneList[0];
+  const ruleF5 = {
+    summary,
+    dataTypeName,
+    containInfoFlag: containInfoFlag ? "1" : "0",
+    industryValue,
+    industryName,
+    industryOther,
+    personCount,
+    personCountUnitValue,
+    personCountUnitName,
+    foreignReceiver,
+    areaValue,
+    areaName,
+    primaryBusiness,
+    principalName,
+    principalJob,
+    contactTel,
+    contactEmail,
+    addr,
+    statDescription,
+  };
+  Object.assign(ruleForm5, ruleF5);
+
+  // ruleForm6
+  const ruleF6 = {
+    contractMakeDate,
+    contractValidDate,
+    contractContent,
+    standardContractAttachIdList,
+  };
+  Object.assign(ruleForm6, ruleF6);
+
+  // ruleForm7
+  const ruleF7 = {
+    reportAttachIdList: reportAttachList,
+  };
+  Object.assign(ruleForm7, ruleF7);
+
+  // ruleForm8
+  const ruleF8 = {
+    delegateAttachIdList: delegateAttachList,
+  };
+  Object.assign(ruleForm8, ruleF8);
+
+  console.log(ruleForm7, "ruleForm1ruleForm1");
 };
 getItems();
 </script>

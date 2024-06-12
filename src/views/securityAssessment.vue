@@ -49,8 +49,18 @@
 
           <el-row style="margin-top: 15px" :gutter="20">
             <el-col :span="8">
-              <el-form-item label="项目编号">
-                <el-input v-model="form.xmbh2"></el-input>
+              <el-form-item label="状态">
+                <!-- <el-input v-model="form.xmbh2"></el-input> -->
+                <el-select v-model="form.status" clearable placeholder="">
+                  <el-option
+                    :label="(item as any).name"
+                    :value="(item as any).value"
+                    v-for="(item, index) in statusList"
+                    :key="index"
+                  />
+                  <!-- <el-option label="是" value="1" />
+                          <el-option label="否" value="1" /> -->
+                </el-select>
               </el-form-item>
             </el-col>
 
@@ -91,7 +101,7 @@
               :icon="DocumentAdd"
               >新增申报</el-button
             >
-            <el-button
+            <!-- <el-button
               style="
                 border-radius: 50px;
                 background-color: #fff;
@@ -110,7 +120,7 @@
               type="primary"
               :icon="Upload"
               >批量上传</el-button
-            >
+            > -->
           </el-row>
         </el-form>
 
@@ -120,25 +130,25 @@
             <el-table-column prop="name" label="项目编号" />
             <el-table-column prop="address" label="流水号" />
             <el-table-column prop="date" label="省份" />
-            <el-table-column prop="name" label="单位" />
-            <el-table-column prop="address" label="创建时间" />
-            <el-table-column prop="address" label="申报时间" />
-            <el-table-column prop="address" label="状态">
-              <template #default="{ row }">
-                <!-- <div class="status">正式通过</div> -->
-                <!-- <div class="status status1">审核中</div> -->
-                <!-- <div class="status status2" >填报中</div> -->
-                <!-- <div class="status status3" >未通过</div> -->
-                <div class="status status4">检测未过</div>
-                <!-- <el-button type="text">编辑</el-button>
+            <el-table-column prop="createUserName" label="单位" />
+            <el-table-column prop="createDate" label="创建时间" />
+            <el-table-column prop="createDate" label="申报时间" />
+            <el-table-column prop="statusName" label="状态">
+              <!-- <template #default="{ row }"> -->
+              <!-- <div class="status">正式通过</div> -->
+              <!-- <div class="status status1">审核中</div> -->
+              <!-- <div class="status status2" >填报中</div> -->
+              <!-- <div class="status status3" >未通过</div> -->
+              <!-- <div class="status status4">检测未过</div> -->
+              <!-- <el-button type="text">编辑</el-button>
                 <el-button type="text" style="color: red">删除</el-button> -->
-              </template>
+              <!-- </template> -->
             </el-table-column>
 
             <el-table-column prop="address" label="操作">
               <template #default="{ row }">
-                <el-button type="text">编辑</el-button>
-                <el-button type="text" style="color: red">删除</el-button>
+                <el-button type="text" @click="toEdit(row.id)">编辑</el-button>
+                <!-- <el-button type="text" style="color: red">删除</el-button> -->
               </template>
             </el-table-column>
           </el-table>
@@ -171,6 +181,9 @@ import {
 } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
 import Bottom from "@/components/Bottom.vue";
+import http, { setBaseInf } from "@/http/httpContentMain";
+
+const token = localStorage.getItem("token");
 
 const router = useRouter();
 const form = reactive({
@@ -179,6 +192,7 @@ const form = reactive({
   sf: "",
   xmbh2: "",
   qzsj: "",
+  status: "",
 });
 const search = () => {};
 const reset = () => {
@@ -201,31 +215,39 @@ const total = ref(0);
 
 const handleSizeChange = () => {};
 const handleCurrentChange = () => {};
-const tableData = [
-  {
-    date: "2016-05-03",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-02",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-04",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-01",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-];
-const securityAdd = () => {
+const tableData = ref([]);
+
+// 列表
+const getList = (tabNumber: any) => {
+  http
+    .get(
+      `k2401-data-exit/exit/paged?current=${
+        tabNumber === 0 ? 1 : page.pageNum
+      }&size=${tabNumber === 0 ? 10 : page.pageSize}&status=`,
+      {
+        Authorization: "Bearer " + token,
+      }
+    )
+    .then((data: any) => {
+      // console.log(data, "datadata-----------");
+      tableData.value = data.items;
+      total.value = parseInt(data.total);
+    });
+};
+
+getList(0);
+
+const securityAdd = (id: any) => {
   router.push({
     path: "/index/securityAssessmentAdd",
+  });
+};
+const toEdit = (id: any) => {
+  router.push({
+    path: "/index/securityAssessmentAdd",
+    query: {
+      id: JSON.stringify(id),
+    },
   });
 };
 </script>

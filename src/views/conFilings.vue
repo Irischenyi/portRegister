@@ -42,7 +42,17 @@
             <el-row style="margin-top: 15px" :gutter="20">
               <el-col :span="8">
                 <el-form-item label="状态">
-                  <el-input v-model="form.xmbh2"></el-input>
+                  <!-- <el-input v-model="form.xmbh2"></el-input> -->
+                  <el-select v-model="form.status" clearable placeholder="">
+                    <el-option
+                      :label="(item as any).name"
+                      :value="(item as any).value"
+                      v-for="(item, index) in statusList"
+                      :key="index"
+                    />
+                    <!-- <el-option label="是" value="1" />
+                          <el-option label="否" value="1" /> -->
+                  </el-select>
                 </el-form-item>
               </el-col>
 
@@ -65,8 +75,14 @@
                   :icon="Refresh"
                   color="#c0c0c0"
                   circle
+                  @click="getList(0)"
                 />
-                <el-button type="primary" :icon="Search" circle />
+                <el-button
+                  type="primary"
+                  :icon="Search"
+                  circle
+                  @click="getList(1)"
+                />
               </el-col>
             </el-row>
 
@@ -82,7 +98,7 @@
                 :icon="DocumentAdd"
                 >新增申报</el-button
               >
-              <el-button
+              <!-- <el-button
                 style="
                   border-radius: 50px;
                   background-color: #fff;
@@ -101,7 +117,7 @@
                 type="primary"
                 :icon="Upload"
                 >批量上传</el-button
-              >
+              > -->
             </el-row>
           </el-form>
 
@@ -116,27 +132,20 @@
               <el-table-column prop="createDate" label="提交时间" />
               <el-table-column prop="status" label="状态">
                 <template #default="{ row }">
-                  <div v-if="row.status == 0" class="status">填报中</div>
-                  <div v-if="row.status == 1" class="status status1">
-                    预检查审核中
-                  </div>
-                  <div v-if="row.status == 2" class="status status2">
-                    预检查通过
-                  </div>
-                  <div v-if="row.status == 3" class="status status3">
-                    预检查未通过
-                  </div>
-                  <!-- <div class="status status4">检测未过</div> -->
-                  <!-- <el-button type="text">编辑</el-button>
-                <el-button type="text" style="color: red">删除</el-button> -->
+                  <div v-if="row.status == 0" class="">填报中</div>
+                  <div v-if="row.status == 1" class="">预检查审核中</div>
+                  <div v-if="row.status == 2" class="">预检查通过</div>
+                  <div v-if="row.status == 3" class="">预检查未通过</div>
                 </template>
               </el-table-column>
 
               <el-table-column prop="address" label="操作">
                 <template #default="{ row }">
-                  <el-button link @click="toDetail(row.id)">详情</el-button>
-                  <el-button link @click="toEdit(row.id)">编辑</el-button>
-                  <el-button link style="color: red">删除</el-button>
+                  <!-- <el-button link @click="toDetail(row.id)">详情</el-button> -->
+                  <el-button link type="primary" @click="toEdit(row.id)"
+                    >编辑</el-button
+                  >
+                  <!-- <el-button link style="color: red">删除</el-button> -->
                 </template>
               </el-table-column>
             </el-table>
@@ -159,7 +168,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import http, { setBaseInf } from "@/http/httpContentMain";
 
 import {
@@ -173,12 +182,14 @@ import { useRouter } from "vue-router";
 const token = localStorage.getItem("token");
 
 const router = useRouter();
-
+onMounted(async () => {
+  // await getStatus(); //编辑详情
+});
 const form = ref({
   xmbh: "",
   lsh: "",
   sf: "",
-  xmbh2: "",
+  status: "",
   qzsj: "",
 });
 const page = reactive({
@@ -194,44 +205,25 @@ const tableData = ref([]);
 
 // 列表
 const getList = (tabNumber: any) => {
-  const currentPage = 1;
+  // k2401-personal-exit/exit/paged?current=1&size=15&status=2
+
   http
     .get(
-      `k2401-personal-exit/exit/paged?current=${currentPage}&size=9&status=${tabNumber}`,
+      `k2401-personal-exit/exit/paged?current=${
+        tabNumber === 0 ? 1 : page.pageNum
+      }&size=${tabNumber === 0 ? 10 : page.pageSize}&status=`,
       {
         Authorization: "Bearer " + token,
       }
     )
     .then((data: any) => {
-      console.log(data, "datadata");
+      console.log(data, "datadata-----------");
       tableData.value = data.items;
       total.value = parseInt(data.total);
     });
 };
-getList(2);
 
-// const tableData = [
-//   {
-//     date: "2016-05-03",
-//     name: "Tom",
-//     address: "No. 189, Grove St, Los Angeles",
-//   },
-//   {
-//     date: "2016-05-02",
-//     name: "Tom",
-//     address: "No. 189, Grove St, Los Angeles",
-//   },
-//   {
-//     date: "2016-05-04",
-//     name: "Tom",
-//     address: "No. 189, Grove St, Los Angeles",
-//   },
-//   {
-//     date: "2016-05-01",
-//     name: "Tom",
-//     address: "No. 189, Grove St, Los Angeles",
-//   },
-// ];
+getList(0);
 
 const peADD = () => {
   router.push({
@@ -255,6 +247,16 @@ const toDetail = (id: any) => {
     },
   });
 };
+// 状态   statusList
+const statusList = ref([]);
+const getStatus = async () => {
+  const res = (await http.get("k2401-personal-exit/status-list", {
+    Authorization: "Bearer " + token,
+  })) as any;
+  console.log(res, "resresres");
+  // statusList.value = res.children;
+};
+// getStatus();
 </script>
 <style lang="scss" scoped>
 .contain {
@@ -281,7 +283,7 @@ const toDetail = (id: any) => {
   text-align: center;
   line-height: 30px;
   color: #fff;
-  background: url(".././assets/images/status/pass.png") no-repeat;
+  // background: url(".././assets/images/status/pass.png") no-repeat;
   background-size: 100% 100%;
 }
 .status1 {

@@ -110,10 +110,6 @@
                             v-for="(item, index) in unitNatureValuelist"
                             :key="index"
                           />
-                          <!-- <el-option label="事业单位" value="2" />
-                          <el-option label="企业" value="3" />
-                          <el-option label="社会组织" value="4" />
-                          <el-option label="其他" value="5" /> -->
                         </el-select>
                       </div>
                     </el-form-item>
@@ -324,8 +320,13 @@
               label="无法定代表人"
               size="large"
             />
-            <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef2" :model="ruleForm2" :rules="rules2">
+            <div style="height: 300px; margin: 0 0 20px 20px">
+              <el-form
+                v-if="!ruleForm2.legalFlag"
+                ref="ruleFormRef2"
+                :model="ruleForm2"
+                :rules="rules2"
+              >
                 <el-row :gutter="20">
                   <el-col :span="8">
                     <el-form-item prop="legal">
@@ -355,7 +356,6 @@
                       >
                         <div><span style="color: red">*</span> 国籍</div>
                         <el-select
-                          style="width: 150px"
                           v-model="ruleForm2.legalNationalValue"
                           clearable
                           placeholder="请选择国籍"
@@ -709,12 +709,12 @@
                           承诺书
                         </div>
                         <div style="display: flex">
-                          <el-input
+                          <!-- <el-input
                             style="margin-right: 50px"
-                            v-model="ruleForm4.promiseAttachIdList"
+                            v-model="ruleForm4.fileName"
                             placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
-                          ></el-input>
-                          <el-button
+                          ></el-input> -->
+                          <!-- <el-button
                             style="
                               border-radius: 50px;
                               background-color: #fff;
@@ -723,7 +723,38 @@
                             type="primary"
                             :icon="Download"
                             >上传文件</el-button
+                          > -->
+                          <!-- <q-file
+                        v-model="file"
+                        filled
+                        style="max-width: 300px"
+                        /> -->
+                          <el-upload
+                            drag
+                            class="upload-demo"
+                            :show-file-list="false"
+                            :http-request="customUpload"
                           >
+                            <el-button
+                              style="
+                                border-radius: 50px;
+                                background-color: #fff;
+                                color: #4984ff;
+                              "
+                              type="primary"
+                              :icon="Download"
+                              >上传文件</el-button
+                            >
+
+                            <!-- <template #tip>
+                              <div class="el-upload__tip">
+                                jpg/png files with a size less than 500KB.
+                              </div>
+                            </template> -->
+                          </el-upload>
+                          <div v-if="ruleForm4.promiseAttachIdList.length > 0">
+                            已上传
+                          </div>
                         </div>
                       </div>
                     </el-form-item>
@@ -837,20 +868,6 @@
                             v-for="(item, index) in industryarea"
                             :key="index"
                           />
-                          <!-- <el-option label="工业" value="1" />
-                          <el-option label="电信" value="2" />
-                          <el-option label="交通" value="3" />
-                          <el-option label="金融" value="4" />
-                          <el-option label="自然资源" value="5" />
-                          <el-option label="卫生健康" value="6" />
-                          <el-option label="教育" value="7" />
-                          <el-option label="科技" value="8" />
-                          <el-option label="跨境电商" value="9" />
-                          <el-option label="零售" value="10" />
-                          <el-option label="文旅" value="11" />
-                          <el-option label="互联网" value="12" />
-                          <el-option label="国防科工" value="13" />
-                          <el-option label="其他" value="14" /> -->
                         </el-select>
                       </div>
                     </el-form-item>
@@ -1394,7 +1411,14 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, watch } from "vue";
 import { ElMessage } from "element-plus";
-import type { ComponentSize, FormInstance, FormRules } from "element-plus";
+import type {
+  ComponentSize,
+  FormInstance,
+  FormRules,
+  UploadProps,
+  UploadUserFile,
+  FormValidateCallback,
+} from "element-plus";
 import { Download } from "@element-plus/icons-vue";
 import http, { setBaseInf } from "@/http/httpContentMain";
 import { useRoute } from "vue-router";
@@ -1418,6 +1442,10 @@ const ruleFormRef8 = ref<FormInstance>();
 
 onMounted(async () => {
   await getItems(); //编辑详情
+  await getSelet(); //编辑详情
+});
+
+const getSelet = async () => {
   await getUnitNatureValue(); //单位性质
   await getUnitCategoryValue(); //单位类型
   await getUnitList(); //数量单位
@@ -1425,7 +1453,43 @@ onMounted(async () => {
   await getCertificatetype(); //证件类型
   await getIndustryarea(); //涉及行业/领域
   await getArea(); // 所在国家或地区
+};
+
+const file = ref();
+
+watch(file, (value) => {
+  const formData = new FormData();
+  console.log(value, "value");
+  // formData.append("file", value);
+  // http
+  //   .post("k2401-enterprise/upload-business-license", formData, {
+  //     "Content-Type": "multipart/form-data",
+  //   })
+  //   .then((response) => {
+  //     const id = (response as unknown as { id: string }).id;
+  //     form.value.businessLicenseAttachIdList = [id];
+  //   });
 });
+const customUpload = (file: any) => {
+  console.log("file>>>>", file.file);
+  const formData = new FormData();
+  formData.append("file", file.file);
+  console.log("formData", formData);
+  http
+    .post("file/push-file", formData, {
+      "Content-Type": "multipart/form-data",
+      Authorization: "Bearer " + token,
+    })
+    .then((response) => {
+      const id = (response as unknown as { id: string }).id;
+      const fileName = (response as unknown as { name: string }).name;
+      let list = [];
+      list.push(id);
+      ruleForm4.fileName = id;
+      ruleForm4.promiseAttachIdList = list as never[];
+      console.log(ruleForm4, "ruleForm4");
+    });
+};
 
 const items = ref({});
 const checkList = ref([]);
@@ -1479,7 +1543,8 @@ const ruleForm3 = reactive({
 });
 // 表单4
 const ruleForm4 = reactive({
-  promiseAttachIdList: "",
+  fileName: "",
+  promiseAttachIdList: [],
 });
 // 表单5
 const ruleForm5 = reactive({
@@ -1512,11 +1577,11 @@ const ruleForm6 = reactive({
 });
 // 表单7
 const ruleForm7 = reactive({
-  reportAttachIdList: [],// 个人信息保护影响评估报告
+  reportAttachIdList: [], // 个人信息保护影响评估报告
 });
 // 表单8
 const ruleForm8 = reactive({
-  delegateAttachIdList: "",//其他相关证明材料
+  delegateAttachIdList: "", //其他相关证明材料
 });
 // 详情
 const getItems = async () => {
@@ -1530,7 +1595,7 @@ const getItems = async () => {
 
     items.value = res;
     // console.log(res, "resresres--------------");
-    checkList.value = ["1", "2", "3"];
+    checkList.value = ["1", "2", "3"] as never[];
 
     const {
       // ruleForm1
@@ -1714,31 +1779,31 @@ const getItems = async () => {
 
 // 下一步
 const next = () => {
-  // if (active.value == 0 && checkList.value.length !== 3) {
-  //   return ElMessage({ type: "warning", message: "第一步信息需要全部勾选" });
-  // } else if (active.value == 0 && checkList.value.length == 3) {
-  //   active.value++;
-  // }
-  // if (active.value == 1) {
-  //   submitForm1(ruleFormRef1.value);
-  // }
-  // if (active.value == 2) {
-  //   submitForm2(ruleFormRef2.value);
-  // }
-  // if (active.value == 3) {
-  //   submitForm3(ruleFormRef3.value);
-  // }
-  // if (active.value == 4) {
-  //   // submitForm4(ruleFormRef4.value);
-  // }
-  // if (active.value == 5) {
-  //   submitForm5(ruleFormRef5.value);
-  // }
-  if (active.value == 6) {
-    submitForm6(ruleFormRef6.value);
-  } else {
-    active.value++;
+  if (active.value == 0 && checkList.value.length !== 3) {
+    // return ElMessage({ type: "warning", message: "第一步信息需要全部勾选" });
+  } else if (active.value == 0 && checkList.value.length == 3) {
+    // active.value++;
+  } else if (active.value == 1) {
+    submitForm1(ruleFormRef1.value);
   }
+  if (active.value == 2) {
+    // if (!ruleForm2.legalFlag) {
+    //   submitForm2(ruleFormRef2.value);
+    // } else {
+    //   active.value++;
+    // }
+  } else if (active.value == 3) {
+    // submitForm3(ruleFormRef3.value);
+  } else if (active.value == 4) {
+    // submitForm4(ruleFormRef4.value);
+  } else if (active.value == 5) {
+    // submitForm5(ruleFormRef5.value);
+  } else if (active.value == 6) {
+    // submitForm6(ruleFormRef6.value);
+  } else {
+    // active.value++;
+  }
+  active.value++;
 };
 //  上一步
 const last = () => {
@@ -1861,41 +1926,78 @@ const sumit = async (num: any) => {
     });
   }
 };
+// import { FormValidateCallback } from "element-ui/types/form";
+const validationCallback: FormValidateCallback = async (valid: any) => {
+  if (valid) {
+    // 单位性质
+    unitNatureValuelist.value.map((item: any) => {
+      if (item.tagValue == ruleForm1.unitNatureValue) {
+        ruleForm1.unitNatureName = item.tagName;
+      }
+    });
+    // 单位类型
+    unitCategoryList.value.map((item: any) => {
+      if (item.tagValue == ruleForm1.unitCategoryValue) {
+        ruleForm1.unitCategoryName = item.tagName;
+      }
+    });
+    // 单位
+    unitList.value.map((item: any) => {
+      // 员工数量单位
+      if (item.tagValue == ruleForm1.empCountUnitValue) {
+        ruleForm1.empCountUnitName = item.tagName;
+      }
+      // 处理个人信息规模单位
+      if (item.tagValue == ruleForm1.infoSizeUnitValue) {
+        ruleForm1.infoSizeUnitName = item.tagName;
+      }
+    });
+    console.log(ruleForm1, "validvalidsubmit!");
+
+    active.value++;
+  } else {
+    return ElMessage({ type: "warning", message: "请补求信息" });
+  }
+};
+
 // 校验表单1
 const submitForm1 = async (ruleFormRef1: FormInstance | undefined) => {
   if (!ruleFormRef1) return;
-  await ruleFormRef1.validate((valid, fields) => {
-    if (valid) {
-      // 单位性质
-      unitNatureValuelist.value.map((item: any) => {
-        if (item.tagValue == ruleForm1.unitNatureValue) {
-          ruleForm1.unitNatureName = item.tagName;
-        }
-      });
-      // 单位类型
-      unitCategoryList.value.map((item: any) => {
-        if (item.tagValue == ruleForm1.unitCategoryValue) {
-          ruleForm1.unitCategoryName = item.tagName;
-        }
-      });
-      // 单位
-      unitList.value.map((item: any) => {
-        // 员工数量单位
-        if (item.tagValue == ruleForm1.empCountUnitValue) {
-          ruleForm1.empCountUnitName = item.tagName;
-        }
-        // 处理个人信息规模单位
-        if (item.tagValue == ruleForm1.infoSizeUnitValue) {
-          ruleForm1.infoSizeUnitName = item.tagName;
-        }
-      });
-      console.log(ruleForm1, "validvalidsubmit!");
+  const ifok = await ruleFormRef1.validate(validationCallback);
+  // console.log(ifok, "ifokifokifokifok");
 
-      active.value++;
-    } else {
-      return ElMessage({ type: "warning", message: "请补求信息" });
-    }
-  });
+  // await ruleFormRef1.validate((valid: any) => {
+  //   if (valid) {
+  //     // 单位性质
+  //     unitNatureValuelist.value.map((item: any) => {
+  //       if (item.tagValue == ruleForm1.unitNatureValue) {
+  //         ruleForm1.unitNatureName = item.tagName;
+  //       }
+  //     });
+  //     // 单位类型
+  //     unitCategoryList.value.map((item: any) => {
+  //       if (item.tagValue == ruleForm1.unitCategoryValue) {
+  //         ruleForm1.unitCategoryName = item.tagName;
+  //       }
+  //     });
+  //     // 单位
+  //     unitList.value.map((item: any) => {
+  //       // 员工数量单位
+  //       if (item.tagValue == ruleForm1.empCountUnitValue) {
+  //         ruleForm1.empCountUnitName = item.tagName;
+  //       }
+  //       // 处理个人信息规模单位
+  //       if (item.tagValue == ruleForm1.infoSizeUnitValue) {
+  //         ruleForm1.infoSizeUnitName = item.tagName;
+  //       }
+  //     });
+  //     console.log(ruleForm1, "validvalidsubmit!");
+
+  //     active.value++;
+  //   } else {
+  //     return ElMessage({ type: "warning", message: "请补求信息" });
+  //   }
+  // });
 };
 // 校验表单2
 const submitForm2 = async (ruleFormRef2: FormInstance | undefined) => {
@@ -1926,27 +2028,29 @@ const submitForm2 = async (ruleFormRef2: FormInstance | undefined) => {
 // 校验表单3
 const submitForm3 = async (ruleFormRef3: FormInstance | undefined) => {
   if (!ruleFormRef3) return;
-  await ruleFormRef3.validate((valid, fields) => {
-    if (valid) {
-      // 国籍
-      guoji.value.map((item: any) => {
-        if (item.tagValue == ruleForm3.operatorNationalValue) {
-          ruleForm3.operatorNationalName = item.tagName;
-        }
-      });
-      // 证件类型
-      certificatetype.value.map((item: any) => {
-        if (item.tagValue == ruleForm3.operatorCertificateTypeValue) {
-          ruleForm3.operatorCertificateTypeName = item.tagName;
-        }
-      });
-      console.log("error submit!", ruleForm3);
-      active.value++;
-    } else {
-      console.log("error submit!", fields);
-      return ElMessage({ type: "warning", message: "请补求信息" });
+  await ruleFormRef3.validate(
+    (valid: any, fields: any): MessageHandler | undefined => {
+      if (valid) {
+        // 国籍
+        guoji.value.map((item: any) => {
+          if (item.tagValue == ruleForm3.operatorNationalValue) {
+            ruleForm3.operatorNationalName = item.tagName;
+          }
+        });
+        // 证件类型
+        certificatetype.value.map((item: any) => {
+          if (item.tagValue == ruleForm3.operatorCertificateTypeValue) {
+            ruleForm3.operatorCertificateTypeName = item.tagName;
+          }
+        });
+        console.log("error submit!", ruleForm3);
+        active.value++;
+      } else {
+        console.log("error submit!", fields);
+        return ElMessage({ type: "warning", message: "请补求信息" });
+      }
     }
-  });
+  );
 };
 // 校验表单5
 const submitForm5 = async (ruleFormRef5: FormInstance | undefined) => {
@@ -2180,8 +2284,10 @@ const rules8 = reactive({
     { required: true, message: "请输入经办人授权委托书", trigger: "blur" },
   ],
 });
-// 单位性质
-const unitNatureValuelist = ref([]);
+
+const unitNatureValuelist = ref([]); // 单位性质
+const area = ref([]); // 所在国家或地区   areaValue
+
 const getUnitNatureValue = async () => {
   const res = (await http.get("/tag/tag?tagCode=unitnature", {
     Authorization: "Bearer " + token,
@@ -2204,6 +2310,14 @@ const getUnitList = async () => {
     Authorization: "Bearer " + token,
   })) as any;
   unitList.value = res.children;
+};
+// 数量单位   empCountUnitValue
+const dataunit = ref([]);
+const getDataunit = async () => {
+  const res = (await http.get("/tag/tag?tagCode=dataunit", {
+    Authorization: "Bearer " + token,
+  })) as any;
+  dataunit.value = res.children;
 };
 // 法人国籍   legalNationalValue
 const guoji = ref([]);
@@ -2229,8 +2343,7 @@ const getIndustryarea = async () => {
   })) as any;
   industryarea.value = res.children;
 };
-// 所在国家或地区   areaValue
-const area = ref([]);
+
 const getArea = async () => {
   const res = (await http.get("/tag/tag?tagCode=area", {
     Authorization: "Bearer " + token,
@@ -2239,10 +2352,13 @@ const getArea = async () => {
 };
 </script>
 <style lang="scss" scoped>
-.contain {
+::v-deep .contain {
   padding: 10px;
   width: 1300px;
   margin: 0 auto;
+  .el-upload-dragger {
+    border: none;
+  }
 }
 .topImg {
   position: relative;
