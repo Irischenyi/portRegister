@@ -6,6 +6,7 @@
     <div class="tabs">
       <q-tabs
           v-model="tab"
+          @update:model-value="handleCurrentChange(1)"
           dense
           class="text-grey"
           active-color="primary"
@@ -13,107 +14,118 @@
           align="justify"
           narrow-indicator
         >
-          <q-tab name="mails" label="代办列表" />
-          <q-tab name="alarms" label="全部列表" />
+          <q-tab name="self" label="个人信息出境" />
+          <q-tab name="data" label="数据出境" />
         </q-tabs>
         <q-separator />
     </div>
     <q-select
-      v-model="model"
+      v-model="tab"
       :options="options"
-      style="width: 250px"
       rounded 
       outline
+      map-options
+      emit-value
+      style="width: 200px"
     />
 
     <q-tab-panels v-model="tab" animated>
-      <q-tab-panel name="mails">
-        <el-table
-          ref="multipleTable"
-          :data="tableData"
-          tooltip-effect="dark"
-          style="width: 100%"
-          @selection-change="handleSelectionChange"
-        >
-          <el-table-column type="selection" width="55"> </el-table-column>
-          <el-table-column label="需求名称" width="120">
-            <template #default="scope">{{ scope.row.date }}</template>
-          </el-table-column>
-          <el-table-column prop="name" label="概述" width="120"> </el-table-column>
-          <el-table-column prop="address" label="所属行业" show-overflow-tooltip>
-          </el-table-column>
-          <el-table-column prop="address" label="附件" show-overflow-tooltip>
-          </el-table-column>
-          <el-table-column prop="address" label="状态" show-overflow-tooltip>
-          </el-table-column>
-          <el-table-column prop="address" label="更新时间" show-overflow-tooltip>
-          </el-table-column>
-          <el-table-column  label="操作" show-overflow-tooltip>
-              <div class="button-list">
-                <div>详情</div>
-                <div>提交</div>
-                <div>编辑</div>
-              </div>
-          </el-table-column>
-        </el-table>
+      <q-tab-panel name="self">
+          <Table v-if="tableData.length>0&&tab=='self'" button="继续填报" @detailMethod="detailMethod" :tableData = "tableData" :titles="titles"></Table>
       </q-tab-panel>
 
-      <q-tab-panel name="alarms">
-        <div class="text-h6">Alarms</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      </q-tab-panel>
-
-      <q-tab-panel name="movies">
-        <div class="text-h6">Movies</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      <q-tab-panel name="data">
+        <Table v-if="tableData.length>0&&tab=='data'"  button="继续填报" @detailMethod="detailMethod" :tableData = "tableData" :titles="titles"></Table>
       </q-tab-panel>
     </q-tab-panels>
     
     <div>
-      <el-pagination layout="prev, pager, next" :total="20"> </el-pagination>
-    </div>
-    <div class="footer">
-      <q-btn unelevated color="grey-5" label="返回" />
-      <q-btn unelevated color="primary" label="提交更新" />
+      <el-pagination
+        layout="prev, pager, next"
+        :hide-on-single-page="true"
+        @current-change="handleCurrentChange"
+        :total="page.total*10">
+      </el-pagination>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-const tableData = ref([{
-    date: '2016-05-03',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1518 弄',
+import { ref, watch, onMounted } from 'vue';
+import http, { setBaseInf, setHttp } from '@/http/httpContentMain'
+import Table from '@/components/Table.vue'
+const tab = ref('self')
+interface itemInt {
+    sendContent: string;
+    sendDate: string;
+    createDate: string;
+}
+
+interface backTp {
+  pages: string;
+  total: string;
+  items: itemInt[]
+}
+const options = ref([
+  {
+    label: '个人信息出境',
+    value: 'self',
   },
   {
-    date: '2016-05-02',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1518 弄',
-  },
-  {
-    date: '2016-05-04',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1518 弄',
-  },
-  {
-    date: '2016-05-01',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1518 弄',
-  },
-  {
-    date: '2016-05-01',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1518 弄',
-  },
-  {
-    date: '2016-05-01',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1518 弄',
-  }])
-const handleSelectionChange = () =>{}
-const tab = ref('mails')
-const model = ref('')
-const options = ref(['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'])
+    label: '数据出境',
+    value: 'data',
+  }
+])
+
+const detailMethod = (item:itemInt) => {
+  console.log('跳转路由到出入境填报')
+}
+
+onMounted(async () => {
+  getBasicData()
+})
+
+const page = ref({
+  total: 1,
+  current: 1
+})
+
+
+
+  const tableData = ref([] as itemInt[])
+
+  const titles = [{
+    name:'需求名称',
+    key: 'unitName',
+    width: ''
+  },{
+    name:'状态',
+    key: 'statusName',
+    width: '250'
+  },{
+    name:'更新时间',
+    key: 'createDate',
+    width: '200'
+  }]
+  const token = localStorage.getItem('token');
+  const getBasicData = (pageIn?: number) => {
+    tableData.value = [];
+    const pageNum = pageIn?pageIn:1
+    const href = tab.value == 'self'? 'k2401-personal-exit/exit/paged':'k2401-data-exit/exit/paged'
+    
+    http.get(href+`?current=${pageNum}&size=8&status=`, {
+        'Authorization':  'Bearer ' + token
+    }).then((data) => {
+      const back = data as unknown as backTp
+      page.value.total = Number(back.pages)
+      tableData.value = back.items;
+    })
+} 
+
+const handleCurrentChange = (value: number) => {
+  page.value.current = value
+  getBasicData(value)
+}
+
 
 </script>
 <style lang="scss" scoped>
@@ -151,14 +163,6 @@ const options = ref(['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'])
   right: 15px;
   button{
     margin-left: 10px;
-  }
-}
-
-.button-list{
-  display: flex;
-  div{
-    margin-right: 10px;
-    color: #4984FF;
   }
 }
 </style>

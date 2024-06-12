@@ -389,7 +389,6 @@
     </q-dialog>
 </template>
 <script setup lang="ts">
-import type { Ref } from 'vue'
 import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { setBaseInf, setHttp } from '@/http/httpContentMain'
@@ -625,7 +624,7 @@ const seeMore = (type: string) => {
     
 
 const question = ref('')
-const messages: Ref<{ text: string; sent: boolean }[]> = ref([])
+const messages = ref([] as { text: string; sent: boolean }[])
 const askQuestion = async () => {
   if (question.value.trim() === '') return
 

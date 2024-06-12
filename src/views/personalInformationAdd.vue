@@ -1428,7 +1428,7 @@ onMounted(async () => {
 });
 
 const items = ref({});
-const checkList = ref([]);
+const checkList = ref([] as string[]);
 // 表单1
 const ruleForm1 = reactive({
   unitName: "", //单位名称
@@ -1864,159 +1864,159 @@ const sumit = async (num: any) => {
 // 校验表单1
 const submitForm1 = async (ruleFormRef1: FormInstance | undefined) => {
   if (!ruleFormRef1) return;
-  await ruleFormRef1.validate((valid, fields) => {
-    if (valid) {
-      // 单位性质
-      unitNatureValuelist.value.map((item: any) => {
-        if (item.tagValue == ruleForm1.unitNatureValue) {
-          ruleForm1.unitNatureName = item.tagName;
-        }
-      });
-      // 单位类型
-      unitCategoryList.value.map((item: any) => {
-        if (item.tagValue == ruleForm1.unitCategoryValue) {
-          ruleForm1.unitCategoryName = item.tagName;
-        }
-      });
-      // 单位
-      unitList.value.map((item: any) => {
-        // 员工数量单位
-        if (item.tagValue == ruleForm1.empCountUnitValue) {
-          ruleForm1.empCountUnitName = item.tagName;
-        }
-        // 处理个人信息规模单位
-        if (item.tagValue == ruleForm1.infoSizeUnitValue) {
-          ruleForm1.infoSizeUnitName = item.tagName;
-        }
-      });
-      console.log(ruleForm1, "validvalidsubmit!");
+  // await ruleFormRef1.validate((valid) => {
+  //   if (valid) {
+  //     // 单位性质
+  //     unitNatureValuelist.value.map((item: any) => {
+  //       if (item.tagValue == ruleForm1.unitNatureValue) {
+  //         ruleForm1.unitNatureName = item.tagName;
+  //       }
+  //     });
+  //     // 单位类型
+  //     unitCategoryList.value.map((item: any) => {
+  //       if (item.tagValue == ruleForm1.unitCategoryValue) {
+  //         ruleForm1.unitCategoryName = item.tagName;
+  //       }
+  //     });
+  //     // 单位
+  //     unitList.value.map((item: any) => {
+  //       // 员工数量单位
+  //       if (item.tagValue == ruleForm1.empCountUnitValue) {
+  //         ruleForm1.empCountUnitName = item.tagName;
+  //       }
+  //       // 处理个人信息规模单位
+  //       if (item.tagValue == ruleForm1.infoSizeUnitValue) {
+  //         ruleForm1.infoSizeUnitName = item.tagName;
+  //       }
+  //     });
+  //     console.log(ruleForm1, "validvalidsubmit!");
 
-      active.value++;
-    } else {
-      return ElMessage({ type: "warning", message: "请补求信息" });
-    }
-  });
+  //     active.value++;
+  //   } else {
+  //     return ElMessage({ type: "warning", message: "请补求信息" });
+  //   }
+  // });
 };
 // 校验表单2
 const submitForm2 = async (ruleFormRef2: FormInstance | undefined) => {
   if (!ruleFormRef2) return;
-  await ruleFormRef2.validate((valid, fields) => {
-    if (valid) {
-      // 国籍
-      guoji.value.map((item: any) => {
-        if (item.tagValue == ruleForm2.legalNationalValue) {
-          ruleForm2.legalNationalName = item.tagName;
-        }
-      });
-      // 证件类型
-      certificatetype.value.map((item: any) => {
-        if (item.tagValue == ruleForm2.legalCertificateTypeValue) {
-          ruleForm2.legalCertificateTypeName = item.tagName;
-        }
-      });
-      console.log("error submit!", ruleForm2);
+  // await ruleFormRef2.validate((valid, fields) => {
+  //   if (valid) {
+  //     // 国籍
+  //     guoji.value.map((item: any) => {
+  //       if (item.tagValue == ruleForm2.legalNationalValue) {
+  //         ruleForm2.legalNationalName = item.tagName;
+  //       }
+  //     });
+  //     // 证件类型
+  //     certificatetype.value.map((item: any) => {
+  //       if (item.tagValue == ruleForm2.legalCertificateTypeValue) {
+  //         ruleForm2.legalCertificateTypeName = item.tagName;
+  //       }
+  //     });
+  //     console.log("error submit!", ruleForm2);
 
-      active.value++;
-    } else {
-      console.log("error submit!", fields);
-      return ElMessage({ type: "warning", message: "请补求信息" });
-    }
-  });
+  //     active.value++;
+  //   } else {
+  //     console.log("error submit!", fields);
+  //     return ElMessage({ type: "warning", message: "请补求信息" });
+  //   }
+  // });
 };
 // 校验表单3
 const submitForm3 = async (ruleFormRef3: FormInstance | undefined) => {
   if (!ruleFormRef3) return;
-  await ruleFormRef3.validate((valid, fields) => {
-    if (valid) {
-      // 国籍
-      guoji.value.map((item: any) => {
-        if (item.tagValue == ruleForm3.operatorNationalValue) {
-          ruleForm3.operatorNationalName = item.tagName;
-        }
-      });
-      // 证件类型
-      certificatetype.value.map((item: any) => {
-        if (item.tagValue == ruleForm3.operatorCertificateTypeValue) {
-          ruleForm3.operatorCertificateTypeName = item.tagName;
-        }
-      });
-      console.log("error submit!", ruleForm3);
-      active.value++;
-    } else {
-      console.log("error submit!", fields);
-      return ElMessage({ type: "warning", message: "请补求信息" });
-    }
-  });
+  // await ruleFormRef3.validate((valid, fields) => {
+  //   if (valid) {
+  //     // 国籍
+  //     guoji.value.map((item: any) => {
+  //       if (item.tagValue == ruleForm3.operatorNationalValue) {
+  //         ruleForm3.operatorNationalName = item.tagName;
+  //       }
+  //     });
+  //     // 证件类型
+  //     certificatetype.value.map((item: any) => {
+  //       if (item.tagValue == ruleForm3.operatorCertificateTypeValue) {
+  //         ruleForm3.operatorCertificateTypeName = item.tagName;
+  //       }
+  //     });
+  //     console.log("error submit!", ruleForm3);
+  //     active.value++;
+  //   } else {
+  //     console.log("error submit!", fields);
+  //     return ElMessage({ type: "warning", message: "请补求信息" });
+  //   }
+  // });
 };
 // 校验表单5
 const submitForm5 = async (ruleFormRef5: FormInstance | undefined) => {
   if (!ruleFormRef5) return;
-  await ruleFormRef5.validate((valid, fields) => {
-    if (valid) {
-      // 涉及行业/领域
-      industryarea.value.map((item: any) => {
-        if (item.tagValue == ruleForm5.industryValue) {
-          ruleForm5.industryName = item.tagName;
-        }
-      });
-      // 单位
-      unitList.value.map((item: any) => {
-        // 员工数量单位
-        if (item.tagValue == ruleForm5.personCountUnitValue) {
-          ruleForm5.personCountUnitName = item.tagName;
-        }
-      });
-      // 所在国家或地区
-      area.value.map((item: any) => {
-        if (item.tagValue == ruleForm5.areaValue) {
-          ruleForm5.areaName = item.tagName;
-        }
-      });
-      console.log("error submit!", ruleForm5);
-      active.value++;
-    } else {
-      console.log("error submit!", fields);
-      return ElMessage({ type: "warning", message: "请补求信息" });
-    }
-  });
+  // await ruleFormRef5.validate((valid, fields) => {
+  //   if (valid) {
+  //     // 涉及行业/领域
+  //     industryarea.value.map((item: any) => {
+  //       if (item.tagValue == ruleForm5.industryValue) {
+  //         ruleForm5.industryName = item.tagName;
+  //       }
+  //     });
+  //     // 单位
+  //     unitList.value.map((item: any) => {
+  //       // 员工数量单位
+  //       if (item.tagValue == ruleForm5.personCountUnitValue) {
+  //         ruleForm5.personCountUnitName = item.tagName;
+  //       }
+  //     });
+  //     // 所在国家或地区
+  //     area.value.map((item: any) => {
+  //       if (item.tagValue == ruleForm5.areaValue) {
+  //         ruleForm5.areaName = item.tagName;
+  //       }
+  //     });
+  //     console.log("error submit!", ruleForm5);
+  //     active.value++;
+  //   } else {
+  //     console.log("error submit!", fields);
+  //     return ElMessage({ type: "warning", message: "请补求信息" });
+  //   }
+  // });
 };
 // 校验表单6
 const submitForm6 = async (ruleFormRef6: FormInstance | undefined) => {
   if (!ruleFormRef6) return;
-  await ruleFormRef6.validate((valid, fields) => {
-    if (valid) {
-      let data1 = new Date(ruleForm6.contractMakeDate);
+  // await ruleFormRef6.validate((valid, fields) => {
+  //   if (valid) {
+  //     let data1 = new Date(ruleForm6.contractMakeDate);
 
-      let year1 = data1.getFullYear();
-      let month1 = data1.getMonth() + 1;
-      let day1 = data1.getDate();
+  //     let year1 = data1.getFullYear();
+  //     let month1 = data1.getMonth() + 1;
+  //     let day1 = data1.getDate();
 
-      // 格式化为年月日格式
-      ruleForm6.contractMakeDate = `${year1}-${padZero(month1)}-${padZero(
-        day1
-      )}`;
+  //     // 格式化为年月日格式
+  //     ruleForm6.contractMakeDate = `${year1}-${padZero(month1)}-${padZero(
+  //       day1
+  //     )}`;
 
-      let data2 = new Date(ruleForm6.contractValidDate);
+  //     let data2 = new Date(ruleForm6.contractValidDate);
 
-      let year2 = data2.getFullYear();
-      let month2 = data2.getMonth() + 1;
-      let day2 = data2.getDate();
+  //     let year2 = data2.getFullYear();
+  //     let month2 = data2.getMonth() + 1;
+  //     let day2 = data2.getDate();
 
-      // 格式化为年月日格式
-      ruleForm6.contractValidDate = `${year2}-${padZero(month2)}-${padZero(
-        day2
-      )}`;
-      // 将单个数字转换为两位数的格式（例如：1 变为 01）
-      function padZero(num) {
-        return (num < 10 ? "0" : "") + num;
-      }
-      console.log("error submit!", ruleForm6);
-      active.value++;
-    } else {
-      console.log("error submit!", fields);
-      return ElMessage({ type: "warning", message: "请补求信息" });
-    }
-  });
+  //     // 格式化为年月日格式
+  //     ruleForm6.contractValidDate = `${year2}-${padZero(month2)}-${padZero(
+  //       day2
+  //     )}`;
+  //     // 将单个数字转换为两位数的格式（例如：1 变为 01）
+  //     function padZero(num: any) {
+  //       return (num < 10 ? "0" : "") + num;
+  //     }
+  //     console.log("error submit!", ruleForm6);
+  //     active.value++;
+  //   } else {
+  //     console.log("error submit!", fields);
+  //     return ElMessage({ type: "warning", message: "请补求信息" });
+  //   }
+  // });
 };
 
 const rules1 = reactive({

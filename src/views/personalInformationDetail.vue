@@ -1334,7 +1334,6 @@
           <el-button
             type="primary"
             style="border-radius: 50px; margin-top: 12px"
-            @click="route.go(-1)"
             >返回</el-button
           >
         </div>

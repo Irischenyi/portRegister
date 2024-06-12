@@ -5,9 +5,14 @@ const props = defineProps<{
   code?: string,
   type?: 'password',
   size?: string,
-  ismust?: 'no'
+  ismust?: 'no',
+  disable?: boolean,
+  value?: string
 }>()
 const value = ref('')
+if(props?.value){
+  value.value = props.value
+}
 watch(value, () => {
   emit('changeFormValue', props.code, value.value)
 })
@@ -19,7 +24,7 @@ const emit = defineEmits(['changeFormValue'])
   <div :class="{'input-set':true, 'min': size?true:false}">
     <div class="title"><span class="tips" v-if="ismust!='no'">*</span>{{ name }}</div>
     <slot v-if="$slots.default"> </slot>
-    <q-input v-else rounded outlined  :type ="type?type:'text'" :placeholder="'请填写'+ name" v-model="value"/>
+    <q-input :disable="disable" v-else rounded outlined  :type ="type?type:'text'" :placeholder="'请填写'+ name" v-model="value"/>
   </div>
 </template>
 

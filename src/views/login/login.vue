@@ -44,7 +44,7 @@ const checkFormFun = () => {
 const login = () => {
     if(!checkFormFun()) return false
     localStorage.setItem('close','')
-    http.post('/k2401-enterprise/login',{
+    http.post('k2401-enterprise/login',{
         ...form
     }).then((data) =>{
         const backData = data as unknown as { token: string }
