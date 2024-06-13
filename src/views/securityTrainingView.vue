@@ -50,16 +50,17 @@
       </template>
   </TemplateFrame>
   <Bottom/>
+  <LoadingIn :show="loadingShow"/>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import TemplateFrame from '@/components/TemplateFrame.vue'
-import http , {picUrl} from '@/http/httpContentMain'
+import http , {picUrl } from '@/http/httpContentMain'
 import { useRouter } from 'vue-router'
 import Bottom from '@/components/Bottom.vue'
-import { Loading } from 'quasar'
+
 const current = ref(1)
 const trainTabs = ref()
 const tab = ref('')
@@ -68,7 +69,7 @@ const token = localStorage.getItem('token');
 const list = ref([] as itemInf[])
 const totalPage = ref(1)
 interface itemInf {categoryName: string , previewUrl: string, title: string, fileSizeKb?: string,  id: string, summary?: string, coverImage: { storagePath : string, previewUrl: string} }
-
+const loadingShow = ref(true)
 
 const service = axios.create({
   baseURL: 'http://47.100.234.98:18766/data-exit-mobileapi/',
@@ -85,22 +86,30 @@ const changeTab = ()=>{
   getFirstList(tab.value)
 }
 
-http.get('k2401-safety/category-list').then((data) => {
-  const backValue = data as unknown as {value: string}[]
-  trainTabs.value = backValue 
-  tab.value = backValue[0]?.value as string
-  totalPage.value = 1
-  getFirstList(tab.value)
+onMounted(() => {
+  getList()
 })
+
+const getList = () => {
+  loadingShow.value = true;
+  http.get('k2401-safety/category-list').then((data) => {
+    const backValue = data as unknown as {value: string}[]
+    trainTabs.value = backValue 
+    tab.value = backValue[0]?.value as string
+    totalPage.value = 1
+    getFirstList(tab.value)
+  })
+}
+
 
 const getFirstList = (tabNumber: string) => {
   list.value = []
-  Loading.show()
-  http.get(`k2401-safety/safety/paged?current=1&size=8&category=${tabNumber}`).then((data) => {
+  loadingShow.value = true;
+  http.get(`k2401-safety/safety/paged?current=1&size=8&category=${tabNumber||1}`).then((data) => {
+    loadingShow.value = false;
     const backList = data as unknown as { items: itemInf[], pages: string }
     list.value = backList.items
     totalPage.value = Number(backList.pages)
-    Loading.hide()
   })
 }
 

@@ -83,10 +83,11 @@
       </template>
   </TemplateFrame>
   <Bottom/>
+  <LoadingIn :show="loadingShow"/>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
-import  http ,{ picUrl } from '@/http/httpContentMain'
+import { ref, onMounted } from 'vue';
+import  http ,{ picUrl, setHttp } from '@/http/httpContentMain'
 import { useRouter } from 'vue-router'
 import TemplateFrame from '@/components/TemplateFrame.vue'
 import Bottom from '@/components/Bottom.vue'
@@ -107,6 +108,7 @@ const current = ref(1)
 const current2 = ref(1)
 const totalPage = ref(1)
 const totalPage2 = ref(1)
+const loadingShow = ref(true)
 const trainTabs = ref()
 const router = useRouter()
 const list = ref([] as itemInf[])
@@ -116,20 +118,29 @@ const changeTab = () => {
   
 }
 
-http.get('k2401-service-hall/category-list').then((data) => {
-  const backValue = data as unknown as {value: string}[]
-  trainTabs.value = backValue 
-  tab.value = backValue[0]?.value as string
-  void getFirstList(tab.value);
-  setTimeout(() => {
-    getFirstList('3')
-  },600)
+onMounted(() => {
+  getList()
+  getFirstList('3')
 })
 
+const getList = () => {
+  const http = setHttp()
+  http.get('k2401-service-hall/category-list').then((data) => {
+    const backValue = data as unknown as {value: string}[]
+    trainTabs.value = backValue 
+    tab.value = backValue[0]?.value as string
+    void getFirstList(tab.value);
+  })
+}
+
+
 const getFirstList = (tabNumber: string) => {
+  const http = setHttp()
+  loadingShow.value = true;
   const currentPage = tabNumber == '3'?current2.value:current.value
   http.get(`k2401-service-hall/service-hall/paged?current=${currentPage}&size=9&category=${tabNumber}`).then((data) => {
-      const backList = data as unknown as { items: itemInf[], pages: string }
+    loadingShow.value = false  
+    const backList = data as unknown as { items: itemInf[], pages: string }
       if(tabNumber == '1' || tabNumber == '2'){
         totalPage.value = Number(backList.pages)
         list.value = backList.items

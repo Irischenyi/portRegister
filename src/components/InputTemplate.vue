@@ -54,6 +54,11 @@ const emit = defineEmits(['changeFormValue'])
   height: 36px;
 }
 
+::v-deep .q-field--disabled {
+  background: #f4f4f4;
+  border-radius: 17px;
+}
+
 .min.input-set{
   width: 300px;
 }

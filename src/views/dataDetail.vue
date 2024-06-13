@@ -5,7 +5,7 @@
             <div class="body-box">
                 <div class="top">
                     <div class="pic">
-                        <img v-if="picUrlLink" :src="picUrlLink"/>
+                        <imgIn v-if="picUrlLink" :src="picUrlLink"/>
                     </div>
                     <div class="right">
                         <div>
@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed} from 'vue';
+import { ref, computed, onMounted} from 'vue';
 import TemplateFrame from '@/components/TemplateFrame.vue'
 import { useRouter, useRoute} from 'vue-router'
 import http , {picUrl} from '@/http/httpContentMain'
@@ -88,7 +88,12 @@ const getDate = () => {
         console.log(picUrlLink.value)
     })
 }
-getDate()
+
+
+onMounted(() => {
+    getDate()
+})
+
 
 </script>
 <style lang="scss" scoped>

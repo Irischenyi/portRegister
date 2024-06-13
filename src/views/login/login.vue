@@ -12,7 +12,7 @@ const picRef = ref()
 const router = useRouter()
 const { codeValue, getCode, closeCodeFun, failMessage } = codeMixinHook(picRef)
 
-
+const loadingShow = ref(false)
 const form = reactive({
     loginName: '',
     password: '',
@@ -44,15 +44,18 @@ const checkFormFun = () => {
 const login = () => {
     if(!checkFormFun()) return false
     localStorage.setItem('close','')
+    loadingShow.value = true
     http.post('k2401-enterprise/login',{
         ...form
     }).then((data) =>{
+        loadingShow.value = false
         const backData = data as unknown as { token: string }
         localStorage.setItem('token', backData.token)
         router.push({
             path: '/index/home'
         })
     }).fail((value) => {
+        loadingShow.value = false
         failMessage.value = value
     })
 }
@@ -114,6 +117,7 @@ const setUser = () => {
             </div>
         </div>
         <picSlider ref="picRef" :show="codeValue.show" @postCheck="postCheck" />
+        <LoadingIn :show="loadingShow"/>
     </div>
 </template>
 

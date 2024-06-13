@@ -11,6 +11,7 @@
 
    
     const img = ref('')
+    const showLoaing = ref(true)
     const standard = ref(0)
     const srcImg = ref('')
     const picInfo = ref({
@@ -34,6 +35,7 @@
             picInfo.value.srcImageWidth = valueInt.srcImageWidth
             picInfo.value.top = valueInt.yposition;
             picInfo.value.uuid = valueInt.uuid;
+            showLoaing.value = false;
             srcImg.value = 'data:image/png;base64,'+valueInt.cutImage
         })
     }
@@ -49,6 +51,7 @@
 
     let TimeIn:number
     watch(standard, (value) => {
+        showLoaing.value = true;
         picInfo.value.left = value - 6;
         clearTimeout(TimeIn)
         TimeIn = setTimeout(()=>{
@@ -68,8 +71,13 @@
         <div class="img-center">
             <img :src="img" :class="{'disbale':img?false:true}":width="picInfo.srcImageWidth" :height="picInfo.srcImageHeight"/>
             <img :src="srcImg" :style="'position:absolute;left:'+picInfo.left+'px;top:'+picInfo.top+'px'"/>
-            <q-slider v-model="standard" :min="0" :max="picInfo.srcImageWidth" style="width: 200px;"/>
+            <q-slider v-if="img" v-model="standard" :min="0" :max="picInfo.srcImageWidth" style="width: 200px;"/>
         </div>
+        <q-inner-loading
+            :showing="!img"
+            label-class="text-teal"
+            label-style="font-size: 1.1em"
+        />
     </div>
 </div>
 </template>
@@ -90,7 +98,7 @@
 }
 
 .center{
-    width: 300px;
+    width: 260px;
     height: 180px;
     background-color: white;
 }
@@ -104,7 +112,7 @@
     display: inline-block;
     position: relative;
     width: 200px;
-    left: 50px;
+    left: 30px;
     top: 20px;
 }
 </style>

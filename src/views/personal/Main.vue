@@ -4,9 +4,11 @@
           <img src="@/assets/images/selfLogo.png" class="logo"/>
           <div>数据出境公共服务平台</div>
           <div class="name-box">
-            <q-icon name="notifications " />
-            <div class="img"></div>
-            小拉科技
+            <!-- <q-icon name="notifications " /> -->
+            <div class="img">
+              <img :src="user.previewUrl"/>
+            </div>
+            {{ user.name }}
           </div>
         </div>
         <div class="body">
@@ -40,6 +42,7 @@
 </template>
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { user } from '@/http/commonData'
 
 const router = useRouter()
 const routerChange = (value: string) => {
@@ -82,6 +85,13 @@ const routerChange = (value: string) => {
       display: inline-block;
       border-radius: 40px;
       margin-right: 10px;
+      position: relative;
+      img{
+        position: absolute;
+        width: 100%;
+        left: 0px;
+        top: 0px;
+      }
     }
   }
 }

@@ -42,7 +42,7 @@ const token = localStorage.getItem('token');
 const emit = defineEmits(['set-Value']);
 const multiple = ref(false)
 
-if(attrValue?.optionList){
+if(attrValue?.optionList?.length){
     selectContent.value = attrValue.optionList
     selectValue.value = []
     multiple.value = true

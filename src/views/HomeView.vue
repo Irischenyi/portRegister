@@ -121,7 +121,7 @@
 
       <!-- 政策咨讯 -->
       <div class="zczx">
-        <div class="fw">政策咨讯</div>
+        <div class="fw" @click="artDetail()">政策咨讯</div>
         <div style="text-align: right; color: #1f71ff; margin-top: -40px">
           查看更多
         </div>
@@ -140,18 +140,17 @@
           <div class="police-detail">
             <div class="left">
                 <div class="pic">
-                  <imgIn :src="setBaseInf.picUrl + tabsLists?.[0]?.attach.previewUrl"/>
-                  <img />
+                  <imgIn :src="setBaseInf.picUrl + tabsLists?.[0]?.attach.previewUrl" v-if="tabsLists?.[0]?.attach.previewUrl"/>
                 </div>
                 <div class="content">
                   <div class="title">{{tabsLists?.[0]?.title}}</div>
                   <div class="content-detail">{{tabsLists?.[0]?.summary}}</div>
-                  <div class="detail">查看详情</div>
+                  <div class="detail" @click="artDetail(tabsLists?.[0]?.id)">查看详情</div>
                 </div>
             </div>
             <div class="right">
               <ul>
-                  <li v-for="item in tabsLists">
+                  <li v-for="item in tabsLists" @click="artDetail(item.id)">
                     <div class="title">{{item.title }}</div>
                     <i>{{ item.publishDate }}</i>
                   </li>
@@ -182,15 +181,18 @@
 
     <!-- 智能客服模块 -->
     <div class="fuwu_f">
-      <div @click="khfwBtn" class="fuwu">
+      <div @click="khfwDialog = true" class="fuwu">
         <img
           style="width: 35%; margin-bottom: 5px"
           src="../assets/images/kehufuwu.png"
           alt=""
         />
         <div style="color: #fff">客户服务</div>
+        <q-tooltip anchor="center left" transition-show="flip-right" self="center right" :offset="[10, 10]">
+          <div style="font-size: 14px;padding: 10px;">0230-12322221111</div> 
+        </q-tooltip>
       </div>
-      <div @click="zxlyBtn" class="fuwu">
+      <div @click="khfwDialog=true" class="fuwu">
         <img
           style="width: 35%; margin-bottom: 5px"
           src="../assets/images/zaixianfuwu.png"
@@ -198,39 +200,22 @@
         />
         <div style="color: #fff">在线服务</div>
       </div>
-      <div @click="lxfsBtn" class="fuwu">
+      <div  class="fuwu">
         <img
           style="width: 35%; margin-bottom: 5px"
           src="../assets/images/lianxifangshi.png"
           alt=""
         />
         <div style="color: #fff">联系方式</div>
+        <q-tooltip anchor="center left" transition-show="flip-right" self="center right" :offset="[10, 10]">
+          <div class="code-pic"></div> 
+        </q-tooltip>
       </div>
     </div>
     <!--  -->
   </div>
-  <!-- 客户服务弹框 -->
-  <el-dialog
-    class="service-dialog"
-    v-model="khfwDialog"
-    :before-close="handleClose1"
-  >
-    <div style="font-size: 18px; font-weight: 600">
-      <div>客服电话</div>
-      <div>
-        <span style="margin-right: 30px">0519-12345678</span>
-        <span>0519-12345678</span>
-      </div>
-      <div style="margin-top: 10px">工作时间</div>
-      <div>
-        <span style="margin-right: 50px">8:30-11:30</span>
-        <span>13:00-17:00</span>
-      </div>
-    </div>
-  </el-dialog>
-  <!-- 在线服务弹框 -->
-
-  <el-dialog
+  <questionBox :show="khfwDialog" @close="khfwDialog=false;"/>
+  <!-- <el-dialog
     style="
       position: absolute;
       right: 0px;
@@ -343,31 +328,9 @@
         </div>
       </el-tab-pane>
     </el-tabs>
-  </el-dialog>
+  </el-dialog> -->
 
   <!-- 联系方式弹框 -->
-  <el-dialog
-    style="padding: 20px 30px; background-color: #eaeff9"
-    v-model="lxfsDialog"
-    width="25%"
-    :before-close="handleClose3"
-  >
-    <div style="display: flex; justify-content: space-around;">
-      <div style="margin-right: 10px">
-        <span>企业客服二维码</span>
-        <div style="width: 100px; height: 100px; background-color: #000">
-          <img style="" src="" alt="" />
-        </div>
-      </div>
-
-      <div>
-        <span style="display: block; text-align: center">公众号二维码</span>
-        <div style="width: 100px; height: 100px; background-color: #000">
-          <img style="" src="" alt="" />
-        </div>
-      </div>
-    </div>
-  </el-dialog>
   <q-dialog v-model="showQuestion">
       <div class="question-dialog">
         <q-card-section class="row q-pb-none" style="display: flex;flex-direction: row-reverse;">
@@ -383,7 +346,7 @@
               <div class="sub-title">您的需求调研任务未完成，需要尽快处理</div>
             </div>
           </div> 
-            <q-btn color="primary" @click="showQuestionPage" unelevated  rounded  class="button" label="立即查看" />
+            <q-btn color="primary" @click="showQuestionPage()" unelevated  rounded  class="button" label="立即查看" />
         </q-card-section>
       </div>
     </q-dialog>
@@ -393,9 +356,11 @@ import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { setBaseInf, setHttp } from '@/http/httpContentMain'
 import { useRouter } from 'vue-router'
+import questionBox from '@/components/questionBox.vue'
 import picSlider from '@/components/picSlider.vue'
 import codeMixinHook from '../views/login/codeMixin'
 import Bottom from '@/components/Bottom.vue'
+
 const router = useRouter()
 onMounted(async () => {
   await getBanner() //获取 Banner 图
@@ -430,6 +395,7 @@ const tabsLists = ref([] as {title: string , publishDate: string, id: string, su
 }}[])
 const ids = ref('')
 const getArticlePaged = async () => {
+  tabsLists.value = []
   const http = setHttp();
   const res = (await http.get('k2401-article/article/paged?current=1&size=8&category='+(tab.value+1))) as any
 
@@ -524,6 +490,7 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 }
 
 const showQuestionPage = () => {
+  
   router.push({
       path: '/index/quastionHome'
     })
@@ -566,20 +533,7 @@ const formRules = ref({
 })
 
 const khfwDialog = ref(false)
-const khfwBtn = () => {
-  khfwDialog.value = true
-}
-const handleClose1 = () => {
-  khfwDialog.value = false
-}
 
-const lxfsDialog = ref(false)
-const lxfsBtn = () => {
-  lxfsDialog.value = true
-}
-const handleClose3 = () => {
-  lxfsDialog.value = false
-}
 
 const itemDetail = ref('')
 const getArticleDetail = async (id: any) => {
@@ -702,6 +656,22 @@ const postCheck = (uuid: string, left: number) => {
       failMessage.value = value as string
     })
 }
+
+const artDetail = (id?: string) => {
+  if(id){
+    router.push({
+      path: '/index/policyconSultationDetail',
+      query: {
+        id: id
+      }
+    })
+  }else{
+    router.push({
+      path: '/index/policyconSultation'
+    })
+  }
+}
+
 </script>
 <style lang="scss" scoped>
 .contain {
@@ -747,6 +717,9 @@ const postCheck = (uuid: string, left: number) => {
     width: 100%;
     font-size: 0px;
     display: flex;
+    transition: all ease 0.3s;
+    position: relative;
+    
     .item-line{
       width: 25%;
     }
@@ -758,6 +731,27 @@ const postCheck = (uuid: string, left: number) => {
       display: inline-block;
       transition: all ease 0.2;
       position: relative;
+      
+      &:hover{
+        &::before{
+            content: '';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            background: rgba(0,0,0,0.3);
+            z-index: 2;
+            box-shadow: inset -20px -20px 30px rgba(255,255,255,0.12);
+        }
+          img{
+            transform: scale(1.1) translateY(-5%) translateX(-5%);
+            
+          }
+          .title, .sub-title{
+            transform: translateX(12px) scale(1.06);
+          }
+        }
       .content{
         width: 100%;
         height: 100%;
@@ -768,19 +762,22 @@ const postCheck = (uuid: string, left: number) => {
         justify-content: center;
         flex-direction: column;
         overflow: hidden;
+        
         img{
           position: absolute;
           width: 120%;
           z-index: 0;
           bottom: 0px;
           left: -20%;
+          transition: all ease-in 0.3s;
         }
         .sub-title{
           color: white;
           margin-top: 10px;
           font-size: 13px;
           margin-left: 30px;
-          z-index: 1;
+          z-index: 2;
+          transition: all ease 0.3s 0.12s;
         }
         .title{
           color: white;
@@ -788,18 +785,20 @@ const postCheck = (uuid: string, left: number) => {
           margin-left: 30px;
           font-size: 15px;
           position: relative;
+          transition: all ease 0.3s 0.12s;
+          z-index: 2;
           &::after{
             content: '';
             width: 5px;
             height: 5px;
-            background-color: #146AFF;
+            background-color: white;
             position: absolute;
             left: -15px;
             top: 9px;
           }
         }
         .click-button{
-          z-index: 1;
+          z-index: 2;
           display: inline-block;
           padding: 8px 10px;
           border: 1px solid white;
@@ -895,9 +894,12 @@ const postCheck = (uuid: string, left: number) => {
 }
 .fuwu_f {
   position: fixed;
-  top: 400px;
-  right: 10px;
+  bottom: 100px;
+  right: 5px;
   transition: all ease 0.5s;
+  transform: scale(0.9);
+  font-size: 12px;
+  z-index: 11;
 }
 .fuwu {
   background-color: #6cabf8;
@@ -1035,14 +1037,24 @@ const postCheck = (uuid: string, left: number) => {
   display: flex;
   .left{
     width: 50%;
-    height: 350px;
     box-sizing: border-box;
     padding: 20px;
+    transition: all ease 0.2s;
+    &:hover{
+      background-color: rgba(0,0,0,0.08);
+      .pic{
+        transform: scale(0.98);
+      }
+      .detail{
+        color: #146AFF;
+      }
+    }
     .pic{
       width: 100%;
       padding-top: 55%;
       overflow: hidden;
       position: relative;
+      transition: all ease 0.13s 0.03s;
       img{
         position: absolute;
         left: 0px;
@@ -1051,6 +1063,7 @@ const postCheck = (uuid: string, left: number) => {
       }
     }
     .title{
+      text-align: left;
       font-size: 15px;
       color: black;
       padding: 5px 0px;
@@ -1062,13 +1075,26 @@ const postCheck = (uuid: string, left: number) => {
       color: grey;
       font-size: 13px;
       padding: 10px;
+      // height: 20px;
+      // overflow: hidden;
     }
-    
     .detail{
+      margin-top: 3px;
+      transition: all ease 0.13s;
+      cursor: pointer;
+    }
+    .content-detail{
+      text-align: left;
+      height: 20px;
+      overflow: hidden;
+      text-wrap: nowrap;
+      text-overflow: ellipsis;
+    }
+    .content{
       text-align: right;
       color: grey;
       font-size: 13px;
-      margin-top: 5px;
+      margin-top: 12px;
     }
   }
   .right{
@@ -1079,6 +1105,8 @@ const postCheck = (uuid: string, left: number) => {
       border-bottom: 1px solid #ededed;
       position: relative;
       display: flex;
+      transition: all ease 0.23s;
+      cursor: pointer;
       &::marker{
         color: #146AFF;
       }
@@ -1091,6 +1119,23 @@ const postCheck = (uuid: string, left: number) => {
         position: absolute;
         left: -15px;
         top: 16px;
+      }
+      &::before{
+        height: 0px;
+      }
+      &:hover{
+        &::before{
+          content: '';
+          width: calc(100% + 40px);
+          height: 100%;
+          position: absolute;
+          left: -30px;
+          top: 0px;
+          background-color: rgba(0,0,0,0.04);
+        }
+        i{
+          color: #146AFF;
+        }
       }
       .title{
         width: 70%;
@@ -1164,4 +1209,15 @@ const postCheck = (uuid: string, left: number) => {
       margin-top: 10px;
     }
 }
+
+.code-pic{
+  width: 80px;
+  height: 80px;
+  border-radius: 2px;
+  border: 1px solid white;
+  background-color: white;
+  margin: 3px 0px;
+}
+
+.question-box{}
 </style>

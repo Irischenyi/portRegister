@@ -3,7 +3,7 @@
         <template #body>
             <div class="question-center">
                 <div class="title">需求调研表单</div>
-                <el-form>
+                <el-form v-if="isShowQuestionButton">
                     <component v-for="(item, key) in stageList" :is="backComponent(item.nodeType)" :value="item" @set-Value = "changeValue"/>
                     <div class="fail-message-box">{{ failMessage }}</div>
                     <div class="submit-box">
@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import TemplateFrame from '@/components/TemplateFrame.vue'
 import http, { mainHttpConnect, setBaseInf } from '@/http/httpContentMain'
 import SelectDom from '@/components/basic/SelectDom.vue';
@@ -27,6 +27,7 @@ import RadioBox from '@/components/basic/RadioBox.vue';
 import DateDom from '@/components/basic/DateDom.vue';
 import TreeSelectDom from '@/components/basic/TreeSelectDom.vue';
 import { Loading } from 'quasar'
+import { ElMessage } from 'element-plus'
 // import date from './test'
 
 const stageList = ref([] as { nodeType: number, nodeName: string, sequence: number }[])
@@ -38,18 +39,44 @@ interface nodeDT {
 const orginalDate = ref({} as {stageList: [{ nodeList: nodeDT[] }]})
 const nodeListDate = ref([] as nodeDT[])
 const failMessage = ref('')
+const isShowQuestionButton = ref(false)
+const getRight = () => {
+    http.get('k2401-survey/check-submit', {
+        'Authorization':  'Bearer ' + token
+        }).then((data) => {
+        if(!data){
+            getList()
+            isShowQuestionButton.value = true;
+        }
+        else{
+            ElMessage({ type: 'warning', message: '已经答过该问卷' })
+        }
+    }).fail(() => {
+        isShowQuestionButton.value = true;
+    })
+}
 
-Loading.show();
-http.get('k2401-survey/survey', {
-    Authorization: 'Bearer '+token
-}).then((data) => {
-    Loading.hide();
-    const back = data as unknown as {stageList: [{ nodeList:[] }]}
-    stageList.value = back?.stageList[0].nodeList;
-    orginalDate.value = JSON.parse(JSON.stringify(back)) 
-}).fail((value) => {
-    Loading.hide();
+const getList = () => {
+    if(!isShowQuestionButton) return
+    Loading.show();
+    http.get('k2401-survey/survey', {
+        Authorization: 'Bearer '+token
+    }).then((data) => {
+        Loading.hide();
+        const back = data as unknown as {stageList: [{ nodeList:[] }]}
+        stageList.value = back?.stageList[0].nodeList;
+        orginalDate.value = JSON.parse(JSON.stringify(back)) 
+    }).fail((value) => {
+        Loading.hide();
+    })
+}
+
+onMounted(() => {
+    getRight()
+    
+    
 })
+
 
 // stageList.value = date
 
@@ -146,6 +173,7 @@ const submitFun = () => {
     margin-top: 20px;
     box-sizing: border-box;
     padding: 20px 50px;
+    min-height: 100vh;
 }
 
 .login {
