@@ -709,11 +709,11 @@
                           承诺书
                         </div>
                         <div style="display: flex">
-                          <!-- <el-input
+                          <el-input
                             style="margin-right: 50px"
                             v-model="ruleForm4.fileName"
                             placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
-                          ></el-input> -->
+                          ></el-input>
                           <!-- <el-button
                             style="
                               border-radius: 50px;
@@ -752,9 +752,9 @@
                               </div>
                             </template> -->
                           </el-upload>
-                          <div v-if="ruleForm4.promiseAttachIdList.length > 0">
+                          <!-- <div v-if="ruleForm4.promiseAttachIdList.length > 0">
                             已上传
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                     </el-form-item>
@@ -1220,10 +1220,33 @@
                         <div style="display: flex">
                           <el-input
                             style="margin-right: 50px"
-                            v-model="ruleForm6.standardContractAttachIdList"
+                            v-model="ruleForm6.fileName"
                             placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
                           ></el-input>
-                          <el-button
+                          <el-upload
+                            drag
+                            class="upload-demo"
+                            :show-file-list="false"
+                            :http-request="customUpload6"
+                          >
+                            <el-button
+                              style="
+                                border-radius: 50px;
+                                background-color: #fff;
+                                color: #4984ff;
+                              "
+                              type="primary"
+                              :icon="Download"
+                              >上传文件</el-button
+                            >
+
+                            <!-- <template #tip>
+                              <div class="el-upload__tip">
+                                jpg/png files with a size less than 500KB.
+                              </div>
+                            </template> -->
+                          </el-upload>
+                          <!-- <el-button
                             style="
                               border-radius: 50px;
                               background-color: #fff;
@@ -1232,7 +1255,7 @@
                             type="primary"
                             :icon="Download"
                             >上传文件</el-button
-                          >
+                          > -->
                         </div>
                       </div>
                     </el-form-item>
@@ -1272,10 +1295,33 @@
                         <div style="display: flex">
                           <el-input
                             style="margin-right: 50px"
-                            v-model="ruleForm7.reportAttachIdList"
+                            v-model="ruleForm7.fileName"
                             placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
                           ></el-input>
-                          <el-button
+                          <el-upload
+                            drag
+                            class="upload-demo"
+                            :show-file-list="false"
+                            :http-request="customUpload7"
+                          >
+                            <el-button
+                              style="
+                                border-radius: 50px;
+                                background-color: #fff;
+                                color: #4984ff;
+                              "
+                              type="primary"
+                              :icon="Download"
+                              >上传文件</el-button
+                            >
+
+                            <!-- <template #tip>
+                              <div class="el-upload__tip">
+                                jpg/png files with a size less than 500KB.
+                              </div>
+                            </template> -->
+                          </el-upload>
+                          <!-- <el-button
                             style="
                               border-radius: 50px;
                               background-color: #fff;
@@ -1284,7 +1330,7 @@
                             type="primary"
                             :icon="Download"
                             >上传文件</el-button
-                          >
+                          > -->
                         </div>
                       </div>
                     </el-form-item>
@@ -1324,18 +1370,32 @@
                         <div style="display: flex">
                           <el-input
                             style="margin-right: 50px"
-                            v-model="ruleForm8.delegateAttachIdList"
+                            v-model="ruleForm8.fileName1"
                           ></el-input>
-                          <el-button
-                            style="
-                              border-radius: 50px;
-                              background-color: #fff;
-                              color: #4984ff;
-                            "
-                            type="primary"
-                            :icon="Download"
-                            >上传文件</el-button
+
+                          <el-upload
+                            drag
+                            class="upload-demo"
+                            :show-file-list="false"
+                            :http-request="customUpload8"
                           >
+                            <el-button
+                              style="
+                                border-radius: 50px;
+                                background-color: #fff;
+                                color: #4984ff;
+                              "
+                              type="primary"
+                              :icon="Download"
+                              >上传文件</el-button
+                            >
+
+                            <!-- <template #tip>
+                              <div class="el-upload__tip">
+                                jpg/png files with a size less than 500KB.
+                              </div>
+                            </template> -->
+                          </el-upload>
                         </div>
                       </div>
                     </el-form-item>
@@ -1356,19 +1416,36 @@
             </div>
             <div></div>
             <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
-              文件上传
+              其他文件上传
             </div>
             <div style="margin-left: 20px">
-              <el-button
-                style="
-                  border-radius: 50px;
-                  background-color: #fff;
-                  color: #4984ff;
-                "
-                type="primary"
-                :icon="Download"
-                >上传文件</el-button
+              <el-input
+                style="margin-right: 50px"
+                v-model="ruleForm8.fileName2"
+              ></el-input>
+              <el-upload
+                drag
+                class="upload-demo"
+                :show-file-list="false"
+                :http-request="customUpload82"
               >
+                <el-button
+                  style="
+                    border-radius: 50px;
+                    background-color: #fff;
+                    color: #4984ff;
+                  "
+                  type="primary"
+                  :icon="Download"
+                  >上传文件</el-button
+                >
+
+                <!-- <template #tip>
+                              <div class="el-upload__tip">
+                                jpg/png files with a size less than 500KB.
+                              </div>
+                            </template> -->
+              </el-upload>
               <div style="margin-top: 10px">
                 请上传除承诺书、个人信息出境标准合同、个人信息保护影响评估报告、经办人授权委托书以外的其他材料，格式为PDF、OFD、PNG、
               </div>
@@ -1386,6 +1463,7 @@
             >上一步</el-button
           >
           <el-button
+            v-if="active < 8"
             type="primary"
             style="border-radius: 50px; margin-top: 12px"
             @click="next"
@@ -1398,6 +1476,7 @@
             >暂存</el-button
           >
           <el-button
+            v-if="active == 8"
             type="primary"
             style="border-radius: 50px; margin-top: 12px"
             @click="sumit(1)"
@@ -1471,10 +1550,8 @@ watch(file, (value) => {
   //   });
 });
 const customUpload = (file: any) => {
-  console.log("file>>>>", file.file);
   const formData = new FormData();
   formData.append("file", file.file);
-  console.log("formData", formData);
   http
     .post("file/push-file", formData, {
       "Content-Type": "multipart/form-data",
@@ -1482,15 +1559,87 @@ const customUpload = (file: any) => {
     })
     .then((response) => {
       const id = (response as unknown as { id: string }).id;
-      const fileName = (response as unknown as { name: string }).name;
+      const fileName = (response as unknown as { fileName: string }).fileName;
+
       let list = [];
       list.push(id);
-      ruleForm4.fileName = id;
       ruleForm4.promiseAttachIdList = list as never[];
-      console.log(ruleForm4, "ruleForm4");
+      ruleForm4.fileName = fileName;
     });
 };
 
+const customUpload6 = (file: any) => {
+  const formData = new FormData();
+  formData.append("file", file.file);
+  http
+    .post("file/push-file", formData, {
+      "Content-Type": "multipart/form-data",
+      Authorization: "Bearer " + token,
+    })
+    .then((response) => {
+      const id = (response as unknown as { id: string }).id;
+      const fileName = (response as unknown as { fileName: string }).fileName;
+
+      let list = [];
+      list.push(id);
+      ruleForm6.standardContractAttachIdList = list as never[];
+      ruleForm6.fileName = fileName;
+    });
+};
+const customUpload7 = (file: any) => {
+  const formData = new FormData();
+  formData.append("file", file.file);
+  http
+    .post("file/push-file", formData, {
+      "Content-Type": "multipart/form-data",
+      Authorization: "Bearer " + token,
+    })
+    .then((response) => {
+      const id = (response as unknown as { id: string }).id;
+      const fileName = (response as unknown as { fileName: string }).fileName;
+
+      let list = [];
+      list.push(id);
+      ruleForm7.reportAttachIdList = list as never[];
+      ruleForm7.fileName = fileName;
+    });
+};
+const customUpload8 = (file: any) => {
+  const formData = new FormData();
+  formData.append("file", file.file);
+  http
+    .post("file/push-file", formData, {
+      "Content-Type": "multipart/form-data",
+      Authorization: "Bearer " + token,
+    })
+    .then((response) => {
+      const id = (response as unknown as { id: string }).id;
+      const fileName = (response as unknown as { fileName: string }).fileName;
+
+      let list = [];
+      list.push(id);
+      ruleForm8.delegateAttachIdList = list as never[];
+      ruleForm8.fileName1 = fileName;
+    });
+};
+const customUpload82 = (file: any) => {
+  const formData = new FormData();
+  formData.append("file", file.file);
+  http
+    .post("file/push-file", formData, {
+      "Content-Type": "multipart/form-data",
+      Authorization: "Bearer " + token,
+    })
+    .then((response) => {
+      const id = (response as unknown as { id: string }).id;
+      const fileName = (response as unknown as { fileName: string }).fileName;
+
+      let list = [];
+      list.push(id);
+      ruleForm8.otherAttachIdList = list as never[];
+      ruleForm8.fileName2 = fileName;
+    });
+};
 const items = ref({});
 const checkList = ref([]);
 // 表单1
@@ -1574,14 +1723,19 @@ const ruleForm6 = reactive({
   contractValidDate: "", //标准合同定订立日期
   contractContent: "", //相关商业合同名称
   standardContractAttachIdList: [], //标准合同文件
+  fileName: "",
 });
 // 表单7
 const ruleForm7 = reactive({
   reportAttachIdList: [], // 个人信息保护影响评估报告
+  fileName: "",
 });
 // 表单8
 const ruleForm8 = reactive({
-  delegateAttachIdList: "", //其他相关证明材料
+  delegateAttachIdList: [], //经办人授权委托书
+  otherAttachIdList: [], //其他相关证明材料
+  fileName1: "",
+  fileName2: "",
 });
 // 详情
 const getItems = async () => {
@@ -1617,6 +1771,7 @@ const getItems = async () => {
       infoSizeUnitValue,
       infoSizeUnitName,
       // ruleForm2
+      legalFlag,
       legal,
       legalTel,
       legalNationalValue,
@@ -1639,18 +1794,19 @@ const getItems = async () => {
       operatorCertificateCode,
       operatorEmail,
       // ruleForm4
-      promiseAttachIdList,
+      promiseAttachList,
       // ruleForm5
       sceneList,
       // ruleForm6
       contractMakeDate,
       contractValidDate,
       contractContent,
-      standardContractAttachIdList,
+      standardContractAttachList,
       // ruleForm7
       reportAttachList,
       // ruleForm8
       delegateAttachList,
+      otherAttachList,
     } = res; // 解构需要的属性
 
     const ruleF1 = {
@@ -1675,6 +1831,7 @@ const getItems = async () => {
     Object.assign(ruleForm1, ruleF1);
 
     const ruleF2 = {
+      legalFlag,
       legal,
       legalTel,
       legalNationalValue,
@@ -1703,7 +1860,8 @@ const getItems = async () => {
 
     // ruleForm4
     const ruleF4 = {
-      promiseAttachIdList,
+      promiseAttachIdList: promiseAttachList,
+      fileName: promiseAttachList[0].fileName,
     };
     Object.assign(ruleForm4, ruleF4);
 
@@ -1757,19 +1915,24 @@ const getItems = async () => {
       contractMakeDate,
       contractValidDate,
       contractContent,
-      standardContractAttachIdList,
+      standardContractAttachIdList: standardContractAttachList,
+      fileName: standardContractAttachList[0].fileName,
     };
     Object.assign(ruleForm6, ruleF6);
 
     // ruleForm7
     const ruleF7 = {
       reportAttachIdList: reportAttachList,
+      fileName: reportAttachList[0].fileName,
     };
     Object.assign(ruleForm7, ruleF7);
 
     // ruleForm8
     const ruleF8 = {
       delegateAttachIdList: delegateAttachList,
+      otherAttachIdList: otherAttachList,
+      fileName1: delegateAttachList[0].fileName,
+      fileName2: otherAttachList[0].fileName,
     };
     Object.assign(ruleForm8, ruleF8);
 
@@ -1780,30 +1943,46 @@ const getItems = async () => {
 // 下一步
 const next = () => {
   if (active.value == 0 && checkList.value.length !== 3) {
-    // return ElMessage({ type: "warning", message: "第一步信息需要全部勾选" });
+    return ElMessage({ type: "warning", message: "第一步信息需要全部勾选" });
   } else if (active.value == 0 && checkList.value.length == 3) {
-    // active.value++;
+    active.value++;
   } else if (active.value == 1) {
     submitForm1(ruleFormRef1.value);
   }
   if (active.value == 2) {
-    // if (!ruleForm2.legalFlag) {
-    //   submitForm2(ruleFormRef2.value);
-    // } else {
-    //   active.value++;
-    // }
+    if (!ruleForm2.legalFlag) {
+      submitForm2(ruleFormRef2.value);
+    } else {
+      active.value++;
+    }
   } else if (active.value == 3) {
-    // submitForm3(ruleFormRef3.value);
+    submitForm3(ruleFormRef3.value);
   } else if (active.value == 4) {
-    // submitForm4(ruleFormRef4.value);
+    if (ruleForm4.promiseAttachIdList.length == 0) {
+      return ElMessage({ type: "warning", message: "请补求信息" });
+    } else {
+      active.value++;
+    }
   } else if (active.value == 5) {
-    // submitForm5(ruleFormRef5.value);
+    submitForm5(ruleFormRef5.value);
   } else if (active.value == 6) {
-    // submitForm6(ruleFormRef6.value);
+    submitForm6(ruleFormRef6.value);
+  } else if (active.value == 7) {
+    if (ruleForm7.reportAttachIdList.length == 0) {
+      return ElMessage({ type: "warning", message: "请补求信息" });
+    } else {
+      active.value++;
+    }
+  } else if (active.value == 8) {
+    if (ruleForm8.delegateAttachIdList.length == 0) {
+      return ElMessage({ type: "warning", message: "请补求信息" });
+    } else {
+      active.value++;
+    }
   } else {
-    // active.value++;
+    active.value++;
   }
-  active.value++;
+  // active.value++;
 };
 //  上一步
 const last = () => {
@@ -1815,6 +1994,33 @@ const last = () => {
 };
 // 提交
 const sumit = async (num: any) => {
+  if (ruleForm6.contractMakeDate) {
+    let data1 = new Date(ruleForm6.contractMakeDate);
+
+    let year1 = data1.getFullYear();
+    let month1 = data1.getMonth() + 1;
+    let day1 = data1.getDate();
+
+    // 格式化为年月日格式
+    ruleForm6.contractMakeDate = `${year1}-${padZero(month1)}-${padZero(day1)}`;
+  }
+  if (ruleForm6.contractValidDate) {
+    let data2 = new Date(ruleForm6.contractValidDate);
+
+    let year2 = data2.getFullYear();
+    let month2 = data2.getMonth() + 1;
+    let day2 = data2.getDate();
+
+    // 格式化为年月日格式
+    ruleForm6.contractValidDate = `${year2}-${padZero(month2)}-${padZero(
+      day2
+    )}`;
+  }
+
+  // 将单个数字转换为两位数的格式（例如：1 变为 01）
+  function padZero(num: any) {
+    return (num < 10 ? "0" : "") + num;
+  }
   let params = {
     // 0 前提
     conditionContent:
@@ -1861,7 +2067,7 @@ const sumit = async (num: any) => {
     operatorCertificateCode: ruleForm3.operatorCertificateCode, // 经办人证件号码
     operatorJob: ruleForm3.operatorJob, // 经办人职务
     // 4 承诺书 文件上传 - 文件上传均调用统一的上传接口（本文档接口1），获取其返回值对象中的id
-    promiseAttachIdList: ["1661290567658663937"], // 承诺书 附件id集合
+    promiseAttachIdList: ruleForm4.promiseAttachIdList, // 承诺书 附件id集合
     // 5 个人信息出境场景 - 子对象集合
     sceneList: [
       {
@@ -1890,12 +2096,12 @@ const sumit = async (num: any) => {
     contractMakeDate: ruleForm6.contractMakeDate, // 标准合同订立日期
     contractValidDate: ruleForm6.contractValidDate, // 标准合同生效日期
     contractContent: ruleForm6.contractContent, // 相关商业合同名称
-    standardContractAttachIdList: ["1661290578916175874"],
+    standardContractAttachIdList: ruleForm6.standardContractAttachIdList,
     // 7 个人信息保护影响评估报告
-    reportAttachIdList: ["1661290608272109570"],
+    reportAttachIdList: ruleForm7.reportAttachIdList,
     // 8 其他相关证明材料
-    delegateAttachIdList: ["1661291263745355777"],
-    otherAttachIdList: ["1661292619461849090"],
+    delegateAttachIdList: ruleForm8.delegateAttachIdList,
+    otherAttachIdList: ruleForm8.otherAttachIdList,
     // 状态
     status: num == 1 ? 1 : 0, // 枚举：0暂存、1填写完成
   };
@@ -1926,83 +2132,48 @@ const sumit = async (num: any) => {
     });
   }
 };
-// import { FormValidateCallback } from "element-ui/types/form";
-const validationCallback: FormValidateCallback = async (valid: any) => {
-  if (valid) {
-    // 单位性质
-    unitNatureValuelist.value.map((item: any) => {
-      if (item.tagValue == ruleForm1.unitNatureValue) {
-        ruleForm1.unitNatureName = item.tagName;
-      }
-    });
-    // 单位类型
-    unitCategoryList.value.map((item: any) => {
-      if (item.tagValue == ruleForm1.unitCategoryValue) {
-        ruleForm1.unitCategoryName = item.tagName;
-      }
-    });
-    // 单位
-    unitList.value.map((item: any) => {
-      // 员工数量单位
-      if (item.tagValue == ruleForm1.empCountUnitValue) {
-        ruleForm1.empCountUnitName = item.tagName;
-      }
-      // 处理个人信息规模单位
-      if (item.tagValue == ruleForm1.infoSizeUnitValue) {
-        ruleForm1.infoSizeUnitName = item.tagName;
-      }
-    });
-    console.log(ruleForm1, "validvalidsubmit!");
-
-    active.value++;
-  } else {
-    return ElMessage({ type: "warning", message: "请补求信息" });
-  }
-};
 
 // 校验表单1
 const submitForm1 = async (ruleFormRef1: FormInstance | undefined) => {
   if (!ruleFormRef1) return;
-  const ifok = await ruleFormRef1.validate(validationCallback);
-  // console.log(ifok, "ifokifokifokifok");
 
-  // await ruleFormRef1.validate((valid: any) => {
-  //   if (valid) {
-  //     // 单位性质
-  //     unitNatureValuelist.value.map((item: any) => {
-  //       if (item.tagValue == ruleForm1.unitNatureValue) {
-  //         ruleForm1.unitNatureName = item.tagName;
-  //       }
-  //     });
-  //     // 单位类型
-  //     unitCategoryList.value.map((item: any) => {
-  //       if (item.tagValue == ruleForm1.unitCategoryValue) {
-  //         ruleForm1.unitCategoryName = item.tagName;
-  //       }
-  //     });
-  //     // 单位
-  //     unitList.value.map((item: any) => {
-  //       // 员工数量单位
-  //       if (item.tagValue == ruleForm1.empCountUnitValue) {
-  //         ruleForm1.empCountUnitName = item.tagName;
-  //       }
-  //       // 处理个人信息规模单位
-  //       if (item.tagValue == ruleForm1.infoSizeUnitValue) {
-  //         ruleForm1.infoSizeUnitName = item.tagName;
-  //       }
-  //     });
-  //     console.log(ruleForm1, "validvalidsubmit!");
+  await ruleFormRef1.validate((valid: any) => {
+    if (valid) {
+      // 单位性质
+      unitNatureValuelist.value.map((item: any) => {
+        if (item.tagValue == ruleForm1.unitNatureValue) {
+          ruleForm1.unitNatureName = item.tagName;
+        }
+      });
+      // 单位类型
+      unitCategoryList.value.map((item: any) => {
+        if (item.tagValue == ruleForm1.unitCategoryValue) {
+          ruleForm1.unitCategoryName = item.tagName;
+        }
+      });
+      // 单位
+      unitList.value.map((item: any) => {
+        // 员工数量单位
+        if (item.tagValue == ruleForm1.empCountUnitValue) {
+          ruleForm1.empCountUnitName = item.tagName;
+        }
+        // 处理个人信息规模单位
+        if (item.tagValue == ruleForm1.infoSizeUnitValue) {
+          ruleForm1.infoSizeUnitName = item.tagName;
+        }
+      });
+      console.log(ruleForm1, "validvalidsubmit!");
 
-  //     active.value++;
-  //   } else {
-  //     return ElMessage({ type: "warning", message: "请补求信息" });
-  //   }
-  // });
+      active.value++;
+    } else {
+      return ElMessage({ type: "warning", message: "请补求信息" });
+    }
+  });
 };
 // 校验表单2
 const submitForm2 = async (ruleFormRef2: FormInstance | undefined) => {
   if (!ruleFormRef2) return;
-  await ruleFormRef2.validate((valid, fields) => {
+  await ruleFormRef2.validate((valid) => {
     if (valid) {
       // 国籍
       guoji.value.map((item: any) => {
@@ -2111,7 +2282,7 @@ const submitForm6 = async (ruleFormRef6: FormInstance | undefined) => {
         day2
       )}`;
       // 将单个数字转换为两位数的格式（例如：1 变为 01）
-      function padZero(num) {
+      function padZero(num: any) {
         return (num < 10 ? "0" : "") + num;
       }
       console.log("error submit!", ruleForm6);

@@ -69,16 +69,57 @@
                     style="width: 80%"
                   ></el-input>
                 </el-col>
+                <el-col :span="12">
+                  <div class="div_bottom">4. 您的企业所属行业是?</div>
+                  <el-select
+                    style="width: 80%"
+                    v-model="ruleForm.industryValue"
+                    clearable
+                    placeholder=""
+                  >
+                    <el-option
+                      :label="(item as any).tagName"
+                      :value="(item as any).tagValue"
+                      v-for="(item, index) in industryList"
+                      :key="index"
+                    />
+                  </el-select>
+                </el-col>
               </el-row>
-
               <el-row class="row_bottom">
                 <el-col :span="12">
+                  <div class="div_bottom">5. 您的企业注册地是?</div>
+                  <div class="group">
+                    <q-select
+                      rounded
+                      outlined
+                      v-model="provinceValue"
+                      :options="cityGroup"
+                      label="省份"
+                    />
+                    <q-select
+                      rounded
+                      outlined
+                      v-model="cityValue"
+                      :options="city"
+                      label="市级"
+                    />
+                    <q-select
+                      rounded
+                      outlined
+                      v-model="areaValue"
+                      :options="area"
+                      label="区级"
+                    />
+                  </div>
+                </el-col>
+                <el-col :span="12">
                   <div class="div_bottom">
-                    4. 您的企业现有人员规模符合以下哪种情况？
+                    6. 您的企业现有人员规模符合以下哪种情况？
                   </div>
                   <el-checkbox-group
                     v-model="ruleForm.empSize"
-                    @change="Change4"
+                    @change="Change6"
                   >
                     <el-row>
                       <el-col :span="12">
@@ -104,14 +145,15 @@
                     </el-row>
                   </el-checkbox-group>
                 </el-col>
-
+              </el-row>
+              <el-row class="row_bottom">
                 <el-col :span="12">
                   <div class="div_bottom">
-                    5. 您的企业上年经营营收符合以下哪种情况？
+                    7. 您的企业上年经营营收符合以下哪种情况？
                   </div>
                   <el-checkbox-group
                     v-model="ruleForm.prevRevenue"
-                    @change="Change5"
+                    @change="Change7"
                   >
                     <el-row>
                       <el-col :span="12">
@@ -126,79 +168,29 @@
                           value="100-1000万元"
                         />
                       </el-col>
-                    </el-row>
-                    <el-row>
                       <el-col :span="12">
                         <el-checkbox
                           label="C. 1000-10000万元"
                           value="1000-10000万元"
                         />
                       </el-col>
+                    </el-row>
+                    <el-row>
                       <el-col :span="12">
                         <el-checkbox
-                          label="D. 10000万元以上"
-                          value="10000万元以上"
+                          label="D. 10000万以上"
+                          value="10000万以上"
                         />
                       </el-col>
                     </el-row>
                   </el-checkbox-group>
                 </el-col>
-              </el-row>
-
-              <el-row class="row_bottom">
                 <el-col :span="12">
                   <div class="div_bottom">
-                    6. 您的企业是否为关键基础设施运营者？
+                    8. 您的企业是否为关键基础设施运营者？
                   </div>
                   <el-checkbox-group
                     v-model="ruleForm.keyBaseBusiness"
-                    @change="Change6"
-                  >
-                    <el-row>
-                      <el-col :span="12">
-                        <el-checkbox label="A. 是" value="是" />
-                      </el-col>
-                      <el-col :span="12">
-                        <el-checkbox label="B. 否" value="否" />
-                      </el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="12">
-                        <el-checkbox label="C. 不清楚" value="不清楚" />
-                      </el-col>
-                    </el-row>
-                  </el-checkbox-group>
-                </el-col>
-                <el-col :span="12">
-                  <div class="div_bottom">7. 您的企业是否处理重要数据？</div>
-                  <el-checkbox-group
-                    v-model="ruleForm.procImpData"
-                    @change="Change7"
-                  >
-                    <el-row>
-                      <el-col :span="12">
-                        <el-checkbox label="A. 是" value="是" />
-                      </el-col>
-                      <el-col :span="12">
-                        <el-checkbox label="B. 否" value="否" />
-                      </el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="12">
-                        <el-checkbox label="C. 不清楚" value="不清楚" />
-                      </el-col>
-                    </el-row>
-                  </el-checkbox-group>
-                </el-col>
-              </el-row>
-
-              <el-row class="row_bottom">
-                <el-col :span="12">
-                  <div class="div_bottom">
-                    8. 您的企业是否处理个人信息数据？
-                  </div>
-                  <el-checkbox-group
-                    v-model="ruleForm.procPersonalData"
                     @change="Change8"
                   >
                     <el-row>
@@ -220,26 +212,78 @@
 
               <el-row class="row_bottom">
                 <el-col :span="12">
+                  <div class="div_bottom">9. 您的企业是否处理重要数据？</div>
+                  <el-checkbox-group
+                    v-model="ruleForm.procImpData"
+                    @change="Change9"
+                  >
+                    <el-row>
+                      <el-col :span="12">
+                        <el-checkbox label="A. 是" value="是" />
+                      </el-col>
+                      <el-col :span="12">
+                        <el-checkbox label="B. 否" value="否" />
+                      </el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="12">
+                        <el-checkbox label="C. 不清楚" value="不清楚" />
+                      </el-col>
+                    </el-row>
+                  </el-checkbox-group>
+                </el-col>
+                <el-col :span="12">
                   <div class="div_bottom">
-                    9. 您的企业处理个人信息数据覆盖的自然人数量为_________?
+                    10. 您的企业是否处理个人信息数据？
+                  </div>
+                  <el-checkbox-group
+                    v-model="ruleForm.procPersonalData"
+                    @change="Change10"
+                  >
+                    <el-row>
+                      <el-col :span="12">
+                        <el-checkbox label="A. 是" value="是" />
+                      </el-col>
+                      <el-col :span="12">
+                        <el-checkbox label="B. 否" value="否" />
+                      </el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="12">
+                        <el-checkbox label="C. 不清楚" value="不清楚" />
+                      </el-col>
+                    </el-row>
+                  </el-checkbox-group>
+                </el-col>
+              </el-row>
+
+              <!-- <el-row class="row_bottom"> </el-row> -->
+
+              <el-row class="row_bottom">
+                <el-col :span="12">
+                  <div class="div_bottom">
+                    11. 您的企业处理个人信息数据覆盖的自然人数量为_________?
                   </div>
                   <el-checkbox-group
                     v-model="ruleForm.personalInfoNatureSize"
-                    @change="Change9"
+                    @change="Change11"
                   >
                     <el-row>
                       <el-col :span="12">
                         <el-checkbox label="A. 10万人以下" value="10万人以下" />
                       </el-col>
                       <el-col :span="12">
-                        <el-checkbox label="B. 10-100万人" value="10-100万人" />
+                        <el-checkbox label="B. 10万-100万" value="10万-100万" />
                       </el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="12">
+                        <el-checkbox label="C. 100万以上" value="100万以上" />
+                      </el-col>
+                      <el-col :span="12">
                         <el-checkbox
-                          label="C. 100万人以上"
-                          value="100万人以上"
+                          label="D. 没有处理个人信息"
+                          value="没有处理个人信息"
                         />
                       </el-col>
                     </el-row>
@@ -248,20 +292,20 @@
 
                 <el-col :span="12">
                   <div class="div_bottom">
-                    10. 您的企业处理个人信息数据覆盖的自然人数量为_________?
+                    12. 您的企业处理个人信息数据覆盖的自然人数量为_________?
                   </div>
                   <el-checkbox-group
                     v-model="ruleForm.personalDataNatureSize"
-                    @change="Change10"
+                    @change="Change12"
                   >
                     <el-row>
                       <el-col :span="12">
-                        <el-checkbox label="A. 一万人以下" value="一万人以下" />
+                        <el-checkbox label="A. 1万人以下" value="1万人以下" />
                       </el-col>
                       <el-col :span="12">
                         <el-checkbox
-                          label="B. 大于等于一万人"
-                          value="大于等于一万人"
+                          label="B. 大于等于1万"
+                          value="大于等于1万"
                         />
                       </el-col>
                     </el-row>
@@ -287,11 +331,11 @@
               <el-row class="row_bottom">
                 <el-col :span="12">
                   <div class="div_bottom">
-                    11. 您的企业是否有数据出境的行为？
+                    13. 您的企业是否有数据出境的行为？
                   </div>
                   <el-checkbox-group
                     v-model="ruleForm.dataExitBehavior"
-                    @change="Change11"
+                    @change="Change13"
                   >
                     <el-row>
                       <el-col :span="12">
@@ -311,7 +355,7 @@
 
                 <el-col :span="12">
                   <div class="div_bottom">
-                    12. 数据出境的方式是___________?（多选）
+                    14. 数据出境的方式是___________?（多选）
                   </div>
                   <el-checkbox-group v-model="ruleForm.dataExitMethods">
                     <el-row>
@@ -334,7 +378,7 @@
               <el-row class="row_bottom">
                 <el-col :span="12">
                   <div class="div_bottom">
-                    13. 境外接收方位于_________？（多选）
+                    15. 境外接收方位于_________？（多选）
                   </div>
                   <el-checkbox-group v-model="ruleForm.foreignReceiverLocation">
                     <el-row>
@@ -368,11 +412,11 @@
                 </el-col>
                 <el-col :span="12">
                   <div class="div_bottom">
-                    14. 出境数据传输或访问频次__________?
+                    16. 数据出境传输或访问频次__________?
                   </div>
                   <el-checkbox-group
                     v-model="ruleForm.dataExitVisitHz"
-                    @change="Change14"
+                    @change="Change16"
                   >
                     <el-row>
                       <el-col :span="12">
@@ -389,6 +433,9 @@
                           value="与境外接收方约定"
                         />
                       </el-col>
+                      <el-col :span="12">
+                        <el-checkbox label="D. 不确定" value="不确定" />
+                      </el-col>
                     </el-row>
                   </el-checkbox-group>
                 </el-col>
@@ -397,11 +444,11 @@
               <el-row class="row_bottom">
                 <el-col :span="12">
                   <div class="div_bottom">
-                    15. 您的企业出境的数据中是否包含重要数据？
+                    17. 您的企业出境的数据中是否包含重要数据？
                   </div>
                   <el-checkbox-group
                     v-model="ruleForm.containImpData"
-                    @change="Change15"
+                    @change="Change17"
                   >
                     <el-row>
                       <el-col :span="12">
@@ -421,19 +468,19 @@
 
                 <el-col :span="12">
                   <div class="div_bottom">
-                    16.
+                    18.
                     您的企业自上年1月1日起出境个人信息覆盖自然人人数为_________?
                   </div>
                   <el-checkbox-group
                     v-model="ruleForm.personalInfoPrevSize"
-                    @change="Change16"
+                    @change="Change18"
                   >
                     <el-row>
                       <el-col :span="12">
                         <el-checkbox label="A. 10万人以下" value="10万人以下" />
                       </el-col>
                       <el-col :span="12">
-                        <el-checkbox label="B. 10-100万人" value="10-100万人" />
+                        <el-checkbox label="B. 10万-100万" value="10万-100万" />
                       </el-col>
                     </el-row>
                     <el-row>
@@ -457,26 +504,30 @@
               <el-row class="row_bottom">
                 <el-col :span="12">
                   <div class="div_bottom">
-                    17. 您的企业处理个人信息数据覆盖的自然人数量为_________?
+                    19.
+                    您的企业自上年1月1日起出境敏感个人信息覆盖自然人人数为_________?
                   </div>
                   <el-checkbox-group
                     v-model="ruleForm.personalDataPrevSize"
-                    @change="Change17"
+                    @change="Change19"
                   >
                     <el-row>
                       <el-col :span="12">
-                        <el-checkbox label="A. 10万人以下" value="10万人以下" />
+                        <el-checkbox label="A. 1万人以下" value="1万人以下" />
                       </el-col>
                       <el-col :span="12">
-                        <el-checkbox label="B. 10-100万人" value="10-100万人" />
+                        <el-checkbox
+                          label="B. 大于等于1万"
+                          value="大于等于1万"
+                        />
                       </el-col>
                     </el-row>
 
                     <el-row>
                       <el-col :span="12">
                         <el-checkbox
-                          label="C. 100万人以上"
-                          value="100万人以上"
+                          label="C. 没有敏感个人信息出境"
+                          value="没有敏感个人信息出境"
                         />
                       </el-col>
                     </el-row>
@@ -497,11 +548,11 @@
               <el-row class="row_bottom">
                 <el-col :span="12">
                   <div class="div_bottom">
-                    18. 您的企业在数据出境过程中是否采取了安全防护措施？
+                    20. 您的企业在数据出境过程中是否采取了安全防护措施？
                   </div>
                   <el-checkbox-group
                     v-model="ruleForm.safetyMeasure"
-                    @change="Change18"
+                    @change="Change20"
                   >
                     <el-row>
                       <el-col :span="12">
@@ -521,11 +572,11 @@
 
                 <el-col :span="12">
                   <div class="div_bottom">
-                    19.您的企业是否在出境个人信息前向个人信息主体告知并取得同意？
+                    21.您的企业是否在出境个人信息前向个人信息主体告知并取得同意
                   </div>
                   <el-checkbox-group
                     v-model="ruleForm.notifyAgree"
-                    @change="Change19"
+                    @change="Change21"
                   >
                     <el-row>
                       <el-col :span="12">
@@ -547,11 +598,11 @@
               <el-row class="row_bottom">
                 <el-col :span="12">
                   <div class="div_bottom">
-                    20. 您的企业是否计划采取跨境数据申报工作？
+                    22. 您的企业是否计划采取跨境数据申报工作？
                   </div>
                   <el-checkbox-group
                     v-model="ruleForm.planApplyWork"
-                    @change="Change20"
+                    @change="Change22"
                   >
                     <el-row>
                       <el-col :span="12">
@@ -636,23 +687,41 @@
   <Bottom />
 </template>
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, watch, onMounted } from "vue";
 import Bottom from "@/components/Bottom.vue";
 import { ElMessage } from "element-plus";
 import http, { setBaseInf } from "@/http/httpContentMain";
+// import { log } from "console";
 
+onMounted(async () => {
+  await getcityGroup(); //编辑详情
+  await getIndustry(); //编辑详情
+});
 const token = localStorage.getItem("token");
 const isOk = ref(false);
 const dialogVisible = ref(false);
 const step = ref(1);
 const result = ref("");
 const stepper = ref();
+const cityGroup = ref([] as { value: string; label: string }[]);
+
+const city = ref([] as { value: string; label: string }[]);
+
+const area = ref([] as { value: string; label: string }[]);
 
 const ruleForm = reactive({
   // 第一部分
   entName: "",
   entAddr: "",
   creditCode: "",
+  industryValue: "", // 4. 所属行业值（标签）接口：tag/tag?tagCode=industry
+  industryName: "", // 4. 所属行业名称（标签）
+  provinceValue: "", // 5. 企业注册地（省）（标签）省市区参考接口1.1.1（xxxValue字段传tagValue的值，xxxName字段传tagName的值）
+  provinceName: "", // 5. 企业注册地（省）（标签）
+  cityValue: "", // 5. 企业注册地（市）（标签）
+  cityName: "", // 5. 企业注册地（市）（标签）
+  areaValue: "", // 5. 企业注册地（区）（标签）
+  areaName: "", // 5. 企业注册地（区）（标签）
   empSize: [],
   prevRevenue: [],
   keyBaseBusiness: [],
@@ -673,28 +742,115 @@ const ruleForm = reactive({
   notifyAgree: [],
   planApplyWork: [],
 });
-// 4
-const Change4 = (e: any) => {
-  if (e.length > 1) {
-    let list = [];
-    list.push(e[e.length - 1]);
-    ruleForm.empSize = list as never[];
+
+const provinceValue = ref();
+const cityValue = ref();
+const areaValue = ref();
+
+watch(provinceValue, (value: { value: string; label: string }) => {
+  console.log(value, "value");
+  if (value) {
+    ruleForm.provinceValue = value.value;
+    ruleForm.provinceName = value.label;
+  }
+  cityValue.value = "";
+  ruleForm.cityValue = "";
+  ruleForm.cityName = "";
+  getCity(value.value, "city");
+});
+
+watch(cityValue, (value: { value: string; label: string }) => {
+  if (value) {
+    ruleForm.cityValue = value.value;
+    ruleForm.cityName = value.label;
+  }
+  areaValue.value = "";
+  ruleForm.areaValue = "";
+  ruleForm.areaName = "";
+  getCity(value.value, "area");
+});
+
+const getcityGroup = () => {
+  http.get("/tag/province-list").then((data) => {
+    (data as unknown as []).forEach((item: { tagName: string; id: string }) => {
+      cityGroup.value.push({
+        label: item.tagName,
+        value: item.id,
+      });
+    });
+  });
+  getIndustry();
+};
+
+const getCity = (value: string, type: string) => {
+  if (type == "city") {
+    city.value = [];
+  } else {
+    area.value = [];
+  }
+  if (!value) return false;
+  http.get("/tag/child-list/" + value).then((response) => {
+    (response as unknown as []).forEach(
+      (item: { tagName: string; id: string }) => {
+        if (type == "city") {
+          city.value.push({
+            label: item.tagName,
+            value: item.id,
+          });
+        } else {
+          area.value.push({
+            label: item.tagName,
+            value: item.id,
+          });
+        }
+      }
+    );
+  });
+};
+// 状态   industryList
+const industryList = ref([]);
+const getIndustry = () => {
+  const res = http.get("tag/tag?tagCode=industry", {
+    Authorization: "Bearer " + token,
+  }) as any;
+  console.log(res, "resresres----");
+  // industryList.value = res.backValue.children;
+  industryList.value = [
+    { tagValue: "A", tagName: "农、林、牧、渔业" },
+    { tagValue: "B", tagName: "采矿业" },
+  ] as never[];
+};
+
+// getIndustry();
+
+const getList = () => {
+  const res = http.get("k2401-data-exit-self-assess/self-last-assess", {
+    Authorization: "Bearer " + token,
+  }) as any;
+  console.log(res, "[00000]");
+  if (res) {
+    // result.value = res.result;
+    // isOk.value = true;
+    // dialogVisible.value = true;
+    // return ElMessage({
+    //   type: "success",
+    //   message: "填写完成",
+    // });
+  } else {
+    // return ElMessage({
+    //   type: "warning",
+    //   message: "评估失败",
+    // });
   }
 };
-// 5
-const Change5 = (e: any) => {
-  if (e.length > 1) {
-    let list = [];
-    list.push(e[e.length - 1]);
-    ruleForm.prevRevenue = list as never[];
-  }
-};
+getList();
+
 // 6
 const Change6 = (e: any) => {
   if (e.length > 1) {
     let list = [];
     list.push(e[e.length - 1]);
-    ruleForm.keyBaseBusiness = list as never[];
+    ruleForm.empSize = list as never[];
   }
 };
 // 7
@@ -702,7 +858,7 @@ const Change7 = (e: any) => {
   if (e.length > 1) {
     let list = [];
     list.push(e[e.length - 1]);
-    ruleForm.procImpData = list as never[];
+    ruleForm.prevRevenue = list as never[];
   }
 };
 // 8
@@ -710,7 +866,7 @@ const Change8 = (e: any) => {
   if (e.length > 1) {
     let list = [];
     list.push(e[e.length - 1]);
-    ruleForm.procPersonalData = list as never[];
+    ruleForm.keyBaseBusiness = list as never[];
   }
 };
 // 9
@@ -718,7 +874,7 @@ const Change9 = (e: any) => {
   if (e.length > 1) {
     let list = [];
     list.push(e[e.length - 1]);
-    ruleForm.personalInfoNatureSize = list as never[];
+    ruleForm.procImpData = list as never[];
   }
 };
 // 10
@@ -726,7 +882,7 @@ const Change10 = (e: any) => {
   if (e.length > 1) {
     let list = [];
     list.push(e[e.length - 1]);
-    ruleForm.personalDataNatureSize = list as never[];
+    ruleForm.procPersonalData = list as never[];
   }
 };
 // 11
@@ -734,23 +890,23 @@ const Change11 = (e: any) => {
   if (e.length > 1) {
     let list = [];
     list.push(e[e.length - 1]);
+    ruleForm.personalInfoNatureSize = list as never[];
+  }
+};
+// 12
+const Change12 = (e: any) => {
+  if (e.length > 1) {
+    let list = [];
+    list.push(e[e.length - 1]);
+    ruleForm.personalDataNatureSize = list as never[];
+  }
+};
+// 13
+const Change13 = (e: any) => {
+  if (e.length > 1) {
+    let list = [];
+    list.push(e[e.length - 1]);
     ruleForm.dataExitBehavior = list as never[];
-  }
-};
-// 14
-const Change14 = (e: any) => {
-  if (e.length > 1) {
-    let list = [];
-    list.push(e[e.length - 1]);
-    ruleForm.dataExitVisitHz = list as never[];
-  }
-};
-// 15
-const Change15 = (e: any) => {
-  if (e.length > 1) {
-    let list = [];
-    list.push(e[e.length - 1]);
-    ruleForm.containImpData = list as never[];
   }
 };
 // 16
@@ -758,7 +914,7 @@ const Change16 = (e: any) => {
   if (e.length > 1) {
     let list = [];
     list.push(e[e.length - 1]);
-    ruleForm.personalInfoPrevSize = list as never[];
+    ruleForm.dataExitVisitHz = list as never[];
   }
 };
 // 17
@@ -766,7 +922,7 @@ const Change17 = (e: any) => {
   if (e.length > 1) {
     let list = [];
     list.push(e[e.length - 1]);
-    ruleForm.personalDataPrevSize = list as never[];
+    ruleForm.containImpData = list as never[];
   }
 };
 // 18
@@ -774,7 +930,7 @@ const Change18 = (e: any) => {
   if (e.length > 1) {
     let list = [];
     list.push(e[e.length - 1]);
-    ruleForm.safetyMeasure = list as never[];
+    ruleForm.personalInfoPrevSize = list as never[];
   }
 };
 // 19
@@ -782,11 +938,27 @@ const Change19 = (e: any) => {
   if (e.length > 1) {
     let list = [];
     list.push(e[e.length - 1]);
-    ruleForm.notifyAgree = list as never[];
+    ruleForm.personalDataPrevSize = list as never[];
   }
 };
 // 20
 const Change20 = (e: any) => {
+  if (e.length > 1) {
+    let list = [];
+    list.push(e[e.length - 1]);
+    ruleForm.safetyMeasure = list as never[];
+  }
+};
+// 21
+const Change21 = (e: any) => {
+  if (e.length > 1) {
+    let list = [];
+    list.push(e[e.length - 1]);
+    ruleForm.notifyAgree = list as never[];
+  }
+};
+// 22
+const Change22 = (e: any) => {
   if (e.length > 1) {
     let list = [];
     list.push(e[e.length - 1]);
@@ -795,10 +967,30 @@ const Change20 = (e: any) => {
 };
 // 提交
 const sumit = async (num: any) => {
+  if (ruleForm.industryValue) {
+    industryList.value.map((item: any) => {
+      if (item.tagValue == ruleForm.industryValue) {
+        ruleForm.industryName = item.tagName;
+      }
+    });
+  }
+  if (areaValue.value) {
+    ruleForm.areaValue = areaValue.value.value;
+    ruleForm.areaName = areaValue.value.label;
+  }
+
   if (
     !ruleForm.entName.trim() ||
     !ruleForm.entAddr.trim() ||
     !ruleForm.creditCode.trim() ||
+    !ruleForm.industryValue ||
+    !ruleForm.industryName ||
+    !ruleForm.provinceValue ||
+    !ruleForm.provinceName ||
+    !ruleForm.cityValue ||
+    !ruleForm.cityName ||
+    !ruleForm.areaValue ||
+    !ruleForm.areaName ||
     ruleForm.empSize.length == 0 ||
     ruleForm.prevRevenue.length == 0 ||
     ruleForm.keyBaseBusiness.length == 0 ||
@@ -827,23 +1019,31 @@ const sumit = async (num: any) => {
     entName: ruleForm.entName, // 企业名称
     entAddr: ruleForm.entAddr, // 企业地址
     creditCode: ruleForm.creditCode, // 统一社会信用代码
-    empSize: ruleForm.empSize[0], // 4. 您的企业现有人员规模符合以下哪种情况？取值["1-100人", "100-1000人", "1000-10000人", "10000人以上"]
-    prevRevenue: ruleForm.prevRevenue[0], // 5. 您的企业上年经营营收符合以下哪种情况？取值["100万元以下", "100-1000万元", "1000-10000万元", "10000万以上"]
-    keyBaseBusiness: ruleForm.keyBaseBusiness[0], // 6. 您的企业是否为关键基础设施运营者？取值["是", "否", "不清楚"]
-    procImpData: ruleForm.procImpData[0], // 7. 您的企业是否处理重要数据？取值["是", "否", "不清楚"]
-    procPersonalData: ruleForm.procPersonalData[0], // 8. 您的企业是否处理个人信息数据？取值["是", "否", "不清楚"]
-    personalInfoNatureSize: ruleForm.personalInfoNatureSize[0], // 9. 您的企业处理个人信息数据覆盖的自然人数量为？取值["10万人以下", "10万-100万", "100万以上", "没有处理个人信息"]
-    personalDataNatureSize: ruleForm.personalDataNatureSize[0], // 10. 您的企业处理个人敏感数据覆盖的自然人数量为？取值["1万人以下", "大于等于1万", "不涉及"]
-    dataExitBehavior: ruleForm.dataExitBehavior[0], // 11. 您的企业是否有数据出境的行为？取值["是", "否", "不清楚"]
-    dataExitMethods: ruleForm.dataExitMethods, // 12. 数据出境的方式是？（多选）取值["跨境专线", "公共互联网", "存储介质"]
-    foreignReceiverLocation: ruleForm.foreignReceiverLocation, // 13. 境外接收方位于？（多选）取值["欧洲", "亚洲", "南美", "北美", "非洲", "大洋洲", "港澳台"]
-    dataExitVisitHz: ruleForm.dataExitVisitHz[0], // 14. 数据出境传输或访问频次？取值["定时", "实时", "与境外接收方约定", "不确定"]
-    containImpData: ruleForm.containImpData[0], // 15. 您的企业出境的数据中是否包含重要数据？取值["是", "否", "不清楚"]
-    personalInfoPrevSize: ruleForm.personalInfoPrevSize[0], // 16. 您的企业自上年1月1日起出境个人信息覆盖自然人人数为？取值["10万人以下", "10万-100万", "100万以上", "没有个人信息出境"]
-    personalDataPrevSize: ruleForm.personalDataPrevSize[0], // 17. 您的企业自上年1月1日起出境敏感个人信息覆盖自然人人数为？取值["1万人以下", "大于等于1万", "没有敏感个人信息出境"]
-    safetyMeasure: ruleForm.safetyMeasure[0], // 18. 您的企业在数据出境过程中是否采取了安全防护措施？取值["是", "否", "不确定"]
-    notifyAgree: ruleForm.notifyAgree[0], // 19. 您的企业是否在出境个人信息前向个人信息主体告知并取得同意？取值["是", "否", "不涉及个人信息出境", "不确定"]
-    planApplyWork: ruleForm.planApplyWork[0], // 20. 您的企业是否计划采取跨境数据申报工作？取值["是", "否", "不确定"]
+    industryValue: ruleForm.industryValue, // 4. 所属行业值（标签）接口：tag/tag?tagCode=industry
+    industryName: ruleForm.industryName, // 4. 所属行业名称（标签）
+    provinceValue: ruleForm.provinceValue, // 5. 企业注册地（省）（标签）省市区参考接口1.1.1（xxxValue字段传tagValue的值，xxxName字段传tagName的值）
+    provinceName: ruleForm.provinceName, // 5. 企业注册地（省）（标签）
+    cityValue: ruleForm.cityValue, // 5. 企业注册地（市）（标签）
+    cityName: ruleForm.cityName, // 5. 企业注册地（市）（标签）
+    areaValue: ruleForm.areaValue, // 5. 企业注册地（区）（标签）
+    areaName: ruleForm.areaName, // 5. 企业注册地（区）（标签）
+    empSize: ruleForm.empSize[0], // 6. 您的企业现有人员规模符合以下哪种情况？取值["1-100人", "100-1000人", "1000-10000人", "10000人以上"]
+    prevRevenue: ruleForm.prevRevenue[0], // 7. 您的企业上年经营营收符合以下哪种情况？取值["100万元以下", "100-1000万元", "1000-10000万元", "10000万以上"]
+    keyBaseBusiness: ruleForm.keyBaseBusiness[0], // 8. 您的企业是否为关键基础设施运营者？取值["是", "否", "不清楚"]
+    procImpData: ruleForm.procImpData[0], // 9. 您的企业是否处理重要数据？取值["是", "否", "不清楚"]
+    procPersonalData: ruleForm.procPersonalData[0], // 10. 您的企业是否处理个人信息数据？取值["是", "否", "不清楚"]
+    personalInfoNatureSize: ruleForm.personalInfoNatureSize[0], // 11. 您的企业处理个人信息数据覆盖的自然人数量为？取值["10万人以下", "10万-100万", "100万以上", "没有处理个人信息"]
+    personalDataNatureSize: ruleForm.personalDataNatureSize[0], // 12. 您的企业处理个人敏感数据覆盖的自然人数量为？取值["1万人以下", "大于等于1万", "不涉及"]
+    dataExitBehavior: ruleForm.dataExitBehavior[0], // 13. 您的企业是否有数据出境的行为？取值["是", "否", "不清楚"]
+    dataExitMethods: ruleForm.dataExitMethods.join(), // 14. 数据出境的方式是？（多选）取值["跨境专线", "公共互联网", "存储介质"]
+    foreignReceiverLocation: ruleForm.foreignReceiverLocation.join(), // 15. 境外接收方位于？（多选）取值["欧洲", "亚洲", "南美", "北美", "非洲", "大洋洲", "港澳台"]
+    dataExitVisitHz: ruleForm.dataExitVisitHz[0], // 16. 数据出境传输或访问频次？取值["定时", "实时", "与境外接收方约定", "不确定"]
+    containImpData: ruleForm.containImpData[0], // 17. 您的企业出境的数据中是否包含重要数据？取值["是", "否", "不清楚"]
+    personalInfoPrevSize: ruleForm.personalInfoPrevSize[0], // 18. 您的企业自上年1月1日起出境个人信息覆盖自然人人数为？取值["10万人以下", "10万-100万", "100万以上", "没有个人信息出境"]
+    personalDataPrevSize: ruleForm.personalDataPrevSize[0], // 19 . 您的企业自上年1月1日起出境敏感个人信息覆盖自然人人数为？取值["1万人以下", "大于等于1万", "没有敏感个人信息出境"]
+    safetyMeasure: ruleForm.safetyMeasure[0], // 20. 您的企业在数据出境过程中是否采取了安全防护措施？取值["是", "否", "不确定"]
+    notifyAgree: ruleForm.notifyAgree[0], // 21. 您的企业是否在出境个人信息前向个人信息主体告知并取得同意？取值["是", "否", "不涉及个人信息出境", "不确定"]
+    planApplyWork: ruleForm.planApplyWork[0], // 22. 您的企业是否计划采取跨境数据申报工作？取值["是", "否", "不确定"]
   };
 
   let res = (await http.post(
@@ -932,5 +1132,11 @@ const sumit = async (num: any) => {
 }
 .row_bottom {
   margin-bottom: 30px;
+}
+::v-deep .group .q-select {
+  margin-right: 11px;
+  display: inline-block;
+  width: 30%;
+  font-size: 12px;
 }
 </style>

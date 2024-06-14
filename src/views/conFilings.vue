@@ -75,13 +75,13 @@
                   :icon="Refresh"
                   color="#c0c0c0"
                   circle
-                  @click="getList(0)"
+                  @click="reset"
                 />
                 <el-button
                   type="primary"
                   :icon="Search"
                   circle
-                  @click="getList(1)"
+                  @click="search"
                 />
               </el-col>
             </el-row>
@@ -182,9 +182,7 @@ import { useRouter } from "vue-router";
 const token = localStorage.getItem("token");
 
 const router = useRouter();
-onMounted(async () => {
-  // await getStatus(); //编辑详情
-});
+
 const form = ref({
   xmbh: "",
   lsh: "",
@@ -199,19 +197,33 @@ const page = reactive({
 });
 const total = ref(0);
 
-const handleSizeChange = () => {};
-const handleCurrentChange = () => {};
+const handleSizeChange = (val: number) => {
+  page.pageSize = val;
+  getList();
+};
+const handleCurrentChange = (val: number) => {
+  page.pageNum = val;
+  getList();
+};
 const tableData = ref([]);
+// 状态   statusList
+const statusList = ref([]);
+const getStatus = () => {
+  const res = http.get("k2401-personal-exit/status-list", {
+    Authorization: "Bearer " + token,
+  }) as any;
+  // console.log(res, "resresres");
+  statusList.value = res.backValue;
+};
+// getStatus();
 
 // 列表
-const getList = (tabNumber: any) => {
+const getList = () => {
   // k2401-personal-exit/exit/paged?current=1&size=15&status=2
 
   http
     .get(
-      `k2401-personal-exit/exit/paged?current=${
-        tabNumber === 0 ? 1 : page.pageNum
-      }&size=${tabNumber === 0 ? 10 : page.pageSize}&status=`,
+      `k2401-personal-exit/exit/paged?current=${page.pageNum}&size=${page.pageSize}&status=`,
       {
         Authorization: "Bearer " + token,
       }
@@ -223,8 +235,30 @@ const getList = (tabNumber: any) => {
     });
 };
 
-getList(0);
+getList();
 
+const reset = () => {
+  let form = ref({
+    xmbh: "",
+    lsh: "",
+    sf: "",
+    status: "",
+    qzsj: "",
+  });
+  Object.assign(form, form);
+  page.pageNum = 1;
+  page.pageSize = 10;
+  getList();
+};
+const search = () => {
+  page.pageNum = 1;
+  page.pageSize = 10;
+  getList();
+};
+onMounted(async () => {
+  // await getList(0); //编辑详情
+  // getStatus();
+});
 const peADD = () => {
   router.push({
     path: "/index/personalInformationAdd",
@@ -247,16 +281,6 @@ const toDetail = (id: any) => {
     },
   });
 };
-// 状态   statusList
-const statusList = ref([]);
-const getStatus = async () => {
-  const res = (await http.get("k2401-personal-exit/status-list", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  console.log(res, "resresres");
-  // statusList.value = res.children;
-};
-// getStatus();
 </script>
 <style lang="scss" scoped>
 .contain {
