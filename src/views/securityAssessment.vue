@@ -194,17 +194,23 @@ const form = reactive({
   qzsj: "",
   status: "",
 });
-const search = () => {};
 const reset = () => {
-  let form2 = {
+  let form = ref({
     xmbh: "",
     lsh: "",
     sf: "",
-    xmbh2: "",
+    status: "",
     qzsj: "",
-  };
-  // form = form2;
-  Object.assign(form, form2);
+  });
+  Object.assign(form, form);
+  page.pageNum = 1;
+  page.pageSize = 10;
+  getList();
+};
+const search = () => {
+  page.pageNum = 1;
+  page.pageSize = 10;
+  getList();
 };
 const page = reactive({
   //配置对应的查询参数
@@ -213,17 +219,21 @@ const page = reactive({
 });
 const total = ref(0);
 
-const handleSizeChange = () => {};
-const handleCurrentChange = () => {};
+const handleSizeChange = (val: number) => {
+  page.pageSize = val;
+  getList();
+};
+const handleCurrentChange = (val: number) => {
+  page.pageNum = val;
+  getList();
+};
 const tableData = ref([]);
 
 // 列表
-const getList = (tabNumber: any) => {
+const getList = () => {
   http
     .get(
-      `k2401-data-exit/exit/paged?current=${
-        tabNumber === 0 ? 1 : page.pageNum
-      }&size=${tabNumber === 0 ? 10 : page.pageSize}&status=`,
+      `k2401-data-exit/exit/paged?current=${page.pageNum}&size=${page.pageSize}&status=`,
       {
         Authorization: "Bearer " + token,
       }
@@ -235,13 +245,14 @@ const getList = (tabNumber: any) => {
     });
 };
 
-getList(0);
-
+getList();
+// x新增
 const securityAdd = (id: any) => {
   router.push({
     path: "/index/securityAssessmentAdd",
   });
 };
+// 详情
 const toEdit = (id: any) => {
   router.push({
     path: "/index/securityAssessmentAdd",
@@ -250,6 +261,16 @@ const toEdit = (id: any) => {
     },
   });
 };
+// 状态   statusList
+const statusList = ref([]);
+const getStatus = () => {
+  const res = http.get("k2401-personal-exit/status-list", {
+    Authorization: "Bearer " + token,
+  }) as any;
+  // console.log(res, "resresres");
+  statusList.value = res.backValue;
+};
+// getStatus();
 </script>
 <style lang="scss" scoped>
 .contain {
