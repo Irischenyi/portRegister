@@ -24,7 +24,7 @@
         </div>
       </div>
     </template>
-    <template #tabs>
+    <!-- <template #tabs>
       <q-tabs
         v-model="tab"
         dense
@@ -36,100 +36,81 @@
         <q-tab name="hydt1" label="合规专题评估" />
         <q-tab name="zcfg1" label="申报材料评估" />
       </q-tabs>
-    </template>
+    </template> -->
     <template #body>
       <div class="contain">
-        <q-tab-panels style="margin-top: 10px" v-model="tab" animated>
-          <q-tab-panel name="hydt1">
-            <!-- 合规专题 -->
-            <div class="hgzt">
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  width: 100%;
-                "
-              >
-                <div
-                  style="width: 33%; padding: 10px; background-color: #fafafa"
-                >
-                  <div>
-                    <div>
-                      <img
-                        style="width: 100%"
-                        src="../assets/images/hgzt1.png"
-                      />
-                    </div>
-                    <div style="font-size: 20px">数据出境合规自评估</div>
-                    <div style="color: #696969">
-                      数据出境合规自评估数据出境合规自评估数据出境合规自评估
-                    </div>
-                    <div style="display: flex; justify-content: end">
-                      <q-btn
-                        @click="btnStep"
-                        rounded
-                        color="primary"
-                        label="去评估"
-                        class="btns"
-                      />
-                    </div>
-                  </div>
+        <!-- <q-tab-panels style="margin-top: 10px" v-model="tab" animated>
+          <q-tab-panel name="hydt1"> -->
+        <!-- 合规专题 -->
+        <div class="hgzt">
+          <div
+            style="display: flex; justify-content: space-between; width: 100%"
+          >
+            <div style="width: 33%; padding: 10px; background-color: #fafafa">
+              <div>
+                <div>
+                  <img style="width: 100%" src="../assets/images/hgzt1.png" />
                 </div>
-
-                <div
-                  style="width: 33%; padding: 10px; background-color: #fafafa"
-                >
-                  <div>
-                    <div>
-                      <img
-                        style="width: 100%"
-                        src="../assets/images/hgzt2.png"
-                      />
-                    </div>
-                    <div style="font-size: 20px">数据出境合规自评估</div>
-                    <div>
-                      数据出境合规自评估数据出境合规自评估数据出境合规自评估
-                    </div>
-                    <div style="display: flex; justify-content: end">
-                      <q-btn
-                        @click="goCheck"
-                        rounded
-                        color="primary"
-                        label="进入检查"
-                        class="btns"
-                      />
-                    </div>
-                  </div>
+                <div style="font-size: 20px">数据出境合规自评估</div>
+                <div style="color: #696969">
+                  数据出境合规自评估数据出境合规自评估数据出境合规自评估
                 </div>
-
-                <div
-                  style="width: 33%; padding: 10px; background-color: #fafafa"
-                >
-                  <div>
-                    <div>
-                      <img
-                        style="width: 100%"
-                        src="../assets/images/hgzt3.png"
-                      />
-                    </div>
-                    <div style="font-size: 20px">数据出境合规自评估</div>
-                    <div>
-                      数据出境合规自评估数据出境合规自评估数据出境合规自评估
-                    </div>
-                    <div style="display: flex; justify-content: end">
-                      <q-btn
-                        @click="goChecks"
-                        rounded
-                        color="primary"
-                        label="进入检查"
-                        class="btns"
-                      />
-                    </div>
-                  </div>
+                <div style="display: flex; justify-content: end">
+                  <q-btn
+                    @click="btnStep"
+                    rounded
+                    color="primary"
+                    label="去评估"
+                    class="btns"
+                  />
                 </div>
               </div>
             </div>
-          </q-tab-panel>
+
+            <div style="width: 33%; padding: 10px; background-color: #fafafa">
+              <div>
+                <div>
+                  <img style="width: 100%" src="../assets/images/hgzt2.png" />
+                </div>
+                <div style="font-size: 20px">数据出境合规自评估</div>
+                <div>
+                  数据出境合规自评估数据出境合规自评估数据出境合规自评估
+                </div>
+                <div style="display: flex; justify-content: end">
+                  <q-btn
+                    @click="goCheck"
+                    rounded
+                    color="primary"
+                    label="进入检查"
+                    class="btns"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div style="width: 33%; padding: 10px; background-color: #fafafa">
+              <div>
+                <div>
+                  <img style="width: 100%" src="../assets/images/hgzt3.png" />
+                </div>
+                <div style="font-size: 20px">数据出境合规自评估</div>
+                <div>
+                  数据出境合规自评估数据出境合规自评估数据出境合规自评估
+                </div>
+                <div style="display: flex; justify-content: end">
+                  <q-btn
+                    @click="goChecks"
+                    rounded
+                    color="primary"
+                    label="进入检查"
+                    class="btns"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- </q-tab-panel>
 
           <q-tab-panel name="zcfg1">
             <div>
@@ -163,7 +144,7 @@
               </div>
             </div>
           </q-tab-panel>
-        </q-tab-panels>
+        </q-tab-panels> -->
       </div>
     </template>
   </TemplateFrame>

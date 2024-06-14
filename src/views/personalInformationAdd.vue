@@ -2137,7 +2137,7 @@ const sumit = async (num: any) => {
 const submitForm1 = async (ruleFormRef1: FormInstance | undefined) => {
   if (!ruleFormRef1) return;
 
-  await ruleFormRef1.validate((valid: any) => {
+  await ruleFormRef1.validate(async (valid: boolean) => {
     if (valid) {
       // 单位性质
       unitNatureValuelist.value.map((item: any) => {
@@ -2166,14 +2166,14 @@ const submitForm1 = async (ruleFormRef1: FormInstance | undefined) => {
 
       active.value++;
     } else {
-      return ElMessage({ type: "warning", message: "请补求信息" });
+      showWarningMessage("请补求信息");
     }
   });
 };
 // 校验表单2
 const submitForm2 = async (ruleFormRef2: FormInstance | undefined) => {
   if (!ruleFormRef2) return;
-  await ruleFormRef2.validate((valid) => {
+  await ruleFormRef2.validate(async (valid: boolean) => {
     if (valid) {
       // 国籍
       guoji.value.map((item: any) => {
@@ -2191,42 +2191,38 @@ const submitForm2 = async (ruleFormRef2: FormInstance | undefined) => {
 
       active.value++;
     } else {
-      console.log("error submit!", fields);
-      return ElMessage({ type: "warning", message: "请补求信息" });
+      showWarningMessage("请补求信息");
     }
   });
 };
 // 校验表单3
 const submitForm3 = async (ruleFormRef3: FormInstance | undefined) => {
   if (!ruleFormRef3) return;
-  await ruleFormRef3.validate(
-    (valid: any, fields: any): MessageHandler | undefined => {
-      if (valid) {
-        // 国籍
-        guoji.value.map((item: any) => {
-          if (item.tagValue == ruleForm3.operatorNationalValue) {
-            ruleForm3.operatorNationalName = item.tagName;
-          }
-        });
-        // 证件类型
-        certificatetype.value.map((item: any) => {
-          if (item.tagValue == ruleForm3.operatorCertificateTypeValue) {
-            ruleForm3.operatorCertificateTypeName = item.tagName;
-          }
-        });
-        console.log("error submit!", ruleForm3);
-        active.value++;
-      } else {
-        console.log("error submit!", fields);
-        return ElMessage({ type: "warning", message: "请补求信息" });
-      }
+  await ruleFormRef3.validate(async (valid: boolean) => {
+    if (valid) {
+      // 国籍
+      guoji.value.map((item: any) => {
+        if (item.tagValue == ruleForm3.operatorNationalValue) {
+          ruleForm3.operatorNationalName = item.tagName;
+        }
+      });
+      // 证件类型
+      certificatetype.value.map((item: any) => {
+        if (item.tagValue == ruleForm3.operatorCertificateTypeValue) {
+          ruleForm3.operatorCertificateTypeName = item.tagName;
+        }
+      });
+      console.log("error submit!", ruleForm3);
+      active.value++;
+    } else {
+      showWarningMessage("请补求信息");
     }
-  );
+  });
 };
 // 校验表单5
 const submitForm5 = async (ruleFormRef5: FormInstance | undefined) => {
   if (!ruleFormRef5) return;
-  await ruleFormRef5.validate((valid, fields) => {
+  await ruleFormRef5.validate(async (valid: boolean) => {
     if (valid) {
       // 涉及行业/领域
       industryarea.value.map((item: any) => {
@@ -2250,15 +2246,14 @@ const submitForm5 = async (ruleFormRef5: FormInstance | undefined) => {
       console.log("error submit!", ruleForm5);
       active.value++;
     } else {
-      console.log("error submit!", fields);
-      return ElMessage({ type: "warning", message: "请补求信息" });
+      showWarningMessage("请补求信息");
     }
   });
 };
 // 校验表单6
 const submitForm6 = async (ruleFormRef6: FormInstance | undefined) => {
   if (!ruleFormRef6) return;
-  await ruleFormRef6.validate((valid, fields) => {
+  await ruleFormRef6.validate(async (valid: boolean) => {
     if (valid) {
       let data1 = new Date(ruleForm6.contractMakeDate);
 
@@ -2288,12 +2283,13 @@ const submitForm6 = async (ruleFormRef6: FormInstance | undefined) => {
       console.log("error submit!", ruleForm6);
       active.value++;
     } else {
-      console.log("error submit!", fields);
-      return ElMessage({ type: "warning", message: "请补求信息" });
+      showWarningMessage("请补求信息");
     }
   });
 };
-
+const showWarningMessage = (message: string) => {
+  ElMessage({ type: "warning", message });
+};
 const rules1 = reactive({
   unitName: [{ required: true, message: "请输入单位名称", trigger: "blur" }],
   unitCategoryValue: [
