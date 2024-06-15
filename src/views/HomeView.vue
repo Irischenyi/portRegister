@@ -109,12 +109,26 @@
       <div class="hgzt">
         <div class="fw">合规专题</div>
         <div class="hgzt-main">
-            <div class="simple-line" v-for="item in [1,2,3]">
+            <div class="simple-line" @click="changeRouter(1)">
               <div>
                 <img style="width: 100%" src="../assets/images/hgzt1.png" />
               </div>
               <div class="title">数据出境合规自评估</div>
-              <div class="content">数据出境合规自评估数据出境合规自评估数据出境合规自评估</div>
+              <div class="content">数据出境合规自评估</div>
+            </div>
+            <div class="simple-line" @click="changeRouter(2)">
+              <div>
+                <img style="width: 100%" src="../assets/images/hgzt2.png" />
+              </div>
+              <div class="title">数据出境合规自评估</div>
+              <div class="content">数据出境合规自评估</div>
+            </div>
+            <div class="simple-line" @click="changeRouter(3)">
+              <div>
+                <img style="width: 100%" src="../assets/images/hgzt3.png" />
+              </div>
+              <div class="title">数据出境合规自评估</div>
+              <div class="content">数据出境合规自评估</div>
             </div>
         </div>
       </div>
@@ -215,121 +229,6 @@
     <!--  -->
   </div>
   <questionBox :show="khfwDialog" @close="khfwDialog=false;"/>
-  <!-- <el-dialog
-    style="
-      position: absolute;
-      right: 0px;
-      bottom: -50px;
-      background-color: #eaeff9;
-    "
-    v-model="zxfwDialog"
-    width="35%"
-    maxHeight="400"
-    :before-close="handleClose2"
-  >
-    <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="常见问题" name="first">
-        <div class="tabPane">
-          <div
-            @click="questionBtn(item as any)"
-            class="cjwt"
-            v-for="item in questionList"
-            :key="(item as any).id"
-          >
-            <div style="font-size: 14px; margin-bottom: 15px">
-              {{ (item as any).question }}
-            </div>
-
-            <div
-              style="margin-left: 20px; color: #000"
-              v-if="(item as any).showAnswer"
-              v-html="(item as any).showAnswerDetail"
-            ></div>
-          </div>
-        </div>
-        <div style="display: flex; margin-top: 20px">
-          <el-input v-model="cjwtInput" style="height: 40px"></el-input>
-          <el-button class="elBtn">发送</el-button>
-        </div>
-      </el-tab-pane>
-
-      <el-tab-pane label="智能咨询" name="second">
-        <div class="tabPane">
-          <div class="chat-container">
-            <div
-              v-for="(message, index) in messages"
-              :key="index"
-              class="message"
-              :class="{
-                'sent-message': message.sent,
-                'received-message': !message.sent
-              }"
-            >
-              {{ message.text }}
-            </div>
-          </div>
-        </div>
-        <div style="display: flex; margin-top: 20px">
-          <el-input
-            v-model="question"
-            @keyup.enter="askQuestion"
-            placeholder="请输入您的问题..."
-            style="height: 40px"
-          ></el-input>
-          <el-button @click="askQuestion" class="elBtn1">发送</el-button>
-        </div>
-      </el-tab-pane>
-
-      <el-tab-pane label="在线留言" name="third">
-        <div style="position: relative" class="tabPane">
-          <el-form
-            ref="formRef"
-            :model="formModel"
-            :rules="formRules"
-            label-width="60px"
-          >
-            <el-form-item label="单位" prop="dw1">
-              <el-input v-model="formModel.dw1" style="width: 60%"></el-input>
-            </el-form-item>
-            <el-form-item label="姓名" prop="xm">
-              <el-input v-model="formModel.xm" style="width: 60%"></el-input>
-            </el-form-item>
-            <el-form-item label="手机号" prop="dw2">
-              <el-input v-model="formModel.dw2" style="width: 60%"></el-input>
-            </el-form-item>
-            <el-form-item label="留言" prop="ly">
-              <el-input
-                v-model="formModel.ly"
-                type="textarea"
-                :rows="4"
-              ></el-input>
-            </el-form-item>
-          </el-form>
-        </div>
-        <div
-          style="
-            display: flex;
-
-            margin-top: 20px;
-          "
-        >
-          <el-input v-model="cjwtInput" style="height: 40px"></el-input>
-
-          <el-button @click="getCodes" class="elBtn1">发送</el-button>
-          <div
-            style="width: 10%; position: absolute; top: -200px; left: -800px"
-          >
-            <picSlider
-              ref="picRef"
-              :show="codeValue.show"
-              @postCheck="postCheck"
-            />
-          </div>
-        </div>
-      </el-tab-pane>
-    </el-tabs>
-  </el-dialog> -->
-
   <!-- 联系方式弹框 -->
   <q-dialog v-model="showQuestion">
       <div class="question-dialog">
@@ -411,6 +310,21 @@ const autoplay = ref(true)
 const btns = (value: any) => {
   tabsValue.value = value
   getArticlePaged()
+}
+
+
+const changeRouter  = (val: number) => {
+  let path
+  if(val == 1){
+    path = '/index/dataProcessing'
+  }else if(val == 2){
+    path = '/index/securityAssessment'
+  }else if(val == 3){
+    path = '/index/securityAssessment'
+  }
+  router.push({
+    path: path
+  })
 }
 
 
@@ -526,24 +440,21 @@ const searchDetail = () => {
 const seeMore = (type: string) => {
     let routerUrl: {href: string}
     if(type == 'safe'){
-      routerUrl = router.resolve({
+      router.push({
         path: '/index/securityTraining'
       })
-      window.open(routerUrl?.href, '_blank')
     }
   }
     
 
 const safeRouterPush = (id: string) => {
-  const routerUrl = router.resolve({
+  router.push({
     path: 'dataDetail',
     query: {
       type: 1,
       id: id
     }
   })
-
-  window.open(routerUrl.href, '_blank')
 }
 
 const activeInt = ref('order: 0;')
@@ -800,6 +711,13 @@ const artDetail = (id?: string) => {
     padding: 12px;
     width: calc(33% - 10px);
     padding-bottom: 5px;
+    transition: all ease 0.3s;
+    &:hover{
+      background-color: #dadada;
+      img{
+        transform: scale(1.01)
+      }
+    }
     .title{
       font-weight: bold;
       margin: 2px 0px;

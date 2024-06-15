@@ -46,10 +46,10 @@ const routerChange = (value: string) => {
       path: '/login'
     })
   } else if(value == 'center'){
-    const routerUrl = router.resolve({
+    const routerUrl = router.push({
       path: '/personalPlatform/basic'
     })
-    window.open(routerUrl.href, '_blank')
+    // window.open(routerUrl.href, '_blank')
   } else {
     http.get('k2401-survey/check-submit', {
       'Authorization':  'Bearer ' + token

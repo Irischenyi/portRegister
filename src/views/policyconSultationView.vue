@@ -20,8 +20,8 @@
       >
         <q-tab
           v-for="(item, index) in tabsChange"
-          :name="(item as any).category"
-          :label="(item as any).categoryName"
+          :name="(item as any).value"
+          :label="(item as any).name"
         />
       </q-tabs>
     </template>
@@ -42,41 +42,45 @@
               style="padding: 20px 10px"
               @click="goToDetail((item as any).id)"
             >
-              <div style="display: flex">
-                <div style="width: 20%; margin-right: 20px">
+              <div style="display: flex; position: relative;">
+                <div style="width: 30%; margin-right: 20px">
                   <div class="img-box">
                     <imgIn
                       :src="setBaseInf.baseUrl + (item as any).attach.storagePath"
                     />
                   </div>
-                  
                 </div>
-                <div style="width: 60%">
-                  <div style="font-size: 20px; font-weight: 500">
-                    {{ (item as any).title }}
+                <div  style="width: 100%;">
+                  <div>
+                    <div class="title">
+                      {{ (item as any).title }}
+                    </div>
+                    <div class="sub-title">
+                      {{ (item as any).summary }}
+                    </div>
+                    
                   </div>
-                  <div style="margin-top: 10px; color: #696969">
-                    {{ (item as any).summary }}
-                  </div>
-                  <div style="margin-top: 80px; color: #696969">
-                    {{ (item as any).sourceFrom }}
-                  </div>
-                </div>
-                <div
-                  style="
-                    display: flex;
-                    justify-content: end;
-                    align-items: end;
-                    width: 20%;
-                    margin-top: auto;
-                  "
-                >
-                  <span style="margin-left: auto; color: #696969">
-                    {{ (item as any).publishDate }}</span
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: end;
+                      margin-top: auto;
+                      position: absolute;
+                      bottom: 0px;
+                      width: 70%;
+                      color: grey;
+                      font-size: 13px;
+                    "
                   >
+                    <div>{{ (item as any).sourceFrom }}</div>
+                    <div style="margin-left: auto; color: #696969">
+                      {{ (item as any).publishDate }}</div
+                    >
+                  </div>
                 </div>
               </div>
-              <div style="margin-top: 20px">
+              <div style="margin-top: 5px">
                 <q-separator />
               </div>
             </div>
@@ -112,19 +116,16 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive } from "vue";
 import Bottom from "@/components/Bottom.vue";
-import http, { setBaseInf } from "@/http/httpContentMain";
+import { setBaseInf, setHttp } from "@/http/httpContentMain";
 import TemplateFrame from "@/components/TemplateFrame.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const loadingShow = ref(true)
 onMounted(async () => {
-  console.log(setBaseInf.baseUrl, "setBaseInf.baseUrl");
-
-  // await getBanner() //获取 Banner 图
-  await getCategoryTabs(); //获取政策资讯类别
-  //指定政策资讯下的分页列表
+  getCategoryTabs(); //获取政策资讯类别
   await getArticlePaged();
+  
 });
 const page = reactive({
   //配置对应的查询参数
@@ -134,54 +135,42 @@ const page = reactive({
 const handleSizeChange = () => {};
 const handleCurrentChange = () => {};
 //  获取 Banner 图
-const bannerSy = ref("");
-const getBanner = async () => {
-  const res = (await http.get("/k2401-banner/list", {
-    params: { category: 1 },
-  })) as any;
-  bannerSy.value = `${setBaseInf.baseUrl}` + res[0].storagePath;
-  console.log(res, "res+++11111111+++++");
-};
 
 //获取政策资讯类别
 const tabsChange = ref([]);
-const tabsChange1 = ref("");
-const tabsChange2 = ref("");
-const tabsChange3 = ref("");
-const tabsChange4 = ref("");
-const getCategoryTabs = async () => {
-  const res = (await http.get(
-    "/k2401-service-hall/service-hall/hot-list"
-  )) as any;
-  console.log(res, "res+++222222222+++++");
-  tabsChange.value = res;
+const getCategoryTabs = () => {
+  const http = setHttp()
+  const res = http.get(
+    "/k2401-article/article-category-list"
+  ).then((data) => {
+    tabsChange.value = data as unknown as [];
+
+  })
 };
 
 const tabsLists = ref([]);
-
+const tabsValue = ref(1);
 const imgTabs = ref("");
 const total = ref(0);
 
 const getArticlePaged = async () => {
   loadingShow.value = true;
+  const http = setHttp()
   const res = (await http.get(
     `/k2401-article/article/paged?current=1&size=10&category=${
-      tabsValue.value || 1
+      tabsValue.value
     }`
   )) as any;
-  console.log(res, "res");
   loadingShow.value = false;
   tabsLists.value = res.items;
   total.value = parseInt(res.total);
-  imgTabs.value = `${setBaseInf.baseUrl}` + res.items[0].attach.storagePath;
+  imgTabs.value = `${setBaseInf.baseUrl}` + res.items?.[0]?.attach.storagePath;
 };
 
 const tab = ref(1);
-getArticlePaged();
 
-const tabsValue = ref(1);
+
 const btns = (value: any) => {
-  console.log(value, "val++++++");
   tabsValue.value = value;
   getArticlePaged();
 };
@@ -244,7 +233,20 @@ const goToDetail = (id: string) => {
 
 .img-box{
   width: 100%;
-  padding-top: 65%;
+  padding-top: 72%;
   position: relative;
+}
+
+.title{
+  font-size: 15px;
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sub-title{
+  color: grey;
+  font-size: 13px;
+  padding: 10px 0px;
 }
 </style>
