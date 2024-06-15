@@ -27,6 +27,7 @@ const headers = [
   }
 ]
 const token = localStorage.getItem('token');
+const showing = ref(false)
 const isShowQuestionButton = ref(false)
 http.get('k2401-survey/check-submit', {
       'Authorization':  'Bearer ' + token
@@ -66,6 +67,11 @@ const routerChange = (value: string) => {
   
 }
 
+const loginOut = () => {
+  localStorage.setItem('token', '');
+  location.reload()
+}
+
 const goTo = (link: string) => {
   router.push({
       path:link
@@ -87,10 +93,26 @@ const goTo = (link: string) => {
         <div v-for="item in headers" @click="goTo(item.link)">{{item.name}}</div>
       </div>
       <div class="right">
-        <div class="form" v-if="isShowQuestionButton" @click="routerChange('question')">调研填表</div>
+        <div class="form" v-if="isShowQuestionButton" :style="token?'top: 10px;':''" @click="routerChange('question')">调研填表</div>
         <div class="login" v-if="!token" @click="routerChange('login')">登录/注册</div>
-        <div class="head" v-if="token" @click="routerChange('center')"></div>
+        <!--  -->
+        <div class="head" v-if="token">
+          <img/>
+          <q-menu class="menu" v-model="showing">
+            <q-list style="min-width: 100px">
+              <q-item clickable v-close-popup>
+                <q-item-section class="section" @click="routerChange('center')">用户中心</q-item-section>
+              </q-item>
+              <q-separator />
+              <q-item clickable v-close-popup>
+                <q-item-section class="section" @click="loginOut">退出登录</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </div>
+        
       </div>
+      
     </div>
   </div>
 
@@ -108,6 +130,7 @@ const goTo = (link: string) => {
   margin: 0 auto;
   position: relative;
   align-items: center;
+  box-shadow: 0 0 20px 4px rgba(0,0,0,0.12);
 }
 .title1{
   .pic-Logo{
@@ -155,14 +178,29 @@ const goTo = (link: string) => {
   .form{
     border: 1px dashed #4984FF;
     color: #4984FF;
+    height: 30px;
+    position: relative;
   }
   .head{
-    width: 30px;
-    height: 30px;
-    background: grey;
+    width: 50px;
+    height: 53px;
     border-radius: 40px;
     margin-left: 20px;
+    font-size: 14px;
+    img{
+      width: 35px;
+      height: 35px;
+      border-radius: 90px;
+      position: relative;
+      top: 7px;
+      background-color: grey;
+    }
+    
   }
+}
+::v-deep .section{
+  font-size: 13px !important;
+  text-align: center;
 }
 .routey {
   color: #000;
@@ -172,5 +210,10 @@ const goTo = (link: string) => {
 .title {
   font-size: 18px;
   margin-right: 150px;
+}
+
+.menu{
+  position: relative;
+  top: 20px;
 }
 </style>

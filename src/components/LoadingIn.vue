@@ -1,46 +1,56 @@
 <template>
-    <img :src="props.src" />
-    <Transition name="fade">
-        <div v-if="!isShow" class="loader-box">
-            <div class="dev1">
-              <q-spinner
-                color="primary"
-                size="3em"
-              />
+    <div>
+        <Transition name="fade">
+            <div class="loading" v-if="show">
+                <div class="dev1">
+                    <div class="dev2"></div>
+                    <div class="dev3"></div>
+                    <div class="dev4"></div>
+                </div>
             </div>
-        </div>
-    </Transition>
+        </Transition>
+    </div>
 </template>
+<script setup lang="ts">
+import { ref, defineProps, watch } from 'vue';
+const attrs = defineProps({
+    show: {
+        type: Boolean
+    }
+})
+
+</script>
 <style lang="scss" scoped>
-img {
-    position: absolute;
+.loading{
     width: 100%;
     height: 100%;
-    left: 0px;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4);
     top: 0px;
+    left: 0px;
+}
+.fade-enter-active,
+.fade-leave-active{
+    transition: opacity ease-in .3s;
 }
 
-.loader-box{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-color: #f4f4f4;
-    left: 0px;
-    top: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.fade-enter,
+.fade-leave-to{
+    opacity: 0;
 }
+
+
 .dev1
 {
     position: absolute;
-    height: 90px;
-    width: 90px;
+    height: 120px;
+    width: 120px;
     margin: 50px;
     padding:10px;
+    transform: scale(0.7);
     // border: 1px solid red;
     perspective:150;
-    left: calc(50% - 80px);
+    left: calc(50% - 120px);
     top: calc(50% - 80px);
     -webkit-perspective:150; /* Safari and Chrome */
 }
@@ -81,7 +91,7 @@ img {
   }
 
   100% {
-    border: 3px solid black;
+    border: 3px solid rgb(210, 199, 225);
     transform: rotateY(-365deg) rotateX(365deg);
   }
 }
@@ -96,7 +106,7 @@ img {
     transform: translateY(0px) rotateX(160deg) scale(0.8);
   }
   100% {
-    border: 3px solid black;
+    border: 3px solid rgb(172, 161, 206);
     transform:  rotateX(365deg) scale(1);
   }
 }
@@ -109,45 +119,9 @@ img {
     transform: rotateX(180deg) scale(0.6);
   }
   100% {
-    border: 3px solid black;
+    border: 3px solid white;
     transform: translateY(-10px) rotateX(365deg) scale(1);
   }
 }
 
 </style>
-<script setup lang="ts">
-import { ref, useAttrs, watch, defineProps } from 'vue';
-const attrs = useAttrs()
-
-const imgOne = ref('')
-
-const attrValue = attrs.value as {
-    src: string
-}
-
-const props = defineProps<{
-    src: string
-}>()
-
-const isShow = ref(false)
-if(props.src.indexOf('@')>=0){
-    console.log(props.src)
-    isShow.value = true;
-}else{
-    if (props.src && props.src.indexOf('undefin')<=0) {
-        const imgDom = new Image();
-        imgDom.src = props.src;
-        imgDom.onload = () => {
-            isShow.value = true;
-        }
-    }else{
-        setTimeout(() => {
-            isShow.value = true;
-        }, 2000)
-    }
-}
-
-
-
-
-</script>

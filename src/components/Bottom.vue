@@ -10,12 +10,12 @@
             </div>
             <div class="bottom_text bottom_text2">
               <div class="bottom_texts">诊断评估</div>
-              <div>联系方式：0619-85028717</div>
+              <div>联系方式：*****-*********</div>
             </div>
             <div class="bottom_text bottom_text2">
               <div class="bottom_texts">专家资源</div>
               <div>
-                企业地址：常州市钟楼区玉龙南路280号常州大数据产业园4号楼4楼
+                企业地址：*********************
               </div>
             </div>
             <div class="bottom_text bottom_text2">
@@ -24,7 +24,7 @@
           </div>
           <div class="code-text">
               <div class="pic">
-                <img/>
+                <!-- <img/> -->
               </div>
               <div class="text">企业客服二维码</div>
           </div>

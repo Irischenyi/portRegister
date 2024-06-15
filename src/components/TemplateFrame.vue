@@ -34,7 +34,7 @@
   
   .tabber-list{
     width: 100vw;
-    min-height: 45px;
+    min-height: 0px;
     background-color: white;
   }
   

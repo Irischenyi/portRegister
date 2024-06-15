@@ -24,6 +24,7 @@ const attrValue = attrs.value as {
     id: string,
     sequence: string,
     nodeType: number
+  
 }
 
 const token = localStorage.getItem('token');
