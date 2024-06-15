@@ -447,42 +447,6 @@ const safeService = async () => {
   safeList.value = res.items as itemInf[]
 }
 
-// 封装常见问题列表接口
-const questionList = ref([])
-const getQuestion = async () => {
-  const http = setHttp();
-  const res = (await http.post('/k2401-question/question/paged', {
-    current: 1, // 第几页
-    size: 10, // 每页多少条数据
-    key: '' // 问题的关键字
-  })) as any
-  questionList.value = res.items
-  console.log(res, '常见问题列表接口')
-}
-// 封装指定常见问题的详情的接口
-let answerDetail = ref('')
-const getQuestionDetail = async (id: any) => {
-  const http = setHttp();
-  const res = (await http.get(`k2401-question/question/${id}`)) as any
-  answerDetail.value = res.answer
-  console.log(answerDetail.value, 'answerDetail.value')
-}
-const questionBtn = async (item: any) => {
-  await getQuestionDetail(item.id)
-  item.showAnswer = !item.showAnswer
-  item.showAnswerDetail = answerDetail.value
-
-  console.log(item, 'item77777777')
-}
-const zxfwDialog = ref(false)
-const zxlyBtn = () => {
-  zxfwDialog.value = true
-  getQuestion()
-}
-const handleClose2 = () => {
-  zxfwDialog.value = false
-}
-
 const activeName = ref('first')
 
 const handleClick = (tab: TabsPaneContext, event: Event) => {
@@ -557,14 +521,7 @@ const searchDetail = () => {
   getArticleDetail(ids.value)
 }
 // 智能咨询接口封装
-const getQueryQusetion = async () => {
-  const http = setHttp();
-  const res = (await http.post('/k2401-talk/question', {
-    question: '问题' // 输入的问题（必填）
-  })) as any
 
-  console.log(res, '智能咨询接口')
-}
 
 const seeMore = (type: string) => {
     let routerUrl: {href: string}
@@ -576,34 +533,6 @@ const seeMore = (type: string) => {
     }
   }
     
-
-const question = ref('')
-const messages = ref([] as { text: string; sent: boolean }[])
-const askQuestion = async () => {
-  if (question.value.trim() === '') return
-
-  messages.value.push({ text: question.value, sent: true }) // 将用户输入的问题显示在右上角
-  const http = setHttp();
-  const res = (await http.post('/k2401-talk/question', {
-    question: question.value // 输入的问题（必填）
-  })) as any
-
-  console.log(res, '智能咨询接口')
-  setTimeout(() => {
-    console.log(res.length, 'res.length')
-
-    if (res.answer) {
-      messages.value.push({ text: res.answer, sent: false }) // 将服务端返回的答案显示在左上角
-    } else {
-      messages.value.push({
-        text: '抱歉，出现了一些问题，请重新提问',
-        sent: false
-      }) // 将服务端返回的答案显示在左上角
-    }
-  }, 500)
-
-  question.value = '' // 重置输入框
-}
 
 const safeRouterPush = (id: string) => {
   const routerUrl = router.resolve({
@@ -1219,5 +1148,4 @@ const artDetail = (id?: string) => {
   margin: 3px 0px;
 }
 
-.question-box{}
 </style>

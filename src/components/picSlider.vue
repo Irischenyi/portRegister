@@ -85,11 +85,13 @@
 <style scoped>
 .q-dialog-plugin{
     height: 300px;
+    
 }
 
 .back{
     width: 100%;
     height: 100%;
+    z-index: 20;
     position: fixed;
     background-color: rgba(0,0,0,0.2);
     display: flex;
