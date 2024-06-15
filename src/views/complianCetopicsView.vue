@@ -46,13 +46,13 @@
           <div
             style="display: flex; justify-content: space-between; width: 100%"
           >
-            <div style="width: 33%; padding: 10px; background-color: #fafafa">
+            <div class="item-dom">
               <div>
                 <div>
                   <img style="width: 100%" src="../assets/images/hgzt1.png" />
                 </div>
-                <div style="font-size: 20px">数据出境合规自评估</div>
-                <div style="color: #696969">
+                <div class="title">数据出境合规自评估</div>
+                <div class="content">
                   数据出境合规自评估数据出境合规自评估数据出境合规自评估
                 </div>
                 <div style="display: flex; justify-content: end">
@@ -67,13 +67,13 @@
               </div>
             </div>
 
-            <div style="width: 33%; padding: 10px; background-color: #fafafa">
+            <div class="item-dom">
               <div>
                 <div>
                   <img style="width: 100%" src="../assets/images/hgzt2.png" />
                 </div>
-                <div style="font-size: 20px">数据出境合规自评估</div>
-                <div>
+                <div class="title">数据出境合规自评估</div>
+                <div class="content">
                   数据出境合规自评估数据出境合规自评估数据出境合规自评估
                 </div>
                 <div style="display: flex; justify-content: end">
@@ -88,13 +88,13 @@
               </div>
             </div>
 
-            <div style="width: 33%; padding: 10px; background-color: #fafafa">
+            <div class="item-dom">
               <div>
                 <div>
                   <img style="width: 100%" src="../assets/images/hgzt3.png" />
                 </div>
-                <div style="font-size: 20px">数据出境合规自评估</div>
-                <div>
+                <div class="title">数据出境合规自评估</div>
+                <div class="content">
                   数据出境合规自评估数据出境合规自评估数据出境合规自评估
                 </div>
                 <div style="display: flex; justify-content: end">
@@ -238,5 +238,25 @@ const goChecks = () => {
 .btns {
   margin-left: auto;
   background-color: #4984ff !important;
+}
+
+.item-dom{
+  width: calc(33% - 10px);
+  background: white;
+  box-sizing: border-box;
+  padding: 20px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  .title{
+    font-size: 17px;
+    font-weight: bold;
+    margin: 10px 0px;
+  }
+
+  .content{
+    font-size: 14px;
+    color: grey;
+    margin-bottom: 10px;
+  }
 }
 </style>

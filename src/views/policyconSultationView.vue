@@ -1,22 +1,6 @@
 <template>
   <TemplateFrame>
     <template #header>
-      <!-- <div class="topImg" style="width: 100%">
-        <img
-          style="width: 100%;"
-          src="@/assets/images/zczxbjt.png"
-          alt=""
-        />
-        <div class="topImgText">
-          <div style="color: #fff; font-size: 23px; font-weight: 500">
-            政策咨询
-          </div>
-          <div style="color: #fff">
-            提供工业互联网安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目；
-            基于行业内最新动态的梳理与汇聚
-          </div>
-        </div>
-      </div> -->
       <div class="head-box">
         <img class="header" src="@/assets/images/zczxbjt.png" />
         <div class="header-center">
@@ -32,20 +16,13 @@
       <q-tabs
         @update:model-value="btns"
         v-model="tab"
-        dense
-        active-color="primary"
-        indicator-color="primary"
-        narrow-indicator
-        align="left"
+        class="text-primary"
       >
         <q-tab
           v-for="(item, index) in tabsChange"
           :name="(item as any).category"
           :label="(item as any).categoryName"
         />
-        <!-- <q-tab name="2" :label="item.categoryName" />
-        <q-tab name="3" :label="tabsChange3" />
-        <q-tab name="4" :label="tabsChange4" /> -->
       </q-tabs>
     </template>
 
@@ -67,10 +44,12 @@
             >
               <div style="display: flex">
                 <div style="width: 20%; margin-right: 20px">
-                  <img
-                    style="width: 100%"
-                    :src="setBaseInf.baseUrl + (item as any).attach.storagePath"
-                  />
+                  <div class="img-box">
+                    <imgIn
+                      :src="setBaseInf.baseUrl + (item as any).attach.storagePath"
+                    />
+                  </div>
+                  
                 </div>
                 <div style="width: 60%">
                   <div style="font-size: 20px; font-weight: 500">
@@ -127,8 +106,7 @@
       </div>
     </template>
   </TemplateFrame>
-
-  <div></div>
+  <LoadingIn :show="loadingShow"/>
   <Bottom />
 </template>
 <script setup lang="ts">
@@ -139,7 +117,7 @@ import TemplateFrame from "@/components/TemplateFrame.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
+const loadingShow = ref(true)
 onMounted(async () => {
   console.log(setBaseInf.baseUrl, "setBaseInf.baseUrl");
 
@@ -185,12 +163,14 @@ const imgTabs = ref("");
 const total = ref(0);
 
 const getArticlePaged = async () => {
+  loadingShow.value = true;
   const res = (await http.get(
     `/k2401-article/article/paged?current=1&size=10&category=${
       tabsValue.value || 1
     }`
   )) as any;
   console.log(res, "res");
+  loadingShow.value = false;
   tabsLists.value = res.items;
   total.value = parseInt(res.total);
   imgTabs.value = `${setBaseInf.baseUrl}` + res.items[0].attach.storagePath;
@@ -260,5 +240,11 @@ const goToDetail = (id: string) => {
   top: 100px;
   left: 320px;
   width: 530px;
+}
+
+.img-box{
+  width: 100%;
+  padding-top: 65%;
+  position: relative;
 }
 </style>
