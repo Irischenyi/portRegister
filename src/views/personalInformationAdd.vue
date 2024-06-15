@@ -2257,20 +2257,20 @@ const submitForm6 = async (ruleFormRef6: FormInstance | undefined) => {
     if (valid) {
       let data1 = new Date(ruleForm6.contractMakeDate);
 
-  //     let year1 = data1.getFullYear();
-  //     let month1 = data1.getMonth() + 1;
-  //     let day1 = data1.getDate();
+      let year1 = data1.getFullYear();
+      let month1 = data1.getMonth() + 1;
+      let day1 = data1.getDate();
 
-  //     // 格式化为年月日格式
-  //     ruleForm6.contractMakeDate = `${year1}-${padZero(month1)}-${padZero(
-  //       day1
-  //     )}`;
+      // 格式化为年月日格式
+      ruleForm6.contractMakeDate = `${year1}-${padZero(month1)}-${padZero(
+        day1
+      )}`;
 
-  //     let data2 = new Date(ruleForm6.contractValidDate);
+      let data2 = new Date(ruleForm6.contractValidDate);
 
-  //     let year2 = data2.getFullYear();
-  //     let month2 = data2.getMonth() + 1;
-  //     let day2 = data2.getDate();
+      let year2 = data2.getFullYear();
+      let month2 = data2.getMonth() + 1;
+      let day2 = data2.getDate();
 
       // 格式化为年月日格式
       ruleForm6.contractValidDate = `${year2}-${padZero(month2)}-${padZero(
