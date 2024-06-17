@@ -183,7 +183,7 @@ const token = localStorage.getItem("token");
 
 const router = useRouter();
 
-const form = ref({
+const form = reactive({
   xmbh: "",
   lsh: "",
   sf: "",
@@ -199,10 +199,16 @@ const total = ref(0);
 
 const handleSizeChange = (val: number) => {
   page.pageSize = val;
+  if (form.status == undefined) {
+    form.status = "";
+  }
   getList();
 };
 const handleCurrentChange = (val: number) => {
   page.pageNum = val;
+  if (form.status == undefined) {
+    form.status = "";
+  }
   getList();
 };
 const tableData = ref([]);
@@ -223,18 +229,16 @@ getStatus();
 
 // 列表
 const getList = () => {
-  // k2401-personal-exit/exit/paged?current=1&size=15&status=2
   const http = setHttp();
 
   http
     .get(
-      `k2401-personal-exit/exit/paged?current=${page.pageNum}&size=${page.pageSize}&status=`,
+      `k2401-personal-exit/exit/paged?current=${page.pageNum}&size=${page.pageSize}&status=${form.status}`,
       {
         Authorization: "Bearer " + token,
       }
     )
     .then((data: any) => {
-      console.log(data, "datadata-----------");
       tableData.value = data.items;
       total.value = parseInt(data.total);
     });
@@ -258,12 +262,12 @@ const reset = () => {
 const search = () => {
   page.pageNum = 1;
   page.pageSize = 10;
+  if (form.status == undefined) {
+    form.status = "";
+  }
   getList();
 };
-onMounted(async () => {
-  // await getList(0); //编辑详情
-  // getStatus();
-});
+
 const peADD = () => {
   router.push({
     path: "/index/personalInformationAdd",
