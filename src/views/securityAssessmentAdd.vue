@@ -1626,7 +1626,7 @@ import type {
   UploadUserFile,
 } from "element-plus";
 import { Download } from "@element-plus/icons-vue";
-import http, { setBaseInf } from "@/http/httpContentMain";
+import http, { setBaseInf, setHttp } from "@/http/httpContentMain";
 const token = localStorage.getItem("token");
 import { useRoute } from "vue-router";
 const route = useRoute();
@@ -2161,185 +2161,189 @@ const rules7 = reactive({
 const items = ref({});
 
 // 详情
-const getItems = async () => {
+const getItems = () => {
   if (query.id) {
     const baseUrl = "k2401-data-exit/exit/";
     const ids = query.id.replace(/"/g, "");
     const url = `${baseUrl}${ids}`;
-    const res = (await http.get(url, {
-      Authorization: "Bearer " + token,
-    })) as any;
+    const http = setHttp();
 
-    items.value = res;
-    console.log(res, "resresres--------------");
-    checkList.value = ["1", "2"] as never[];
+    http
+      .get(url, {
+        Authorization: "Bearer " + token,
+      })
+      .then((res: any) => {
+        items.value = res;
+        // console.log(res, "resresres--------------");
+        checkList.value = ["1", "2"] as never[];
 
-    const {
-      // ruleForm1
-      unitName,
-      unitNatureValue,
-      unitNatureName,
-      unitNatureOther,
-      unitCategoryValue,
-      unitCategoryName,
-      unitCategoryOther,
-      creditCode,
-      unitRegAddr,
-      unitOfficeAddr,
-      keyInfoOperatorFlag,
-      empCount,
-      empCountUnitValue,
-      empCountUnitName,
-      infoSize,
-      infoSizeUnitValue,
-      infoSizeUnitName,
-      // ruleForm2
-      legal,
-      legalTel,
-      legalNationalValue,
-      legalNationalName,
-      legalJob,
-      legalCertificateTypeValue,
-      legalCertificateTypeName,
-      legalCertificateTypeOther,
-      legalCertificateCode,
-      legalEmail,
-      // ruleForm3
-      principalName, // 负责人姓名
-      principalTel, // 负责人联系电话
-      principalNationalValue, // 负责人国籍值（标签）数据接口：tag/tag?tagCode=guoji
-      principalNationalName, // 负责人国籍名称（标签）
-      principalJob, // 负责人职务
-      principalCertificateTypeValue, //  负责人证件类型值（标签）数据接口：tag/tag?tagCode=certificatetype
-      principalCertificateTypeName, // 负责人证件类型名称（标签）
-      principalCertificateTypeOther, // 负责人其他证件类型
-      principalCertificateCode, // 负责人证件号码
-      principalOrgName, // 负责人管理机构名称
-      principalOrgEmpCount, // 负责人管理机构人数
-      principalOrgEmpCountUnitValue, // 负责人管理机构人数单位值（标签）数据接口：tag/tag?tagCode=personunit
-      principalOrgEmpCountUnitName, // 负责人管理机构人数单位名称（标签）
-      principalEmail, // 负责人电子邮箱
-      // ruleForm4
-      operator,
-      operatorTel,
-      operatorNationalValue,
-      operatorNationalName,
-      operatorJob,
-      operatorCertificateTypeValue,
-      operatorCertificateTypeName,
-      operatorCertificateTypeOther,
-      operatorCertificateCode,
-      operatorEmail,
-      // ruleForm5
-      observeContent,
-      // ruleForm6
-      sceneList,
-      // ruleForm7
-      creditCodeAttachList,
-      legalIdCardAttachList,
-      operatorIdCardAttachList,
-      delegateAttachList,
-      promiseAttachList,
-      contractAttachList,
-      reportAttachList,
-      otherAttachList,
-    } = res; // 解构需要的属性
+        const {
+          // ruleForm1
+          unitName,
+          unitNatureValue,
+          unitNatureName,
+          unitNatureOther,
+          unitCategoryValue,
+          unitCategoryName,
+          unitCategoryOther,
+          creditCode,
+          unitRegAddr,
+          unitOfficeAddr,
+          keyInfoOperatorFlag,
+          empCount,
+          empCountUnitValue,
+          empCountUnitName,
+          infoSize,
+          infoSizeUnitValue,
+          infoSizeUnitName,
+          // ruleForm2
+          legal,
+          legalTel,
+          legalNationalValue,
+          legalNationalName,
+          legalJob,
+          legalCertificateTypeValue,
+          legalCertificateTypeName,
+          legalCertificateTypeOther,
+          legalCertificateCode,
+          legalEmail,
+          // ruleForm3
+          principalName, // 负责人姓名
+          principalTel, // 负责人联系电话
+          principalNationalValue, // 负责人国籍值（标签）数据接口：tag/tag?tagCode=guoji
+          principalNationalName, // 负责人国籍名称（标签）
+          principalJob, // 负责人职务
+          principalCertificateTypeValue, //  负责人证件类型值（标签）数据接口：tag/tag?tagCode=certificatetype
+          principalCertificateTypeName, // 负责人证件类型名称（标签）
+          principalCertificateTypeOther, // 负责人其他证件类型
+          principalCertificateCode, // 负责人证件号码
+          principalOrgName, // 负责人管理机构名称
+          principalOrgEmpCount, // 负责人管理机构人数
+          principalOrgEmpCountUnitValue, // 负责人管理机构人数单位值（标签）数据接口：tag/tag?tagCode=personunit
+          principalOrgEmpCountUnitName, // 负责人管理机构人数单位名称（标签）
+          principalEmail, // 负责人电子邮箱
+          // ruleForm4
+          operator,
+          operatorTel,
+          operatorNationalValue,
+          operatorNationalName,
+          operatorJob,
+          operatorCertificateTypeValue,
+          operatorCertificateTypeName,
+          operatorCertificateTypeOther,
+          operatorCertificateCode,
+          operatorEmail,
+          // ruleForm5
+          observeContent,
+          // ruleForm6
+          sceneList,
+          // ruleForm7
+          creditCodeAttachList,
+          legalIdCardAttachList,
+          operatorIdCardAttachList,
+          delegateAttachList,
+          promiseAttachList,
+          contractAttachList,
+          reportAttachList,
+          otherAttachList,
+        } = res; // 解构需要的属性
 
-    const ruleF1 = {
-      unitName,
-      unitNatureValue,
-      unitNatureName,
-      unitNatureOther,
-      unitCategoryValue,
-      unitCategoryName,
-      unitCategoryOther,
-      creditCode,
-      unitRegAddr,
-      unitOfficeAddr,
-      keyInfoOperatorFlag: keyInfoOperatorFlag ? "1" : "0",
-      empCount,
-      empCountUnitValue,
-      empCountUnitName,
-      infoSize,
-      infoSizeUnitValue,
-      infoSizeUnitName,
-    };
-    Object.assign(ruleForm1, ruleF1);
+        const ruleF1 = {
+          unitName,
+          unitNatureValue,
+          unitNatureName,
+          unitNatureOther,
+          unitCategoryValue,
+          unitCategoryName,
+          unitCategoryOther,
+          creditCode,
+          unitRegAddr,
+          unitOfficeAddr,
+          keyInfoOperatorFlag: keyInfoOperatorFlag ? "1" : "0",
+          empCount,
+          empCountUnitValue,
+          empCountUnitName,
+          infoSize,
+          infoSizeUnitValue,
+          infoSizeUnitName,
+        };
+        Object.assign(ruleForm1, ruleF1);
 
-    const ruleF2 = {
-      legal,
-      legalTel,
-      legalNationalValue,
-      legalNationalName,
-      legalJob,
-      legalCertificateTypeValue,
-      legalCertificateTypeName,
-      legalCertificateTypeOther,
-      legalCertificateCode,
-      legalEmail,
-    };
-    Object.assign(ruleForm2, ruleF2);
-    const ruleF3 = {
-      principalName, // 负责人姓名
-      principalTel, // 负责人联系电话
-      principalNationalValue, // 负责人国籍值（标签）数据接口：tag/tag?tagCode=guoji
-      principalNationalName, // 负责人国籍名称（标签）
-      principalJob, // 负责人职务
-      principalCertificateTypeValue, //  负责人证件类型值（标签）数据接口：tag/tag?tagCode=certificatetype
-      principalCertificateTypeName, // 负责人证件类型名称（标签）
-      principalCertificateTypeOther, // 负责人其他证件类型
-      principalCertificateCode, // 负责人证件号码
-      principalOrgName, // 负责人管理机构名称
-      principalOrgEmpCount, // 负责人管理机构人数
-      principalOrgEmpCountUnitValue, // 负责人管理机构人数单位值（标签）数据接口：tag/tag?tagCode=personunit
-      principalOrgEmpCountUnitName, // 负责人管理机构人数单位名称（标签）
-      principalEmail, // 负责人电子邮箱
-    };
-    Object.assign(ruleForm3, ruleF3);
+        const ruleF2 = {
+          legal,
+          legalTel,
+          legalNationalValue,
+          legalNationalName,
+          legalJob,
+          legalCertificateTypeValue,
+          legalCertificateTypeName,
+          legalCertificateTypeOther,
+          legalCertificateCode,
+          legalEmail,
+        };
+        Object.assign(ruleForm2, ruleF2);
+        const ruleF3 = {
+          principalName, // 负责人姓名
+          principalTel, // 负责人联系电话
+          principalNationalValue, // 负责人国籍值（标签）数据接口：tag/tag?tagCode=guoji
+          principalNationalName, // 负责人国籍名称（标签）
+          principalJob, // 负责人职务
+          principalCertificateTypeValue, //  负责人证件类型值（标签）数据接口：tag/tag?tagCode=certificatetype
+          principalCertificateTypeName, // 负责人证件类型名称（标签）
+          principalCertificateTypeOther, // 负责人其他证件类型
+          principalCertificateCode, // 负责人证件号码
+          principalOrgName, // 负责人管理机构名称
+          principalOrgEmpCount, // 负责人管理机构人数
+          principalOrgEmpCountUnitValue, // 负责人管理机构人数单位值（标签）数据接口：tag/tag?tagCode=personunit
+          principalOrgEmpCountUnitName, // 负责人管理机构人数单位名称（标签）
+          principalEmail, // 负责人电子邮箱
+        };
+        Object.assign(ruleForm3, ruleF3);
 
-    // ruleForm4
-    const ruleF4 = {
-      operator,
-      operatorTel,
-      operatorNationalValue,
-      operatorNationalName,
-      operatorJob,
-      operatorCertificateTypeValue,
-      operatorCertificateTypeName,
-      operatorCertificateTypeOther,
-      operatorCertificateCode,
-      operatorEmail,
-    };
-    Object.assign(ruleForm4, ruleF4);
+        // ruleForm4
+        const ruleF4 = {
+          operator,
+          operatorTel,
+          operatorNationalValue,
+          operatorNationalName,
+          operatorJob,
+          operatorCertificateTypeValue,
+          operatorCertificateTypeName,
+          operatorCertificateTypeOther,
+          operatorCertificateCode,
+          operatorEmail,
+        };
+        Object.assign(ruleForm4, ruleF4);
 
-    Object.assign(ruleForm5, observeContent);
+        Object.assign(ruleForm5, observeContent);
 
-    // ruleForm6
+        // ruleForm6
 
-    Object.assign(ruleForm6, sceneList);
+        Object.assign(ruleForm6, sceneList);
 
-    // ruleForm7
-    const ruleF7 = {
-      creditCodeAttachIdList: creditCodeAttachList,
-      credfileName: creditCodeAttachList[0].fileName,
-      legalIdCardAttachIdList: legalIdCardAttachList,
-      legalfileName: legalIdCardAttachList[0].fileName,
-      operatorIdCardAttachIdList: operatorIdCardAttachList,
-      operatorfileName: operatorIdCardAttachList[0].fileName,
-      delegateAttachIdList: delegateAttachList,
-      delegatefileName: delegateAttachList[0].fileName,
-      promiseAttachIdList: promiseAttachList,
-      promfileName: promiseAttachList[0].fileName,
-      contractAttachIdList: contractAttachList,
-      contfileName: contractAttachList[0].fileName,
-      reportAttachIdList: reportAttachList,
-      reportfileName: reportAttachList[0].fileName,
-      otherAttachIdList: otherAttachList,
-      otherfileName: otherAttachList[0].fileName,
-    };
-    Object.assign(ruleForm7, ruleF7);
+        // ruleForm7
+        const ruleF7 = {
+          creditCodeAttachIdList: creditCodeAttachList,
+          credfileName: creditCodeAttachList[0].fileName,
+          legalIdCardAttachIdList: legalIdCardAttachList,
+          legalfileName: legalIdCardAttachList[0].fileName,
+          operatorIdCardAttachIdList: operatorIdCardAttachList,
+          operatorfileName: operatorIdCardAttachList[0].fileName,
+          delegateAttachIdList: delegateAttachList,
+          delegatefileName: delegateAttachList[0].fileName,
+          promiseAttachIdList: promiseAttachList,
+          promfileName: promiseAttachList[0].fileName,
+          contractAttachIdList: contractAttachList,
+          contfileName: contractAttachList[0].fileName,
+          reportAttachIdList: reportAttachList,
+          reportfileName: reportAttachList[0].fileName,
+          otherAttachIdList: otherAttachList,
+          otherfileName: otherAttachList[0].fileName,
+        };
+        Object.assign(ruleForm7, ruleF7);
 
-    console.log(ruleForm1, "ruleForm1ruleForm1");
+        console.log(ruleForm1, "ruleForm1ruleForm1");
+      });
   }
 };
 
@@ -2683,77 +2687,120 @@ const showWarningMessage = (message: string) => {
 };
 // 单位性质
 const unitNatureValuelist = ref([]);
-const getUnitNatureValue = async () => {
-  const res = (await http.get("/tag/tag?tagCode=unitnature", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  unitNatureValuelist.value = res.children;
+const getUnitNatureValue = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=unitnature", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      unitNatureValuelist.value = data.children;
+    });
 };
 // 单位类型  unitCategoryValue
 const unitCategoryList = ref([]);
-const getUnitCategoryValue = async () => {
-  const res = (await http.get("/tag/tag?tagCode=unitcategory", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  unitCategoryList.value = res.children;
+const getUnitCategoryValue = () => {
+  const http = setHttp();
+  http
+    .get("/tag/tag?tagCode=unitcategory", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      unitCategoryList.value = data.children;
+    });
 };
 // 数量单位   empCountUnitValue
 const unitList = ref([]);
-const getUnitList = async () => {
-  const res = (await http.get("/tag/tag?tagCode=personunit", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  unitList.value = res.children;
+const getUnitList = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=personunit", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      unitList.value = data.children;
+    });
 };
 // 法人国籍   legalNationalValue
 const guoji = ref([]);
-const getGuoji = async () => {
-  const res = (await http.get("/tag/tag?tagCode=guoji", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  guoji.value = res.children;
-  // console.log(guoji.value,'guoji.value')
+const getGuoji = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=guoji", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      guoji.value = data.children;
+      // console.log(guoji.value,'guoji.value')
+    });
 };
 // 证件类型   legalCertificateTypeValue
 const certificatetype = ref([]);
-const getCertificatetype = async () => {
-  const res = (await http.get("/tag/tag?tagCode=certificatetype", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  certificatetype.value = res.children;
+const getCertificatetype = () => {
+  const http = setHttp();
+
+  const res = http
+    .get("/tag/tag?tagCode=certificatetype", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      certificatetype.value = data.children;
+    });
 };
 // 涉及行业/领域   industryValue
 const industryarea = ref([]);
-const getIndustryarea = async () => {
-  const res = (await http.get("/tag/tag?tagCode=industryarea", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  industryarea.value = res.children;
+const getIndustryarea = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=industryarea", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      industryarea.value = data.children;
+    });
 };
 // 所在国家或地区   areaValue
 const area = ref([]);
-const getArea = async () => {
-  const res = (await http.get("/tag/tag?tagCode=area", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  area.value = res.children;
+const getArea = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=area", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      area.value = data.children;
+    });
 };
 // 法人国籍   legalNationalValue
 const datatype = ref([]);
-const getDatatype = async () => {
-  const res = (await http.get("/tag/tag?tagCode=datatype", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  datatype.value = res.children;
-  // console.log(guoji.value,'guoji.value')
+const getDatatype = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=datatype", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      datatype.value = data.children;
+    });
 };
 // 数量单位   empCountUnitValue
 const dataunit = ref([]);
-const getDataunit = async () => {
-  const res = (await http.get("/tag/tag?tagCode=dataunit", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  dataunit.value = res.children;
+const getDataunit = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=dataunit", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      dataunit.value = data.children;
+    });
 };
 </script>
 <style lang="scss" scoped>

@@ -1499,7 +1499,7 @@ import type {
   FormValidateCallback,
 } from "element-plus";
 import { Download } from "@element-plus/icons-vue";
-import http, { setBaseInf } from "@/http/httpContentMain";
+import http, { setBaseInf, setHttp } from "@/http/httpContentMain";
 import { useRoute } from "vue-router";
 const route = useRoute();
 // 获取id
@@ -1738,205 +1738,210 @@ const ruleForm8 = reactive({
   fileName2: "",
 });
 // 详情
-const getItems = async () => {
+const getItems = () => {
   if (query.id) {
     const baseUrl = "/k2401-personal-exit/exit/";
     const ids = query.id.replace(/"/g, "");
     const url = `${baseUrl}${ids}`;
-    const res = (await http.get(url, {
-      Authorization: "Bearer " + token,
-    })) as any;
+    const http = setHttp();
 
-    items.value = res;
-    // console.log(res, "resresres--------------");
-    checkList.value = ["1", "2", "3"] as never[];
+    http
+      .get(url, {
+        Authorization: "Bearer " + token,
+      })
+      .then((res: any) => {
+        items.value = res;
 
-    const {
-      // ruleForm1
-      unitName,
-      unitNatureValue,
-      unitNatureName,
-      unitNatureOther,
-      unitCategoryValue,
-      unitCategoryName,
-      unitCategoryOther,
-      creditCode,
-      unitRegAddr,
-      unitOfficeAddr,
-      keyInfoOperatorFlag,
-      empCount,
-      empCountUnitValue,
-      empCountUnitName,
-      infoSize,
-      infoSizeUnitValue,
-      infoSizeUnitName,
-      // ruleForm2
-      legalFlag,
-      legal,
-      legalTel,
-      legalNationalValue,
-      legalNationalName,
-      legalJob,
-      legalCertificateTypeValue,
-      legalCertificateTypeName,
-      legalCertificateTypeOther,
-      legalCertificateCode,
-      legalEmail,
-      // ruleForm3
-      operator,
-      operatorTel,
-      operatorNationalValue,
-      operatorNationalName,
-      operatorJob,
-      operatorCertificateTypeValue,
-      operatorCertificateTypeName,
-      operatorCertificateTypeOther,
-      operatorCertificateCode,
-      operatorEmail,
-      // ruleForm4
-      promiseAttachList,
-      // ruleForm5
-      sceneList,
-      // ruleForm6
-      contractMakeDate,
-      contractValidDate,
-      contractContent,
-      standardContractAttachList,
-      // ruleForm7
-      reportAttachList,
-      // ruleForm8
-      delegateAttachList,
-      otherAttachList,
-    } = res; // 解构需要的属性
+        // console.log(res, "resresres--------------");
+        checkList.value = ["1", "2", "3"] as never[];
 
-    const ruleF1 = {
-      unitName,
-      unitNatureValue,
-      unitNatureName,
-      unitNatureOther,
-      unitCategoryValue,
-      unitCategoryName,
-      unitCategoryOther,
-      creditCode,
-      unitRegAddr,
-      unitOfficeAddr,
-      keyInfoOperatorFlag: keyInfoOperatorFlag ? "1" : "0",
-      empCount,
-      empCountUnitValue,
-      empCountUnitName,
-      infoSize,
-      infoSizeUnitValue,
-      infoSizeUnitName,
-    };
-    Object.assign(ruleForm1, ruleF1);
+        const {
+          // ruleForm1
+          unitName,
+          unitNatureValue,
+          unitNatureName,
+          unitNatureOther,
+          unitCategoryValue,
+          unitCategoryName,
+          unitCategoryOther,
+          creditCode,
+          unitRegAddr,
+          unitOfficeAddr,
+          keyInfoOperatorFlag,
+          empCount,
+          empCountUnitValue,
+          empCountUnitName,
+          infoSize,
+          infoSizeUnitValue,
+          infoSizeUnitName,
+          // ruleForm2
+          legalFlag,
+          legal,
+          legalTel,
+          legalNationalValue,
+          legalNationalName,
+          legalJob,
+          legalCertificateTypeValue,
+          legalCertificateTypeName,
+          legalCertificateTypeOther,
+          legalCertificateCode,
+          legalEmail,
+          // ruleForm3
+          operator,
+          operatorTel,
+          operatorNationalValue,
+          operatorNationalName,
+          operatorJob,
+          operatorCertificateTypeValue,
+          operatorCertificateTypeName,
+          operatorCertificateTypeOther,
+          operatorCertificateCode,
+          operatorEmail,
+          // ruleForm4
+          promiseAttachList,
+          // ruleForm5
+          sceneList,
+          // ruleForm6
+          contractMakeDate,
+          contractValidDate,
+          contractContent,
+          standardContractAttachList,
+          // ruleForm7
+          reportAttachList,
+          // ruleForm8
+          delegateAttachList,
+          otherAttachList,
+        } = res; // 解构需要的属性
 
-    const ruleF2 = {
-      legalFlag,
-      legal,
-      legalTel,
-      legalNationalValue,
-      legalNationalName,
-      legalJob,
-      legalCertificateTypeValue,
-      legalCertificateTypeName,
-      legalCertificateTypeOther,
-      legalCertificateCode,
-      legalEmail,
-    };
-    Object.assign(ruleForm2, ruleF2);
-    const ruleF3 = {
-      operator,
-      operatorTel,
-      operatorNationalValue,
-      operatorNationalName,
-      operatorJob,
-      operatorCertificateTypeValue,
-      operatorCertificateTypeName,
-      operatorCertificateTypeOther,
-      operatorCertificateCode,
-      operatorEmail,
-    };
-    Object.assign(ruleForm3, ruleF3);
+        const ruleF1 = {
+          unitName,
+          unitNatureValue,
+          unitNatureName,
+          unitNatureOther,
+          unitCategoryValue,
+          unitCategoryName,
+          unitCategoryOther,
+          creditCode,
+          unitRegAddr,
+          unitOfficeAddr,
+          keyInfoOperatorFlag: keyInfoOperatorFlag ? "1" : "0",
+          empCount,
+          empCountUnitValue,
+          empCountUnitName,
+          infoSize,
+          infoSizeUnitValue,
+          infoSizeUnitName,
+        };
+        Object.assign(ruleForm1, ruleF1);
 
-    // ruleForm4
-    const ruleF4 = {
-      promiseAttachIdList: promiseAttachList,
-      fileName: promiseAttachList[0].fileName,
-    };
-    Object.assign(ruleForm4, ruleF4);
+        const ruleF2 = {
+          legalFlag,
+          legal,
+          legalTel,
+          legalNationalValue,
+          legalNationalName,
+          legalJob,
+          legalCertificateTypeValue,
+          legalCertificateTypeName,
+          legalCertificateTypeOther,
+          legalCertificateCode,
+          legalEmail,
+        };
+        Object.assign(ruleForm2, ruleF2);
+        const ruleF3 = {
+          operator,
+          operatorTel,
+          operatorNationalValue,
+          operatorNationalName,
+          operatorJob,
+          operatorCertificateTypeValue,
+          operatorCertificateTypeName,
+          operatorCertificateTypeOther,
+          operatorCertificateCode,
+          operatorEmail,
+        };
+        Object.assign(ruleForm3, ruleF3);
 
-    // ruleForm5
-    const {
-      summary,
-      dataTypeName,
-      containInfoFlag,
-      industryValue,
-      industryName,
-      industryOther,
-      personCount,
-      personCountUnitValue,
-      personCountUnitName,
-      foreignReceiver,
-      areaValue,
-      areaName,
-      primaryBusiness,
-      principalName,
-      principalJob,
-      contactTel,
-      contactEmail,
-      addr,
-      statDescription,
-    } = sceneList[0];
-    const ruleF5 = {
-      summary,
-      dataTypeName,
-      containInfoFlag: containInfoFlag ? "1" : "0",
-      industryValue,
-      industryName,
-      industryOther,
-      personCount,
-      personCountUnitValue,
-      personCountUnitName,
-      foreignReceiver,
-      areaValue,
-      areaName,
-      primaryBusiness,
-      principalName,
-      principalJob,
-      contactTel,
-      contactEmail,
-      addr,
-      statDescription,
-    };
-    Object.assign(ruleForm5, ruleF5);
+        // ruleForm4
+        const ruleF4 = {
+          promiseAttachIdList: promiseAttachList,
+          fileName: promiseAttachList[0].fileName,
+        };
+        Object.assign(ruleForm4, ruleF4);
 
-    // ruleForm6
-    const ruleF6 = {
-      contractMakeDate,
-      contractValidDate,
-      contractContent,
-      standardContractAttachIdList: standardContractAttachList,
-      fileName: standardContractAttachList[0].fileName,
-    };
-    Object.assign(ruleForm6, ruleF6);
+        // ruleForm5
+        const {
+          summary,
+          dataTypeName,
+          containInfoFlag,
+          industryValue,
+          industryName,
+          industryOther,
+          personCount,
+          personCountUnitValue,
+          personCountUnitName,
+          foreignReceiver,
+          areaValue,
+          areaName,
+          primaryBusiness,
+          principalName,
+          principalJob,
+          contactTel,
+          contactEmail,
+          addr,
+          statDescription,
+        } = sceneList[0];
+        const ruleF5 = {
+          summary,
+          dataTypeName,
+          containInfoFlag: containInfoFlag ? "1" : "0",
+          industryValue,
+          industryName,
+          industryOther,
+          personCount,
+          personCountUnitValue,
+          personCountUnitName,
+          foreignReceiver,
+          areaValue,
+          areaName,
+          primaryBusiness,
+          principalName,
+          principalJob,
+          contactTel,
+          contactEmail,
+          addr,
+          statDescription,
+        };
+        Object.assign(ruleForm5, ruleF5);
 
-    // ruleForm7
-    const ruleF7 = {
-      reportAttachIdList: reportAttachList,
-      fileName: reportAttachList[0].fileName,
-    };
-    Object.assign(ruleForm7, ruleF7);
+        // ruleForm6
+        const ruleF6 = {
+          contractMakeDate,
+          contractValidDate,
+          contractContent,
+          standardContractAttachIdList: standardContractAttachList,
+          fileName: standardContractAttachList[0].fileName,
+        };
+        Object.assign(ruleForm6, ruleF6);
 
-    // ruleForm8
-    const ruleF8 = {
-      delegateAttachIdList: delegateAttachList,
-      otherAttachIdList: otherAttachList,
-      fileName1: delegateAttachList[0].fileName,
-      fileName2: otherAttachList[0].fileName,
-    };
-    Object.assign(ruleForm8, ruleF8);
+        // ruleForm7
+        const ruleF7 = {
+          reportAttachIdList: reportAttachList,
+          fileName: reportAttachList[0].fileName,
+        };
+        Object.assign(ruleForm7, ruleF7);
 
-    console.log(ruleForm7, "ruleForm1ruleForm1");
+        // ruleForm8
+        const ruleF8 = {
+          delegateAttachIdList: delegateAttachList,
+          otherAttachIdList: otherAttachList,
+          fileName1: delegateAttachList[0].fileName,
+          fileName2: otherAttachList[0].fileName,
+        };
+        Object.assign(ruleForm8, ruleF8);
+
+        console.log(ruleForm7, "ruleForm1ruleForm1");
+      });
   }
 };
 
@@ -2455,67 +2460,107 @@ const rules8 = reactive({
 const unitNatureValuelist = ref([]); // 单位性质
 const area = ref([]); // 所在国家或地区   areaValue
 
-const getUnitNatureValue = async () => {
-  const res = (await http.get("/tag/tag?tagCode=unitnature", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  unitNatureValuelist.value = res.children;
+const getUnitNatureValue = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=unitnature", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      unitNatureValuelist.value = data.children;
+    });
 };
 
 // 单位类型  unitCategoryValue
 const unitCategoryList = ref([]);
-const getUnitCategoryValue = async () => {
-  const res = (await http.get("/tag/tag?tagCode=unitcategory", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  unitCategoryList.value = res.children;
+const getUnitCategoryValue = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=unitcategory", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      unitCategoryList.value = data.children;
+    });
 };
 // 数量单位   empCountUnitValue
 const unitList = ref([]);
-const getUnitList = async () => {
-  const res = (await http.get("/tag/tag?tagCode=personunit", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  unitList.value = res.children;
+const getUnitList = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=personunit", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      unitList.value = data.children;
+    });
 };
 // 数量单位   empCountUnitValue
 const dataunit = ref([]);
-const getDataunit = async () => {
-  const res = (await http.get("/tag/tag?tagCode=dataunit", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  dataunit.value = res.children;
+const getDataunit = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=dataunit", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      dataunit.value = data.children;
+    });
 };
 // 法人国籍   legalNationalValue
 const guoji = ref([]);
-const getGuoji = async () => {
-  const res = (await http.get("/tag/tag?tagCode=guoji", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  guoji.value = res.children;
+const getGuoji = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=guoji", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      guoji.value = data.children;
+    });
 };
 // 证件类型   legalCertificateTypeValue
 const certificatetype = ref([]);
-const getCertificatetype = async () => {
-  const res = (await http.get("/tag/tag?tagCode=certificatetype", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  certificatetype.value = res.children;
+const getCertificatetype = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=certificatetype", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      certificatetype.value = data.children;
+    });
 };
 // 涉及行业/领域   industryValue
 const industryarea = ref([]);
-const getIndustryarea = async () => {
-  const res = (await http.get("/tag/tag?tagCode=industryarea", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  industryarea.value = res.children;
+const getIndustryarea = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=industryarea", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      industryarea.value = data.children;
+    });
 };
 
-const getArea = async () => {
-  const res = (await http.get("/tag/tag?tagCode=area", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  area.value = res.children;
+const getArea = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=area", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      area.value = data.children;
+    });
 };
 </script>
 <style lang="scss" scoped>

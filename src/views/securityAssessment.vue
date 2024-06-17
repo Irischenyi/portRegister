@@ -181,7 +181,7 @@ import {
 } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
 import Bottom from "@/components/Bottom.vue";
-import http, { setBaseInf } from "@/http/httpContentMain";
+import http, { setBaseInf, setHttp } from "@/http/httpContentMain";
 
 const token = localStorage.getItem("token");
 
@@ -231,6 +231,8 @@ const tableData = ref([]);
 
 // 列表
 const getList = () => {
+  const http = setHttp();
+
   http
     .get(
       `k2401-data-exit/exit/paged?current=${page.pageNum}&size=${page.pageSize}&status=`,
@@ -264,13 +266,17 @@ const toEdit = (id: any) => {
 // 状态   statusList
 const statusList = ref([]);
 const getStatus = () => {
-  const res = http.get("k2401-personal-exit/status-list", {
-    Authorization: "Bearer " + token,
-  }) as any;
-  // console.log(res, "resresres");
-  statusList.value = res.backValue;
+  const http = setHttp();
+
+  http
+    .get("k2401-personal-exit/status-list", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      statusList.value = data;
+    });
 };
-// getStatus();
+getStatus();
 </script>
 <style lang="scss" scoped>
 .contain {

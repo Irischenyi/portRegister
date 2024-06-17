@@ -169,7 +169,7 @@
 </template>
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
-import http, { setBaseInf } from "@/http/httpContentMain";
+import { setBaseInf, setHttp } from "@/http/httpContentMain";
 
 import {
   Search,
@@ -209,17 +209,22 @@ const tableData = ref([]);
 // 状态   statusList
 const statusList = ref([]);
 const getStatus = () => {
-  const res = http.get("k2401-personal-exit/status-list", {
-    Authorization: "Bearer " + token,
-  }) as any;
-  // console.log(res, "resresres");
-  statusList.value = res.backValue;
+  const http = setHttp();
+
+  http
+    .get("k2401-personal-exit/status-list", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      statusList.value = data;
+    });
 };
-// getStatus();
+getStatus();
 
 // 列表
 const getList = () => {
   // k2401-personal-exit/exit/paged?current=1&size=15&status=2
+  const http = setHttp();
 
   http
     .get(
