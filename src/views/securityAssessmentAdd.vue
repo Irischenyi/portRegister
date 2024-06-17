@@ -1869,9 +1869,6 @@ const rules1 = reactive({
     { required: true, message: "请选择单位类型", trigger: "change" },
   ],
   creditCode: [
-    { required: true, message: "请 统一社会信用代码", trigger: "change" },
-  ],
-  tyshxydm: [
     { required: true, message: "请输入统一社会信用代码", trigger: "blur" },
   ],
   unitOfficeAddr: [
@@ -1885,7 +1882,7 @@ const rules1 = reactive({
     },
   ],
   infoSize: [
-    { required: true, message: "请选择处理个人信息规模", trigger: "blur" },
+    { required: true, message: "请选择处理个人信息规模", trigger: "change" },
   ],
   infoSizeUnitValue: [
     {
@@ -1999,7 +1996,7 @@ const rules4 = reactive({
     { required: true, message: "请输入证件号码", trigger: "blur" },
   ],
   operatorEmail: [
-    { required: true, message: "请选择电子邮箱", trigger: "blur" },
+    { required: true, message: "请选择电子邮箱", trigger: "change" },
   ],
 });
 
@@ -2072,7 +2069,7 @@ const rules6 = reactive({
     {
       required: true,
       message: "请选择是否包含敏感个人信息",
-      trigger: "blur",
+      trigger: "change",
     },
   ],
 });

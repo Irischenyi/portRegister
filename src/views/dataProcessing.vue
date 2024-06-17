@@ -588,7 +588,13 @@
                     </el-row>
                     <el-row>
                       <el-col :span="12">
-                        <el-checkbox label="C. 不清楚" value="不清楚" />
+                        <el-checkbox
+                          label="C. 不涉及个人信息出境"
+                          value="不涉及个人信息出境"
+                        />
+                      </el-col>
+                      <el-col :span="12">
+                        <el-checkbox label="D. 不确定" value="不确定" />
                       </el-col>
                     </el-row>
                   </el-checkbox-group>
@@ -646,7 +652,7 @@
               />
               <q-btn
                 v-if="step < 3"
-                style="width: 140px; height: 50px"
+                style="margin-right: 20px; width: 140px; height: 50px"
                 @click="($refs.stepper as any).next()"
                 rounded
                 color="primary"
@@ -654,15 +660,15 @@
               />
               <q-btn
                 v-if="step === 3 && !isOk"
-                style="width: 140px; height: 50px"
+                style="margin-right: 20px; width: 140px; height: 50px"
                 @click="sumit"
                 rounded
                 color="primary"
                 label="填写完成"
               />
               <q-btn
-                v-if="isOk"
-                style="width: 140px; height: 50px"
+                v-if="isOk || ifList"
+                style="margin-right: 20px; width: 140px; height: 50px"
                 @click="dialogVisible = true"
                 rounded
                 color="primary"
@@ -690,7 +696,7 @@
 import { ref, reactive, watch, onMounted } from "vue";
 import Bottom from "@/components/Bottom.vue";
 import { ElMessage } from "element-plus";
-import http, { setBaseInf } from "@/http/httpContentMain";
+import http, { setBaseInf, setHttp } from "@/http/httpContentMain";
 // import { log } from "console";
 
 onMounted(async () => {
@@ -702,6 +708,7 @@ const isOk = ref(false);
 const dialogVisible = ref(false);
 const step = ref(1);
 const result = ref("");
+const ifList = ref(false);
 const stepper = ref();
 const cityGroup = ref([] as { value: string; label: string }[]);
 
@@ -753,9 +760,11 @@ watch(provinceValue, (value: { value: string; label: string }) => {
     ruleForm.provinceValue = value.value;
     ruleForm.provinceName = value.label;
   }
-  cityValue.value = "";
-  ruleForm.cityValue = "";
-  ruleForm.cityName = "";
+  if (!ifList) {
+    cityValue.value = "";
+    ruleForm.cityValue = "";
+    ruleForm.cityName = "";
+  }
   getCity(value.value, "city");
 });
 
@@ -764,14 +773,19 @@ watch(cityValue, (value: { value: string; label: string }) => {
     ruleForm.cityValue = value.value;
     ruleForm.cityName = value.label;
   }
-  areaValue.value = "";
-  ruleForm.areaValue = "";
-  ruleForm.areaName = "";
+  if (!ifList) {
+    areaValue.value = "";
+    ruleForm.areaValue = "";
+    ruleForm.areaName = "";
+  }
+
   getCity(value.value, "area");
 });
 
 const getcityGroup = () => {
-  http.get("/tag/province-list").then((data) => {
+  const http = setHttp();
+
+  http.get("/tag/province-list").then((data: any) => {
     (data as unknown as []).forEach((item: { tagName: string; id: string }) => {
       cityGroup.value.push({
         label: item.tagName,
@@ -779,7 +793,6 @@ const getcityGroup = () => {
       });
     });
   });
-  getIndustry();
 };
 
 const getCity = (value: string, type: string) => {
@@ -789,6 +802,8 @@ const getCity = (value: string, type: string) => {
     area.value = [];
   }
   if (!value) return false;
+  const http = setHttp();
+
   http.get("/tag/child-list/" + value).then((response) => {
     (response as unknown as []).forEach(
       (item: { tagName: string; id: string }) => {
@@ -810,38 +825,86 @@ const getCity = (value: string, type: string) => {
 // 状态   industryList
 const industryList = ref([]);
 const getIndustry = () => {
-  const res = http.get("tag/tag?tagCode=industry", {
-    Authorization: "Bearer " + token,
-  }) as any;
-  console.log(res, "resresres----");
-  // industryList.value = res.backValue.children;
-  industryList.value = [
-    { tagValue: "A", tagName: "农、林、牧、渔业" },
-    { tagValue: "B", tagName: "采矿业" },
-  ] as never[];
+  const http = setHttp();
+
+  http
+    .get("tag/tag?tagCode=industry", {
+      Authorization: "Bearer " + token,
+    })
+    .then((res: any) => {
+      industryList.value = res.children;
+    });
 };
 
 // getIndustry();
 
 const getList = () => {
-  const res = http.get("k2401-data-exit-self-assess/self-last-assess", {
-    Authorization: "Bearer " + token,
-  }) as any;
-  console.log(res, "[00000]");
-  if (res) {
-    // result.value = res.result;
-    // isOk.value = true;
-    // dialogVisible.value = true;
-    // return ElMessage({
-    //   type: "success",
-    //   message: "填写完成",
-    // });
-  } else {
-    // return ElMessage({
-    //   type: "warning",
-    //   message: "评估失败",
-    // });
-  }
+  const http = setHttp();
+
+  http
+    .get("k2401-data-exit-self-assess/self-last-assess", {
+      Authorization: "Bearer " + token,
+    })
+    .then((res: any) => {
+      console.log(res, "[00000]");
+      if (res) {
+        ifList.value = true;
+
+        Object.assign(ruleForm, res);
+        provinceValue.value = {
+          value: res.provinceValue,
+          label: res.provinceName,
+        };
+        cityValue.value = {
+          value: res.cityValue,
+          label: res.cityName,
+        };
+        areaValue.value = {
+          value: res.areaValue,
+          label: res.areaName,
+        };
+        //       provinceValue: "", // 5. 企业注册地（省）（标签）省市区参考接口1.1.1（xxxValue字段传tagValue的值，xxxName字段传tagName的值）
+        // provinceName: "", // 5. 企业注册地（省）（标签）
+        // cityValue: "", // 5. 企业注册地（市）（标签）
+        // cityName: "", // 5. 企业注册地（市）（标签）
+        // areaValue: "", // 5. 企业注册地（区）（标签）
+        // areaName: "", // 5. 企业注册地（区）（标签）
+
+        ruleForm.empSize = [res.empSize] as never;
+        ruleForm.prevRevenue = [res.prevRevenue] as never;
+        ruleForm.keyBaseBusiness = [res.keyBaseBusiness] as never;
+        ruleForm.procImpData = [res.procImpData] as never;
+        ruleForm.procPersonalData = [res.procPersonalData] as never;
+        ruleForm.personalInfoNatureSize = [res.personalInfoNatureSize] as never;
+        ruleForm.personalDataNatureSize = [res.personalDataNatureSize] as never;
+        ruleForm.dataExitBehavior = [res.dataExitBehavior] as never;
+        ruleForm.dataExitMethods = res.dataExitMethods.split(",");
+        ruleForm.foreignReceiverLocation =
+          res.foreignReceiverLocation.split(",");
+        ruleForm.dataExitVisitHz = [res.dataExitVisitHz] as never;
+        ruleForm.containImpData = [res.containImpData] as never;
+        ruleForm.personalInfoPrevSize = [res.personalInfoPrevSize] as never;
+        ruleForm.personalDataPrevSize = [res.personalDataPrevSize] as never;
+        ruleForm.safetyMeasure = [res.safetyMeasure] as never;
+        ruleForm.notifyAgree = [res.notifyAgree] as never;
+        ruleForm.planApplyWork = [res.planApplyWork] as never;
+
+        console.log(ruleForm, "[ruleFormruleForm]");
+
+        result.value = res.result;
+        // isOk.value = true;
+        // dialogVisible.value = true;
+        // return ElMessage({
+        //   type: "success",
+        //   message: "填写完成",
+        // });
+      } else {
+        // return ElMessage({
+        //   type: "warning",
+        //   message: "评估失败",
+        // });
+      }
+    });
 };
 getList();
 
