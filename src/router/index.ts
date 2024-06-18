@@ -5,6 +5,10 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: "/",
+      redirect: "/index/home",
+    },
+    {
       path: "/index",
       name: "index",
       redirect: "/index/home",

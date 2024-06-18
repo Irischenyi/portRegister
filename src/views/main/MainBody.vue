@@ -7,37 +7,46 @@ const router = useRouter()
 const headers = [
   {
     name: '首页',
-    link: '/index/home'
+    link: '/index/home',
+    value: 'home'
   },
   {
     name: '服务大厅',
-    link: '/index/serviceHall'
+    link: '/index/serviceHall',
+    value: 'service'
   },
   {
     name: '合规专题',
-    link: '/index/complianCetopics'
+    link: '/index/complianCetopics',
+    value: 'complian'
   },
   {
     name: '政策咨询',
-    link: '/index/policyconSultation'
+    link: '/index/policyconSultation',
+    value: 'policy'
   },
   {
     name: '安全培训',
-    link: '/index/securityTraining'
+    link: '/index/securityTraining',
+    value: 'security'
   }
 ]
 const token = localStorage.getItem('token');
 const showing = ref(false)
 const isShowQuestionButton = ref(false)
-http.get('k2401-survey/check-submit', {
+if(!token){
+  isShowQuestionButton.value = false
+}else{
+  http.get('k2401-survey/check-submit', {
       'Authorization':  'Bearer ' + token
     }).then((data) => {
-  if(!data){
+    if(!data){
+      isShowQuestionButton.value = true;
+    }
+  }).fail(() => {
     isShowQuestionButton.value = true;
-  }
-}).fail(() => {
-  isShowQuestionButton.value = true;
-})
+  })
+}
 
 
 const routerChange = (value: string) => {
@@ -72,10 +81,12 @@ const loginOut = () => {
   location.reload()
 }
 
-const goTo = (link: string) => {
+const name = ref('')
+const goTo = (link: string, value: string) => {
   router.push({
       path:link
-    })
+  })
+  name.value = value
 }
 
 </script>
@@ -85,12 +96,12 @@ const goTo = (link: string) => {
     <div class="footer_wrap">
       <div class="title1">
         <div class="pic-Logo">
-          <img src="@/assets/images/selfLogo.png"/>
+          <img src="@/assets/logo.png"/>
         </div>
         数据出境公共服务平台
       </div>
       <div class="center-name">
-        <div v-for="item in headers" @click="goTo(item.link)">{{item.name}}</div>
+        <div v-for="item in headers" :class="{'active': name == item.value }" @click="goTo(item.link, item.value)">{{item.name}}</div>
       </div>
       <div class="right">
         <div class="form" v-if="isShowQuestionButton" :style="token?'top: 10px;':''" @click="routerChange('question')">调研填表</div>
@@ -136,9 +147,14 @@ const goTo = (link: string) => {
   .pic-Logo{
     width: 40px;
     height: 40px;
-    background: grey;
     margin-right: 20px;
     border-radius: 40px;
+    position: relative;
+    img{
+      position: relative;
+      top: 3px;
+      width: 100%;
+    }
   }
   display: flex;
   align-items: center;
@@ -158,6 +174,23 @@ const goTo = (link: string) => {
     &:hover{
       color: #4984FF;
     }
+    
+  }
+}
+
+.active{
+  color: #4984FF;
+  font-weight: bold;
+  position: relative;
+  &::after{
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #4984FF;
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 .right{

@@ -154,6 +154,7 @@ const setUser = () => {
 
 .bottom *, .bottom div div{
     display: inline-block;
+    cursor: pointer;
 }
 
 .login{

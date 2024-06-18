@@ -18,7 +18,7 @@
           <q-tab v-for="(item, key) in trainTabs" :key="key" :name="item.value" :label="item.name"/>
         </q-tabs>
       </template>
-      <template #body>
+      <template #body v-if=" tab != '3'">
           <div :class="{'card': true, 'hiddens': tab == '3'}" v-for="item in list" @click="goToDetail(item.id)">
               <div class="card-box">
                   <div class="pic">
@@ -47,7 +47,7 @@
           </div>
       </template>
       
-      <template #end>
+      <template #end v-if=" tab == '3'">
         <div class="bottom-card">
           <div class="bottom-body">
             <div class="card" v-for="(item, key) in serviceList" :key="key">
@@ -268,9 +268,11 @@ const goToDetail = (id: string) => {
 
 .bottom-card{
   width: 100%;
+  padding-bottom: 30px;
   background-color: white;
-  padding-bottom: 80px;
-  padding-top: 10px;
+  padding-top: 0px;
+  position: relative;
+  top: -10px;
   .bottom-body{
     width: calc(100% - 480px);
     margin-left: 240px;

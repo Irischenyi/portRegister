@@ -1,7 +1,7 @@
 <template>
     <Transition name="fade">
         <div  class="question-bpx-back" v-if="show">
-            <div  :class="{'question-bpx':true, 'questuon-ask-box': activeTab =='ask'}">
+            <div  :class="{'question-bpx':true, 'questuon-ask-box': true}">
                 <q-icon name="close" class="close" @click="emit('close')"/>
                 <div class="dev1">
                     <div class="head">
@@ -11,7 +11,7 @@
                         <div class="question" v-if="activeTab =='usl'">
                                 <q-scroll-area
                                     visible
-                                    style="height: 406px;"
+                                    style="height: 430px;"
                                     class="col"
                                     @scroll="onScrollFirst"
                                     >
@@ -61,13 +61,13 @@
                                 label-width="60px"
                             >
                                 <el-form-item label="单位" prop="dw1">
-                                <el-input v-model="formModel.dw1" style="width: 60%"></el-input>
+                                <el-input v-model="formModel.dw1" style="width: 100%"></el-input>
                                 </el-form-item>
                                 <el-form-item label="姓名" prop="xm">
-                                <el-input v-model="formModel.xm" style="width: 60%"></el-input>
+                                <el-input v-model="formModel.xm" style="width: 100%"></el-input>
                                 </el-form-item>
                                 <el-form-item label="手机号" prop="dw2">
-                                <el-input v-model="formModel.dw2" style="width: 60%"></el-input>
+                                <el-input v-model="formModel.dw2" style="width: 100%"></el-input>
                                 </el-form-item>
                                 <el-form-item label="留言" prop="ly">
                                 <el-input
@@ -294,7 +294,7 @@ const postCheck = (uuid: string, left: number) => {
         }
     }
     .main-box{
-        height: 420px;
+        height: 480px;
         width: calc(100% - 40px);
         background-color: white;
         margin: 0 auto;
@@ -408,7 +408,7 @@ const postCheck = (uuid: string, left: number) => {
 .let-save{
     display: flex;
     justify-content: end;
-    margin-top: 55px;
+    margin-top: 125px;
 }
 
 .close{

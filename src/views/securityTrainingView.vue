@@ -23,7 +23,7 @@
             <div class="bg">
               <imgIn :src="picUrl+item.coverImage.previewUrl"/>
             </div>
-            <div class="bottom">
+            <div class="bottom-in">
               {{ item.title }}
             </div>
             <div class="bottom-tool" v-if="tab == '2'">
@@ -177,7 +177,7 @@ const goToDetail = (id: string) => {
   }
 }
 
-.bottom{
+.bottom-in{
   position: absolute;
   bottom: 0px;
   height: 50px;

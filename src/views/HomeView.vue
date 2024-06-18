@@ -490,7 +490,6 @@ const postCheck = (uuid: string, left: number) => {
       closeCodeFun(true)
     })
     .fail((value) => {
-      console.log('失败 ++++++++')
       ElMessage({ type: 'warning', message: value })
       closeCodeFun(value)
       failMessage.value = value as string
