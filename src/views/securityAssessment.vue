@@ -147,7 +147,7 @@
 
             <el-table-column prop="address" label="操作">
               <template #default="{ row }">
-                <el-button type="text" @click="toEdit(row.id)">编辑</el-button>
+                <el-button link type="primary" @click="toEdit(row.id)">编辑</el-button>
                 <!-- <el-button type="text" style="color: red">删除</el-button> -->
               </template>
             </el-table-column>
@@ -195,14 +195,7 @@ const form = reactive({
   status: "",
 });
 const reset = () => {
-  let form = ref({
-    xmbh: "",
-    lsh: "",
-    sf: "",
-    status: "",
-    qzsj: "",
-  });
-  Object.assign(form, form);
+  form.status = "";
   page.pageNum = 1;
   page.pageSize = 10;
   getList();

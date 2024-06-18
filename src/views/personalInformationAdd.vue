@@ -57,19 +57,19 @@
             <el-checkbox-group v-model="checkList">
               <div>
                 <el-checkbox
-                  label=" (一) 关键信息基础设施运营者以外的数据处理者             "
+                  label="(一) 关键信息基础设施运营者以外的数据处理者             "
                   value="1"
                 />
               </div>
               <div>
                 <el-checkbox
-                  label="（二) 自当年1月1日起，累计向境外提供10万人以上、不满100万人个人信 (不含敏感个人信息) 的；"
+                  label="(二) 自当年1月1日起，累计向境外提供10万人以上、不满100万人个人信 (不含敏感个人信息) 的；"
                   value="2"
                 />
               </div>
               <div>
                 <el-checkbox
-                  label="（三) 自当年1月1日起，累计向境外提供不满1万人敏感个人信息的；"
+                  label="(三) 自当年1月1日起，累计向境外提供不满1万人敏感个人信息的；"
                   value="3"
                 />
               </div>
@@ -122,7 +122,7 @@
 
                   <el-form-item prop="unitNatureOther">
                     <div style="display: flex; flex-direction: column">
-                      <div><span style="color: red">*-</span></div>
+                      <div><span style="color: red"></span>其他</div>
                       <el-input
                         v-model="ruleForm1.unitNatureOther"
                         placeholder="请输入其他单位性质"
@@ -153,7 +153,7 @@
 
                   <el-form-item prop="unitCategoryOther">
                     <div style="display: flex; flex-direction: column">
-                      <div><span style="color: red">*-</span></div>
+                      <div><span style="color: red"></span>其他</div>
                       <el-input
                         v-model="ruleForm1.unitCategoryOther"
                         placeholder="请输入其他单位性质"
@@ -410,7 +410,7 @@
 
                   <el-form-item prop="legalCertificateTypeOther">
                     <div style="display: flex; flex-direction: column">
-                      <div><span style="color: red">*-</span></div>
+                      <div><span style="color: red"></span>其他</div>
                       <el-input
                         v-model="ruleForm2.legalCertificateTypeOther"
                         placeholder="请输入其他证件类型"
@@ -480,7 +480,6 @@
                     >
                       <div><span style="color: red">*</span> 国籍</div>
                       <el-select
-                        style="width: 150px"
                         v-model="ruleForm3.operatorNationalValue"
                         clearable
                         placeholder="请选择国籍"
@@ -547,7 +546,7 @@
 
                   <el-form-item prop="operatorCertificateTypeOther">
                     <div style="display: flex; flex-direction: column">
-                      <div><span style="color: red">*-</span></div>
+                      <div><span style="color: red"></span>其他</div>
                       <el-input
                         v-model="ruleForm3.operatorCertificateTypeOther"
                         placeholder="请输入其他证件类型"
@@ -646,12 +645,26 @@
                         <span style="color: red">*</span>
                         承诺书
                       </div>
-                      <div style="display: flex">
+                      <div style="display: flex; position: relative">
                         <el-input
                           style="margin-right: 50px"
                           v-model="ruleForm4.fileName"
                           placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
-                        ></el-input>
+                          readonly
+                        >
+                        </el-input>
+                        <el-icon
+                          v-if="ruleForm4.fileName"
+                          style="
+                            position: absolute;
+                            top: 10px;
+                            left: 250px;
+                            cursor: pointer;
+                          "
+                          @click="deleteFileName(1)"
+                          ><CircleClose
+                        /></el-icon>
+
                         <!-- <el-button
                             style="
                               border-radius: 50px;
@@ -1161,12 +1174,24 @@
                         <span style="color: red">*</span>
                         标准合同文件
                       </div>
-                      <div style="display: flex">
+                      <div style="display: flex; position: relative">
                         <el-input
                           style="margin-right: 50px"
                           v-model="ruleForm6.fileName"
                           placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                          readonly
                         ></el-input>
+                        <el-icon
+                          v-if="ruleForm6.fileName"
+                          style="
+                            position: absolute;
+                            top: 10px;
+                            left: 250px;
+                            cursor: pointer;
+                          "
+                          @click="deleteFileName(1)"
+                          ><CircleClose
+                        /></el-icon>
                         <el-upload
                           drag
                           class="upload-demo"
@@ -1224,7 +1249,7 @@
             <el-form ref="ruleFormRef7" :model="ruleForm7" :rules="rules7">
               <el-row :gutter="20">
                 <el-col :span="12">
-                  <el-form-item prop="fileName">
+                  <el-form-item prop="reportAttachIdList">
                     <div
                       style="display: flex; flex-direction: column; width: 70%"
                     >
@@ -1232,12 +1257,24 @@
                         <span style="color: red">*</span>
                         个人信息保护影响评估报告
                       </div>
-                      <div style="display: flex">
+                      <div style="display: flex; position: relative">
                         <el-input
                           style="margin-right: 50px"
                           v-model="ruleForm7.fileName"
                           placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                          readonly
                         ></el-input>
+                        <el-icon
+                          v-if="ruleForm7.fileName"
+                          style="
+                            position: absolute;
+                            top: 10px;
+                            left: 250px;
+                            cursor: pointer;
+                          "
+                          @click="deleteFileName(1)"
+                          ><CircleClose
+                        /></el-icon>
                         <el-upload
                           drag
                           class="upload-demo"
@@ -1292,23 +1329,34 @@
             承诺书
           </div>
           <div style="margin: 0 0 20px 20px">
-            <el-form ref="ruleFormRef8" :model="ruleForm8" :rules="ruleForm8">
+            <el-form ref="ruleFormRef8" :model="ruleForm8" :rules="rules8">
               <el-row :gutter="20">
                 <el-col :span="12">
-                  <el-form-item prop="fileName1">
+                  <el-form-item prop="delegateAttachIdList">
                     <div
-                      style="display: flex; flex-direction: column; width: 90%"
+                      style="display: flex; flex-direction: column; width: 70%"
                     >
                       <div>
                         <span style="color: red">*</span>
                         经办人授权委托书
                       </div>
-                      <div style="display: flex">
+                      <div style="display: flex; position: relative">
                         <el-input
                           style="margin-right: 50px"
                           v-model="ruleForm8.fileName1"
+                          readonly
                         ></el-input>
-
+                        <el-icon
+                          v-if="ruleForm8.fileName1"
+                          style="
+                            position: absolute;
+                            top: 10px;
+                            left: 250px;
+                            cursor: pointer;
+                          "
+                          @click="deleteFileName(1)"
+                          ><CircleClose
+                        /></el-icon>
                         <el-upload
                           drag
                           class="upload-demo"
@@ -1352,34 +1400,48 @@
           <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
             其他文件上传
           </div>
-          <div style="margin-left: 20px">
-            <el-input
-              style="margin-right: 50px"
-              v-model="ruleForm8.fileName2"
-            ></el-input>
-            <el-upload
-              drag
-              class="upload-demo"
-              :show-file-list="false"
-              :http-request="customUpload82"
-            >
-              <el-button
+          <div style="margin-left: 20px; width: 35%">
+            <div style="display: flex; position: relative">
+              <el-input
+                style="margin-right: 50px"
+                v-model="ruleForm8.fileName2"
+                readonly
+              ></el-input>
+              <el-icon
+                v-if="ruleForm8.fileName2"
                 style="
-                  border-radius: 50px;
-                  background-color: #fff;
-                  color: #4984ff;
+                  position: absolute;
+                  top: 10px;
+                  left: 250px;
+                  cursor: pointer;
                 "
-                type="primary"
-                :icon="Download"
-                >上传文件</el-button
+                @click="deleteFileName(2)"
+                ><CircleClose
+              /></el-icon>
+              <el-upload
+                drag
+                class="upload-demo"
+                :show-file-list="false"
+                :http-request="customUpload82"
               >
+                <el-button
+                  style="
+                    border-radius: 50px;
+                    background-color: #fff;
+                    color: #4984ff;
+                  "
+                  type="primary"
+                  :icon="Download"
+                  >上传文件</el-button
+                >
 
-              <!-- <template #tip>
+                <!-- <template #tip>
                               <div class="el-upload__tip">
                                 jpg/png files with a size less than 500KB.
                               </div>
                             </template> -->
-            </el-upload>
+              </el-upload>
+            </div>
             <div style="margin-top: 10px">
               请上传除承诺书、个人信息出境标准合同、个人信息保护影响评估报告、经办人授权委托书以外的其他材料，格式为PDF、OFD、PNG、
             </div>
@@ -1431,7 +1493,7 @@ import type {
   UploadUserFile,
   FormValidateCallback,
 } from "element-plus";
-import { Download } from "@element-plus/icons-vue";
+import { Download, CircleClose } from "@element-plus/icons-vue";
 import http, { setBaseInf, setHttp } from "@/http/httpContentMain";
 import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
@@ -1469,21 +1531,6 @@ const getSelet = async () => {
   await getArea(); // 所在国家或地区
 };
 
-const file = ref();
-
-watch(file, (value) => {
-  const formData = new FormData();
-  console.log(value, "value");
-  // formData.append("file", value);
-  // http
-  //   .post("k2401-enterprise/upload-business-license", formData, {
-  //     "Content-Type": "multipart/form-data",
-  //   })
-  //   .then((response) => {
-  //     const id = (response as unknown as { id: string }).id;
-  //     form.value.businessLicenseAttachIdList = [id];
-  //   });
-});
 const customUpload = (file: any) => {
   const formData = new FormData();
   formData.append("file", file.file);
@@ -1575,6 +1622,28 @@ const customUpload82 = (file: any) => {
       ruleForm8.fileName2 = fileName;
     });
 };
+
+const deleteFileName = (num: any) => {
+  if (active.value == 4) {
+    ruleForm4.fileName = "";
+    ruleForm4.promiseAttachIdList = [];
+  } else if (active.value == 6) {
+    ruleForm6.fileName = "";
+    ruleForm6.standardContractAttachIdList = [];
+  } else if (active.value == 7) {
+    ruleForm7.fileName = "";
+    ruleForm7.reportAttachIdList = [];
+  } else if (active.value == 8) {
+    if (num == 1) {
+      ruleForm8.fileName1 = "";
+      ruleForm8.delegateAttachIdList = [];
+    } else {
+      ruleForm8.fileName2 = "";
+      ruleForm8.otherAttachIdList = [];
+    }
+  }
+};
+
 const items = ref({});
 const checkList = ref([] as string[]);
 // 表单1
@@ -1611,7 +1680,27 @@ const ruleForm2 = reactive({
   legalCertificateCode: "", //证件号码
   legalEmail: "", //电子邮箱
 });
-
+watch(
+  () => ruleForm2.legalFlag,
+  (newValue, oldValue) => {
+    if (newValue) {
+      let form = {
+        legalFlag: true,
+        legal: "", //姓名
+        legalTel: "", //联系电话
+        legalNationalValue: "", //国籍 code
+        legalNationalName: "", //国籍 name
+        legalJob: "", //职务
+        legalCertificateTypeValue: "", //证件类型 code
+        legalCertificateTypeName: "", //证件类型  name
+        legalCertificateTypeOther: "", //其他证件类型
+        legalCertificateCode: "", //证件号码
+        legalEmail: "", //电子邮箱
+      };
+      Object.assign(ruleForm2, form);
+    }
+  }
+);
 // 表单3
 const ruleForm3 = reactive({
   operator: "", //姓名
@@ -1857,8 +1946,7 @@ const next = () => {
     active.value++;
   } else if (active.value == 1) {
     submitForm1(ruleFormRef1.value);
-  }
-  if (active.value == 2) {
+  } else if (active.value == 2) {
     if (!ruleForm2.legalFlag) {
       submitForm2(ruleFormRef2.value);
     } else {
@@ -2274,7 +2362,7 @@ const rules2 = reactive({
   legal: [{ required: true, message: "请输入姓名", trigger: "blur" }],
   legalTel: [{ required: true, message: "请输入联系电话", trigger: "blur" }],
   legalNationalValue: [
-    { required: true, message: "请输入国籍", trigger: "blur" },
+    { required: true, message: "请选择国籍", trigger: "change" },
   ],
   legalJob: [{ required: true, message: "请输入职务", trigger: "blur" }],
   legalCertificateTypeValue: [
@@ -2283,16 +2371,14 @@ const rules2 = reactive({
   legalCertificateCode: [
     { required: true, message: "请输入证件号码", trigger: "blur" },
   ],
-  legalEmail: [
-    { required: true, message: "请选择电子邮箱", trigger: "change" },
-  ],
+  legalEmail: [{ required: true, message: "请输入电子邮箱", trigger: "blur" }],
 });
 
 const rules3 = reactive({
   operator: [{ required: true, message: "请输入姓名", trigger: "blur" }],
   operatorTel: [{ required: true, message: "请输入联系电话", trigger: "blur" }],
   operatorNationalValue: [
-    { required: true, message: "请输入国籍", trigger: "blur" },
+    { required: true, message: "请选择国籍", trigger: "change" },
   ],
   operatorJob: [{ required: true, message: "请输入职务", trigger: "blur" }],
   operatorCertificateTypeValue: [
@@ -2315,10 +2401,14 @@ const rules4 = reactive({
 const rules5 = reactive({
   summary: [{ required: true, message: "请输入出境场景简述", trigger: "blur" }],
   dataTypeName: [
-    { required: true, message: "请输入数据类型", trigger: "blur" },
+    { required: true, message: "请选择数据类型", trigger: "change" },
   ],
   containInfoFlag: [
-    { required: true, message: "请输入是否包含敏感个人信息", trigger: "blur" },
+    {
+      required: true,
+      message: "请选择是否包含敏感个人信息",
+      trigger: "change",
+    },
   ],
   industryValue: [
     { required: true, message: "请选择涉及行业/领域 ", trigger: "change" },
@@ -2333,8 +2423,8 @@ const rules5 = reactive({
   personCountUnitValue: [
     {
       required: true,
-      message: "请输入涉及自然人（去重）数量单位",
-      trigger: "blur",
+      message: "请选择涉及自然人（去重）数量单位",
+      trigger: "change",
     },
   ],
   foreignReceiver: [
@@ -2347,8 +2437,8 @@ const rules5 = reactive({
   areaValue: [
     {
       required: true,
-      message: "请输入所在国家或地区",
-      trigger: "blur",
+      message: "请选择所在国家或地区",
+      trigger: "change",
     },
   ],
   primaryBusiness: [
@@ -2389,7 +2479,7 @@ const rules6 = reactive({
     { required: true, message: "请输入标准合同生效日期", trigger: "blur" },
   ],
   standardContractAttachIdList: [
-    { required: true, message: "请输入标准合同文件", trigger: "blur" },
+    { required: true, message: "请上传标准合同文件", trigger: "blur" },
   ],
 });
 
@@ -2517,6 +2607,7 @@ const getArea = () => {
   margin: 0 auto;
   .el-upload-dragger {
     border: none;
+    padding: 0;
   }
 }
 .head-box {

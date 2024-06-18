@@ -251,14 +251,7 @@ const getList = () => {
 getList();
 
 const reset = () => {
-  let form = ref({
-    xmbh: "",
-    lsh: "",
-    sf: "",
-    status: "",
-    qzsj: "",
-  });
-  Object.assign(form, form);
+  form.status = "";
   page.pageNum = 1;
   page.pageSize = 10;
   getList();
