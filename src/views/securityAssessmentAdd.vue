@@ -1290,7 +1290,7 @@
               <el-form ref="ruleFormRef7" :model="ruleForm7" :rules="rules7">
                 <el-row :gutter="20">
                   <el-col :span="12">
-                    <el-form-item prop="credfileName">
+                    <el-form-item prop="creditCodeAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1302,11 +1302,24 @@
                           <span style="color: red">*</span>
                           统一社会信用代码证件影印件（加盖公章）
                         </div>
-                        <div style="display: flex">
+                        <div style="display: flex; position: relative">
                           <el-input
                             style="margin-right: 50px"
                             v-model="ruleForm7.credfileName"
+                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                            readonly
                           ></el-input>
+                          <el-icon
+                            v-if="ruleForm7.credfileName"
+                            style="
+                              position: absolute;
+                              top: 10px;
+                              left: 250px;
+                              cursor: pointer;
+                            "
+                            @click="deleteFileName(1)"
+                            ><CircleClose
+                          /></el-icon>
                           <el-upload
                             drag
                             class="upload-demo"
@@ -1330,7 +1343,7 @@
                   </el-col>
 
                   <el-col :span="12">
-                    <el-form-item prop="legalfileName">
+                    <el-form-item prop="legalIdCardAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1342,11 +1355,24 @@
                           <span style="color: red">*</span>
                           法定代表人身份证件影印件（加盖公章）
                         </div>
-                        <div style="display: flex">
+                        <div style="display: flex; position: relative">
                           <el-input
                             style="margin-right: 50px"
                             v-model="ruleForm7.legalfileName"
+                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                            readonly
                           ></el-input>
+                          <el-icon
+                            v-if="ruleForm7.legalfileName"
+                            style="
+                              position: absolute;
+                              top: 10px;
+                              left: 250px;
+                              cursor: pointer;
+                            "
+                            @click="deleteFileName(2)"
+                            ><CircleClose
+                          /></el-icon>
                           <el-upload
                             drag
                             class="upload-demo"
@@ -1372,7 +1398,7 @@
 
                 <el-row :gutter="20">
                   <el-col :span="12">
-                    <el-form-item prop="operatorfileName">
+                    <el-form-item prop="operatorIdCardAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1384,11 +1410,24 @@
                           <span style="color: red">*</span>
                           经办人身份证件影印件（加盖公章）
                         </div>
-                        <div style="display: flex">
+                        <div style="display: flex; position: relative">
                           <el-input
                             style="margin-right: 50px"
                             v-model="ruleForm7.operatorfileName"
+                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                            readonly
                           ></el-input>
+                          <el-icon
+                            v-if="ruleForm7.operatorfileName"
+                            style="
+                              position: absolute;
+                              top: 10px;
+                              left: 250px;
+                              cursor: pointer;
+                            "
+                            @click="deleteFileName(3)"
+                            ><CircleClose
+                          /></el-icon>
                           <el-upload
                             drag
                             class="upload-demo"
@@ -1412,7 +1451,7 @@
                   </el-col>
 
                   <el-col :span="12">
-                    <el-form-item prop="delegatefileName">
+                    <el-form-item prop="delegateAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1424,11 +1463,24 @@
                           <span style="color: red">*</span>
                           经办人授权委托书
                         </div>
-                        <div style="display: flex">
+                        <div style="display: flex; position: relative">
                           <el-input
                             style="margin-right: 50px"
                             v-model="ruleForm7.delegatefileName"
+                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                            readonly
                           ></el-input>
+                          <el-icon
+                            v-if="ruleForm7.delegatefileName"
+                            style="
+                              position: absolute;
+                              top: 10px;
+                              left: 250px;
+                              cursor: pointer;
+                            "
+                            @click="deleteFileName(4)"
+                            ><CircleClose
+                          /></el-icon>
                           <el-upload
                             drag
                             class="upload-demo"
@@ -1453,7 +1505,7 @@
                 </el-row>
                 <el-row :gutter="20">
                   <el-col :span="12">
-                    <el-form-item prop="promfileName">
+                    <el-form-item prop="promiseAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1465,11 +1517,24 @@
                           <span style="color: red">*</span>
                           承诺书
                         </div>
-                        <div style="display: flex">
+                        <div style="display: flex; position: relative">
                           <el-input
                             style="margin-right: 50px"
                             v-model="ruleForm7.promfileName"
+                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                            readonly
                           ></el-input>
+                          <el-icon
+                            v-if="ruleForm7.promfileName"
+                            style="
+                              position: absolute;
+                              top: 10px;
+                              left: 250px;
+                              cursor: pointer;
+                            "
+                            @click="deleteFileName(5)"
+                            ><CircleClose
+                          /></el-icon>
                           <el-upload
                             drag
                             class="upload-demo"
@@ -1492,7 +1557,7 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
-                    <el-form-item prop="contfileName">
+                    <el-form-item prop="contractAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1505,11 +1570,24 @@
                           与境外接收方拟订立的数据出境相关合同或其他具有法律效力影印件
                           (加盖公章)
                         </div>
-                        <div style="display: flex">
+                        <div style="display: flex; position: relative">
                           <el-input
                             style="margin-right: 50px"
                             v-model="ruleForm7.contfileName"
+                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                            readonly
                           ></el-input>
+                          <el-icon
+                            v-if="ruleForm7.contfileName"
+                            style="
+                              position: absolute;
+                              top: 10px;
+                              left: 250px;
+                              cursor: pointer;
+                            "
+                            @click="deleteFileName(6)"
+                            ><CircleClose
+                          /></el-icon>
                           <el-upload
                             drag
                             class="upload-demo"
@@ -1534,7 +1612,7 @@
                 </el-row>
                 <el-row :gutter="20">
                   <el-col :span="12">
-                    <el-form-item prop="reportfileName">
+                    <el-form-item prop="reportAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1546,11 +1624,24 @@
                           <span style="color: red">*</span>
                           数据出境风险自评估报告
                         </div>
-                        <div style="display: flex">
+                        <div style="display: flex; position: relative">
                           <el-input
                             style="margin-right: 50px"
                             v-model="ruleForm7.reportfileName"
+                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                            readonly
                           ></el-input>
+                          <el-icon
+                            v-if="ruleForm7.reportfileName"
+                            style="
+                              position: absolute;
+                              top: 10px;
+                              left: 250px;
+                              cursor: pointer;
+                            "
+                            @click="deleteFileName(7)"
+                            ><CircleClose
+                          /></el-icon>
                           <el-upload
                             drag
                             class="upload-demo"
@@ -1603,27 +1694,42 @@
               <div style="color: #333; margin-bottom: 10px; font-size: 16px">
                 其他相关证明材料
               </div>
-              <el-input
-                style="margin-right: 50px"
-                v-model="ruleForm7.otherfileName"
-              ></el-input>
-              <el-upload
-                drag
-                class="upload-demo"
-                :show-file-list="false"
-                :http-request="customUpload78"
-              >
-                <el-button
+              <div style="display: flex; position: relative; width: 34%">
+                <el-input
+                  style="margin-right: 50px"
+                  v-model="ruleForm7.otherfileName"
+                  placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                  readonly
+                ></el-input>
+                <el-icon
+                  v-if="ruleForm7.otherfileName"
                   style="
-                    border-radius: 50px;
-                    background-color: #fff;
-                    color: #4984ff;
+                    position: absolute;
+                    top: 10px;
+                    left: 250px;
+                    cursor: pointer;
                   "
-                  type="primary"
-                  :icon="Download"
-                  >上传文件</el-button
+                  @click="deleteFileName(8)"
+                  ><CircleClose
+                /></el-icon>
+                <el-upload
+                  drag
+                  class="upload-demo"
+                  :show-file-list="false"
+                  :http-request="customUpload78"
                 >
-              </el-upload>
+                  <el-button
+                    style="
+                      border-radius: 50px;
+                      background-color: #fff;
+                      color: #4984ff;
+                    "
+                    type="primary"
+                    :icon="Download"
+                    >上传文件</el-button
+                  >
+                </el-upload>
+              </div>
               <!-- <div>已上传 {{ ruleForm7.otherAttachIdList }}</div> -->
               <div style="color: #333; margin-bottom: 10px; font-size: 16px">
                 请上传格式为PDF、OFD、PNG、JPG、JPEG的文件
@@ -1676,7 +1782,7 @@ import type {
   UploadProps,
   UploadUserFile,
 } from "element-plus";
-import { Download } from "@element-plus/icons-vue";
+import { Download, CircleClose } from "@element-plus/icons-vue";
 import http, { setBaseInf, setHttp } from "@/http/httpContentMain";
 const token = localStorage.getItem("token");
 import { useRoute, useRouter } from "vue-router";
@@ -1800,6 +1906,7 @@ const next = () => {
   } else {
     active.value++;
   }
+  // active.value++;
 };
 //  上一步
 const last = () => {
@@ -2422,8 +2529,12 @@ const getItems = () => {
           operatorEmail,
         };
         Object.assign(ruleForm4, ruleF4);
+        // ruleForm5
+        const ruleF5 = {
+          observeContent,
+        };
 
-        Object.assign(ruleForm5, observeContent);
+        Object.assign(ruleForm5, ruleF5);
 
         // ruleForm6
 
@@ -2685,6 +2796,33 @@ const closeOutbound = (index: any, ind: any) => {
   ruleForm6[index].receiveList.splice(ind, 1);
 };
 
+const deleteFileName = (num: any) => {
+  if (num == 1) {
+    ruleForm7.credfileName = "";
+    ruleForm7.creditCodeAttachIdList = [];
+  } else if (num == 2) {
+    ruleForm7.legalfileName = "";
+    ruleForm7.legalIdCardAttachIdList = [];
+  } else if (num == 3) {
+    ruleForm7.operatorfileName = "";
+    ruleForm7.operatorIdCardAttachIdList = [];
+  } else if (num == 4) {
+    ruleForm7.delegatefileName = "";
+    ruleForm7.delegateAttachIdList = [];
+  } else if (num == 5) {
+    ruleForm7.promfileName = "";
+    ruleForm7.promiseAttachIdList = [];
+  } else if (num == 6) {
+    ruleForm7.contfileName = "";
+    ruleForm7.contractAttachIdList = [];
+  } else if (num == 7) {
+    ruleForm7.reportfileName = "";
+    ruleForm7.reportAttachIdList = [];
+  } else {
+    ruleForm7.otherfileName = "";
+    ruleForm7.otherAttachIdList = [];
+  }
+};
 // 校验表单1
 const submitForm1 = async (ruleFormRef1: FormInstance | undefined) => {
   if (!ruleFormRef1) return;
@@ -2939,6 +3077,7 @@ const getDataunit = () => {
   margin: 0 auto;
   .el-upload-dragger {
     border: none;
+    padding: 0;
   }
 }
 .topImg {

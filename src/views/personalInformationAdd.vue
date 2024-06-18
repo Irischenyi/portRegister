@@ -664,22 +664,6 @@
                           @click="deleteFileName(1)"
                           ><CircleClose
                         /></el-icon>
-
-                        <!-- <el-button
-                            style="
-                              border-radius: 50px;
-                              background-color: #fff;
-                              color: #4984ff;
-                            "
-                            type="primary"
-                            :icon="Download"
-                            >上传文件</el-button
-                          > -->
-                        <!-- <q-file
-                        v-model="file"
-                        filled
-                        style="max-width: 300px"
-                        /> -->
                         <el-upload
                           drag
                           class="upload-demo"
@@ -703,9 +687,6 @@
                               </div>
                             </template> -->
                         </el-upload>
-                        <!-- <div v-if="ruleForm4.promiseAttachIdList.length > 0">
-                            已上传
-                          </div> -->
                       </div>
                     </div>
                   </el-form-item>
