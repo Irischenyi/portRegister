@@ -15,7 +15,7 @@
     <template #tabs>
       <q-tabs
         @update:model-value="btns"
-        v-model="tab"
+        v-model="tabsValue"
         class="text-primary"
       >
         <q-tab
@@ -29,7 +29,7 @@
     <template #body>
       <q-tab-panels
         style="width: 100%; margin-top: 10px"
-        v-model="tab"
+        v-model="tabsValue"
         animated
       >
         <q-tab-panel :name="tabsValue">
@@ -39,7 +39,7 @@
             <div
               v-for="(item, index) in tabsLists"
               :key="index"
-              style="padding: 20px 10px"
+              style="padding: 10px 10px"
               @click="goToDetail((item as any).id)"
             >
               <div style="display: flex; position: relative;">
@@ -80,10 +80,12 @@
                   </div>
                 </div>
               </div>
-              <div style="margin-top: 5px">
-                <q-separator />
-              </div>
+              <q-separator style="margin-top: 20px;"/>  
+              <!-- <div style="margin-top: 5px">
+              
+              </div> -->
             </div>
+            
           </div>
         </q-tab-panel>
       </q-tab-panels>
@@ -118,9 +120,10 @@ import { ref, onMounted, reactive } from "vue";
 import Bottom from "@/components/Bottom.vue";
 import { setBaseInf, setHttp } from "@/http/httpContentMain";
 import TemplateFrame from "@/components/TemplateFrame.vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
 const loadingShow = ref(true)
 onMounted(async () => {
   getCategoryTabs(); //获取政策资讯类别
@@ -148,8 +151,12 @@ const getCategoryTabs = () => {
   })
 };
 
+const query = route.query as {
+  tab: string
+};
+
 const tabsLists = ref([]);
-const tabsValue = ref(1);
+const tabsValue = ref(query.tab||'1');
 const imgTabs = ref("");
 const total = ref(0);
 
@@ -167,7 +174,6 @@ const getArticlePaged = async () => {
   imgTabs.value = `${setBaseInf.baseUrl}` + res.items?.[0]?.attach.storagePath;
 };
 
-const tab = ref(1);
 
 
 const btns = (value: any) => {
@@ -181,7 +187,8 @@ const goToDetail = (id: string) => {
   router.push({
     path: "/index/policyconSultationDetail",
     query: {
-      id: JSON.stringify(id),
+      id: id,
+      tab: tabsValue.value
     },
   });
 };

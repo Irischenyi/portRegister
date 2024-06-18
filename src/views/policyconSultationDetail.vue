@@ -3,7 +3,7 @@
     <template #body>
         <div class="contain">
           <div class="detail-title">
-            <span style="font-size: 16px">行业动态</span> >
+            <span style="font-size: 16px" @click="goToList" >{{ nameList[Number(tab)-1].name }}</span> >
             {{ (items as any).title }}
           </div>
 
@@ -39,7 +39,9 @@ import { useRoute } from "vue-router";
 import http, { setBaseInf } from "@/http/httpContentMain";
 import Bottom from "@/components/Bottom.vue";
 import TemplateFrame from "@/components/TemplateFrame.vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const route = useRoute();
 const items = ref({});
 // 图片
@@ -47,7 +49,30 @@ const bannerSy = ref("");
 // 获取id
 const query = route.query as {
   id: string;
+  tab: string
 };
+
+const nameList = [{
+  name: '行业动态',
+},{
+  name: '政策法规',
+},{
+  name: '优秀表彰',
+},{
+  name: '通知公告',
+}]
+
+const tab = query.tab
+
+const goToList = () => {
+  router.push({
+    path: "/index/policyconSultation",
+    query: {
+      tab: tab,
+    },
+  });
+};
+
 // 详情
 const getItems = async () => {
   const baseUrl = "/k2401-article/article/";
