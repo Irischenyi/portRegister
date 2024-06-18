@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="topImg" style="width: 100%">
+    <!-- <div class="topImg" style="width: 100%">
       <img style="width: 100%" src="../assets/images/hgztbjt.png" alt="" />
       <div class="topImgText">
         <div style="color: #fff; font-size: 23px; font-weight: 500">
@@ -11,94 +11,99 @@
           基于行业内最新动态的梳理与汇聚
         </div>
       </div>
-
-      <!-- 页面 -->
-      <div class="contain">
+    </div> -->
+    <div class="head-box">
+      <img class="header" src="@/assets/images/hgztbjt.png" />
+      <div class="header-center">
+        <div>合规专题</div>
         <div>
-          <div style="font-size: 20px; margin-bottom: 20px">
-            个人信息出境标准合同备案
-          </div>
-          <el-form label-width="100px">
-            <el-row :gutter="20">
-              <el-col :span="8">
-                <el-form-item label="备案号">
-                  <el-input v-model="form.xmbh"></el-input>
-                </el-form-item>
-              </el-col>
+          提供工业互联网安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目；<br />
+          基于行业内最新动态的梳理与汇聚
+        </div>
+      </div>
+    </div>
+    <!-- 页面 -->
+    <div class="contain">
+      <div>
+        <div style="font-size: 20px; margin-bottom: 20px">
+          个人信息出境标准合同备案
+        </div>
+        <el-form label-width="100px">
+          <el-row :gutter="20">
+            <el-col :span="8">
+              <el-form-item label="备案号">
+                <el-input v-model="form.xmbh"></el-input>
+              </el-form-item>
+            </el-col>
 
-              <el-col :span="8">
-                <el-form-item label="流水号">
-                  <el-input v-model="form.lsh"></el-input>
-                </el-form-item>
-              </el-col>
+            <el-col :span="8">
+              <el-form-item label="流水号">
+                <el-input v-model="form.lsh"></el-input>
+              </el-form-item>
+            </el-col>
 
-              <el-col :span="8">
-                <el-form-item label="备案省份">
-                  <el-input v-model="form.sf"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
+            <el-col :span="8">
+              <el-form-item label="备案省份">
+                <el-input v-model="form.sf"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-            <el-row style="margin-top: 15px" :gutter="20">
-              <el-col :span="8">
-                <el-form-item label="状态">
-                  <!-- <el-input v-model="form.xmbh2"></el-input> -->
-                  <el-select v-model="form.status" clearable placeholder="">
-                    <el-option
-                      :label="(item as any).name"
-                      :value="(item as any).value"
-                      v-for="(item, index) in statusList"
-                      :key="index"
-                    />
-                    <!-- <el-option label="是" value="1" />
-                          <el-option label="否" value="1" /> -->
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="8">
-                <el-form-item label="起止时间">
-                  <!-- <el-input v-model="form.qzsj"></el-input> -->
-                  <el-date-picker
-                    v-model="form.qzsj"
-                    type="daterange"
-                    start-placeholder="开始时间"
-                    end-placeholder="结束时间"
+          <el-row style="margin-top: 15px" :gutter="20">
+            <el-col :span="8">
+              <el-form-item label="状态">
+                <!-- <el-input v-model="form.xmbh2"></el-input> -->
+                <el-select v-model="form.status" clearable placeholder="">
+                  <el-option
+                    :label="(item as any).name"
+                    :value="(item as any).value"
+                    v-for="(item, index) in statusList"
+                    :key="index"
                   />
-                </el-form-item>
-              </el-col>
+                  <!-- <el-option label="是" value="1" />
+                          <el-option label="否" value="1" /> -->
+                </el-select>
+              </el-form-item>
+            </el-col>
 
-              <el-col :span="8">
-                <el-button
-                  style="margin-left: 60px"
-                  type="primary"
-                  :icon="Refresh"
-                  color="#c0c0c0"
-                  circle
-                  @click="reset"
+            <el-col :span="8">
+              <el-form-item label="起止时间">
+                <!-- <el-input v-model="form.qzsj"></el-input> -->
+                <el-date-picker
+                  v-model="form.qzsj"
+                  type="daterange"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
                 />
-                <el-button
-                  type="primary"
-                  :icon="Search"
-                  circle
-                  @click="search"
-                />
-              </el-col>
-            </el-row>
+              </el-form-item>
+            </el-col>
 
-            <el-row style="margin: 30px 0 10px 0">
+            <el-col :span="8">
               <el-button
-                @click="peADD"
-                style="
-                  border-radius: 30px;
-                  background-color: #fff;
-                  color: #4984ff;
-                "
+                style="margin-left: 60px"
                 type="primary"
-                :icon="DocumentAdd"
-                >新增申报</el-button
-              >
-              <!-- <el-button
+                :icon="Refresh"
+                color="#c0c0c0"
+                circle
+                @click="reset"
+              />
+              <el-button type="primary" :icon="Search" circle @click="search" />
+            </el-col>
+          </el-row>
+
+          <el-row style="margin: 30px 0 10px 0">
+            <el-button
+              @click="peADD"
+              style="
+                border-radius: 30px;
+                background-color: #fff;
+                color: #4984ff;
+              "
+              type="primary"
+              :icon="DocumentAdd"
+              >新增申报</el-button
+            >
+            <!-- <el-button
                 style="
                   border-radius: 50px;
                   background-color: #fff;
@@ -118,50 +123,49 @@
                 :icon="Upload"
                 >批量上传</el-button
               > -->
-            </el-row>
-          </el-form>
+          </el-row>
+        </el-form>
 
-          <div style="margin-top: 20px">
-            <el-table :data="tableData" stripe style="width: 100%">
-              <el-table-column prop="date" label="序号" />
-              <el-table-column prop="date" label="备案号" />
-              <el-table-column prop="createUserId" label="流水号" />
-              <el-table-column prop="unitName" label="备案省份" />
-              <el-table-column prop="unitName" label="备案单位" />
-              <el-table-column prop="createDate" label="创建时间" />
-              <el-table-column prop="createDate" label="提交时间" />
-              <el-table-column prop="status" label="状态">
-                <template #default="{ row }">
-                  <div v-if="row.status == 0" class="">填报中</div>
-                  <div v-if="row.status == 1" class="">预检查审核中</div>
-                  <div v-if="row.status == 2" class="">预检查通过</div>
-                  <div v-if="row.status == 3" class="">预检查未通过</div>
-                </template>
-              </el-table-column>
+        <div style="margin-top: 20px">
+          <el-table :data="tableData" stripe style="width: 100%">
+            <el-table-column prop="date" label="序号" />
+            <el-table-column prop="date" label="备案号" />
+            <el-table-column prop="createUserId" label="流水号" />
+            <el-table-column prop="unitName" label="备案省份" />
+            <el-table-column prop="unitName" label="备案单位" />
+            <el-table-column prop="createDate" label="创建时间" />
+            <el-table-column prop="createDate" label="提交时间" />
+            <el-table-column prop="status" label="状态">
+              <template #default="{ row }">
+                <div v-if="row.status == 0" class="">填报中</div>
+                <div v-if="row.status == 1" class="">预检查审核中</div>
+                <div v-if="row.status == 2" class="">预检查通过</div>
+                <div v-if="row.status == 3" class="">预检查未通过</div>
+              </template>
+            </el-table-column>
 
-              <el-table-column prop="address" label="操作">
-                <template #default="{ row }">
-                  <!-- <el-button link @click="toDetail(row.id)">详情</el-button> -->
-                  <el-button link type="primary" @click="toEdit(row.id)"
-                    >编辑</el-button
-                  >
-                  <!-- <el-button link style="color: red">删除</el-button> -->
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-          <div style="display: flex; justify-content: end; margin-top: 20px">
-            <el-pagination
-              background
-              :current-page="page.pageNum"
-              :page-size="page.pageSize"
-              layout="prev, pager, next"
-              :total="total"
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-              class="paginations"
-            />
-          </div>
+            <el-table-column prop="address" label="操作">
+              <template #default="{ row }">
+                <!-- <el-button link @click="toDetail(row.id)">详情</el-button> -->
+                <el-button link type="primary" @click="toEdit(row.id)"
+                  >编辑</el-button
+                >
+                <!-- <el-button link style="color: red">删除</el-button> -->
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+        <div style="display: flex; justify-content: end; margin-top: 20px">
+          <el-pagination
+            background
+            :current-page="page.pageNum"
+            :page-size="page.pageSize"
+            layout="prev, pager, next"
+            :total="total"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            class="paginations"
+          />
         </div>
       </div>
     </div>
@@ -298,6 +302,31 @@ const toDetail = (id: any) => {
   margin: 0 auto;
   .paginations {
     margin-left: auto;
+  }
+}
+.head-box {
+  position: relative;
+}
+
+.header {
+  width: 100%;
+}
+
+.header-center {
+  width: calc(100% - 500px);
+  position: absolute;
+  left: 250px;
+  top: 50%;
+  height: 100px;
+  color: white;
+  transform: translateY(-50%);
+  div:nth-child(1) {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  div:nth-child(2) {
+    font-size: 13px;
+    // width: 400px;
   }
 }
 .topImg {

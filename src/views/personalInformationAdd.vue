@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="topImg" style="width: 100%">
+    <!-- <div class="topImg" style="width: 100%">
       <img style="width: 100%" src="../assets/images/hgztbjt.png" alt="" />
       <div class="topImgText">
         <div style="color: #fff; font-size: 23px; font-weight: 500">
@@ -11,638 +11,580 @@
           基于行业内最新动态的梳理与汇聚
         </div>
       </div>
+    </div> -->
+    <div class="head-box">
+      <img class="header" src="@/assets/images/hgztbjt.png" />
+      <div class="header-center">
+        <div>合规专题</div>
+        <div>
+          提供工业互联网安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目；<br />
+          基于行业内最新动态的梳理与汇聚
+        </div>
+      </div>
+    </div>
+    <!-- 页面 -->
+    <div class="contain">
+      <div style="font-size: 20px">
+        个人信息出境标准合同备案材料完备性预检查
+      </div>
+
+      <div style="padding: 40px">
+        <el-steps
+          style="width: 100%"
+          :active="active"
+          align-center
+          process-status="finish"
+        >
+          <el-step title="个人信息出境标准合同备案适用场景"></el-step>
+          <el-step title="个人信息处理者情况" />
+          <el-step title="法定代表人 信息" />
+          <el-step title="经办人信息" />
+          <el-step title="承诺书" />
+          <el-step title="个人信息出境场景" />
+          <el-step title="个人信息出境标准合同" />
+          <el-step title="个人信息保护影响评估报告" />
+          <el-step title="其他相关证明材料" />
+        </el-steps>
+      </div>
 
       <!-- 页面 -->
-      <div class="contain">
-        <div style="font-size: 20px">
-          个人信息出境标准合同备案材料完备性预检查
+      <div style="margin-top: 20px">
+        <div v-if="active == 0">
+          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+            个人信息处理者通过订立标准合同的方式向境外提供个人信息的，应当同时符合下列情形
+          </div>
+          <div style="margin-bottom: 20px">
+            <el-checkbox-group v-model="checkList">
+              <div>
+                <el-checkbox
+                  label=" (一) 关键信息基础设施运营者以外的数据处理者             "
+                  value="1"
+                />
+              </div>
+              <div>
+                <el-checkbox
+                  label="（二) 自当年1月1日起，累计向境外提供10万人以上、不满100万人个人信 (不含敏感个人信息) 的；"
+                  value="2"
+                />
+              </div>
+              <div>
+                <el-checkbox
+                  label="（三) 自当年1月1日起，累计向境外提供不满1万人敏感个人信息的；"
+                  value="3"
+                />
+              </div>
+            </el-checkbox-group>
+          </div>
+          <div></div>
         </div>
 
-        <div style="padding: 40px">
-          <el-steps
-            style="width: 100%"
-            :active="active"
-            align-center
-            process-status="finish"
-          >
-            <el-step title="个人信息出境标准合同备案适用场景"></el-step>
-            <el-step title="个人信息处理者情况" />
-            <el-step title="法定代表人 信息" />
-            <el-step title="经办人信息" />
-            <el-step title="承诺书" />
-            <el-step title="个人信息出境场景" />
-            <el-step title="个人信息出境标准合同" />
-            <el-step title="个人信息保护影响评估报告" />
-            <el-step title="其他相关证明材料" />
-          </el-steps>
+        <div v-if="active == 1">
+          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+            个人信息处理者情况
+          </div>
+          <div style="margin: 0 0 20px 20px">
+            <el-form ref="ruleFormRef1" :model="ruleForm1" :rules="rules1">
+              <el-row :gutter="20">
+                <el-col :span="8">
+                  <el-form-item prop="unitName">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div><span style="color: red">*</span> 单位名称</div>
+                      <el-input
+                        v-model="ruleForm1.unitName"
+                        placeholder="请输入单位名称"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8" style="display: flex">
+                  <el-form-item prop="unitNatureValue">
+                    <div style="display: flex; flex-direction: column">
+                      <div><span style="color: red"></span> 单位性质</div>
+                      <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
+                      <el-select
+                        style="width: 150px"
+                        v-model="ruleForm1.unitNatureValue"
+                        placeholder="请选择单位性质"
+                        clearable
+                      >
+                        <el-option
+                          :label="(item as any).tagName"
+                          :value="(item as any).tagValue"
+                          v-for="(item, index) in unitNatureValuelist"
+                          :key="index"
+                        />
+                      </el-select>
+                    </div>
+                  </el-form-item>
+
+                  <el-form-item prop="unitNatureOther">
+                    <div style="display: flex; flex-direction: column">
+                      <div><span style="color: red">*-</span></div>
+                      <el-input
+                        v-model="ruleForm1.unitNatureOther"
+                        placeholder="请输入其他单位性质"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8" style="display: flex">
+                  <el-form-item prop="unitCategoryValue">
+                    <div style="display: flex; flex-direction: column">
+                      <div><span style="color: red">*</span> 单位类型</div>
+                      <el-select
+                        style="width: 150px"
+                        v-model="ruleForm1.unitCategoryValue"
+                        placeholder="请选择单位类型"
+                        clearable
+                      >
+                        <el-option
+                          :label="(item as any).tagName"
+                          :value="(item as any).tagValue"
+                          v-for="(item, index) in unitCategoryList"
+                          :key="index"
+                        />
+                      </el-select>
+                    </div>
+                  </el-form-item>
+
+                  <el-form-item prop="unitCategoryOther">
+                    <div style="display: flex; flex-direction: column">
+                      <div><span style="color: red">*-</span></div>
+                      <el-input
+                        v-model="ruleForm1.unitCategoryOther"
+                        placeholder="请输入其他单位性质"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row :gutter="20">
+                <el-col :span="8">
+                  <el-form-item prop="unitRegAddr">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div><span style="color: red"></span>单位注册地</div>
+                      <el-input
+                        v-model="ruleForm1.unitRegAddr"
+                        placeholder="请输入单位注册地"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item prop="unitOfficeAddr">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div><span style="color: red">*</span>办公所在地</div>
+                      <el-input
+                        v-model="ruleForm1.unitOfficeAddr"
+                        placeholder="请输入办公所在地"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" style="display: flex">
+                  <el-form-item prop="empCount">
+                    <div style="display: flex; flex-direction: column">
+                      <div><span style="color: red"></span> 员工数量</div>
+                      <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
+                      <el-input
+                        v-model="ruleForm1.empCount"
+                        placeholder="按自然人（去重统计数量）"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+
+                  <el-form-item prop="empCountUnitValue">
+                    <div style="display: flex; flex-direction: column">
+                      <div><span style="color: red"></span> 员工数量单位</div>
+                      <el-select
+                        style="width: 150px"
+                        v-model="ruleForm1.empCountUnitValue"
+                        clearable
+                        placeholder="请选择单位"
+                      >
+                        <el-option
+                          :label="(item as any).tagName"
+                          :value="(item as any).tagValue"
+                          v-for="(item, index) in unitList"
+                          :key="index"
+                        />
+                      </el-select>
+                    </div>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row :gutter="20">
+                <el-col :span="8">
+                  <el-form-item prop="creditCode">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div>
+                        <span style="color: red"></span>统一社会信用代码
+                      </div>
+                      <el-input
+                        v-model="ruleForm1.creditCode"
+                        placeholder="请输入统一社会信用代码"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-form-item prop="keyInfoOperatorFlag">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div>
+                        <span style="color: red">*</span
+                        >是否为关键信息基础设施运营者
+                      </div>
+                      <el-select
+                        v-model="ruleForm1.keyInfoOperatorFlag"
+                        clearable
+                        placeholder="请选择是否为关键信息基础设施运营者"
+                      >
+                        <el-option label="是" value="1" />
+                        <el-option label="否" value="0" />
+                      </el-select>
+                    </div>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8" style="display: flex">
+                  <el-form-item prop="infoSize">
+                    <div style="display: flex; flex-direction: column">
+                      <div>
+                        <span style="color: red">*</span>处理个人信息规模
+                      </div>
+                      <el-input
+                        v-model="ruleForm1.infoSize"
+                        placeholder="按自然人（去重统计数量）"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                  <el-form-item prop="infoSizeUnitValue">
+                    <div style="display: flex; flex-direction: column">
+                      <div>
+                        <span style="color: red">*</span> 处理个人信息规模单位
+                      </div>
+                      <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
+                      <el-select
+                        style="width: 150px"
+                        v-model="ruleForm1.infoSizeUnitValue"
+                        clearable
+                        placeholder="请选择单位"
+                      >
+                        <el-option
+                          :label="(item as any).tagName"
+                          :value="(item as any).tagValue"
+                          v-for="(item, index) in unitList"
+                          :key="index"
+                        />
+                      </el-select>
+                    </div>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </div>
+          <div></div>
         </div>
 
-        <!-- 页面 -->
-        <div style="margin-top: 20px">
-          <div v-if="active == 0">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              个人信息处理者通过订立标准合同的方式向境外提供个人信息的，应当同时符合下列情形
-            </div>
-            <div style="margin-bottom: 20px">
-              <el-checkbox-group v-model="checkList">
-                <div>
-                  <el-checkbox
-                    label=" (一) 关键信息基础设施运营者以外的数据处理者             "
-                    value="1"
-                  />
-                </div>
-                <div>
-                  <el-checkbox
-                    label="（二) 自当年1月1日起，累计向境外提供10万人以上、不满100万人个人信 (不含敏感个人信息) 的；"
-                    value="2"
-                  />
-                </div>
-                <div>
-                  <el-checkbox
-                    label="（三) 自当年1月1日起，累计向境外提供不满1万人敏感个人信息的；"
-                    value="3"
-                  />
-                </div>
-              </el-checkbox-group>
-            </div>
-            <div></div>
+        <div v-if="active == 2">
+          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+            法定代表人信息
           </div>
-
-          <div v-if="active == 1">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              个人信息处理者情况
-            </div>
-            <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef1" :model="ruleForm1" :rules="rules1">
-                <el-row :gutter="20">
-                  <el-col :span="8">
-                    <el-form-item prop="unitName">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
+          <el-checkbox
+            v-model="ruleForm2.legalFlag"
+            label="无法定代表人"
+            size="large"
+          />
+          <div style="height: 300px; margin: 0 0 20px 20px">
+            <el-form
+              v-if="!ruleForm2.legalFlag"
+              ref="ruleFormRef2"
+              :model="ruleForm2"
+              :rules="rules2"
+            >
+              <el-row :gutter="20">
+                <el-col :span="8">
+                  <el-form-item prop="legal">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div><span style="color: red">*</span> 姓名</div>
+                      <el-input
+                        v-model="ruleForm2.legal"
+                        placeholder="请输入姓名"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item prop="legalNationalValue">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div><span style="color: red">*</span> 国籍</div>
+                      <el-select
+                        v-model="ruleForm2.legalNationalValue"
+                        clearable
+                        placeholder="请选择国籍"
                       >
-                        <div><span style="color: red">*</span> 单位名称</div>
-                        <el-input
-                          v-model="ruleForm1.unitName"
-                          placeholder="请输入单位名称"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
+                        <el-option
+                          :label="(item as any).tagName"
+                          :value="(item as any).tagValue"
+                          v-for="(item, index) in guoji"
+                          :key="index"
+                        />
+                      </el-select>
+                    </div>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item prop="legalTel">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div><span style="color: red">*</span> 联系电话</div>
+                      <el-input
+                        v-model="ruleForm2.legalTel"
+                        placeholder="请输入联系电话"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+              </el-row>
 
-                  <el-col :span="8" style="display: flex">
-                    <el-form-item prop="unitNatureValue">
-                      <div style="display: flex; flex-direction: column">
-                        <div><span style="color: red"></span> 单位性质</div>
-                        <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
-                        <el-select
-                          style="width: 150px"
-                          v-model="ruleForm1.unitNatureValue"
-                          placeholder="请选择单位性质"
-                          clearable
-                        >
-                          <el-option
-                            :label="(item as any).tagName"
-                            :value="(item as any).tagValue"
-                            v-for="(item, index) in unitNatureValuelist"
-                            :key="index"
-                          />
-                        </el-select>
-                      </div>
-                    </el-form-item>
+              <el-row :gutter="20">
+                <el-col :span="8">
+                  <el-form-item prop="legalEmail">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div><span style="color: red">*</span>电子邮箱</div>
+                      <el-input
+                        v-model="ruleForm2.legalEmail"
+                        placeholder="请输入电子邮箱"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
 
-                    <el-form-item prop="unitNatureOther">
-                      <div style="display: flex; flex-direction: column">
-                        <div><span style="color: red">*-</span></div>
-                        <el-input
-                          v-model="ruleForm1.unitNatureOther"
-                          placeholder="请输入其他单位性质"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-
-                  <el-col :span="8" style="display: flex">
-                    <el-form-item prop="unitCategoryValue">
-                      <div style="display: flex; flex-direction: column">
-                        <div><span style="color: red">*</span> 单位类型</div>
-                        <el-select
-                          style="width: 150px"
-                          v-model="ruleForm1.unitCategoryValue"
-                          placeholder="请选择单位类型"
-                          clearable
-                        >
-                          <el-option
-                            :label="(item as any).tagName"
-                            :value="(item as any).tagValue"
-                            v-for="(item, index) in unitCategoryList"
-                            :key="index"
-                          />
-                        </el-select>
-                      </div>
-                    </el-form-item>
-
-                    <el-form-item prop="unitCategoryOther">
-                      <div style="display: flex; flex-direction: column">
-                        <div><span style="color: red">*-</span></div>
-                        <el-input
-                          v-model="ruleForm1.unitCategoryOther"
-                          placeholder="请输入其他单位性质"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-
-                <el-row :gutter="20">
-                  <el-col :span="8">
-                    <el-form-item prop="unitRegAddr">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
+                <el-col :span="8" style="display: flex">
+                  <el-form-item prop="legalCertificateTypeValue">
+                    <div style="display: flex; flex-direction: column">
+                      <div><span style="color: red">*</span> 证件类型</div>
+                      <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
+                      <el-select
+                        style="width: 150px"
+                        v-model="ruleForm2.legalCertificateTypeValue"
+                        clearable
+                        placeholder="请选择证件类型"
                       >
-                        <div><span style="color: red"></span>单位注册地</div>
-                        <el-input
-                          v-model="ruleForm1.unitRegAddr"
-                          placeholder="请输入单位注册地"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8">
-                    <el-form-item prop="unitOfficeAddr">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div><span style="color: red">*</span>办公所在地</div>
-                        <el-input
-                          v-model="ruleForm1.unitOfficeAddr"
-                          placeholder="请输入办公所在地"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8" style="display: flex">
-                    <el-form-item prop="empCount">
-                      <div style="display: flex; flex-direction: column">
-                        <div><span style="color: red"></span> 员工数量</div>
-                        <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
-                        <el-input
-                          v-model="ruleForm1.empCount"
-                          placeholder="按自然人（去重统计数量）"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-
-                    <el-form-item prop="empCountUnitValue">
-                      <div style="display: flex; flex-direction: column">
-                        <div><span style="color: red"></span> 员工数量单位</div>
-                        <el-select
-                          style="width: 150px"
-                          v-model="ruleForm1.empCountUnitValue"
-                          clearable
-                          placeholder="请选择单位"
-                        >
-                          <el-option
-                            :label="(item as any).tagName"
-                            :value="(item as any).tagValue"
-                            v-for="(item, index) in unitList"
-                            :key="index"
-                          />
-                        </el-select>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-
-                <el-row :gutter="20">
-                  <el-col :span="8">
-                    <el-form-item prop="creditCode">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div>
-                          <span style="color: red"></span>统一社会信用代码
-                        </div>
-                        <el-input
-                          v-model="ruleForm1.creditCode"
-                          placeholder="请输入统一社会信用代码"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-
-                  <el-col :span="8">
-                    <el-form-item prop="keyInfoOperatorFlag">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div>
-                          <span style="color: red">*</span
-                          >是否为关键信息基础设施运营者
-                        </div>
-                        <el-select
-                          v-model="ruleForm1.keyInfoOperatorFlag"
-                          clearable
-                          placeholder="请选择是否为关键信息基础设施运营者"
-                        >
-                          <el-option label="是" value="1" />
-                          <el-option label="否" value="0" />
-                        </el-select>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-
-                  <el-col :span="8" style="display: flex">
-                    <el-form-item prop="infoSize">
-                      <div style="display: flex; flex-direction: column">
-                        <div>
-                          <span style="color: red">*</span>处理个人信息规模
-                        </div>
-                        <el-input
-                          v-model="ruleForm1.infoSize"
-                          placeholder="按自然人（去重统计数量）"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                    <el-form-item prop="infoSizeUnitValue">
-                      <div style="display: flex; flex-direction: column">
-                        <div>
-                          <span style="color: red">*</span> 处理个人信息规模单位
-                        </div>
-                        <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
-                        <el-select
-                          style="width: 150px"
-                          v-model="ruleForm1.infoSizeUnitValue"
-                          clearable
-                          placeholder="请选择单位"
-                        >
-                          <el-option
-                            :label="(item as any).tagName"
-                            :value="(item as any).tagValue"
-                            v-for="(item, index) in unitList"
-                            :key="index"
-                          />
-                        </el-select>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-              </el-form>
-            </div>
-            <div></div>
-          </div>
-
-          <div v-if="active == 2">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              法定代表人信息
-            </div>
-            <el-checkbox
-              v-model="ruleForm2.legalFlag"
-              label="无法定代表人"
-              size="large"
-            />
-            <div style="height: 300px; margin: 0 0 20px 20px">
-              <el-form
-                v-if="!ruleForm2.legalFlag"
-                ref="ruleFormRef2"
-                :model="ruleForm2"
-                :rules="rules2"
-              >
-                <el-row :gutter="20">
-                  <el-col :span="8">
-                    <el-form-item prop="legal">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div><span style="color: red">*</span> 姓名</div>
-                        <el-input
-                          v-model="ruleForm2.legal"
-                          placeholder="请输入姓名"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8">
-                    <el-form-item prop="legalNationalValue">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div><span style="color: red">*</span> 国籍</div>
-                        <el-select
-                          v-model="ruleForm2.legalNationalValue"
-                          clearable
-                          placeholder="请选择国籍"
-                        >
-                          <el-option
-                            :label="(item as any).tagName"
-                            :value="(item as any).tagValue"
-                            v-for="(item, index) in guoji"
-                            :key="index"
-                          />
-                        </el-select>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8">
-                    <el-form-item prop="legalTel">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div><span style="color: red">*</span> 联系电话</div>
-                        <el-input
-                          v-model="ruleForm2.legalTel"
-                          placeholder="请输入联系电话"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-
-                <el-row :gutter="20">
-                  <el-col :span="8">
-                    <el-form-item prop="legalEmail">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div><span style="color: red">*</span>电子邮箱</div>
-                        <el-input
-                          v-model="ruleForm2.legalEmail"
-                          placeholder="请输入电子邮箱"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-
-                  <el-col :span="8" style="display: flex">
-                    <el-form-item prop="legalCertificateTypeValue">
-                      <div style="display: flex; flex-direction: column">
-                        <div><span style="color: red">*</span> 证件类型</div>
-                        <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
-                        <el-select
-                          style="width: 150px"
-                          v-model="ruleForm2.legalCertificateTypeValue"
-                          clearable
-                          placeholder="请选择证件类型"
-                        >
-                          <el-option
-                            :label="(item as any).tagName"
-                            :value="(item as any).tagValue"
-                            v-for="(item, index) in certificatetype"
-                            :key="index"
-                          />
-                          <!-- <el-option label="居民身份证" value="1" />
+                        <el-option
+                          :label="(item as any).tagName"
+                          :value="(item as any).tagValue"
+                          v-for="(item, index) in certificatetype"
+                          :key="index"
+                        />
+                        <!-- <el-option label="居民身份证" value="1" />
                           <el-option label="护照" value="2" />
                           <el-option label="台湾居民来往大陆通行证" value="3" />
                           <el-option label="港澳居民来往大陆通行证" value="4" />
                           <el-option label="其他" value="5" /> -->
-                        </el-select>
-                      </div>
-                    </el-form-item>
+                      </el-select>
+                    </div>
+                  </el-form-item>
 
-                    <el-form-item prop="legalCertificateTypeOther">
-                      <div style="display: flex; flex-direction: column">
-                        <div><span style="color: red">*-</span></div>
-                        <el-input
-                          v-model="ruleForm2.legalCertificateTypeOther"
-                          placeholder="请输入其他证件类型"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8">
-                    <el-form-item prop="legalCertificateCode">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div><span style="color: red">*</span>证件号码</div>
-                        <el-input
-                          v-model="ruleForm2.legalCertificateCode"
-                          placeholder="请输入证件号码"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
+                  <el-form-item prop="legalCertificateTypeOther">
+                    <div style="display: flex; flex-direction: column">
+                      <div><span style="color: red">*-</span></div>
+                      <el-input
+                        v-model="ruleForm2.legalCertificateTypeOther"
+                        placeholder="请输入其他证件类型"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item prop="legalCertificateCode">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div><span style="color: red">*</span>证件号码</div>
+                      <el-input
+                        v-model="ruleForm2.legalCertificateCode"
+                        placeholder="请输入证件号码"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+              </el-row>
 
-                <el-row :gutter="20">
-                  <el-col :span="8">
-                    <el-form-item prop="legalJob">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div><span style="color: red">*</span>职务</div>
-                        <el-input
-                          v-model="ruleForm2.legalJob"
-                          placeholder="请输入职务"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-              </el-form>
-            </div>
-            <div></div>
+              <el-row :gutter="20">
+                <el-col :span="8">
+                  <el-form-item prop="legalJob">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div><span style="color: red">*</span>职务</div>
+                      <el-input
+                        v-model="ruleForm2.legalJob"
+                        placeholder="请输入职务"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
           </div>
+          <div></div>
+        </div>
 
-          <div v-if="active == 3">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              经办人信息
-            </div>
-            <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef3" :model="ruleForm3" :rules="rules3">
-                <el-row :gutter="20">
-                  <el-col :span="8">
-                    <el-form-item prop="operator">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
+        <div v-if="active == 3">
+          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+            经办人信息
+          </div>
+          <div style="margin: 0 0 20px 20px">
+            <el-form ref="ruleFormRef3" :model="ruleForm3" :rules="rules3">
+              <el-row :gutter="20">
+                <el-col :span="8">
+                  <el-form-item prop="operator">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div><span style="color: red">*</span> 姓名</div>
+                      <el-input
+                        v-model="ruleForm3.operator"
+                        placeholder="请输入姓名"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item prop="operatorNationalValue">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div><span style="color: red">*</span> 国籍</div>
+                      <el-select
+                        style="width: 150px"
+                        v-model="ruleForm3.operatorNationalValue"
+                        clearable
+                        placeholder="请选择国籍"
                       >
-                        <div><span style="color: red">*</span> 姓名</div>
-                        <el-input
-                          v-model="ruleForm3.operator"
-                          placeholder="请输入姓名"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8">
-                    <el-form-item prop="operatorNationalValue">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div><span style="color: red">*</span> 国籍</div>
-                        <el-select
-                          style="width: 150px"
-                          v-model="ruleForm3.operatorNationalValue"
-                          clearable
-                          placeholder="请选择国籍"
-                        >
-                          <el-option
-                            :label="(item as any).tagName"
-                            :value="(item as any).tagValue"
-                            v-for="(item, index) in guoji"
-                            :key="index"
-                          />
-                        </el-select>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8">
-                    <el-form-item prop="operatorTel">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div><span style="color: red">*</span> 联系电话</div>
-                        <el-input
-                          v-model="ruleForm3.operatorTel"
-                          placeholder="请输入联系电话"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
+                        <el-option
+                          :label="(item as any).tagName"
+                          :value="(item as any).tagValue"
+                          v-for="(item, index) in guoji"
+                          :key="index"
+                        />
+                      </el-select>
+                    </div>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item prop="operatorTel">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div><span style="color: red">*</span> 联系电话</div>
+                      <el-input
+                        v-model="ruleForm3.operatorTel"
+                        placeholder="请输入联系电话"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+              </el-row>
 
-                <el-row :gutter="20">
-                  <el-col :span="8">
-                    <el-form-item prop="operatorEmail">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
+              <el-row :gutter="20">
+                <el-col :span="8">
+                  <el-form-item prop="operatorEmail">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div><span style="color: red">*</span>电子邮箱</div>
+                      <el-input
+                        v-model="ruleForm3.operatorEmail"
+                        placeholder="请输入电子邮箱"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8" style="display: flex">
+                  <el-form-item prop="operatorCertificateTypeValue">
+                    <div style="display: flex; flex-direction: column">
+                      <div><span style="color: red">*</span> 证件类型</div>
+                      <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
+                      <el-select
+                        style="width: 150px"
+                        v-model="ruleForm3.operatorCertificateTypeValue"
+                        clearable
+                        placeholder="请选择证件类型"
                       >
-                        <div><span style="color: red">*</span>电子邮箱</div>
-                        <el-input
-                          v-model="ruleForm3.operatorEmail"
-                          placeholder="请输入电子邮箱"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8" style="display: flex">
-                    <el-form-item prop="operatorCertificateTypeValue">
-                      <div style="display: flex; flex-direction: column">
-                        <div><span style="color: red">*</span> 证件类型</div>
-                        <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
-                        <el-select
-                          style="width: 150px"
-                          v-model="ruleForm3.operatorCertificateTypeValue"
-                          clearable
-                          placeholder="请选择证件类型"
-                        >
-                          <el-option
-                            :label="(item as any).tagName"
-                            :value="(item as any).tagValue"
-                            v-for="(item, index) in certificatetype"
-                            :key="index"
-                          />
-                        </el-select>
-                      </div>
-                    </el-form-item>
+                        <el-option
+                          :label="(item as any).tagName"
+                          :value="(item as any).tagValue"
+                          v-for="(item, index) in certificatetype"
+                          :key="index"
+                        />
+                      </el-select>
+                    </div>
+                  </el-form-item>
 
-                    <el-form-item prop="operatorCertificateTypeOther">
-                      <div style="display: flex; flex-direction: column">
-                        <div><span style="color: red">*-</span></div>
-                        <el-input
-                          v-model="ruleForm3.operatorCertificateTypeOther"
-                          placeholder="请输入其他证件类型"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8">
-                    <el-form-item prop="operatorCertificateCode">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div><span style="color: red">*</span>证件号码</div>
-                        <el-input
-                          v-model="ruleForm3.operatorCertificateCode"
-                          placeholder="请输入证件号码"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
+                  <el-form-item prop="operatorCertificateTypeOther">
+                    <div style="display: flex; flex-direction: column">
+                      <div><span style="color: red">*-</span></div>
+                      <el-input
+                        v-model="ruleForm3.operatorCertificateTypeOther"
+                        placeholder="请输入其他证件类型"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item prop="operatorCertificateCode">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div><span style="color: red">*</span>证件号码</div>
+                      <el-input
+                        v-model="ruleForm3.operatorCertificateCode"
+                        placeholder="请输入证件号码"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+              </el-row>
 
-                <el-row :gutter="20">
-                  <el-col :span="8">
-                    <el-form-item prop="operatorJob">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div><span style="color: red">*</span>职务</div>
-                        <el-input
-                          v-model="ruleForm3.operatorJob"
-                          placeholder="请输入职务"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                  <!-- <el-col :span="8" style="display: flex">
+              <el-row :gutter="20">
+                <el-col :span="8">
+                  <el-form-item prop="operatorJob">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div><span style="color: red">*</span>职务</div>
+                      <el-input
+                        v-model="ruleForm3.operatorJob"
+                        placeholder="请输入职务"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+                <!-- <el-col :span="8" style="display: flex">
                     <el-form-item prop="gljgrs">
                       <div style="display: flex; flex-direction: column">
                         <div>
@@ -682,39 +624,35 @@
                       </div>
                     </el-form-item>
                   </el-col> -->
-                </el-row>
-              </el-form>
-            </div>
-            <div></div>
+              </el-row>
+            </el-form>
           </div>
+          <div></div>
+        </div>
 
-          <div v-if="active == 4">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              承诺书
-            </div>
-            <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef4" :model="ruleForm4" :rules="rules4">
-                <el-row :gutter="20">
-                  <el-col :span="12">
-                    <el-form-item prop="promiseAttachIdList">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 70%;
-                        "
-                      >
-                        <div>
-                          <span style="color: red">*</span>
-                          承诺书
-                        </div>
-                        <div style="display: flex">
-                          <el-input
-                            style="margin-right: 50px"
-                            v-model="ruleForm4.fileName"
-                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
-                          ></el-input>
-                          <!-- <el-button
+        <div v-if="active == 4">
+          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+            承诺书
+          </div>
+          <div style="margin: 0 0 20px 20px">
+            <el-form ref="ruleFormRef4" :model="ruleForm4" :rules="rules4">
+              <el-row :gutter="20">
+                <el-col :span="12">
+                  <el-form-item prop="promiseAttachIdList">
+                    <div
+                      style="display: flex; flex-direction: column; width: 70%"
+                    >
+                      <div>
+                        <span style="color: red">*</span>
+                        承诺书
+                      </div>
+                      <div style="display: flex">
+                        <el-input
+                          style="margin-right: 50px"
+                          v-model="ruleForm4.fileName"
+                          placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                        ></el-input>
+                        <!-- <el-button
                             style="
                               border-radius: 50px;
                               background-color: #fff;
@@ -724,471 +662,126 @@
                             :icon="Download"
                             >上传文件</el-button
                           > -->
-                          <!-- <q-file
+                        <!-- <q-file
                         v-model="file"
                         filled
                         style="max-width: 300px"
                         /> -->
-                          <el-upload
-                            drag
-                            class="upload-demo"
-                            :show-file-list="false"
-                            :http-request="customUpload"
+                        <el-upload
+                          drag
+                          class="upload-demo"
+                          :show-file-list="false"
+                          :http-request="customUpload"
+                        >
+                          <el-button
+                            style="
+                              border-radius: 50px;
+                              background-color: #fff;
+                              color: #4984ff;
+                            "
+                            type="primary"
+                            :icon="Download"
+                            >上传文件</el-button
                           >
-                            <el-button
-                              style="
-                                border-radius: 50px;
-                                background-color: #fff;
-                                color: #4984ff;
-                              "
-                              type="primary"
-                              :icon="Download"
-                              >上传文件</el-button
-                            >
 
-                            <!-- <template #tip>
+                          <!-- <template #tip>
                               <div class="el-upload__tip">
                                 jpg/png files with a size less than 500KB.
                               </div>
                             </template> -->
-                          </el-upload>
-                          <!-- <div v-if="ruleForm4.promiseAttachIdList.length > 0">
+                        </el-upload>
+                        <!-- <div v-if="ruleForm4.promiseAttachIdList.length > 0">
                             已上传
                           </div> -->
-                        </div>
+                      </div>
+                    </div>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </div>
+          <div></div>
+          <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
+            《承诺书》模板下载
+          </div>
+        </div>
+
+        <div v-if="active == 5">
+          <div
+            v-for="(it, i) in ruleForm5"
+            :key="i"
+            style="
+              border: 1px dashed;
+              border-radius: 10px;
+              margin-bottom: 20px;
+              padding: 20px;
+            "
+          >
+            <div
+              v-if="i > 0"
+              style="float: right; color: #409eff; cursor: pointer"
+              @click="closeScene(i)"
+            >
+              删除该场景
+            </div>
+            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+              个人信息出境场景{{ i + 1 }}
+            </div>
+            <div style="margin: 0 0 20px 20px">
+              <el-form ref="ruleFormRef5" :model="it" :rules="rules5">
+                <el-row :gutter="20">
+                  <el-col :span="24">
+                    <el-form-item prop="summary">
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: column;
+                          width: 100%;
+                        "
+                      >
+                        <div><span style="color: red">*</span>出境场景简述</div>
+                        <el-input
+                          :rows="6"
+                          type="textarea"
+                          v-model="it.summary"
+                          placeholder="填写拟出境个人信息类型，比如姓名(真实姓名)、电话号码(手机号或固定电话号码)、身份证(身份证号码或身份证照片)、护照(护照号码或护照照片)、电子邮箱、移动设备型号(如手机、PAD型号)、社交媒体账号、社交媒体浏览\搜索\点赞等行为记录、银行卡号、交易信息、用户设置的访问密码、设备型号信息、位置信息(静态信息)、轨迹信息(动态信息)、影像记录信息、个人生物识别信息(面部识别或指纹识别或声音识别)、病例、医疗影像信息、工作经历、教育经历信息、办公地址、家庭地址、家庭成员、家庭财产信息(如家庭收入、债务)、其他"
+                        ></el-input>
                       </div>
                     </el-form-item>
                   </el-col>
                 </el-row>
-              </el-form>
-            </div>
-            <div></div>
-            <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
-              《承诺书》模板下载
-            </div>
-          </div>
 
-          <div v-if="active == 5">
-            <div
-              v-for="(it, i) in ruleForm5"
-              :key="i"
-              style="
-                border: 1px dashed;
-                border-radius: 10px;
-                margin-bottom: 20px;
-                padding: 20px;
-              "
-            >
-              <div
-                v-if="i > 0"
-                style="float: right; color: #409eff; cursor: pointer"
-                @click="closeScene(i)"
-              >
-                删除该场景
-              </div>
-              <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-                个人信息出境场景{{ i + 1 }}
-              </div>
-              <div style="margin: 0 0 20px 20px">
-                <el-form ref="ruleFormRef5" :model="it" :rules="rules5">
-                  <el-row :gutter="20">
-                    <el-col :span="24">
-                      <el-form-item prop="summary">
-                        <div
-                          style="
-                            display: flex;
-                            flex-direction: column;
-                            width: 100%;
-                          "
-                        >
-                          <div>
-                            <span style="color: red">*</span>出境场景简述
-                          </div>
-                          <el-input
-                            :rows="6"
-                            type="textarea"
-                            v-model="it.summary"
-                            placeholder="填写拟出境个人信息类型，比如姓名(真实姓名)、电话号码(手机号或固定电话号码)、身份证(身份证号码或身份证照片)、护照(护照号码或护照照片)、电子邮箱、移动设备型号(如手机、PAD型号)、社交媒体账号、社交媒体浏览\搜索\点赞等行为记录、银行卡号、交易信息、用户设置的访问密码、设备型号信息、位置信息(静态信息)、轨迹信息(动态信息)、影像记录信息、个人生物识别信息(面部识别或指纹识别或声音识别)、病例、医疗影像信息、工作经历、教育经历信息、办公地址、家庭地址、家庭成员、家庭财产信息(如家庭收入、债务)、其他"
-                          ></el-input>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
+                <div
+                  style="color: #2977ff; font-size: 15px; margin-bottom: 20px"
+                >
+                  拟数据出境情况
+                </div>
 
-                  <div
-                    style="color: #2977ff; font-size: 15px; margin-bottom: 20px"
-                  >
-                    拟数据出境情况
-                  </div>
-
-                  <el-row :gutter="20">
-                    <el-col :span="8">
-                      <el-form-item prop="dataTypeName">
-                        <div
-                          style="
-                            display: flex;
-                            flex-direction: column;
-                            width: 100%;
-                          "
-                        >
-                          <div><span style="color: red">*</span> 数据类型</div>
-                          <el-select
-                            style="width: 150px"
-                            v-model="it.dataTypeName"
-                            clearable
-                            placeholder="请选择数据类型"
-                          >
-                            <el-option label="个人信息" value="1" />
-                          </el-select>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-
-                    <el-col :span="8">
-                      <el-form-item prop="containInfoFlag">
-                        <div
-                          style="
-                            display: flex;
-                            flex-direction: column;
-                            width: 80%;
-                          "
-                        >
-                          <div>
-                            <span style="color: red">*</span>
-                            是否包含敏感个人信息
-                          </div>
-                          <el-select
-                            style="width: 150px"
-                            v-model="it.containInfoFlag"
-                            clearable
-                            placeholder="请选择数据类型"
-                          >
-                            <el-option label="是" value="1" />
-                            <el-option label="否" value="0" />
-                          </el-select>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-
-                    <el-col :span="8" style="display: flex">
-                      <el-form-item prop="industryValue">
-                        <div style="display: flex; flex-direction: column">
-                          <div>
-                            <span style="color: red">*</span> 涉及行业/领域
-                          </div>
-                          <el-select
-                            style="width: 150px"
-                            v-model="it.industryValue"
-                            clearable
-                            placeholder="请选择涉及行业/领域"
-                          >
-                            <el-option
-                              :label="(item as any).tagName"
-                              :value="(item as any).tagValue"
-                              v-for="(item, index) in industryarea"
-                              :key="index"
-                            />
-                          </el-select>
-                        </div>
-                      </el-form-item>
-
-                      <el-form-item prop="industryOther">
-                        <div style="display: flex; flex-direction: column">
-                          <div>
-                            <span style="color: red">*</span>涉及其他行业/领域
-                          </div>
-                          <el-input
-                            v-model="it.industryOther"
-                            placeholder="请输入涉及行业/领域（其他）"
-                          ></el-input>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-
-                  <el-row :gutter="20">
-                    <el-col :span="8" style="display: flex">
-                      <el-form-item prop="personCount">
-                        <div
-                          style="
-                            display: flex;
-                            flex-direction: column;
-                            width: 150px;
-                          "
-                        >
-                          <div>
-                            <span style="color: red">*</span
-                            >涉及自然人（去重）数量
-                          </div>
-                          <el-input
-                            v-model="it.personCount"
-                            placeholder="请输入涉及自然人（去重）数量"
-                          ></el-input>
-                        </div>
-                      </el-form-item>
-                      <el-form-item prop="personCountUnitValue">
-                        <div
-                          style="
-                            display: flex;
-                            flex-direction: column;
-                            width: 80%;
-                          "
-                        >
-                          <div>
-                            <span style="color: red">*</span
-                            >涉及自然人（去重）数量单位
-                          </div>
-
-                          <el-select
-                            style="width: 150px"
-                            v-model="it.personCountUnitValue"
-                            clearable
-                            placeholder="请选择单位"
-                          >
-                            <el-option
-                              :label="(item as any).tagName"
-                              :value="(item as any).tagValue"
-                              v-for="(item, index) in unitList"
-                              :key="index"
-                            />
-                          </el-select>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-
-                  <div
-                    style="color: #2977ff; font-size: 15px; margin-bottom: 20px"
-                  >
-                    境外接收方情况
-                  </div>
-
-                  <el-row :gutter="20">
-                    <el-col :span="8">
-                      <el-form-item prop="foreignReceiver">
-                        <div
-                          style="
-                            display: flex;
-                            flex-direction: column;
-                            width: 100%;
-                          "
-                        >
-                          <div>
-                            <span style="color: red">*</span> 境外接收方名称
-                          </div>
-                          <el-input
-                            v-model="it.foreignReceiver"
-                            placeholder="请输入境外接收方名称"
-                          ></el-input>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-
-                    <el-col :span="8">
-                      <el-form-item prop="areaValue">
-                        <div
-                          style="
-                            display: flex;
-                            flex-direction: column;
-                            width: 80%;
-                          "
-                        >
-                          <div>
-                            <span style="color: red">*</span> 所在国家或者地区
-                          </div>
-                          <el-select
-                            style="width: 150px"
-                            v-model="it.areaValue"
-                            clearable
-                            placeholder="请选择所在国家或者地区"
-                          >
-                            <el-option
-                              :label="(item as any).tagName"
-                              :value="(item as any).tagValue"
-                              v-for="(item, index) in area"
-                              :key="index"
-                            />
-                          </el-select>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-
-                    <el-col :span="8" style="display: flex">
-                      <el-form-item prop="primaryBusiness">
-                        <div style="display: flex; flex-direction: column">
-                          <div><span style="color: red">*</span> 主营业务</div>
-                          <el-input
-                            v-model="it.primaryBusiness"
-                            placeholder="请输入主营业务"
-                          ></el-input>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-
-                  <el-row :gutter="20">
-                    <el-col :span="8" style="display: flex">
-                      <el-form-item prop="principalName">
-                        <div
-                          style="
-                            display: flex;
-                            flex-direction: column;
-                            width: 150px;
-                          "
-                        >
-                          <div><span style="color: red">*</span>负责人姓名</div>
-                          <el-input
-                            v-model="it.principalName"
-                            placeholder="请输入负责人姓名"
-                          ></el-input>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="8" style="display: flex">
-                      <el-form-item prop="principalJob">
-                        <div
-                          style="
-                            display: flex;
-                            flex-direction: column;
-                            width: 80%;
-                          "
-                        >
-                          <div><span style="color: red">*</span>负责人职务</div>
-
-                          <el-input
-                            v-model="it.principalJob"
-                            placeholder="请输入负责人职务"
-                          ></el-input>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row :gutter="20">
-                    <el-col :span="8" style="display: flex">
-                      <el-form-item prop="contactTel">
-                        <div
-                          style="
-                            display: flex;
-                            flex-direction: column;
-                            width: 150px;
-                          "
-                        >
-                          <div>
-                            <span style="color: red"></span>联系方式-电话
-                          </div>
-                          <el-input
-                            v-model="it.contactTel"
-                            placeholder="请输入联系方式-电话"
-                          ></el-input>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="8" style="display: flex">
-                      <el-form-item prop="contactEmail">
-                        <div
-                          style="
-                            display: flex;
-                            flex-direction: column;
-                            width: 80%;
-                          "
-                        >
-                          <div>
-                            <span style="color: red"></span>联系方式-邮箱
-                          </div>
-
-                          <el-input
-                            v-model="it.contactEmail"
-                            placeholder="请输入联系方式-邮箱"
-                          ></el-input>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row :gutter="20">
-                    <el-col :span="24">
-                      <el-form-item prop="addr">
-                        <div
-                          style="
-                            display: flex;
-                            flex-direction: column;
-                            width: 100%;
-                          "
-                        >
-                          <div><span style="color: red">*</span>所在地址</div>
-                          <el-input
-                            :rows="6"
-                            type="textarea"
-                            v-model="it.addr"
-                            placeholder="请输入所在地址"
-                          ></el-input>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row :gutter="20">
-                    <el-col :span="24">
-                      <el-form-item prop="statDescription">
-                        <div
-                          style="
-                            display: flex;
-                            flex-direction: column;
-                            width: 100%;
-                          "
-                        >
-                          <div><span style="color: red"></span>统计说明</div>
-                          <el-input
-                            :rows="6"
-                            type="textarea"
-                            v-model="it.statDescription"
-                            placeholder="请输入统计说明"
-                          ></el-input>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                </el-form>
-              </div>
-            </div>
-            <div style="width: 100%; text-align: center">
-              <el-button @click="addScene" type="primary"
-                >添加数据出境场景</el-button
-              >
-            </div>
-          </div>
-
-          <div v-if="active == 6">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              承诺书
-            </div>
-            <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef6" :model="ruleForm6" :rules="rules6">
                 <el-row :gutter="20">
                   <el-col :span="8">
-                    <el-form-item prop="contractMakeDate">
+                    <el-form-item prop="dataTypeName">
                       <div
                         style="
                           display: flex;
                           flex-direction: column;
-                          width: 80%;
+                          width: 100%;
                         "
                       >
-                        <div>
-                          <span style="color: red">*</span>标准合同订立日期
-                        </div>
-                        <el-date-picker
-                          v-model="ruleForm6.contractMakeDate"
-                          type="date"
-                          placeholder="请选择标准合同订立日期"
-                        />
-                        <!-- <el-input
-                          v-model="ruleForm6.contractMakeDate"
-                          placeholder="请输入办公所在地"
-                        ></el-input> -->
+                        <div><span style="color: red">*</span> 数据类型</div>
+                        <el-select
+                          style="width: 150px"
+                          v-model="it.dataTypeName"
+                          clearable
+                          placeholder="请选择数据类型"
+                        >
+                          <el-option label="个人信息" value="1" />
+                        </el-select>
                       </div>
                     </el-form-item>
                   </el-col>
+
                   <el-col :span="8">
-                    <el-form-item prop="contractValidDate">
+                    <el-form-item prop="containInfoFlag">
                       <div
                         style="
                           display: flex;
@@ -1197,320 +790,632 @@
                         "
                       >
                         <div>
-                          <span style="color: red">*</span>标准合同生效日期
+                          <span style="color: red">*</span>
+                          是否包含敏感个人信息
                         </div>
-                        <el-date-picker
-                          v-model="ruleForm6.contractValidDate"
-                          type="date"
-                          placeholder="请选择标准合同生效日期"
-                        />
-                        <!-- <el-input
-                          v-model="ruleForm6.contractValidDate"
-                          placeholder="请输入办公所在地"
-                        ></el-input> -->
+                        <el-select
+                          style="width: 150px"
+                          v-model="it.containInfoFlag"
+                          clearable
+                          placeholder="请选择数据类型"
+                        >
+                          <el-option label="是" value="1" />
+                          <el-option label="否" value="0" />
+                        </el-select>
                       </div>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="8">
-                    <el-form-item prop="contractContent">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
+
+                  <el-col :span="8" style="display: flex">
+                    <el-form-item prop="industryValue">
+                      <div style="display: flex; flex-direction: column">
                         <div>
-                          <span style="color: red"></span>相关商业合同名称
+                          <span style="color: red">*</span> 涉及行业/领域
+                        </div>
+                        <el-select
+                          style="width: 150px"
+                          v-model="it.industryValue"
+                          clearable
+                          placeholder="请选择涉及行业/领域"
+                        >
+                          <el-option
+                            :label="(item as any).tagName"
+                            :value="(item as any).tagValue"
+                            v-for="(item, index) in industryarea"
+                            :key="index"
+                          />
+                        </el-select>
+                      </div>
+                    </el-form-item>
+
+                    <el-form-item prop="industryOther">
+                      <div style="display: flex; flex-direction: column">
+                        <div>
+                          <span style="color: red">*</span>涉及其他行业/领域
                         </div>
                         <el-input
-                          v-model="ruleForm6.contractContent"
-                          placeholder="请输入相关商业合同名称"
+                          v-model="it.industryOther"
+                          placeholder="请输入涉及行业/领域（其他）"
+                        ></el-input>
+                      </div>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+
+                <el-row :gutter="20">
+                  <el-col :span="8" style="display: flex">
+                    <el-form-item prop="personCount">
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: column;
+                          width: 150px;
+                        "
+                      >
+                        <div>
+                          <span style="color: red">*</span
+                          >涉及自然人（去重）数量
+                        </div>
+                        <el-input
+                          v-model="it.personCount"
+                          placeholder="请输入涉及自然人（去重）数量"
+                        ></el-input>
+                      </div>
+                    </el-form-item>
+                    <el-form-item prop="personCountUnitValue">
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: column;
+                          width: 80%;
+                        "
+                      >
+                        <div>
+                          <span style="color: red">*</span
+                          >涉及自然人（去重）数量单位
+                        </div>
+
+                        <el-select
+                          style="width: 150px"
+                          v-model="it.personCountUnitValue"
+                          clearable
+                          placeholder="请选择单位"
+                        >
+                          <el-option
+                            :label="(item as any).tagName"
+                            :value="(item as any).tagValue"
+                            v-for="(item, index) in unitList"
+                            :key="index"
+                          />
+                        </el-select>
+                      </div>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+
+                <div
+                  style="color: #2977ff; font-size: 15px; margin-bottom: 20px"
+                >
+                  境外接收方情况
+                </div>
+
+                <el-row :gutter="20">
+                  <el-col :span="8">
+                    <el-form-item prop="foreignReceiver">
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: column;
+                          width: 100%;
+                        "
+                      >
+                        <div>
+                          <span style="color: red">*</span> 境外接收方名称
+                        </div>
+                        <el-input
+                          v-model="it.foreignReceiver"
+                          placeholder="请输入境外接收方名称"
+                        ></el-input>
+                      </div>
+                    </el-form-item>
+                  </el-col>
+
+                  <el-col :span="8">
+                    <el-form-item prop="areaValue">
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: column;
+                          width: 80%;
+                        "
+                      >
+                        <div>
+                          <span style="color: red">*</span> 所在国家或者地区
+                        </div>
+                        <el-select
+                          style="width: 150px"
+                          v-model="it.areaValue"
+                          clearable
+                          placeholder="请选择所在国家或者地区"
+                        >
+                          <el-option
+                            :label="(item as any).tagName"
+                            :value="(item as any).tagValue"
+                            v-for="(item, index) in area"
+                            :key="index"
+                          />
+                        </el-select>
+                      </div>
+                    </el-form-item>
+                  </el-col>
+
+                  <el-col :span="8" style="display: flex">
+                    <el-form-item prop="primaryBusiness">
+                      <div style="display: flex; flex-direction: column">
+                        <div><span style="color: red">*</span> 主营业务</div>
+                        <el-input
+                          v-model="it.primaryBusiness"
+                          placeholder="请输入主营业务"
+                        ></el-input>
+                      </div>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+
+                <el-row :gutter="20">
+                  <el-col :span="8" style="display: flex">
+                    <el-form-item prop="principalName">
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: column;
+                          width: 150px;
+                        "
+                      >
+                        <div><span style="color: red">*</span>负责人姓名</div>
+                        <el-input
+                          v-model="it.principalName"
+                          placeholder="请输入负责人姓名"
+                        ></el-input>
+                      </div>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="8" style="display: flex">
+                    <el-form-item prop="principalJob">
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: column;
+                          width: 80%;
+                        "
+                      >
+                        <div><span style="color: red">*</span>负责人职务</div>
+
+                        <el-input
+                          v-model="it.principalJob"
+                          placeholder="请输入负责人职务"
                         ></el-input>
                       </div>
                     </el-form-item>
                   </el-col>
                 </el-row>
                 <el-row :gutter="20">
-                  <el-col :span="12">
-                    <el-form-item prop="standardContractAttachIdList">
+                  <el-col :span="8" style="display: flex">
+                    <el-form-item prop="contactTel">
                       <div
                         style="
                           display: flex;
                           flex-direction: column;
-                          width: 70%;
+                          width: 150px;
                         "
                       >
-                        <div>
-                          <span style="color: red">*</span>
-                          标准合同文件
-                        </div>
-                        <div style="display: flex">
-                          <el-input
-                            style="margin-right: 50px"
-                            v-model="ruleForm6.fileName"
-                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
-                          ></el-input>
-                          <el-upload
-                            drag
-                            class="upload-demo"
-                            :show-file-list="false"
-                            :http-request="customUpload6"
-                          >
-                            <el-button
-                              style="
-                                border-radius: 50px;
-                                background-color: #fff;
-                                color: #4984ff;
-                              "
-                              type="primary"
-                              :icon="Download"
-                              >上传文件</el-button
-                            >
-
-                            <!-- <template #tip>
-                              <div class="el-upload__tip">
-                                jpg/png files with a size less than 500KB.
-                              </div>
-                            </template> -->
-                          </el-upload>
-                          <!-- <el-button
-                            style="
-                              border-radius: 50px;
-                              background-color: #fff;
-                              color: #4984ff;
-                            "
-                            type="primary"
-                            :icon="Download"
-                            >上传文件</el-button
-                          > -->
-                        </div>
+                        <div><span style="color: red"></span>联系方式-电话</div>
+                        <el-input
+                          v-model="it.contactTel"
+                          placeholder="请输入联系方式-电话"
+                        ></el-input>
                       </div>
                     </el-form-item>
-                    <div style="font-size: 12px; margin-top: -10px">
-                      请上传《个人信息出境标准合同》加盖公章的影印件
-                    </div>
+                  </el-col>
+                  <el-col :span="8" style="display: flex">
+                    <el-form-item prop="contactEmail">
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: column;
+                          width: 80%;
+                        "
+                      >
+                        <div><span style="color: red"></span>联系方式-邮箱</div>
+
+                        <el-input
+                          v-model="it.contactEmail"
+                          placeholder="请输入联系方式-邮箱"
+                        ></el-input>
+                      </div>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                  <el-col :span="24">
+                    <el-form-item prop="addr">
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: column;
+                          width: 100%;
+                        "
+                      >
+                        <div><span style="color: red">*</span>所在地址</div>
+                        <el-input
+                          :rows="6"
+                          type="textarea"
+                          v-model="it.addr"
+                          placeholder="请输入所在地址"
+                        ></el-input>
+                      </div>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                  <el-col :span="24">
+                    <el-form-item prop="statDescription">
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: column;
+                          width: 100%;
+                        "
+                      >
+                        <div><span style="color: red"></span>统计说明</div>
+                        <el-input
+                          :rows="6"
+                          type="textarea"
+                          v-model="it.statDescription"
+                          placeholder="请输入统计说明"
+                        ></el-input>
+                      </div>
+                    </el-form-item>
                   </el-col>
                 </el-row>
               </el-form>
             </div>
-            <div></div>
-            <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
-              《个人信息出境标准合同》模板下载
-            </div>
           </div>
-
-          <div v-if="active == 7">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              个人信息保护影响评估报告
-            </div>
-            <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef7" :model="ruleForm7" :rules="rules7">
-                <el-row :gutter="20">
-                  <el-col :span="12">
-                    <el-form-item prop="fileName">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 70%;
-                        "
-                      >
-                        <div>
-                          <span style="color: red">*</span>
-                          个人信息保护影响评估报告
-                        </div>
-                        <div style="display: flex">
-                          <el-input
-                            style="margin-right: 50px"
-                            v-model="ruleForm7.fileName"
-                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
-                          ></el-input>
-                          <el-upload
-                            drag
-                            class="upload-demo"
-                            :show-file-list="false"
-                            :http-request="customUpload7"
-                          >
-                            <el-button
-                              style="
-                                border-radius: 50px;
-                                background-color: #fff;
-                                color: #4984ff;
-                              "
-                              type="primary"
-                              :icon="Download"
-                              >上传文件</el-button
-                            >
-
-                            <!-- <template #tip>
-                              <div class="el-upload__tip">
-                                jpg/png files with a size less than 500KB.
-                              </div>
-                            </template> -->
-                          </el-upload>
-                          <!-- <el-button
-                            style="
-                              border-radius: 50px;
-                              background-color: #fff;
-                              color: #4984ff;
-                            "
-                            type="primary"
-                            :icon="Download"
-                            >上传文件</el-button
-                          > -->
-                        </div>
-                      </div>
-                    </el-form-item>
-                    <div style="font-size: 12px; margin-top: -10px">
-                      请上传《个人信息保护影响评估报告》加盖公章的影印件
-                    </div>
-                  </el-col>
-                </el-row>
-              </el-form>
-            </div>
-            <div></div>
-            <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
-              《个人信息保护影响评估报告》模板下载
-            </div>
+          <div style="width: 100%; text-align: center">
+            <el-button @click="addScene" type="primary"
+              >添加数据出境场景</el-button
+            >
           </div>
+        </div>
 
-          <div v-if="active == 8">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              承诺书
-            </div>
-            <div style="margin: 0 0 20px 20px">
-              <el-form ref="ruleFormRef8" :model="ruleForm8" :rules="ruleForm8">
-                <el-row :gutter="20">
-                  <el-col :span="12">
-                    <el-form-item prop="fileName1">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 90%;
-                        "
-                      >
-                        <div>
-                          <span style="color: red">*</span>
-                          经办人授权委托书
-                        </div>
-                        <div style="display: flex">
-                          <el-input
-                            style="margin-right: 50px"
-                            v-model="ruleForm8.fileName1"
-                          ></el-input>
-
-                          <el-upload
-                            drag
-                            class="upload-demo"
-                            :show-file-list="false"
-                            :http-request="customUpload8"
-                          >
-                            <el-button
-                              style="
-                                border-radius: 50px;
-                                background-color: #fff;
-                                color: #4984ff;
-                              "
-                              type="primary"
-                              :icon="Download"
-                              >上传文件</el-button
-                            >
-
-                            <!-- <template #tip>
-                              <div class="el-upload__tip">
-                                jpg/png files with a size less than 500KB.
-                              </div>
-                            </template> -->
-                          </el-upload>
-                        </div>
-                      </div>
-                    </el-form-item>
-                    <div style="margin-top: -10px">
-                      请上传《经办人授权委托书》加盖公章的影印件
-                    </div>
+        <div v-if="active == 6">
+          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+            承诺书
+          </div>
+          <div style="margin: 0 0 20px 20px">
+            <el-form ref="ruleFormRef6" :model="ruleForm6" :rules="rules6">
+              <el-row :gutter="20">
+                <el-col :span="8">
+                  <el-form-item prop="contractMakeDate">
                     <div
-                      style="color: #2977ff; margin: 20px 0; font-size: 16px"
+                      style="display: flex; flex-direction: column; width: 80%"
                     >
-                      《经办人授权委托书》模板下载
+                      <div>
+                        <span style="color: red">*</span>标准合同订立日期
+                      </div>
+                      <el-date-picker
+                        v-model="ruleForm6.contractMakeDate"
+                        type="date"
+                        placeholder="请选择标准合同订立日期"
+                      />
+                      <!-- <el-input
+                          v-model="ruleForm6.contractMakeDate"
+                          placeholder="请输入办公所在地"
+                        ></el-input> -->
                     </div>
-                    <!-- <div style="font-size: 12px; margin-top: -10px">
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item prop="contractValidDate">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div>
+                        <span style="color: red">*</span>标准合同生效日期
+                      </div>
+                      <el-date-picker
+                        v-model="ruleForm6.contractValidDate"
+                        type="date"
+                        placeholder="请选择标准合同生效日期"
+                      />
+                      <!-- <el-input
+                          v-model="ruleForm6.contractValidDate"
+                          placeholder="请输入办公所在地"
+                        ></el-input> -->
+                    </div>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item prop="contractContent">
+                    <div
+                      style="display: flex; flex-direction: column; width: 80%"
+                    >
+                      <div>
+                        <span style="color: red"></span>相关商业合同名称
+                      </div>
+                      <el-input
+                        v-model="ruleForm6.contractContent"
+                        placeholder="请输入相关商业合同名称"
+                      ></el-input>
+                    </div>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row :gutter="20">
+                <el-col :span="12">
+                  <el-form-item prop="standardContractAttachIdList">
+                    <div
+                      style="display: flex; flex-direction: column; width: 70%"
+                    >
+                      <div>
+                        <span style="color: red">*</span>
+                        标准合同文件
+                      </div>
+                      <div style="display: flex">
+                        <el-input
+                          style="margin-right: 50px"
+                          v-model="ruleForm6.fileName"
+                          placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                        ></el-input>
+                        <el-upload
+                          drag
+                          class="upload-demo"
+                          :show-file-list="false"
+                          :http-request="customUpload6"
+                        >
+                          <el-button
+                            style="
+                              border-radius: 50px;
+                              background-color: #fff;
+                              color: #4984ff;
+                            "
+                            type="primary"
+                            :icon="Download"
+                            >上传文件</el-button
+                          >
+
+                          <!-- <template #tip>
+                              <div class="el-upload__tip">
+                                jpg/png files with a size less than 500KB.
+                              </div>
+                            </template> -->
+                        </el-upload>
+                        <!-- <el-button
+                            style="
+                              border-radius: 50px;
+                              background-color: #fff;
+                              color: #4984ff;
+                            "
+                            type="primary"
+                            :icon="Download"
+                            >上传文件</el-button
+                          > -->
+                      </div>
+                    </div>
+                  </el-form-item>
+                  <div style="font-size: 12px; margin-top: -10px">
+                    请上传《个人信息出境标准合同》加盖公章的影印件
+                  </div>
+                </el-col>
+              </el-row>
+            </el-form>
+          </div>
+          <div></div>
+          <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
+            《个人信息出境标准合同》模板下载
+          </div>
+        </div>
+
+        <div v-if="active == 7">
+          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+            个人信息保护影响评估报告
+          </div>
+          <div style="margin: 0 0 20px 20px">
+            <el-form ref="ruleFormRef7" :model="ruleForm7" :rules="rules7">
+              <el-row :gutter="20">
+                <el-col :span="12">
+                  <el-form-item prop="fileName">
+                    <div
+                      style="display: flex; flex-direction: column; width: 70%"
+                    >
+                      <div>
+                        <span style="color: red">*</span>
+                        个人信息保护影响评估报告
+                      </div>
+                      <div style="display: flex">
+                        <el-input
+                          style="margin-right: 50px"
+                          v-model="ruleForm7.fileName"
+                          placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                        ></el-input>
+                        <el-upload
+                          drag
+                          class="upload-demo"
+                          :show-file-list="false"
+                          :http-request="customUpload7"
+                        >
+                          <el-button
+                            style="
+                              border-radius: 50px;
+                              background-color: #fff;
+                              color: #4984ff;
+                            "
+                            type="primary"
+                            :icon="Download"
+                            >上传文件</el-button
+                          >
+
+                          <!-- <template #tip>
+                              <div class="el-upload__tip">
+                                jpg/png files with a size less than 500KB.
+                              </div>
+                            </template> -->
+                        </el-upload>
+                        <!-- <el-button
+                            style="
+                              border-radius: 50px;
+                              background-color: #fff;
+                              color: #4984ff;
+                            "
+                            type="primary"
+                            :icon="Download"
+                            >上传文件</el-button
+                          > -->
+                      </div>
+                    </div>
+                  </el-form-item>
+                  <div style="font-size: 12px; margin-top: -10px">
+                    请上传《个人信息保护影响评估报告》加盖公章的影印件
+                  </div>
+                </el-col>
+              </el-row>
+            </el-form>
+          </div>
+          <div></div>
+          <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
+            《个人信息保护影响评估报告》模板下载
+          </div>
+        </div>
+
+        <div v-if="active == 8">
+          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+            承诺书
+          </div>
+          <div style="margin: 0 0 20px 20px">
+            <el-form ref="ruleFormRef8" :model="ruleForm8" :rules="ruleForm8">
+              <el-row :gutter="20">
+                <el-col :span="12">
+                  <el-form-item prop="fileName1">
+                    <div
+                      style="display: flex; flex-direction: column; width: 90%"
+                    >
+                      <div>
+                        <span style="color: red">*</span>
+                        经办人授权委托书
+                      </div>
+                      <div style="display: flex">
+                        <el-input
+                          style="margin-right: 50px"
+                          v-model="ruleForm8.fileName1"
+                        ></el-input>
+
+                        <el-upload
+                          drag
+                          class="upload-demo"
+                          :show-file-list="false"
+                          :http-request="customUpload8"
+                        >
+                          <el-button
+                            style="
+                              border-radius: 50px;
+                              background-color: #fff;
+                              color: #4984ff;
+                            "
+                            type="primary"
+                            :icon="Download"
+                            >上传文件</el-button
+                          >
+
+                          <!-- <template #tip>
+                              <div class="el-upload__tip">
+                                jpg/png files with a size less than 500KB.
+                              </div>
+                            </template> -->
+                        </el-upload>
+                      </div>
+                    </div>
+                  </el-form-item>
+                  <div style="margin-top: -10px">
+                    请上传《经办人授权委托书》加盖公章的影印件
+                  </div>
+                  <div style="color: #2977ff; margin: 20px 0; font-size: 16px">
+                    《经办人授权委托书》模板下载
+                  </div>
+                  <!-- <div style="font-size: 12px; margin-top: -10px">
                       请上传《个人信息出境标准合同》加盖公章的影印件
                     </div> -->
-                  </el-col>
-                </el-row>
-              </el-form>
-            </div>
-            <div></div>
-            <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
-              其他文件上传
-            </div>
-            <div style="margin-left: 20px">
-              <el-input
-                style="margin-right: 50px"
-                v-model="ruleForm8.fileName2"
-              ></el-input>
-              <el-upload
-                drag
-                class="upload-demo"
-                :show-file-list="false"
-                :http-request="customUpload82"
+                </el-col>
+              </el-row>
+            </el-form>
+          </div>
+          <div></div>
+          <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
+            其他文件上传
+          </div>
+          <div style="margin-left: 20px">
+            <el-input
+              style="margin-right: 50px"
+              v-model="ruleForm8.fileName2"
+            ></el-input>
+            <el-upload
+              drag
+              class="upload-demo"
+              :show-file-list="false"
+              :http-request="customUpload82"
+            >
+              <el-button
+                style="
+                  border-radius: 50px;
+                  background-color: #fff;
+                  color: #4984ff;
+                "
+                type="primary"
+                :icon="Download"
+                >上传文件</el-button
               >
-                <el-button
-                  style="
-                    border-radius: 50px;
-                    background-color: #fff;
-                    color: #4984ff;
-                  "
-                  type="primary"
-                  :icon="Download"
-                  >上传文件</el-button
-                >
 
-                <!-- <template #tip>
+              <!-- <template #tip>
                               <div class="el-upload__tip">
                                 jpg/png files with a size less than 500KB.
                               </div>
                             </template> -->
-              </el-upload>
-              <div style="margin-top: 10px">
-                请上传除承诺书、个人信息出境标准合同、个人信息保护影响评估报告、经办人授权委托书以外的其他材料，格式为PDF、OFD、PNG、
-              </div>
+            </el-upload>
+            <div style="margin-top: 10px">
+              请上传除承诺书、个人信息出境标准合同、个人信息保护影响评估报告、经办人授权委托书以外的其他材料，格式为PDF、OFD、PNG、
             </div>
           </div>
         </div>
+      </div>
 
-        <!--  -->
-        <div style="display: flex; justify-content: end">
-          <el-button
-            v-if="active > 0"
-            type="primary"
-            style="border-radius: 50px; margin-top: 12px"
-            @click="last"
-            >上一步</el-button
-          >
-          <el-button
-            v-if="active < 8"
-            type="primary"
-            style="border-radius: 50px; margin-top: 12px"
-            @click="next"
-            >下一步</el-button
-          >
-          <el-button
-            type="primary"
-            style="border-radius: 50px; margin-top: 12px"
-            @click="sumit(0)"
-            >暂存</el-button
-          >
-          <el-button
-            v-if="active == 8"
-            type="primary"
-            style="border-radius: 50px; margin-top: 12px"
-            @click="sumit(1)"
-            >填写完成</el-button
-          >
-        </div>
+      <!--  -->
+      <div style="display: flex; justify-content: end">
+        <el-button
+          v-if="active > 0"
+          type="primary"
+          style="border-radius: 50px; margin-top: 12px"
+          @click="last"
+          >上一步</el-button
+        >
+        <el-button
+          v-if="active < 8"
+          type="primary"
+          style="border-radius: 50px; margin-top: 12px"
+          @click="next"
+          >下一步</el-button
+        >
+        <el-button
+          type="primary"
+          style="border-radius: 50px; margin-top: 12px"
+          @click="sumit(0)"
+          >暂存</el-button
+        >
+        <el-button
+          v-if="active == 8"
+          type="primary"
+          style="border-radius: 50px; margin-top: 12px"
+          @click="sumit(1)"
+          >填写完成</el-button
+        >
       </div>
     </div>
   </div>
@@ -2068,7 +1973,7 @@ const sumit = async (num: any) => {
   form.map((item: any) => {
     item.containInfoFlag = item.containInfoFlag == "1" ? true : false;
   });
-  
+
   let params = {
     // 0 前提
     conditionContent:
@@ -2612,6 +2517,31 @@ const getArea = () => {
   margin: 0 auto;
   .el-upload-dragger {
     border: none;
+  }
+}
+.head-box {
+  position: relative;
+}
+
+.header {
+  width: 100%;
+}
+
+.header-center {
+  width: calc(100% - 500px);
+  position: absolute;
+  left: 250px;
+  top: 50%;
+  height: 100px;
+  color: white;
+  transform: translateY(-50%);
+  div:nth-child(1) {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  div:nth-child(2) {
+    font-size: 13px;
+    // width: 400px;
   }
 }
 .topImg {
