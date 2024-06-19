@@ -1,17 +1,5 @@
 <template>
   <div>
-    <!-- <div class="topImg" style="width: 100%">
-      <img style="width: 100%" src="../assets/images/hgztbjt.png" alt="" />
-      <div class="topImgText">
-        <div style="color: #fff; font-size: 23px; font-weight: 500">
-          合规专题
-        </div>
-        <div style="color: #fff">
-          提供工业互联网o安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目；
-          基于行业内最新动态的梳理与汇聚
-        </div>
-      </div>
-    </div> -->
     <div class="head-box">
       <img class="header" src="@/assets/images/hgztbjt.png" />
       <div class="header-center">
@@ -79,9 +67,7 @@
         </div>
 
         <div v-if="active == 1">
-          <div class="titles">
-            个人信息处理者情况
-          </div>
+          <div class="titles">个人信息处理者情况</div>
           <div style="margin: 0 0 20px 20px">
             <el-form ref="ruleFormRef1" :model="ruleForm1" :rules="rules1">
               <el-row :gutter="20">
@@ -103,7 +89,6 @@
                   <el-form-item prop="unitNatureValue">
                     <div style="display: flex; flex-direction: column">
                       <div><span style="color: red"></span> 单位性质</div>
-                      <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
                       <el-select
                         style="width: 150px"
                         v-model="ruleForm1.unitNatureValue"
@@ -194,7 +179,6 @@
                   <el-form-item prop="empCount">
                     <div style="display: flex; flex-direction: column">
                       <div><span style="color: red"></span> 员工数量</div>
-                      <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
                       <el-input
                         v-model="ruleForm1.empCount"
                         placeholder="按自然人（去重统计数量）"
@@ -278,7 +262,6 @@
                       <div>
                         <span style="color: red">*</span> 处理个人信息规模单位
                       </div>
-                      <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
                       <el-select
                         style="width: 150px"
                         v-model="ruleForm1.infoSizeUnitValue"
@@ -302,9 +285,7 @@
         </div>
 
         <div v-if="active == 2">
-          <div class="titles">
-            法定代表人信息
-          </div>
+          <div class="titles">法定代表人信息</div>
           <el-checkbox
             v-model="ruleForm2.legalFlag"
             label="无法定代表人"
@@ -386,7 +367,6 @@
                   <el-form-item prop="legalCertificateTypeValue">
                     <div style="display: flex; flex-direction: column">
                       <div><span style="color: red">*</span> 证件类型</div>
-                      <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
                       <el-select
                         style="width: 150px"
                         v-model="ruleForm2.legalCertificateTypeValue"
@@ -399,11 +379,6 @@
                           v-for="(item, index) in certificatetype"
                           :key="index"
                         />
-                        <!-- <el-option label="居民身份证" value="1" />
-                          <el-option label="护照" value="2" />
-                          <el-option label="台湾居民来往大陆通行证" value="3" />
-                          <el-option label="港澳居民来往大陆通行证" value="4" />
-                          <el-option label="其他" value="5" /> -->
                       </el-select>
                     </div>
                   </el-form-item>
@@ -454,9 +429,7 @@
         </div>
 
         <div v-if="active == 3">
-          <div class="titles">
-            经办人信息
-          </div>
+          <div class="titles">经办人信息</div>
           <div style="margin: 0 0 20px 20px">
             <el-form ref="ruleFormRef3" :model="ruleForm3" :rules="rules3">
               <el-row :gutter="20">
@@ -527,7 +500,6 @@
                   <el-form-item prop="operatorCertificateTypeValue">
                     <div style="display: flex; flex-direction: column">
                       <div><span style="color: red">*</span> 证件类型</div>
-                      <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
                       <el-select
                         style="width: 150px"
                         v-model="ruleForm3.operatorCertificateTypeValue"
@@ -543,7 +515,6 @@
                       </el-select>
                     </div>
                   </el-form-item>
-
                   <el-form-item prop="operatorCertificateTypeOther">
                     <div style="display: flex; flex-direction: column">
                       <div><span style="color: red"></span>其他</div>
@@ -568,7 +539,6 @@
                   </el-form-item>
                 </el-col>
               </el-row>
-
               <el-row :gutter="20">
                 <el-col :span="8">
                   <el-form-item prop="operatorJob">
@@ -583,56 +553,12 @@
                     </div>
                   </el-form-item>
                 </el-col>
-                <!-- <el-col :span="8" style="display: flex">
-                    <el-form-item prop="gljgrs">
-                      <div style="display: flex; flex-direction: column">
-                        <div>
-                          <span style="color: red">*</span> 管理机构人数
-                        </div>
-                        <el-select
-                          style="width: 150px"
-                          v-model="ruleForm3.gljgrs"
-                          clearable
-                        >
-                          <el-option label="单位性质1" value="单位性质1" />
-                          <el-option label="单位性质2" value="单位性质2" />
-                        </el-select>
-                      </div>
-                    </el-form-item>
-
-                    <el-form-item prop="gljgrsdw">
-                      <div style="display: flex; flex-direction: column">
-                        <div>
-                          <span style="color: red">*</span> 管理机构人数单位
-                        </div>
-                        <el-input v-model="ruleForm3.gljgrsdw"></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8">
-                    <el-form-item prop="dzyx">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div><span style="color: red">*</span>电子邮箱</div>
-                        <el-input v-model="ruleForm3.dzyx"></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col> -->
               </el-row>
             </el-form>
           </div>
-          <div></div>
         </div>
-
         <div v-if="active == 4">
-          <div class="titles">
-            承诺书
-          </div>
+          <div class="titles">承诺书</div>
           <div style="margin: 0 0 20px 20px">
             <el-form ref="ruleFormRef4" :model="ruleForm4" :rules="rules4">
               <el-row :gutter="20">
@@ -680,12 +606,6 @@
                             :icon="Download"
                             >上传文件</el-button
                           >
-
-                          <!-- <template #tip>
-                              <div class="el-upload__tip">
-                                jpg/png files with a size less than 500KB.
-                              </div>
-                            </template> -->
                         </el-upload>
                       </div>
                     </div>
@@ -718,9 +638,7 @@
             >
               删除该场景
             </div>
-            <div class="titles">
-              个人信息出境场景{{ i + 1 }}
-            </div>
+            <div class="titles">个人信息出境场景{{ i + 1 }}</div>
             <div style="margin: 0 0 20px 20px">
               <el-form ref="ruleFormRef5" :model="it" :rules="rules5">
                 <el-row :gutter="20">
@@ -745,10 +663,7 @@
                   </el-col>
                 </el-row>
 
-                <div class="titles">
-
-                  拟数据出境情况
-                </div>
+                <div class="titles">拟数据出境情况</div>
 
                 <el-row :gutter="20">
                   <el-col :span="8">
@@ -886,10 +801,7 @@
                   </el-col>
                 </el-row>
 
-                <div class="titles">
-
-                  境外接收方情况
-                </div>
+                <div class="titles">境外接收方情况</div>
 
                 <el-row :gutter="20">
                   <el-col :span="8">
@@ -1081,9 +993,7 @@
         </div>
 
         <div v-if="active == 6">
-          <div class="titles">
-            个人信息出境标准合同
-          </div>
+          <div class="titles">个人信息出境标准合同</div>
           <div style="margin: 0 0 20px 20px">
             <el-form ref="ruleFormRef6" :model="ruleForm6" :rules="rules6">
               <el-row :gutter="20">
@@ -1100,10 +1010,6 @@
                         type="date"
                         placeholder="请选择标准合同订立日期"
                       />
-                      <!-- <el-input
-                          v-model="ruleForm6.contractMakeDate"
-                          placeholder="请输入办公所在地"
-                        ></el-input> -->
                     </div>
                   </el-form-item>
                 </el-col>
@@ -1120,10 +1026,6 @@
                         type="date"
                         placeholder="请选择标准合同生效日期"
                       />
-                      <!-- <el-input
-                          v-model="ruleForm6.contractValidDate"
-                          placeholder="请输入办公所在地"
-                        ></el-input> -->
                     </div>
                   </el-form-item>
                 </el-col>
@@ -1175,7 +1077,7 @@
                           drag
                           class="upload-demo"
                           :show-file-list="false"
-                          :http-request="customUpload6"
+                          :http-request="customUpload"
                         >
                           <el-button
                             style="
@@ -1187,23 +1089,7 @@
                             :icon="Download"
                             >上传文件</el-button
                           >
-
-                          <!-- <template #tip>
-                              <div class="el-upload__tip">
-                                jpg/png files with a size less than 500KB.
-                              </div>
-                            </template> -->
                         </el-upload>
-                        <!-- <el-button
-                            style="
-                              border-radius: 50px;
-                              background-color: #fff;
-                              color: #4984ff;
-                            "
-                            type="primary"
-                            :icon="Download"
-                            >上传文件</el-button
-                          > -->
                       </div>
                     </div>
                   </el-form-item>
@@ -1221,9 +1107,7 @@
         </div>
 
         <div v-if="active == 7">
-          <div class="titles">
-            个人信息保护影响评估报告
-          </div>
+          <div class="titles">个人信息保护影响评估报告</div>
           <div style="margin: 0 0 20px 20px">
             <el-form ref="ruleFormRef7" :model="ruleForm7" :rules="rules7">
               <el-row :gutter="20">
@@ -1258,7 +1142,7 @@
                           drag
                           class="upload-demo"
                           :show-file-list="false"
-                          :http-request="customUpload7"
+                          :http-request="customUpload"
                         >
                           <el-button
                             style="
@@ -1270,23 +1154,7 @@
                             :icon="Download"
                             >上传文件</el-button
                           >
-
-                          <!-- <template #tip>
-                              <div class="el-upload__tip">
-                                jpg/png files with a size less than 500KB.
-                              </div>
-                            </template> -->
                         </el-upload>
-                        <!-- <el-button
-                            style="
-                              border-radius: 50px;
-                              background-color: #fff;
-                              color: #4984ff;
-                            "
-                            type="primary"
-                            :icon="Download"
-                            >上传文件</el-button
-                          > -->
                       </div>
                     </div>
                   </el-form-item>
@@ -1304,9 +1172,7 @@
         </div>
 
         <div v-if="active == 8">
-          <div class="titles">
-            其他相关证明材料
-          </div>
+          <div class="titles">其他相关证明材料</div>
           <div style="margin: 0 0 20px 20px">
             <el-form ref="ruleFormRef8" :model="ruleForm8" :rules="rules8">
               <el-row :gutter="20">
@@ -1352,12 +1218,6 @@
                             :icon="Download"
                             >上传文件</el-button
                           >
-
-                          <!-- <template #tip>
-                              <div class="el-upload__tip">
-                                jpg/png files with a size less than 500KB.
-                              </div>
-                            </template> -->
                         </el-upload>
                       </div>
                     </div>
@@ -1368,9 +1228,6 @@
                   <div style="color: #2977ff; margin: 20px 0; font-size: 16px">
                     《经办人授权委托书》模板下载
                   </div>
-                  <!-- <div style="font-size: 12px; margin-top: -10px">
-                      请上传《个人信息出境标准合同》加盖公章的影印件
-                    </div> -->
                 </el-col>
               </el-row>
             </el-form>
@@ -1413,12 +1270,6 @@
                   :icon="Download"
                   >上传文件</el-button
                 >
-
-                <!-- <template #tip>
-                              <div class="el-upload__tip">
-                                jpg/png files with a size less than 500KB.
-                              </div>
-                            </template> -->
               </el-upload>
             </div>
             <div style="margin-top: 10px">
@@ -1509,7 +1360,7 @@ const getSelet = async () => {
   await getIndustryarea(); //涉及行业/领域
   await getArea(); // 所在国家或地区
 };
-
+// 文件上传   4、6、7步骤
 const customUpload = (file: any) => {
   const formData = new FormData();
   formData.append("file", file.file);
@@ -1524,47 +1375,19 @@ const customUpload = (file: any) => {
 
       let list = [];
       list.push(id);
-      ruleForm4.promiseAttachIdList = list as never[];
-      ruleForm4.fileName = fileName;
+      if (active.value == 4) {
+        ruleForm4.promiseAttachIdList = list as never[];
+        ruleForm4.fileName = fileName;
+      } else if (active.value == 6) {
+        ruleForm6.standardContractAttachIdList = list as never[];
+        ruleForm6.fileName = fileName;
+      } else if (active.value == 7) {
+        ruleForm7.reportAttachIdList = list as never[];
+        ruleForm7.fileName = fileName;
+      }
     });
 };
-
-const customUpload6 = (file: any) => {
-  const formData = new FormData();
-  formData.append("file", file.file);
-  http
-    .post("file/push-file", formData, {
-      "Content-Type": "multipart/form-data",
-      Authorization: "Bearer " + token,
-    })
-    .then((response) => {
-      const id = (response as unknown as { id: string }).id;
-      const fileName = (response as unknown as { fileName: string }).fileName;
-
-      let list = [];
-      list.push(id);
-      ruleForm6.standardContractAttachIdList = list as never[];
-      ruleForm6.fileName = fileName;
-    });
-};
-const customUpload7 = (file: any) => {
-  const formData = new FormData();
-  formData.append("file", file.file);
-  http
-    .post("file/push-file", formData, {
-      "Content-Type": "multipart/form-data",
-      Authorization: "Bearer " + token,
-    })
-    .then((response) => {
-      const id = (response as unknown as { id: string }).id;
-      const fileName = (response as unknown as { fileName: string }).fileName;
-
-      let list = [];
-      list.push(id);
-      ruleForm7.reportAttachIdList = list as never[];
-      ruleForm7.fileName = fileName;
-    });
-};
+// 文件上传   8步骤
 const customUpload8 = (file: any) => {
   const formData = new FormData();
   formData.append("file", file.file);
@@ -1601,7 +1424,7 @@ const customUpload82 = (file: any) => {
       ruleForm8.fileName2 = fileName;
     });
 };
-
+// 删除文件
 const deleteFileName = (num: any) => {
   if (active.value == 4) {
     ruleForm4.fileName = "";

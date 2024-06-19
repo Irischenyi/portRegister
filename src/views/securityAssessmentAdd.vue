@@ -300,7 +300,7 @@
               label="无法定代表人"
               size="large"
             /> -->
-            <div style="height: 300px; margin: 0 0 20px 20px">
+            <div style=" margin: 0 0 20px 20px">
               <el-form ref="ruleFormRef2" :model="ruleForm2" :rules="rules2">
                 <el-row :gutter="20">
                   <el-col :span="8">
@@ -454,7 +454,6 @@
                 </el-row>
               </el-form>
             </div>
-            <div></div>
           </div>
 
           <div v-if="active == 3">

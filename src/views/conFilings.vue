@@ -1,17 +1,5 @@
 <template>
   <div>
-    <!-- <div class="topImg" style="width: 100%">
-      <img style="width: 100%" src="../assets/images/hgztbjt.png" alt="" />
-      <div class="topImgText">
-        <div style="color: #fff; font-size: 23px; font-weight: 500">
-          合规专题
-        </div>
-        <div style="color: #fff">
-          提供工业互联网安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目；
-          基于行业内最新动态的梳理与汇聚
-        </div>
-      </div>
-    </div> -->
     <div class="head-box">
       <img class="header" src="@/assets/images/hgztbjt.png" />
       <div class="header-center">
@@ -52,7 +40,6 @@
           <el-row style="margin-top: 15px" :gutter="20">
             <el-col :span="8">
               <el-form-item label="状态">
-                <!-- <el-input v-model="form.xmbh2"></el-input> -->
                 <el-select v-model="form.status" clearable placeholder="">
                   <el-option
                     :label="(item as any).name"
@@ -60,15 +47,12 @@
                     v-for="(item, index) in statusList"
                     :key="index"
                   />
-                  <!-- <el-option label="是" value="1" />
-                          <el-option label="否" value="1" /> -->
                 </el-select>
               </el-form-item>
             </el-col>
 
             <el-col :span="8">
               <el-form-item label="起止时间">
-                <!-- <el-input v-model="form.qzsj"></el-input> -->
                 <el-date-picker
                   v-model="form.qzsj"
                   type="daterange"
@@ -128,7 +112,7 @@
 
         <div style="margin-top: 20px">
           <el-table :data="tableData" stripe style="width: 100%">
-            <el-table-column type="index" label="序号" width="80"/>
+            <el-table-column type="index" label="序号" width="80" />
             <el-table-column prop="createUserId" label="备案号" />
             <el-table-column prop="createUserId" label="流水号" />
             <el-table-column prop="createUserName" label="备案省份" />
