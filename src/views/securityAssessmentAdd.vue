@@ -23,32 +23,32 @@
             align-center
             process-status="finish"
           >
-            <el-step title="安全评估申 请适用场景"></el-step>
-            <el-step title="数据处理者 情况" />
-            <el-step title="法定代表人 信息" />
-            <el-step title="数据安全负 责人和管理 机构信息" />
+            <el-step title="安全评估申请适用场景"></el-step>
+            <el-step title="数据处理者情况" />
+            <el-step title="法定代表人信息" />
+            <el-step title="数据安全负责人和管理机构信息" />
             <el-step title="经办人信息" />
-            <el-step title="数据处理者 遵守中国法 律;行政法规; 部门规章情况" />
-            <el-step title="数据出境场 景" />
-            <el-step title="数据出境安 全评估申报 材料上传" />
+            <el-step title="数据处理者遵守中国法律;行政法规;部门规章情况" />
+            <el-step title="数据出境场景" />
+            <el-step title="数据出境安全评估申报材料上传" />
           </el-steps>
         </div>
 
         <!-- 页面 -->
         <div style="margin-top: 20px">
           <div v-if="active == 0">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+            <div class="titles">
               数据处理者向境外提供数据，有下列情形之一的，应当通过所在地省级网信部门向国家网信办申报数据出境安全评估
             </div>
             <div style="margin-bottom: 20px">
               <el-checkbox-group v-model="checkList">
                 <el-checkbox
-                  label="(一) 关键信息基础设施运营者向境外提供个人信或者重要数数据；"
-                  value="1"
+                  label="（一）关键信息基础设施运营者向境外提供个人信息或者重要数据；"
+                  value="（一）关键信息基础设施运营者向境外提供个人信息或者重要数据；"
                 />
                 <el-checkbox
-                  label="(二) 关键信息基础设施运营者以外的数据处理者向境外提供重要数据，或自当年1月1日起累计向境外提供100万人以上个人信息（不含"
-                  value="2"
+                  label="（二）关键信息基础设施运营者以外的数据处理者向境外提供重要数据，或者自当年1月1日起累计向境外提供100万人以上个人信息（不含敏感个人信息）或者1万人以上敏感个人信息；"
+                  value="（二）关键信息基础设施运营者以外的数据处理者向境外提供重要数据，或者自当年1月1日起累计向境外提供100万人以上个人信息（不含敏感个人信息）或者1万人以上敏感个人信息；"
                 />
               </el-checkbox-group>
             </div>
@@ -56,9 +56,7 @@
           </div>
 
           <div v-if="active == 1">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              个人信息处理者情况
-            </div>
+            <div class="titles">个人信息处理者情况</div>
             <div style="margin: 0 0 20px 20px">
               <el-form ref="ruleFormRef1" :model="ruleForm1" :rules="rules1">
                 <el-row :gutter="20">
@@ -83,8 +81,7 @@
                   <el-col :span="8" style="display: flex">
                     <el-form-item prop="unitNatureValue">
                       <div style="display: flex; flex-direction: column">
-                        <div><span style="color: red"></span> 单位性质</div>
-                        <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
+                        <div><span style="color: red">*</span> 单位性质</div>
                         <el-select
                           style="width: 150px"
                           v-model="ruleForm1.unitNatureValue"
@@ -103,7 +100,7 @@
 
                     <el-form-item prop="unitNatureOther">
                       <div style="display: flex; flex-direction: column">
-                        <div><span style="color: red">*-</span></div>
+                        <div><span style="color: red"></span>其他</div>
                         <el-input
                           v-model="ruleForm1.unitNatureOther"
                           placeholder="请输入其他单位性质"
@@ -134,7 +131,7 @@
 
                     <el-form-item prop="unitCategoryOther">
                       <div style="display: flex; flex-direction: column">
-                        <div><span style="color: red">*-</span></div>
+                        <div><span style="color: red"></span>其他</div>
                         <el-input
                           v-model="ruleForm1.unitCategoryOther"
                           placeholder="请输入其他单位性质"
@@ -145,6 +142,25 @@
                 </el-row>
 
                 <el-row :gutter="20">
+                  <el-col :span="8">
+                    <el-form-item prop="creditCode">
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: column;
+                          width: 80%;
+                        "
+                      >
+                        <div>
+                          <span style="color: red">*</span>统一社会信用代码
+                        </div>
+                        <el-input
+                          v-model="ruleForm1.creditCode"
+                          placeholder="请输入统一社会信用代码"
+                        ></el-input>
+                      </div>
+                    </el-form-item>
+                  </el-col>
                   <el-col :span="8">
                     <el-form-item prop="unitRegAddr">
                       <div
@@ -179,6 +195,33 @@
                       </div>
                     </el-form-item>
                   </el-col>
+                </el-row>
+
+                <el-row :gutter="20">
+                  <el-col :span="8">
+                    <el-form-item prop="keyInfoOperatorFlag">
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: column;
+                          width: 80%;
+                        "
+                      >
+                        <div>
+                          <span style="color: red">*</span
+                          >是否为关键信息基础设施运营者
+                        </div>
+                        <el-select
+                          v-model="ruleForm1.keyInfoOperatorFlag"
+                          clearable
+                          placeholder="请选择是否为关键信息基础设施运营者"
+                        >
+                          <el-option label="是" value="1" />
+                          <el-option label="否" value="0" />
+                        </el-select>
+                      </div>
+                    </el-form-item>
+                  </el-col>
                   <el-col :span="8" style="display: flex">
                     <el-form-item prop="empCount">
                       <div style="display: flex; flex-direction: column">
@@ -210,54 +253,6 @@
                       </div>
                     </el-form-item>
                   </el-col>
-                </el-row>
-
-                <el-row :gutter="20">
-                  <el-col :span="8">
-                    <el-form-item prop="creditCode">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div>
-                          <span style="color: red"></span>统一社会信用代码
-                        </div>
-                        <el-input
-                          v-model="ruleForm1.creditCode"
-                          placeholder="请输入统一社会信用代码"
-                        ></el-input>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-
-                  <el-col :span="8">
-                    <el-form-item prop="keyInfoOperatorFlag">
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          width: 80%;
-                        "
-                      >
-                        <div>
-                          <span style="color: red">*</span
-                          >是否为关键信息基础设施运营者
-                        </div>
-                        <el-select
-                          v-model="ruleForm1.keyInfoOperatorFlag"
-                          clearable
-                          placeholder="请选择是否为关键信息基础设施运营者"
-                        >
-                          <el-option label="是" value="1" />
-                          <el-option label="否" value="0" />
-                        </el-select>
-                      </div>
-                    </el-form-item>
-                  </el-col>
-
                   <el-col :span="8" style="display: flex">
                     <el-form-item prop="infoSize">
                       <div style="display: flex; flex-direction: column">
@@ -299,15 +294,13 @@
           </div>
 
           <div v-if="active == 2">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              法定代表人信息
-            </div>
+            <div class="titles">法定代表人信息</div>
             <!-- <el-checkbox
               v-model="ruleForm2.legalFlag"
               label="无法定代表人"
               size="large"
             /> -->
-            <div style="height: 300px; margin: 0 0 20px 20px">
+            <div style=" margin: 0 0 20px 20px">
               <el-form ref="ruleFormRef2" :model="ruleForm2" :rules="rules2">
                 <el-row :gutter="20">
                   <el-col :span="8">
@@ -413,7 +406,7 @@
 
                     <el-form-item prop="legalCertificateTypeOther">
                       <div style="display: flex; flex-direction: column">
-                        <div><span style="color: red">*-</span></div>
+                        <div><span style="color: red"></span>其他</div>
                         <el-input
                           v-model="ruleForm2.legalCertificateTypeOther"
                           placeholder="请输入其他证件类型"
@@ -461,13 +454,10 @@
                 </el-row>
               </el-form>
             </div>
-            <div></div>
           </div>
 
           <div v-if="active == 3">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              数据安全负责人和管理机构信息
-            </div>
+            <div class="titles">数据安全负责人和管理机构信息</div>
             <div style="margin: 0 0 20px 20px">
               <el-form ref="ruleFormRef3" :model="ruleForm3" :rules="rules3">
                 <el-row :gutter="20">
@@ -481,7 +471,10 @@
                         "
                       >
                         <div><span style="color: red">*</span> 姓名</div>
-                        <el-input v-model="ruleForm3.principalName"></el-input>
+                        <el-input
+                          v-model="ruleForm3.principalName"
+                          placeholder="请输入姓名"
+                        ></el-input>
                       </div>
                     </el-form-item>
                   </el-col>
@@ -496,7 +489,10 @@
                         "
                       >
                         <div><span style="color: red">*</span> 联系电话</div>
-                        <el-input v-model="ruleForm3.principalTel"></el-input>
+                        <el-input
+                          v-model="ruleForm3.principalTel"
+                          placeholder="请输入联系电话"
+                        ></el-input>
                       </div>
                     </el-form-item>
                   </el-col>
@@ -539,7 +535,10 @@
                         "
                       >
                         <div><span style="color: red">*</span>职务</div>
-                        <el-input v-model="ruleForm3.principalJob"></el-input>
+                        <el-input
+                          v-model="ruleForm3.principalJob"
+                          placeholder="请输入职务"
+                        ></el-input>
                       </div>
                     </el-form-item>
                   </el-col>
@@ -547,7 +546,6 @@
                     <el-form-item prop="principalCertificateTypeValue">
                       <div style="display: flex; flex-direction: column">
                         <div><span style="color: red">*</span> 证件类型</div>
-                        <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
                         <el-select
                           style="width: 150px"
                           v-model="ruleForm3.principalCertificateTypeValue"
@@ -569,6 +567,7 @@
                         <div><span style="color: red"></span> 其他</div>
                         <el-input
                           v-model="ruleForm3.principalCertificateTypeOther"
+                          placeholder="请选择证件类型"
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -585,6 +584,7 @@
                         <div><span style="color: red">*</span>证件号码</div>
                         <el-input
                           v-model="ruleForm3.principalCertificateCode"
+                          placeholder="请输入证件号码"
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -604,6 +604,7 @@
                         <div><span style="color: red">*</span>管理机构名称</div>
                         <el-input
                           v-model="ruleForm3.principalOrgName"
+                          placeholder="请输入管理机构名称"
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -616,6 +617,7 @@
                         </div>
                         <el-input
                           v-model="ruleForm3.principalOrgEmpCount"
+                          placeholder="请输入管理机构人数"
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -651,7 +653,10 @@
                         "
                       >
                         <div><span style="color: red"></span>电子邮箱</div>
-                        <el-input v-model="ruleForm3.principalEmail"></el-input>
+                        <el-input
+                          v-model="ruleForm3.principalEmail"
+                          placeholder="请输入电子邮箱"
+                        ></el-input>
                       </div>
                     </el-form-item>
                   </el-col>
@@ -662,9 +667,7 @@
           </div>
 
           <div v-if="active == 4">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              经办人信息
-            </div>
+            <div class="titles">经办人信息</div>
             <div style="margin: 0 0 20px 20px">
               <el-form ref="ruleFormRef4" :model="ruleForm4" :rules="rules4">
                 <el-row :gutter="20">
@@ -751,7 +754,6 @@
                     <el-form-item prop="operatorCertificateTypeValue">
                       <div style="display: flex; flex-direction: column">
                         <div><span style="color: red">*</span> 证件类型</div>
-                        <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
                         <el-select
                           style="width: 150px"
                           v-model="ruleForm4.operatorCertificateTypeValue"
@@ -770,7 +772,7 @@
 
                     <el-form-item prop="operatorCertificateTypeOther">
                       <div style="display: flex; flex-direction: column">
-                        <div><span style="color: red">*-</span></div>
+                        <div><span style="color: red"></span>其他</div>
                         <el-input
                           v-model="ruleForm4.operatorCertificateTypeOther"
                           placeholder="请输入其他证件类型"
@@ -822,7 +824,7 @@
           </div>
 
           <div v-if="active == 5">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+            <div class="titles">
               数据处理者遵守中国法律、行政法规、部门规章情况
             </div>
             <div style="margin: 0 0 20px 20px">
@@ -856,19 +858,26 @@
           </div>
 
           <div v-if="active == 6">
-            <div style="margin: 0 0 20px 20px">
-              <div v-for="(it, i) in ruleForm6" :key="i">
+            <div style="">
+              <div
+                v-for="(it, i) in ruleForm6"
+                :key="i"
+                style="
+                  border: 1px dashed;
+                  border-radius: 10px;
+                  margin-bottom: 20px;
+                  padding: 20px;
+                "
+              >
+                <div
+                  v-if="i > 0"
+                  style="float: right; color: #409eff; cursor: pointer"
+                  @click="closeScene(i)"
+                >
+                  删除该场景
+                </div>
+                <div class="titles">数据出境场景{{ i + 1 }}</div>
                 <el-form ref="ruleFormRef6" :model="it" :rules="rules6">
-                  <div
-                    style="
-                      color: #2977ff;
-                      font-size: 15px;
-                      margin-bottom: 20px;
-                      text-align: center;
-                    "
-                  >
-                    数据出境场景
-                  </div>
                   <el-row :gutter="20">
                     <el-col :span="24">
                       <el-form-item prop="summary">
@@ -892,16 +901,7 @@
                     </el-col>
                   </el-row>
 
-                  <div
-                    style="
-                      color: #2977ff;
-                      font-size: 15px;
-                      margin-bottom: 20px;
-                      text-align: center;
-                    "
-                  >
-                    拟数据出境情况
-                  </div>
+                  <div class="titles">拟数据出境情况</div>
 
                   <el-row :gutter="20">
                     <el-col :span="8">
@@ -910,7 +910,7 @@
                           style="
                             display: flex;
                             flex-direction: column;
-                            width: 100%;
+                            width: 80%;
                           "
                         >
                           <div><span style="color: red">*</span> 数据类型</div>
@@ -1025,23 +1025,32 @@
                       </el-form-item>
                     </el-col>
                   </el-row>
-                  <div>
+                  <div
+                    v-for="(t, n) in it.receiveList"
+                    :key="n"
+                    style="
+                      border: 1px dashed;
+                      border-radius: 10px;
+                      margin-bottom: 20px;
+                      padding: 20px;
+                    "
+                  >
                     <div
-                      style="
-                        color: #2977ff;
-                        font-size: 15px;
-                        margin-bottom: 20px;
-                        text-align: center;
-                      "
+                      v-if="n > 0"
+                      style="float: right; color: #409eff; cursor: pointer"
+                      @click="closeOutbound(i, n)"
                     >
-                      境外接收方情况
+                      删除该境外接收方
+                    </div>
+                    <div class="titles">
+                      境外接收方情况{{ i + 1 }}-{{ n + 1 }}
                     </div>
                     <el-checkbox
-                      v-model="it.receiveList[0].statDescriptionFlag"
+                      v-model="t.statDescriptionFlag"
                       label="填写统计说明"
                       size="large"
                     />
-                    <div v-if="!it.receiveList[0].statDescriptionFlag">
+                    <div v-if="!t.statDescriptionFlag">
                       <el-row :gutter="20">
                         <el-col :span="8">
                           <el-form-item prop="foreignReceiver">
@@ -1049,14 +1058,14 @@
                               style="
                                 display: flex;
                                 flex-direction: column;
-                                width: 100%;
+                                width: 80%;
                               "
                             >
                               <div>
                                 <span style="color: red">*</span> 境外接收方名称
                               </div>
                               <el-input
-                                v-model="it.receiveList[0].foreignReceiver"
+                                v-model="t.foreignReceiver"
                                 placeholder="请输入境外接收方名称"
                               ></el-input>
                             </div>
@@ -1077,7 +1086,7 @@
                                 所在国家或者地区
                               </div>
                               <el-select
-                                v-model="it.receiveList[0].areaValue"
+                                v-model="t.areaValue"
                                 clearable
                                 placeholder="请选择所在国家或者地区"
                               >
@@ -1092,14 +1101,20 @@
                           </el-form-item>
                         </el-col>
 
-                        <el-col :span="8" style="display: flex">
+                        <el-col :span="8">
                           <el-form-item prop="primaryBusiness">
-                            <div style="display: flex; flex-direction: column">
+                            <div
+                              style="
+                                display: flex;
+                                flex-direction: column;
+                                width: 80%;
+                              "
+                            >
                               <div>
                                 <span style="color: red">*</span> 主营业务
                               </div>
                               <el-input
-                                v-model="it.receiveList[0].primaryBusiness"
+                                v-model="t.primaryBusiness"
                                 placeholder="请输入主营业务"
                               ></el-input>
                             </div>
@@ -1108,26 +1123,26 @@
                       </el-row>
 
                       <el-row :gutter="20">
-                        <el-col :span="8" style="display: flex">
+                        <el-col :span="8">
                           <el-form-item prop="principalName">
                             <div
                               style="
                                 display: flex;
                                 flex-direction: column;
-                                width: 150px;
+                                width: 80%;
                               "
                             >
                               <div>
                                 <span style="color: red">*</span>负责人姓名
                               </div>
                               <el-input
-                                v-model="it.receiveList[0].principalName"
+                                v-model="t.principalName"
                                 placeholder="请输入负责人姓名"
                               ></el-input>
                             </div>
                           </el-form-item>
                         </el-col>
-                        <el-col :span="8" style="display: flex">
+                        <el-col :span="8">
                           <el-form-item prop="principalJob">
                             <div
                               style="
@@ -1141,7 +1156,7 @@
                               </div>
 
                               <el-input
-                                v-model="it.receiveList[0].principalJob"
+                                v-model="t.principalJob"
                                 placeholder="请输入负责人职务"
                               ></el-input>
                             </div>
@@ -1149,26 +1164,26 @@
                         </el-col>
                       </el-row>
                       <el-row :gutter="20">
-                        <el-col :span="8" style="display: flex">
+                        <el-col :span="8">
                           <el-form-item prop="contactTel">
                             <div
                               style="
                                 display: flex;
                                 flex-direction: column;
-                                width: 150px;
+                                width: 80%;
                               "
                             >
                               <div>
                                 <span style="color: red"></span>联系方式-电话
                               </div>
                               <el-input
-                                v-model="it.receiveList[0].contactTel"
+                                v-model="t.contactTel"
                                 placeholder="请输入联系方式-电话"
                               ></el-input>
                             </div>
                           </el-form-item>
                         </el-col>
-                        <el-col :span="8" style="display: flex">
+                        <el-col :span="8">
                           <el-form-item prop="contactEmail">
                             <div
                               style="
@@ -1182,7 +1197,7 @@
                               </div>
 
                               <el-input
-                                v-model="it.receiveList[0].contactEmail"
+                                v-model="t.contactEmail"
                                 placeholder="请输入联系方式-邮箱"
                               ></el-input>
                             </div>
@@ -1205,7 +1220,7 @@
                               <el-input
                                 :rows="6"
                                 type="textarea"
-                                v-model="it.receiveList[0].addr"
+                                v-model="t.addr"
                                 placeholder="请输入所在地址"
                               ></el-input>
                             </div>
@@ -1227,7 +1242,7 @@
                             <el-input
                               :rows="6"
                               type="textarea"
-                              v-model="it.receiveList[0].statDescription"
+                              v-model="t.statDescription"
                               placeholder="请输入统计说明"
                             ></el-input>
                           </div>
@@ -1235,20 +1250,31 @@
                       </el-col>
                     </el-row>
                   </div>
+                  <div
+                    style="width: 100%; text-align: center; margin-bottom: 10px"
+                  >
+                    <el-button @click="addOutbound(i)" type="primary"
+                      >添加境外接收方情况</el-button
+                    >
+                  </div>
                 </el-form>
+              </div>
+
+              <div style="width: 100%; text-align: center">
+                <el-button @click="addScene" type="primary"
+                  >添加数据出境场景</el-button
+                >
               </div>
             </div>
           </div>
 
           <div v-if="active == 7">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              文件上传
-            </div>
+            <div class="titles">文件上传</div>
             <div style="margin: 0 0 20px 20px">
               <el-form ref="ruleFormRef7" :model="ruleForm7" :rules="rules7">
                 <el-row :gutter="20">
                   <el-col :span="12">
-                    <el-form-item prop="credfileName">
+                    <el-form-item prop="creditCodeAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1260,11 +1286,24 @@
                           <span style="color: red">*</span>
                           统一社会信用代码证件影印件（加盖公章）
                         </div>
-                        <div style="display: flex">
+                        <div style="display: flex; position: relative">
                           <el-input
                             style="margin-right: 50px"
                             v-model="ruleForm7.credfileName"
+                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                            readonly
                           ></el-input>
+                          <el-icon
+                            v-if="ruleForm7.credfileName"
+                            style="
+                              position: absolute;
+                              top: 10px;
+                              left: 250px;
+                              cursor: pointer;
+                            "
+                            @click="deleteFileName(1)"
+                            ><CircleClose
+                          /></el-icon>
                           <el-upload
                             drag
                             class="upload-demo"
@@ -1288,7 +1327,7 @@
                   </el-col>
 
                   <el-col :span="12">
-                    <el-form-item prop="legalfileName">
+                    <el-form-item prop="legalIdCardAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1300,11 +1339,24 @@
                           <span style="color: red">*</span>
                           法定代表人身份证件影印件（加盖公章）
                         </div>
-                        <div style="display: flex">
+                        <div style="display: flex; position: relative">
                           <el-input
                             style="margin-right: 50px"
                             v-model="ruleForm7.legalfileName"
+                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                            readonly
                           ></el-input>
+                          <el-icon
+                            v-if="ruleForm7.legalfileName"
+                            style="
+                              position: absolute;
+                              top: 10px;
+                              left: 250px;
+                              cursor: pointer;
+                            "
+                            @click="deleteFileName(2)"
+                            ><CircleClose
+                          /></el-icon>
                           <el-upload
                             drag
                             class="upload-demo"
@@ -1330,7 +1382,7 @@
 
                 <el-row :gutter="20">
                   <el-col :span="12">
-                    <el-form-item prop="operatorfileName">
+                    <el-form-item prop="operatorIdCardAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1342,11 +1394,24 @@
                           <span style="color: red">*</span>
                           经办人身份证件影印件（加盖公章）
                         </div>
-                        <div style="display: flex">
+                        <div style="display: flex; position: relative">
                           <el-input
                             style="margin-right: 50px"
                             v-model="ruleForm7.operatorfileName"
+                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                            readonly
                           ></el-input>
+                          <el-icon
+                            v-if="ruleForm7.operatorfileName"
+                            style="
+                              position: absolute;
+                              top: 10px;
+                              left: 250px;
+                              cursor: pointer;
+                            "
+                            @click="deleteFileName(3)"
+                            ><CircleClose
+                          /></el-icon>
                           <el-upload
                             drag
                             class="upload-demo"
@@ -1370,7 +1435,7 @@
                   </el-col>
 
                   <el-col :span="12">
-                    <el-form-item prop="delegatefileName">
+                    <el-form-item prop="delegateAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1382,11 +1447,24 @@
                           <span style="color: red">*</span>
                           经办人授权委托书
                         </div>
-                        <div style="display: flex">
+                        <div style="display: flex; position: relative">
                           <el-input
                             style="margin-right: 50px"
                             v-model="ruleForm7.delegatefileName"
+                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                            readonly
                           ></el-input>
+                          <el-icon
+                            v-if="ruleForm7.delegatefileName"
+                            style="
+                              position: absolute;
+                              top: 10px;
+                              left: 250px;
+                              cursor: pointer;
+                            "
+                            @click="deleteFileName(4)"
+                            ><CircleClose
+                          /></el-icon>
                           <el-upload
                             drag
                             class="upload-demo"
@@ -1411,7 +1489,7 @@
                 </el-row>
                 <el-row :gutter="20">
                   <el-col :span="12">
-                    <el-form-item prop="promfileName">
+                    <el-form-item prop="promiseAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1423,11 +1501,24 @@
                           <span style="color: red">*</span>
                           承诺书
                         </div>
-                        <div style="display: flex">
+                        <div style="display: flex; position: relative">
                           <el-input
                             style="margin-right: 50px"
                             v-model="ruleForm7.promfileName"
+                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                            readonly
                           ></el-input>
+                          <el-icon
+                            v-if="ruleForm7.promfileName"
+                            style="
+                              position: absolute;
+                              top: 10px;
+                              left: 250px;
+                              cursor: pointer;
+                            "
+                            @click="deleteFileName(5)"
+                            ><CircleClose
+                          /></el-icon>
                           <el-upload
                             drag
                             class="upload-demo"
@@ -1450,7 +1541,7 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
-                    <el-form-item prop="contfileName">
+                    <el-form-item prop="contractAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1463,11 +1554,24 @@
                           与境外接收方拟订立的数据出境相关合同或其他具有法律效力影印件
                           (加盖公章)
                         </div>
-                        <div style="display: flex">
+                        <div style="display: flex; position: relative">
                           <el-input
                             style="margin-right: 50px"
                             v-model="ruleForm7.contfileName"
+                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                            readonly
                           ></el-input>
+                          <el-icon
+                            v-if="ruleForm7.contfileName"
+                            style="
+                              position: absolute;
+                              top: 10px;
+                              left: 250px;
+                              cursor: pointer;
+                            "
+                            @click="deleteFileName(6)"
+                            ><CircleClose
+                          /></el-icon>
                           <el-upload
                             drag
                             class="upload-demo"
@@ -1492,7 +1596,7 @@
                 </el-row>
                 <el-row :gutter="20">
                   <el-col :span="12">
-                    <el-form-item prop="reportfileName">
+                    <el-form-item prop="reportAttachIdList">
                       <div
                         style="
                           display: flex;
@@ -1504,11 +1608,24 @@
                           <span style="color: red">*</span>
                           数据出境风险自评估报告
                         </div>
-                        <div style="display: flex">
+                        <div style="display: flex; position: relative">
                           <el-input
                             style="margin-right: 50px"
                             v-model="ruleForm7.reportfileName"
+                            placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                            readonly
                           ></el-input>
+                          <el-icon
+                            v-if="ruleForm7.reportfileName"
+                            style="
+                              position: absolute;
+                              top: 10px;
+                              left: 250px;
+                              cursor: pointer;
+                            "
+                            @click="deleteFileName(7)"
+                            ><CircleClose
+                          /></el-icon>
                           <el-upload
                             drag
                             class="upload-demo"
@@ -1533,48 +1650,72 @@
                 </el-row>
               </el-form>
             </div>
-            <div></div>
+            <div style="margin-bottom: 10px">
+              <el-button type="primary" plain
+                >《经办人授权委托书》模板下载</el-button
+              >
+              <el-button type="primary" plain>《承诺书》模板下载</el-button>
+              <el-button type="primary" plain
+                >《数据出境风险自评估报告》模板下载</el-button
+              >
+            </div>
             <div>
-              <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
+              <div style="color: #333; margin-bottom: 10px; font-size: 16px">
                 请上传《经办人授权委托书》签字并加盖公章的影印件
               </div>
-              <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
+              <div style="color: #333; margin-bottom: 10px; font-size: 16px">
                 请上传《承诺书》签字并加盖公章的影印件
               </div>
-              <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
+              <div style="color: #333; margin-bottom: 10px; font-size: 16px">
                 请上传《个人信息出境标准合同》加盖公章的影印件
               </div>
-              <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
+              <div style="color: #333; margin-bottom: 10px; font-size: 16px">
                 请上传《数据出境风险自评估报告》加盖公章的影印件
               </div>
             </div>
             <div>
-              <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
+              <!-- #2977ff -->
+              <div style="color: #333; margin-bottom: 10px; font-size: 16px">
                 其他相关证明材料
               </div>
-              <el-input
-                style="margin-right: 50px"
-                v-model="ruleForm7.otherfileName"
-              ></el-input>
-              <el-upload
-                drag
-                class="upload-demo"
-                :show-file-list="false"
-                :http-request="customUpload78"
-              >
-                <el-button
+              <div style="display: flex; position: relative; width: 34%">
+                <el-input
+                  style="margin-right: 50px"
+                  v-model="ruleForm7.otherfileName"
+                  placeholder="请上传格式为PDF、OFD、PNG、JPG、JPEG的文件"
+                  readonly
+                ></el-input>
+                <el-icon
+                  v-if="ruleForm7.otherfileName"
                   style="
-                    border-radius: 50px;
-                    background-color: #fff;
-                    color: #4984ff;
+                    position: absolute;
+                    top: 10px;
+                    left: 250px;
+                    cursor: pointer;
                   "
-                  type="primary"
-                  :icon="Download"
-                  >上传文件</el-button
+                  @click="deleteFileName(8)"
+                  ><CircleClose
+                /></el-icon>
+                <el-upload
+                  drag
+                  class="upload-demo"
+                  :show-file-list="false"
+                  :http-request="customUpload78"
                 >
-              </el-upload>
+                  <el-button
+                    style="
+                      border-radius: 50px;
+                      background-color: #fff;
+                      color: #4984ff;
+                    "
+                    type="primary"
+                    :icon="Download"
+                    >上传文件</el-button
+                  >
+                </el-upload>
+              </div>
               <!-- <div>已上传 {{ ruleForm7.otherAttachIdList }}</div> -->
-              <div style="color: #2977ff; margin-bottom: 10px; font-size: 16px">
+              <div style="color: #333; margin-bottom: 10px; font-size: 16px">
                 请上传格式为PDF、OFD、PNG、JPG、JPEG的文件
               </div>
             </div>
@@ -1625,10 +1766,12 @@ import type {
   UploadProps,
   UploadUserFile,
 } from "element-plus";
-import { Download } from "@element-plus/icons-vue";
-import http, { setBaseInf } from "@/http/httpContentMain";
+import { Download, CircleClose } from "@element-plus/icons-vue";
+import http, { setBaseInf, setHttp } from "@/http/httpContentMain";
 const token = localStorage.getItem("token");
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+const router = useRouter();
+
 const route = useRoute();
 // 获取id
 const query = route.query as {
@@ -1659,29 +1802,91 @@ onMounted(async () => {
 const active = ref(0);
 // 下一步
 const next = () => {
-  if (active.value == 0 && checkList.value.length !== 2) {
-    return ElMessage({ type: "warning", message: "第一步信息需要全部勾选" });
-  } else if (active.value == 0 && checkList.value.length == 2) {
+  if (active.value == 0 && checkList.value.length == 0) {
+    return ElMessage({ type: "warning", message: "下列情形至少选择一项" });
+  } else if (active.value == 0 && checkList.value.length > 0) {
     active.value++;
   } else if (active.value == 1) {
     submitForm1(ruleFormRef1.value);
   } else if (active.value == 2) {
-    if (!ruleForm2.legalFlag) {
-      submitForm2(ruleFormRef2.value);
-    } else {
-      active.value++;
-    }
+    submitForm2(ruleFormRef2.value);
   } else if (active.value == 3) {
     submitForm3(ruleFormRef3.value);
   } else if (active.value == 4) {
     submitForm4(ruleFormRef4.value);
   } else if (active.value == 5) {
-    submitForm5(ruleFormRef5.value);
+    if (ruleForm5.observeContent.trim()) {
+      active.value++;
+    } else {
+      return showWarningMessage("请补求信息");
+    }
   } else if (active.value == 6) {
     // submitForm6(ruleFormRef6.value);
-    active.value++;
+    console.log(ruleForm6, "ruleForm6ruleForm6");
+    let isok = false;
+    let isok2 = false;
+    ruleForm6.map((item) => {
+      if (
+        !item.summary.trim() ||
+        !item.dataTypeValue ||
+        !item.industryValue ||
+        !item.impDataSize ||
+        !item.impDataSizeUnitValue
+      ) {
+        return (isok = true);
+      } else {
+        // 数据类型
+        datatype.value.map((t: any) => {
+          if (t.tagValue == item.dataTypeValue) {
+            item.dataTypeName = t.tagName;
+          }
+        });
+        // 涉及行业/领域
+        industryarea.value.map((t: any) => {
+          if (t.tagValue == item.industryValue) {
+            item.industryName = t.tagName;
+          }
+        });
+        // 所在国家或地区
+        dataunit.value.map((t: any) => {
+          if (t.tagValue == item.impDataSizeUnitValue) {
+            item.impDataSizeUnitName = t.tagName;
+          }
+        });
+        item.receiveList.map((it) => {
+          console.log(it.statDescriptionFlag, "statDescriptionFlag");
+
+          if (
+            !it.statDescriptionFlag &&
+            !it.contactTel.trim() &&
+            !it.statDescriptionFlag &&
+            !it.contactEmail.trim()
+          ) {
+            return (isok2 = true);
+          }
+        });
+      }
+    });
+
+    if (isok) {
+      return showWarningMessage("请补求信息");
+    } else if (isok2) {
+      return showWarningMessage("请填写联系方式，电话和邮箱至少填写一项");
+    } else {
+      active.value++;
+    }
   } else if (active.value == 7) {
-    // submitForm6(ruleFormRef6.value);
+    if (
+      ruleForm7.creditCodeAttachIdList.length == 0 ||
+      ruleForm7.legalIdCardAttachIdList.length == 0 ||
+      ruleForm7.operatorIdCardAttachIdList.length == 0 ||
+      ruleForm7.delegateAttachIdList.length == 0 ||
+      ruleForm7.promiseAttachIdList.length == 0 ||
+      ruleForm7.contractAttachIdList.length == 0 ||
+      ruleForm7.reportAttachIdList.length == 0
+    ) {
+      showWarningMessage("请上传文件");
+    }
   } else {
     active.value++;
   }
@@ -1689,10 +1894,6 @@ const next = () => {
 };
 //  上一步
 const last = () => {
-  // if (active.value == 0 && checkList.value.length !== 3) {
-  //   return ElMessage({ type: "info", message: "第一步信息需要全部勾选" });
-  // }
-
   active.value--;
 };
 const customUpload71 = (file: any) => {
@@ -1869,9 +2070,6 @@ const rules1 = reactive({
     { required: true, message: "请选择单位类型", trigger: "change" },
   ],
   creditCode: [
-    { required: true, message: "请 统一社会信用代码", trigger: "change" },
-  ],
-  tyshxydm: [
     { required: true, message: "请输入统一社会信用代码", trigger: "blur" },
   ],
   unitOfficeAddr: [
@@ -1885,7 +2083,7 @@ const rules1 = reactive({
     },
   ],
   infoSize: [
-    { required: true, message: "请选择处理个人信息规模", trigger: "blur" },
+    { required: true, message: "请选择处理个人信息规模", trigger: "change" },
   ],
   infoSizeUnitValue: [
     {
@@ -1898,7 +2096,7 @@ const rules1 = reactive({
 
 // 表单2
 const ruleForm2 = reactive({
-  legalFlag: false,
+  // legalFlag: false,
   legal: "", //姓名
   legalTel: "", //联系电话
   legalNationalValue: "", //国籍 code
@@ -1914,7 +2112,7 @@ const rules2 = reactive({
   legal: [{ required: true, message: "请输入姓名", trigger: "blur" }],
   legalTel: [{ required: true, message: "请输入联系电话", trigger: "blur" }],
   legalNationalValue: [
-    { required: true, message: "请输入国籍", trigger: "blur" },
+    { required: true, message: "请输入国籍", trigger: "change" },
   ],
   legalJob: [{ required: true, message: "请输入职务", trigger: "blur" }],
   legalCertificateTypeValue: [
@@ -1951,7 +2149,7 @@ const rules3 = reactive({
     { required: true, message: "请输入联系电话", trigger: "blur" },
   ],
   principalNationalValue: [
-    { required: true, message: "请输入国籍", trigger: "blur" },
+    { required: true, message: "请输入国籍", trigger: "change" },
   ],
   principalJob: [{ required: true, message: "请输入职务", trigger: "blur" }],
   principalCertificateTypeValue: [
@@ -1966,7 +2164,10 @@ const rules3 = reactive({
   gljgrprincipalOrgEmpCounts: [
     { required: true, message: "请选择管理机构人数", trigger: "change" },
   ],
-  principalOrgEmpCountUnitName: [
+  principalOrgEmpCount: [
+    { required: true, message: "请输入管理机构人数", trigger: "blur" },
+  ],
+  principalOrgEmpCountUnitValue: [
     { required: true, message: "请输入管理机构人数单位", trigger: "blur" },
   ],
 });
@@ -1988,7 +2189,7 @@ const rules4 = reactive({
   operator: [{ required: true, message: "请输入姓名", trigger: "blur" }],
   operatorTel: [{ required: true, message: "请输入联系电话", trigger: "blur" }],
   operatorNationalValue: [
-    { required: true, message: "请输入国籍", trigger: "blur" },
+    { required: true, message: "请输入国籍", trigger: "change" },
   ],
   operatorJob: [{ required: true, message: "请输入职务", trigger: "blur" }],
   operatorCertificateTypeValue: [
@@ -1999,7 +2200,7 @@ const rules4 = reactive({
     { required: true, message: "请输入证件号码", trigger: "blur" },
   ],
   operatorEmail: [
-    { required: true, message: "请选择电子邮箱", trigger: "blur" },
+    { required: true, message: "请选择电子邮箱", trigger: "change" },
   ],
 });
 
@@ -2024,7 +2225,7 @@ const ruleForm6 = reactive([
     impDataSize: "", // [重要数据]涉及重要数据规模
     impDataSizeUnitValue: "", // [重要数据]涉及重要数据规模单位值（标签）数据接口：tag/tag?tagCode=dataunit
     impDataSizeUnitName: "", // [重要数据]涉及重要数据规模单位名称（标签）
-    containInfoFlag: true, // [个人信息]是否包含敏感个人信息
+    containInfoFlag: false, // [个人信息]是否包含敏感个人信息
     personCount: "", // [个人信息]涉及自然人（去重）数量
     personCountUnitValue: "", // [个人信息]涉及自然人（去重）数量单位值（标签）数据接口：tag/tag?tagCode=personunit
     personCountUnitName: "", // [个人信息]涉及自然人（去重）数量单位名称（标签）
@@ -2052,9 +2253,7 @@ const rules6 = reactive({
   dataTypeValue: [
     { required: true, message: "请输入数据类型", trigger: "blur" },
   ],
-  grxx: [
-    { required: true, message: "请输入是否包含敏感个人信息", trigger: "blur" },
-  ],
+
   industryValue: [
     { required: true, message: "请选择涉及行业/领域 ", trigger: "change" },
   ],
@@ -2072,7 +2271,7 @@ const rules6 = reactive({
     {
       required: true,
       message: "请选择是否包含敏感个人信息",
-      trigger: "blur",
+      trigger: "change",
     },
   ],
 });
@@ -2161,185 +2360,193 @@ const rules7 = reactive({
 const items = ref({});
 
 // 详情
-const getItems = async () => {
+const getItems = () => {
   if (query.id) {
     const baseUrl = "k2401-data-exit/exit/";
     const ids = query.id.replace(/"/g, "");
     const url = `${baseUrl}${ids}`;
-    const res = (await http.get(url, {
-      Authorization: "Bearer " + token,
-    })) as any;
+    const http = setHttp();
 
-    items.value = res;
-    console.log(res, "resresres--------------");
-    checkList.value = ["1", "2"] as never[];
+    http
+      .get(url, {
+        Authorization: "Bearer " + token,
+      })
+      .then((res: any) => {
+        items.value = res;
+        // console.log(res, "resresres--------------");
+        checkList.value = res.conditionContent.split("|");
 
-    const {
-      // ruleForm1
-      unitName,
-      unitNatureValue,
-      unitNatureName,
-      unitNatureOther,
-      unitCategoryValue,
-      unitCategoryName,
-      unitCategoryOther,
-      creditCode,
-      unitRegAddr,
-      unitOfficeAddr,
-      keyInfoOperatorFlag,
-      empCount,
-      empCountUnitValue,
-      empCountUnitName,
-      infoSize,
-      infoSizeUnitValue,
-      infoSizeUnitName,
-      // ruleForm2
-      legal,
-      legalTel,
-      legalNationalValue,
-      legalNationalName,
-      legalJob,
-      legalCertificateTypeValue,
-      legalCertificateTypeName,
-      legalCertificateTypeOther,
-      legalCertificateCode,
-      legalEmail,
-      // ruleForm3
-      principalName, // 负责人姓名
-      principalTel, // 负责人联系电话
-      principalNationalValue, // 负责人国籍值（标签）数据接口：tag/tag?tagCode=guoji
-      principalNationalName, // 负责人国籍名称（标签）
-      principalJob, // 负责人职务
-      principalCertificateTypeValue, //  负责人证件类型值（标签）数据接口：tag/tag?tagCode=certificatetype
-      principalCertificateTypeName, // 负责人证件类型名称（标签）
-      principalCertificateTypeOther, // 负责人其他证件类型
-      principalCertificateCode, // 负责人证件号码
-      principalOrgName, // 负责人管理机构名称
-      principalOrgEmpCount, // 负责人管理机构人数
-      principalOrgEmpCountUnitValue, // 负责人管理机构人数单位值（标签）数据接口：tag/tag?tagCode=personunit
-      principalOrgEmpCountUnitName, // 负责人管理机构人数单位名称（标签）
-      principalEmail, // 负责人电子邮箱
-      // ruleForm4
-      operator,
-      operatorTel,
-      operatorNationalValue,
-      operatorNationalName,
-      operatorJob,
-      operatorCertificateTypeValue,
-      operatorCertificateTypeName,
-      operatorCertificateTypeOther,
-      operatorCertificateCode,
-      operatorEmail,
-      // ruleForm5
-      observeContent,
-      // ruleForm6
-      sceneList,
-      // ruleForm7
-      creditCodeAttachList,
-      legalIdCardAttachList,
-      operatorIdCardAttachList,
-      delegateAttachList,
-      promiseAttachList,
-      contractAttachList,
-      reportAttachList,
-      otherAttachList,
-    } = res; // 解构需要的属性
+        const {
+          // ruleForm1
+          unitName,
+          unitNatureValue,
+          unitNatureName,
+          unitNatureOther,
+          unitCategoryValue,
+          unitCategoryName,
+          unitCategoryOther,
+          creditCode,
+          unitRegAddr,
+          unitOfficeAddr,
+          keyInfoOperatorFlag,
+          empCount,
+          empCountUnitValue,
+          empCountUnitName,
+          infoSize,
+          infoSizeUnitValue,
+          infoSizeUnitName,
+          // ruleForm2
+          legal,
+          legalTel,
+          legalNationalValue,
+          legalNationalName,
+          legalJob,
+          legalCertificateTypeValue,
+          legalCertificateTypeName,
+          legalCertificateTypeOther,
+          legalCertificateCode,
+          legalEmail,
+          // ruleForm3
+          principalName, // 负责人姓名
+          principalTel, // 负责人联系电话
+          principalNationalValue, // 负责人国籍值（标签）数据接口：tag/tag?tagCode=guoji
+          principalNationalName, // 负责人国籍名称（标签）
+          principalJob, // 负责人职务
+          principalCertificateTypeValue, //  负责人证件类型值（标签）数据接口：tag/tag?tagCode=certificatetype
+          principalCertificateTypeName, // 负责人证件类型名称（标签）
+          principalCertificateTypeOther, // 负责人其他证件类型
+          principalCertificateCode, // 负责人证件号码
+          principalOrgName, // 负责人管理机构名称
+          principalOrgEmpCount, // 负责人管理机构人数
+          principalOrgEmpCountUnitValue, // 负责人管理机构人数单位值（标签）数据接口：tag/tag?tagCode=personunit
+          principalOrgEmpCountUnitName, // 负责人管理机构人数单位名称（标签）
+          principalEmail, // 负责人电子邮箱
+          // ruleForm4
+          operator,
+          operatorTel,
+          operatorNationalValue,
+          operatorNationalName,
+          operatorJob,
+          operatorCertificateTypeValue,
+          operatorCertificateTypeName,
+          operatorCertificateTypeOther,
+          operatorCertificateCode,
+          operatorEmail,
+          // ruleForm5
+          observeContent,
+          // ruleForm6
+          sceneList,
+          // ruleForm7
+          creditCodeAttachList,
+          legalIdCardAttachList,
+          operatorIdCardAttachList,
+          delegateAttachList,
+          promiseAttachList,
+          contractAttachList,
+          reportAttachList,
+          otherAttachList,
+        } = res; // 解构需要的属性
 
-    const ruleF1 = {
-      unitName,
-      unitNatureValue,
-      unitNatureName,
-      unitNatureOther,
-      unitCategoryValue,
-      unitCategoryName,
-      unitCategoryOther,
-      creditCode,
-      unitRegAddr,
-      unitOfficeAddr,
-      keyInfoOperatorFlag: keyInfoOperatorFlag ? "1" : "0",
-      empCount,
-      empCountUnitValue,
-      empCountUnitName,
-      infoSize,
-      infoSizeUnitValue,
-      infoSizeUnitName,
-    };
-    Object.assign(ruleForm1, ruleF1);
+        const ruleF1 = {
+          unitName,
+          unitNatureValue,
+          unitNatureName,
+          unitNatureOther,
+          unitCategoryValue,
+          unitCategoryName,
+          unitCategoryOther,
+          creditCode,
+          unitRegAddr,
+          unitOfficeAddr,
+          keyInfoOperatorFlag: keyInfoOperatorFlag ? "1" : "0",
+          empCount,
+          empCountUnitValue,
+          empCountUnitName,
+          infoSize,
+          infoSizeUnitValue,
+          infoSizeUnitName,
+        };
+        Object.assign(ruleForm1, ruleF1);
 
-    const ruleF2 = {
-      legal,
-      legalTel,
-      legalNationalValue,
-      legalNationalName,
-      legalJob,
-      legalCertificateTypeValue,
-      legalCertificateTypeName,
-      legalCertificateTypeOther,
-      legalCertificateCode,
-      legalEmail,
-    };
-    Object.assign(ruleForm2, ruleF2);
-    const ruleF3 = {
-      principalName, // 负责人姓名
-      principalTel, // 负责人联系电话
-      principalNationalValue, // 负责人国籍值（标签）数据接口：tag/tag?tagCode=guoji
-      principalNationalName, // 负责人国籍名称（标签）
-      principalJob, // 负责人职务
-      principalCertificateTypeValue, //  负责人证件类型值（标签）数据接口：tag/tag?tagCode=certificatetype
-      principalCertificateTypeName, // 负责人证件类型名称（标签）
-      principalCertificateTypeOther, // 负责人其他证件类型
-      principalCertificateCode, // 负责人证件号码
-      principalOrgName, // 负责人管理机构名称
-      principalOrgEmpCount, // 负责人管理机构人数
-      principalOrgEmpCountUnitValue, // 负责人管理机构人数单位值（标签）数据接口：tag/tag?tagCode=personunit
-      principalOrgEmpCountUnitName, // 负责人管理机构人数单位名称（标签）
-      principalEmail, // 负责人电子邮箱
-    };
-    Object.assign(ruleForm3, ruleF3);
+        const ruleF2 = {
+          legal,
+          legalTel,
+          legalNationalValue,
+          legalNationalName,
+          legalJob,
+          legalCertificateTypeValue,
+          legalCertificateTypeName,
+          legalCertificateTypeOther,
+          legalCertificateCode,
+          legalEmail,
+        };
+        Object.assign(ruleForm2, ruleF2);
+        const ruleF3 = {
+          principalName, // 负责人姓名
+          principalTel, // 负责人联系电话
+          principalNationalValue, // 负责人国籍值（标签）数据接口：tag/tag?tagCode=guoji
+          principalNationalName, // 负责人国籍名称（标签）
+          principalJob, // 负责人职务
+          principalCertificateTypeValue, //  负责人证件类型值（标签）数据接口：tag/tag?tagCode=certificatetype
+          principalCertificateTypeName, // 负责人证件类型名称（标签）
+          principalCertificateTypeOther, // 负责人其他证件类型
+          principalCertificateCode, // 负责人证件号码
+          principalOrgName, // 负责人管理机构名称
+          principalOrgEmpCount, // 负责人管理机构人数
+          principalOrgEmpCountUnitValue, // 负责人管理机构人数单位值（标签）数据接口：tag/tag?tagCode=personunit
+          principalOrgEmpCountUnitName, // 负责人管理机构人数单位名称（标签）
+          principalEmail, // 负责人电子邮箱
+        };
+        Object.assign(ruleForm3, ruleF3);
 
-    // ruleForm4
-    const ruleF4 = {
-      operator,
-      operatorTel,
-      operatorNationalValue,
-      operatorNationalName,
-      operatorJob,
-      operatorCertificateTypeValue,
-      operatorCertificateTypeName,
-      operatorCertificateTypeOther,
-      operatorCertificateCode,
-      operatorEmail,
-    };
-    Object.assign(ruleForm4, ruleF4);
+        // ruleForm4
+        const ruleF4 = {
+          operator,
+          operatorTel,
+          operatorNationalValue,
+          operatorNationalName,
+          operatorJob,
+          operatorCertificateTypeValue,
+          operatorCertificateTypeName,
+          operatorCertificateTypeOther,
+          operatorCertificateCode,
+          operatorEmail,
+        };
+        Object.assign(ruleForm4, ruleF4);
+        // ruleForm5
+        const ruleF5 = {
+          observeContent,
+        };
 
-    Object.assign(ruleForm5, observeContent);
+        Object.assign(ruleForm5, ruleF5);
 
-    // ruleForm6
+        // ruleForm6
 
-    Object.assign(ruleForm6, sceneList);
+        Object.assign(ruleForm6, sceneList);
 
-    // ruleForm7
-    const ruleF7 = {
-      creditCodeAttachIdList: creditCodeAttachList,
-      credfileName: creditCodeAttachList[0].fileName,
-      legalIdCardAttachIdList: legalIdCardAttachList,
-      legalfileName: legalIdCardAttachList[0].fileName,
-      operatorIdCardAttachIdList: operatorIdCardAttachList,
-      operatorfileName: operatorIdCardAttachList[0].fileName,
-      delegateAttachIdList: delegateAttachList,
-      delegatefileName: delegateAttachList[0].fileName,
-      promiseAttachIdList: promiseAttachList,
-      promfileName: promiseAttachList[0].fileName,
-      contractAttachIdList: contractAttachList,
-      contfileName: contractAttachList[0].fileName,
-      reportAttachIdList: reportAttachList,
-      reportfileName: reportAttachList[0].fileName,
-      otherAttachIdList: otherAttachList,
-      otherfileName: otherAttachList[0].fileName,
-    };
-    Object.assign(ruleForm7, ruleF7);
+        // ruleForm7
+        const ruleF7 = {
+          creditCodeAttachIdList: creditCodeAttachList,
+          credfileName: creditCodeAttachList[0].fileName,
+          legalIdCardAttachIdList: legalIdCardAttachList,
+          legalfileName: legalIdCardAttachList[0].fileName,
+          operatorIdCardAttachIdList: operatorIdCardAttachList,
+          operatorfileName: operatorIdCardAttachList[0].fileName,
+          delegateAttachIdList: delegateAttachList,
+          delegatefileName: delegateAttachList[0].fileName,
+          promiseAttachIdList: promiseAttachList,
+          promfileName: promiseAttachList[0].fileName,
+          contractAttachIdList: contractAttachList,
+          contfileName: contractAttachList[0].fileName,
+          reportAttachIdList: reportAttachList,
+          reportfileName: reportAttachList[0].fileName,
+          otherAttachIdList: otherAttachList,
+          otherfileName: otherAttachList[0].fileName,
+        };
+        Object.assign(ruleForm7, ruleF7);
 
-    console.log(ruleForm1, "ruleForm1ruleForm1");
+        console.log(ruleForm1, "ruleForm1ruleForm1");
+      });
   }
 };
 
@@ -2347,8 +2554,8 @@ const getItems = async () => {
 const sumit = async (num: any) => {
   let params = {
     // 0 数据出境安全评估申报使用情形
-    conditionContent:
-      "（一）关键信息基础设施运营者向境外提供个人信息或者重要数据；|（二）关键信息基础设施运营者以外的数据处理者向境外提供重要数据，或者自当年1月1日起累计向境外提供100万人以上个人信息（不含敏感个人信息）或者1万人以上敏感个人信息；", // 前提（每个选项的值用|分割即可）
+    conditionContent: checkList.value.join("|"),
+    // "（一）关键信息基础设施运营者向境外提供个人信息或者重要数据；|（二）关键信息基础设施运营者以外的数据处理者向境外提供重要数据，或者自当年1月1日起累计向境外提供100万人以上个人信息（不含敏感个人信息）或者1万人以上敏感个人信息；", // 前提（每个选项的值用|分割即可）
     // 1 数据处理者情况
     unitName: ruleForm1.unitName, // 单位名称
     unitNatureValue: ruleForm1.unitNatureValue, // 单位性质值（标签）（标签接口数据接口参见接口1.12.3），取tagValue字段，数据接口：tag/tag?tagCode=unitnature
@@ -2360,7 +2567,7 @@ const sumit = async (num: any) => {
     creditCode: ruleForm1.creditCode, // 统一社会信用代码
     unitRegAddr: ruleForm1.unitRegAddr, // 单位注册地
     unitOfficeAddr: ruleForm1.unitOfficeAddr, // 办公所在地
-    keyInfoOperatorFlag: ruleForm1.keyInfoOperatorFlag, // 是否为关键信息基础设施运营者
+    keyInfoOperatorFlag: ruleForm1.keyInfoOperatorFlag == "1" ? true : false, // 是否为关键信息基础设施运营者
     empCount: ruleForm1.empCount, // 员工数据
     empCountUnitValue: ruleForm1.empCountUnitValue, // 员工数量单位值（标签）数据接口：tag/tag?tagCode=personunit
     empCountUnitName: ruleForm1.empCountUnitName, // 员工数量单位名称（标签）
@@ -2479,7 +2686,7 @@ const sumit = async (num: any) => {
     // ],
 
     // 状态
-    status: 0, // 枚举：0暂存、1填写完成
+    status: num == 1 ? 1 : 0, // 枚举：0暂存、1填写完成
   };
   let res = "";
   if (!query.id) {
@@ -2497,6 +2704,9 @@ const sumit = async (num: any) => {
   }
   console.log(res, "resresres");
   if (res) {
+    if (num == 1) {
+      router.go(-1);
+    }
     return ElMessage({
       type: "success",
       message: num == 1 ? "填写完成" : "暂存成功",
@@ -2509,6 +2719,94 @@ const sumit = async (num: any) => {
   }
 };
 
+const addOutbound = (index: any) => {
+  let form = {
+    statDescriptionFlag: false, // 填写统计说明
+    statDescription: "", // 统计说明
+    foreignReceiver: "", // 境外接收方名称
+    areaValue: "", // 所在国家或地区值（标签）数据接口：tag/tag?tagCode=area
+    areaName: "", // 所在国家或地区名称（标签）
+    primaryBusiness: "", // 主营业务
+    principalName: "", // 负责人姓名
+    principalJob: "", // 负责人职务
+    contactTel: "", // 联系方式-电话
+    contactEmail: "", // 联系方式-邮箱
+    addr: "", // 所在地址
+  };
+
+  ruleForm6[index].receiveList.push(form);
+};
+
+const addScene = () => {
+  let form = {
+    summary: "", // 出境场景简述
+    dataTypeValue: "", // 数据类型值（标签）数据接口：tag/tag?tagCode=datatype
+    dataTypeName: "", // 数据类型名称（标签）
+    impDeptName: "", // [重要数据]重要数据认定主管部门名称
+    industryValue: "", // [重要数据、个人信息]涉及行业/领域值（标签）数据接口：tag/tag?tagCode=industryarea
+    industryName: "", // [重要数据、个人信息]涉及行业/领域名称（标签）
+    industryOther: "", // [重要数据、个人信息]涉及其他行业/领域
+    impDataSize: "", // [重要数据]涉及重要数据规模
+    impDataSizeUnitValue: "", // [重要数据]涉及重要数据规模单位值（标签）数据接口：tag/tag?tagCode=dataunit
+    impDataSizeUnitName: "", // [重要数据]涉及重要数据规模单位名称（标签）
+    containInfoFlag: false, // [个人信息]是否包含敏感个人信息
+    personCount: "", // [个人信息]涉及自然人（去重）数量
+    personCountUnitValue: "", // [个人信息]涉及自然人（去重）数量单位值（标签）数据接口：tag/tag?tagCode=personunit
+    personCountUnitName: "", // [个人信息]涉及自然人（去重）数量单位名称（标签）
+    receiveList: [
+      // 境外接收方情况
+      {
+        statDescriptionFlag: false, // 填写统计说明
+        statDescription: "", // 统计说明
+        foreignReceiver: "", // 境外接收方名称
+        areaValue: "", // 所在国家或地区值（标签）数据接口：tag/tag?tagCode=area
+        areaName: "", // 所在国家或地区名称（标签）
+        primaryBusiness: "", // 主营业务
+        principalName: "", // 负责人姓名
+        principalJob: "", // 负责人职务
+        contactTel: "", // 联系方式-电话
+        contactEmail: "", // 联系方式-邮箱
+        addr: "", // 所在地址
+      },
+    ],
+  };
+  ruleForm6.push(form);
+};
+
+const closeScene = (index: any) => {
+  ruleForm6.splice(index, 1);
+};
+const closeOutbound = (index: any, ind: any) => {
+  ruleForm6[index].receiveList.splice(ind, 1);
+};
+
+const deleteFileName = (num: any) => {
+  if (num == 1) {
+    ruleForm7.credfileName = "";
+    ruleForm7.creditCodeAttachIdList = [];
+  } else if (num == 2) {
+    ruleForm7.legalfileName = "";
+    ruleForm7.legalIdCardAttachIdList = [];
+  } else if (num == 3) {
+    ruleForm7.operatorfileName = "";
+    ruleForm7.operatorIdCardAttachIdList = [];
+  } else if (num == 4) {
+    ruleForm7.delegatefileName = "";
+    ruleForm7.delegateAttachIdList = [];
+  } else if (num == 5) {
+    ruleForm7.promfileName = "";
+    ruleForm7.promiseAttachIdList = [];
+  } else if (num == 6) {
+    ruleForm7.contfileName = "";
+    ruleForm7.contractAttachIdList = [];
+  } else if (num == 7) {
+    ruleForm7.reportfileName = "";
+    ruleForm7.reportAttachIdList = [];
+  } else {
+    ruleForm7.otherfileName = "";
+    ruleForm7.otherAttachIdList = [];
+  }
+};
 // 校验表单1
 const submitForm1 = async (ruleFormRef1: FormInstance | undefined) => {
   if (!ruleFormRef1) return;
@@ -2628,49 +2926,6 @@ const submitForm4 = async (ruleFormRef4: FormInstance | undefined) => {
           ruleForm4.operatorCertificateTypeName = item.tagName;
         }
       });
-      console.log("error submit!", ruleForm3);
-      active.value++;
-    } else {
-      showWarningMessage("请补求信息");
-    }
-  });
-};
-// 校验表单5
-const submitForm5 = async (ruleFormRef5: FormInstance | undefined) => {
-  if (!ruleFormRef5) return;
-  await ruleFormRef5.validate(async (valid: boolean) => {
-    if (valid) {
-      active.value++;
-    } else {
-      showWarningMessage("请补求信息");
-    }
-  });
-};
-// 校验表单6
-const submitForm6 = async (ruleFormRef6: FormInstance | undefined) => {
-  if (!ruleFormRef6) return;
-  await ruleFormRef6.validate(async (valid: boolean) => {
-    if (valid) {
-      // 涉及行业/领域
-      datatype.value.map((item: any) => {
-        if (item.tagValue == ruleFormRef6.dataTypeValue) {
-          ruleFormRef6.dataTypeName = item.tagName;
-        }
-      });
-      // 单位
-      unitList.value.map((item: any) => {
-        // 员工数量单位
-        if (item.tagValue == ruleForm5.personCountUnitValue) {
-          ruleForm5.personCountUnitName = item.tagName;
-        }
-      });
-      // 所在国家或地区
-      area.value.map((item: any) => {
-        if (item.tagValue == ruleForm5.areaValue) {
-          ruleForm5.areaName = item.tagName;
-        }
-      });
-      console.log("error submit!", ruleForm5);
       active.value++;
     } else {
       showWarningMessage("请补求信息");
@@ -2683,77 +2938,120 @@ const showWarningMessage = (message: string) => {
 };
 // 单位性质
 const unitNatureValuelist = ref([]);
-const getUnitNatureValue = async () => {
-  const res = (await http.get("/tag/tag?tagCode=unitnature", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  unitNatureValuelist.value = res.children;
+const getUnitNatureValue = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=unitnature", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      unitNatureValuelist.value = data.children;
+    });
 };
 // 单位类型  unitCategoryValue
 const unitCategoryList = ref([]);
-const getUnitCategoryValue = async () => {
-  const res = (await http.get("/tag/tag?tagCode=unitcategory", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  unitCategoryList.value = res.children;
+const getUnitCategoryValue = () => {
+  const http = setHttp();
+  http
+    .get("/tag/tag?tagCode=unitcategory", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      unitCategoryList.value = data.children;
+    });
 };
 // 数量单位   empCountUnitValue
 const unitList = ref([]);
-const getUnitList = async () => {
-  const res = (await http.get("/tag/tag?tagCode=personunit", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  unitList.value = res.children;
+const getUnitList = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=personunit", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      unitList.value = data.children;
+    });
 };
 // 法人国籍   legalNationalValue
 const guoji = ref([]);
-const getGuoji = async () => {
-  const res = (await http.get("/tag/tag?tagCode=guoji", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  guoji.value = res.children;
-  // console.log(guoji.value,'guoji.value')
+const getGuoji = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=guoji", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      guoji.value = data.children;
+      // console.log(guoji.value,'guoji.value')
+    });
 };
 // 证件类型   legalCertificateTypeValue
 const certificatetype = ref([]);
-const getCertificatetype = async () => {
-  const res = (await http.get("/tag/tag?tagCode=certificatetype", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  certificatetype.value = res.children;
+const getCertificatetype = () => {
+  const http = setHttp();
+
+  const res = http
+    .get("/tag/tag?tagCode=certificatetype", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      certificatetype.value = data.children;
+    });
 };
 // 涉及行业/领域   industryValue
 const industryarea = ref([]);
-const getIndustryarea = async () => {
-  const res = (await http.get("/tag/tag?tagCode=industryarea", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  industryarea.value = res.children;
+const getIndustryarea = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=industryarea", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      industryarea.value = data.children;
+    });
 };
 // 所在国家或地区   areaValue
 const area = ref([]);
-const getArea = async () => {
-  const res = (await http.get("/tag/tag?tagCode=area", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  area.value = res.children;
+const getArea = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=area", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      area.value = data.children;
+    });
 };
 // 法人国籍   legalNationalValue
 const datatype = ref([]);
-const getDatatype = async () => {
-  const res = (await http.get("/tag/tag?tagCode=datatype", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  datatype.value = res.children;
-  // console.log(guoji.value,'guoji.value')
+const getDatatype = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=datatype", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      datatype.value = data.children;
+    });
 };
 // 数量单位   empCountUnitValue
 const dataunit = ref([]);
-const getDataunit = async () => {
-  const res = (await http.get("/tag/tag?tagCode=dataunit", {
-    Authorization: "Bearer " + token,
-  })) as any;
-  dataunit.value = res.children;
+const getDataunit = () => {
+  const http = setHttp();
+
+  http
+    .get("/tag/tag?tagCode=dataunit", {
+      Authorization: "Bearer " + token,
+    })
+    .then((data: any) => {
+      dataunit.value = data.children;
+    });
 };
 </script>
 <style lang="scss" scoped>
@@ -2763,7 +3061,14 @@ const getDataunit = async () => {
   margin: 0 auto;
   .el-upload-dragger {
     border: none;
+    padding: 0;
   }
+}
+.titles {
+  color: #2977ff;
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 .topImg {
   position: relative;
