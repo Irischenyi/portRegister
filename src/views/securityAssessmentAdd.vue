@@ -300,7 +300,7 @@
               label="无法定代表人"
               size="large"
             /> -->
-            <div style=" margin: 0 0 20px 20px">
+            <div style="margin: 0 0 20px 20px">
               <el-form ref="ruleFormRef2" :model="ruleForm2" :rules="rules2">
                 <el-row :gutter="20">
                   <el-col :span="8">
@@ -1259,7 +1259,6 @@
                   </div>
                 </el-form>
               </div>
-
               <div style="width: 100%; text-align: center">
                 <el-button @click="addScene" type="primary"
                   >添加数据出境场景</el-button
@@ -1757,7 +1756,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
 import { ElMessage } from "element-plus";
 import type {
   ComponentSize,
@@ -1821,60 +1820,7 @@ const next = () => {
       return showWarningMessage("请补求信息");
     }
   } else if (active.value == 6) {
-    // submitForm6(ruleFormRef6.value);
-    console.log(ruleForm6, "ruleForm6ruleForm6");
-    let isok = false;
-    let isok2 = false;
-    ruleForm6.map((item) => {
-      if (
-        !item.summary.trim() ||
-        !item.dataTypeValue ||
-        !item.industryValue ||
-        !item.impDataSize ||
-        !item.impDataSizeUnitValue
-      ) {
-        return (isok = true);
-      } else {
-        // 数据类型
-        datatype.value.map((t: any) => {
-          if (t.tagValue == item.dataTypeValue) {
-            item.dataTypeName = t.tagName;
-          }
-        });
-        // 涉及行业/领域
-        industryarea.value.map((t: any) => {
-          if (t.tagValue == item.industryValue) {
-            item.industryName = t.tagName;
-          }
-        });
-        // 所在国家或地区
-        dataunit.value.map((t: any) => {
-          if (t.tagValue == item.impDataSizeUnitValue) {
-            item.impDataSizeUnitName = t.tagName;
-          }
-        });
-        item.receiveList.map((it) => {
-          console.log(it.statDescriptionFlag, "statDescriptionFlag");
-
-          if (
-            !it.statDescriptionFlag &&
-            !it.contactTel.trim() &&
-            !it.statDescriptionFlag &&
-            !it.contactEmail.trim()
-          ) {
-            return (isok2 = true);
-          }
-        });
-      }
-    });
-
-    if (isok) {
-      return showWarningMessage("请补求信息");
-    } else if (isok2) {
-      return showWarningMessage("请填写联系方式，电话和邮箱至少填写一项");
-    } else {
-      active.value++;
-    }
+    checkout6();
   } else if (active.value == 7) {
     if (
       ruleForm7.creditCodeAttachIdList.length == 0 ||
@@ -1890,12 +1836,80 @@ const next = () => {
   } else {
     active.value++;
   }
-  // active.value++;
+  // if (active.value == 6) {
+  //   checkout6();
+  // } else {
+  //   active.value++;
+  // }
 };
+
+const checkout6 = () => {
+  let isok = false;
+  let isok2 = false;
+  ruleForm6.map((item, i) => {
+    // let form=`form${i}`
+    // submitForm6(form0);
+    if (
+      !item.summary.trim() ||
+      !item.dataTypeValue ||
+      !item.industryValue ||
+      !item.impDataSize ||
+      !item.impDataSizeUnitValue
+    ) {
+      return (isok = true);
+    } else {
+      // 数据类型
+      datatype.value.map((t: any) => {
+        if (t.tagValue == item.dataTypeValue) {
+          item.dataTypeName = t.tagName;
+        }
+      });
+      // 涉及行业/领域
+      industryarea.value.map((t: any) => {
+        if (t.tagValue == item.industryValue) {
+          item.industryName = t.tagName;
+        }
+      });
+      // 所在国家或地区
+      dataunit.value.map((t: any) => {
+        if (t.tagValue == item.impDataSizeUnitValue) {
+          item.impDataSizeUnitName = t.tagName;
+        }
+      });
+      item.receiveList.map((it, i) => {
+        if (
+          !it.statDescriptionFlag &&
+          !it.contactTel.trim() &&
+          !it.contactEmail.trim()
+        ) {
+          return (isok2 = true);
+        }
+        if (!it.statDescriptionFlag && it.areaValue) {
+          // 涉及行业/领域
+          area.value.map((t: any) => {
+            if (t.tagValue == it.areaValue) {
+              it.areaName = t.tagName;
+            }
+          });
+        }
+      });
+    }
+  });
+
+  if (isok) {
+    return showWarningMessage("请补求信息");
+  } else if (isok2) {
+    return showWarningMessage("请填写联系方式，电话和邮箱至少填写一项");
+  } else {
+    active.value++;
+  }
+};
+
 //  上一步
 const last = () => {
   active.value--;
 };
+// 文件上传
 const customUpload71 = (file: any) => {
   const formData = new FormData();
   formData.append("file", file.file);
@@ -2096,7 +2110,6 @@ const rules1 = reactive({
 
 // 表单2
 const ruleForm2 = reactive({
-  // legalFlag: false,
   legal: "", //姓名
   legalTel: "", //联系电话
   legalNationalValue: "", //国籍 code
@@ -2195,7 +2208,6 @@ const rules4 = reactive({
   operatorCertificateTypeValue: [
     { required: true, message: "请选择证件类型", trigger: "change" },
   ],
-  // qt: [{ required: true, message: "请输入其他", trigger: "blur" }],
   operatorCertificateCode: [
     { required: true, message: "请输入证件号码", trigger: "blur" },
   ],
@@ -2373,7 +2385,6 @@ const getItems = () => {
       })
       .then((res: any) => {
         items.value = res;
-        // console.log(res, "resresres--------------");
         checkList.value = res.conditionContent.split("|");
 
         const {
@@ -2521,7 +2532,6 @@ const getItems = () => {
         Object.assign(ruleForm5, ruleF5);
 
         // ruleForm6
-
         Object.assign(ruleForm6, sceneList);
 
         // ruleForm7
@@ -2615,41 +2625,6 @@ const sumit = async (num: any) => {
     observeContent: ruleForm5.observeContent,
     // 6 数据出境场景
     sceneList: ruleForm6,
-    //  [
-    //   // 数据出境场景集合
-    //   {
-    //     summary: "出境场景简述", // 出境场景简述
-    //     dataTypeValue: "1", // 数据类型值（标签）数据接口：tag/tag?tagCode=datatype
-    //     dataTypeName: "重要数据", // 数据类型名称（标签）
-    //     impDeptName: "重要数据认定主管部门名称", // [重要数据]重要数据认定主管部门名称
-    //     industryValue: "1", // [重要数据、个人信息]涉及行业/领域值（标签）数据接口：tag/tag?tagCode=industryarea
-    //     industryName: "工业", // [重要数据、个人信息]涉及行业/领域名称（标签）
-    //     industryOther: "涉及其他行业/领域", // [重要数据、个人信息]涉及其他行业/领域
-    //     impDataSize: 100, // [重要数据]涉及重要数据规模
-    //     impDataSizeUnitValue: "1", // [重要数据]涉及重要数据规模单位值（标签）数据接口：tag/tag?tagCode=dataunit
-    //     impDataSizeUnitName: "MB", // [重要数据]涉及重要数据规模单位名称（标签）
-    //     containInfoFlag: true, // [个人信息]是否包含敏感个人信息
-    //     personCount: 100, // [个人信息]涉及自然人（去重）数量
-    //     personCountUnitValue: "1", // [个人信息]涉及自然人（去重）数量单位值（标签）数据接口：tag/tag?tagCode=personunit
-    //     personCountUnitName: "人", // [个人信息]涉及自然人（去重）数量单位名称（标签）
-    //     receiveList: [
-    //       // 境外接收方情况
-    //       {
-    //         statDescriptionFlag: true, // 填写统计说明
-    //         statDescription: "统计说明内容", // 统计说明
-    //         foreignReceiver: "境外接收方名称", // 境外接收方名称
-    //         areaValue: "1", // 所在国家或地区值（标签）数据接口：tag/tag?tagCode=area
-    //         areaName: "中国台湾", // 所在国家或地区名称（标签）
-    //         primaryBusiness: "主营业务", // 主营业务
-    //         principalName: "负责人姓名", // 负责人姓名
-    //         principalJob: "负责人职务", // 负责人职务
-    //         contactTel: "联系方式-电话", // 联系方式-电话
-    //         contactEmail: "联系方式-邮箱", // 联系方式-邮箱
-    //         addr: "所在地址", // 所在地址
-    //       },
-    //     ],
-    //   },
-    // ],
     // 7 数据出境安全评估申报材料上传:
     creditCodeAttachIdList: ruleForm7.creditCodeAttachIdList,
     legalIdCardAttachIdList: ruleForm7.legalIdCardAttachIdList,
@@ -2659,32 +2634,6 @@ const sumit = async (num: any) => {
     contractAttachIdList: ruleForm7.contractAttachIdList,
     reportAttachIdList: ruleForm7.reportAttachIdList,
     otherAttachIdList: ruleForm7.otherAttachIdList,
-
-    // creditCodeAttachIdList: [
-    //   "1661292619461849090", // 统一社会信用代码证件影印件（加盖公章） 附件id集合
-    // ],
-    // legalIdCardAttachIdList: [
-    //   "1661321500252299265", //  法定代表人身份证件影印件（加盖公章） 附件id集合
-    // ],
-    // operatorIdCardAttachIdList: [
-    //   "1674334124413935617", // 经办人身份证件影印件（加盖公章） 附件id集合
-    // ],
-    // delegateAttachIdList: [
-    //   "1674334852431740930", // 经办人授权委托书 附件id集合
-    // ],
-    // promiseAttachIdList: [
-    //   "1674338104548261889", // 承诺书 附件id集合
-    // ],
-    // contractAttachIdList: [
-    //   "1678979353561567234", // 与境外接收方拟订立的数据出境相关合同或者其他具有法律效力的文件影印件（加盖公章） 附件id集合
-    // ],
-    // reportAttachIdList: [
-    //   "1785846491328344066", // 数据出境风险自评估报告 附件id集合
-    // ],
-    // otherAttachIdList: [
-    //   "1785853147294588929", // 其他相关证明材料 附件id集合
-    // ],
-
     // 状态
     status: num == 1 ? 1 : 0, // 枚举：0暂存、1填写完成
   };
@@ -2932,7 +2881,17 @@ const submitForm4 = async (ruleFormRef4: FormInstance | undefined) => {
     }
   });
 };
-
+// 校验表单4
+const submitForm6 = async (ruleFormRef4: FormInstance | undefined) => {
+  if (!ruleFormRef4) return;
+  await ruleFormRef4.validate(async (valid: boolean) => {
+    if (valid) {
+      active.value++;
+    } else {
+      showWarningMessage("请补求信息");
+    }
+  });
+};
 const showWarningMessage = (message: string) => {
   ElMessage({ type: "warning", message });
 };
@@ -2985,7 +2944,6 @@ const getGuoji = () => {
     })
     .then((data: any) => {
       guoji.value = data.children;
-      // console.log(guoji.value,'guoji.value')
     });
 };
 // 证件类型   legalCertificateTypeValue
@@ -3053,6 +3011,28 @@ const getDataunit = () => {
       dataunit.value = data.children;
     });
 };
+watch(
+  ruleForm6,
+  (newValue, oldValue) => {
+    newValue.forEach((obj, i) => {
+      obj.receiveList.forEach((subItem) => {
+        if (subItem.statDescriptionFlag) {
+          subItem.statDescription = "";
+          subItem.foreignReceiver = "";
+          subItem.areaValue = "";
+          subItem.areaName = "";
+          subItem.primaryBusiness = "";
+          subItem.principalName = "";
+          subItem.principalJob = "";
+          subItem.contactTel = "";
+          subItem.contactEmail = "";
+          subItem.addr = "";
+        }
+      });
+    });
+  },
+  { deep: true }
+);
 </script>
 <style lang="scss" scoped>
 ::v-deep .contain {
