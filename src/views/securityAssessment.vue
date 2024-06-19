@@ -50,7 +50,6 @@
           <el-row style="margin-top: 15px" :gutter="20">
             <el-col :span="8">
               <el-form-item label="状态">
-                <!-- <el-input v-model="form.xmbh2"></el-input> -->
                 <el-select v-model="form.status" clearable placeholder="">
                   <el-option
                     :label="(item as any).name"
@@ -58,15 +57,13 @@
                     v-for="(item, index) in statusList"
                     :key="index"
                   />
-                  <!-- <el-option label="是" value="1" />
-                          <el-option label="否" value="1" /> -->
+                
                 </el-select>
               </el-form-item>
             </el-col>
 
             <el-col :span="8">
               <el-form-item label="起止时间">
-                <!-- <el-input v-model="form.qzsj"></el-input> -->
                 <el-date-picker
                   v-model="form.qzsj"
                   type="daterange"
@@ -126,13 +123,13 @@
 
         <div style="margin-top: 20px">
           <el-table :data="tableData" stripe style="width: 100%">
-            <el-table-column prop="date" label="序号" />
-            <el-table-column prop="name" label="项目编号" />
-            <el-table-column prop="address" label="流水号" />
-            <el-table-column prop="date" label="省份" />
+            <el-table-column type="index" label="序号" width="80" />
+            <el-table-column prop="createUserId" label="项目编号" />
+            <el-table-column prop="createUserId" label="流水号" />
+            <el-table-column prop="createUserName" label="省份" />
             <el-table-column prop="createUserName" label="单位" />
             <el-table-column prop="createDate" label="创建时间" />
-            <el-table-column prop="createDate" label="申报时间" />
+            <el-table-column prop="submitDate" label="申报时间" />
             <el-table-column prop="statusName" label="状态">
               <!-- <template #default="{ row }"> -->
               <!-- <div class="status">正式通过</div> -->
@@ -282,8 +279,8 @@ getStatus();
 <style lang="scss" scoped>
 .contain {
   padding: 10px;
-  // width: 1300px;
-  width: calc(100% - 480px);
+  width: 1300px;
+  // width: calc(100% - 480px);
   margin: 0 auto;
   .paginations {
     margin-left: auto;

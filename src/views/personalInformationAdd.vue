@@ -50,7 +50,7 @@
       <!-- 页面 -->
       <div style="margin-top: 20px">
         <div v-if="active == 0">
-          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+          <div class="titles">
             个人信息处理者通过订立标准合同的方式向境外提供个人信息的，应当同时符合下列情形
           </div>
           <div style="margin-bottom: 20px">
@@ -79,7 +79,7 @@
         </div>
 
         <div v-if="active == 1">
-          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+          <div class="titles">
             个人信息处理者情况
           </div>
           <div style="margin: 0 0 20px 20px">
@@ -302,7 +302,7 @@
         </div>
 
         <div v-if="active == 2">
-          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+          <div class="titles">
             法定代表人信息
           </div>
           <el-checkbox
@@ -454,7 +454,7 @@
         </div>
 
         <div v-if="active == 3">
-          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+          <div class="titles">
             经办人信息
           </div>
           <div style="margin: 0 0 20px 20px">
@@ -630,7 +630,7 @@
         </div>
 
         <div v-if="active == 4">
-          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+          <div class="titles">
             承诺书
           </div>
           <div style="margin: 0 0 20px 20px">
@@ -718,7 +718,7 @@
             >
               删除该场景
             </div>
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+            <div class="titles">
               个人信息出境场景{{ i + 1 }}
             </div>
             <div style="margin: 0 0 20px 20px">
@@ -745,9 +745,8 @@
                   </el-col>
                 </el-row>
 
-                <div
-                  style="color: #2977ff; font-size: 15px; margin-bottom: 20px"
-                >
+                <div class="titles">
+
                   拟数据出境情况
                 </div>
 
@@ -887,9 +886,8 @@
                   </el-col>
                 </el-row>
 
-                <div
-                  style="color: #2977ff; font-size: 15px; margin-bottom: 20px"
-                >
+                <div class="titles">
+
                   境外接收方情况
                 </div>
 
@@ -1083,8 +1081,8 @@
         </div>
 
         <div v-if="active == 6">
-          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-            承诺书
+          <div class="titles">
+            个人信息出境标准合同
           </div>
           <div style="margin: 0 0 20px 20px">
             <el-form ref="ruleFormRef6" :model="ruleForm6" :rules="rules6">
@@ -1223,7 +1221,7 @@
         </div>
 
         <div v-if="active == 7">
-          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+          <div class="titles">
             个人信息保护影响评估报告
           </div>
           <div style="margin: 0 0 20px 20px">
@@ -1306,8 +1304,8 @@
         </div>
 
         <div v-if="active == 8">
-          <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-            承诺书
+          <div class="titles">
+            其他相关证明材料
           </div>
           <div style="margin: 0 0 20px 20px">
             <el-form ref="ruleFormRef8" :model="ruleForm8" :rules="rules8">
@@ -2590,6 +2588,12 @@ const getArea = () => {
     border: none;
     padding: 0;
   }
+}
+.titles {
+  color: #2977ff;
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 .head-box {
   position: relative;

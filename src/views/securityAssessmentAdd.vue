@@ -23,21 +23,21 @@
             align-center
             process-status="finish"
           >
-            <el-step title="安全评估申 请适用场景"></el-step>
-            <el-step title="数据处理者 情况" />
-            <el-step title="法定代表人 信息" />
-            <el-step title="数据安全负 责人和管理 机构信息" />
+            <el-step title="安全评估申请适用场景"></el-step>
+            <el-step title="数据处理者情况" />
+            <el-step title="法定代表人信息" />
+            <el-step title="数据安全负责人和管理机构信息" />
             <el-step title="经办人信息" />
-            <el-step title="数据处理者 遵守中国法 律;行政法规; 部门规章情况" />
-            <el-step title="数据出境场 景" />
-            <el-step title="数据出境安 全评估申报 材料上传" />
+            <el-step title="数据处理者遵守中国法律;行政法规;部门规章情况" />
+            <el-step title="数据出境场景" />
+            <el-step title="数据出境安全评估申报材料上传" />
           </el-steps>
         </div>
 
         <!-- 页面 -->
         <div style="margin-top: 20px">
           <div v-if="active == 0">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+            <div class="titles">
               数据处理者向境外提供数据，有下列情形之一的，应当通过所在地省级网信部门向国家网信办申报数据出境安全评估
             </div>
             <div style="margin-bottom: 20px">
@@ -56,9 +56,7 @@
           </div>
 
           <div v-if="active == 1">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              个人信息处理者情况
-            </div>
+            <div class="titles">个人信息处理者情况</div>
             <div style="margin: 0 0 20px 20px">
               <el-form ref="ruleFormRef1" :model="ruleForm1" :rules="rules1">
                 <el-row :gutter="20">
@@ -296,9 +294,7 @@
           </div>
 
           <div v-if="active == 2">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              法定代表人信息
-            </div>
+            <div class="titles">法定代表人信息</div>
             <!-- <el-checkbox
               v-model="ruleForm2.legalFlag"
               label="无法定代表人"
@@ -462,9 +458,7 @@
           </div>
 
           <div v-if="active == 3">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              数据安全负责人和管理机构信息
-            </div>
+            <div class="titles">数据安全负责人和管理机构信息</div>
             <div style="margin: 0 0 20px 20px">
               <el-form ref="ruleFormRef3" :model="ruleForm3" :rules="rules3">
                 <el-row :gutter="20">
@@ -478,7 +472,10 @@
                         "
                       >
                         <div><span style="color: red">*</span> 姓名</div>
-                        <el-input v-model="ruleForm3.principalName"></el-input>
+                        <el-input
+                          v-model="ruleForm3.principalName"
+                          placeholder="请输入姓名"
+                        ></el-input>
                       </div>
                     </el-form-item>
                   </el-col>
@@ -493,7 +490,10 @@
                         "
                       >
                         <div><span style="color: red">*</span> 联系电话</div>
-                        <el-input v-model="ruleForm3.principalTel"></el-input>
+                        <el-input
+                          v-model="ruleForm3.principalTel"
+                          placeholder="请输入联系电话"
+                        ></el-input>
                       </div>
                     </el-form-item>
                   </el-col>
@@ -536,7 +536,10 @@
                         "
                       >
                         <div><span style="color: red">*</span>职务</div>
-                        <el-input v-model="ruleForm3.principalJob"></el-input>
+                        <el-input
+                          v-model="ruleForm3.principalJob"
+                          placeholder="请输入职务"
+                        ></el-input>
                       </div>
                     </el-form-item>
                   </el-col>
@@ -544,7 +547,6 @@
                     <el-form-item prop="principalCertificateTypeValue">
                       <div style="display: flex; flex-direction: column">
                         <div><span style="color: red">*</span> 证件类型</div>
-                        <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
                         <el-select
                           style="width: 150px"
                           v-model="ruleForm3.principalCertificateTypeValue"
@@ -566,6 +568,7 @@
                         <div><span style="color: red"></span> 其他</div>
                         <el-input
                           v-model="ruleForm3.principalCertificateTypeOther"
+                          placeholder="请选择证件类型"
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -582,6 +585,7 @@
                         <div><span style="color: red">*</span>证件号码</div>
                         <el-input
                           v-model="ruleForm3.principalCertificateCode"
+                          placeholder="请输入证件号码"
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -601,6 +605,7 @@
                         <div><span style="color: red">*</span>管理机构名称</div>
                         <el-input
                           v-model="ruleForm3.principalOrgName"
+                          placeholder="请输入管理机构名称"
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -613,6 +618,7 @@
                         </div>
                         <el-input
                           v-model="ruleForm3.principalOrgEmpCount"
+                          placeholder="请输入管理机构人数"
                         ></el-input>
                       </div>
                     </el-form-item>
@@ -648,7 +654,10 @@
                         "
                       >
                         <div><span style="color: red"></span>电子邮箱</div>
-                        <el-input v-model="ruleForm3.principalEmail"></el-input>
+                        <el-input
+                          v-model="ruleForm3.principalEmail"
+                          placeholder="请输入电子邮箱"
+                        ></el-input>
                       </div>
                     </el-form-item>
                   </el-col>
@@ -659,9 +668,7 @@
           </div>
 
           <div v-if="active == 4">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              经办人信息
-            </div>
+            <div class="titles">经办人信息</div>
             <div style="margin: 0 0 20px 20px">
               <el-form ref="ruleFormRef4" :model="ruleForm4" :rules="rules4">
                 <el-row :gutter="20">
@@ -748,7 +755,6 @@
                     <el-form-item prop="operatorCertificateTypeValue">
                       <div style="display: flex; flex-direction: column">
                         <div><span style="color: red">*</span> 证件类型</div>
-                        <!-- <el-input v-model="ruleForm1.dwxz1"></el-input> -->
                         <el-select
                           style="width: 150px"
                           v-model="ruleForm4.operatorCertificateTypeValue"
@@ -819,7 +825,7 @@
           </div>
 
           <div v-if="active == 5">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
+            <div class="titles">
               数据处理者遵守中国法律、行政法规、部门规章情况
             </div>
             <div style="margin: 0 0 20px 20px">
@@ -871,16 +877,7 @@
                 >
                   删除该场景
                 </div>
-                <div
-                  style="
-                    color: #2977ff;
-                    font-size: 15px;
-                    margin: 30px 0;
-                    text-align: center;
-                  "
-                >
-                  数据出境场景{{ i + 1 }}
-                </div>
+                <div class="titles">数据出境场景{{ i + 1 }}</div>
                 <el-form ref="ruleFormRef6" :model="it" :rules="rules6">
                   <el-row :gutter="20">
                     <el-col :span="24">
@@ -905,16 +902,7 @@
                     </el-col>
                   </el-row>
 
-                  <div
-                    style="
-                      color: #2977ff;
-                      font-size: 15px;
-                      margin-bottom: 20px;
-                      text-align: center;
-                    "
-                  >
-                    拟数据出境情况
-                  </div>
+                  <div class="titles">拟数据出境情况</div>
 
                   <el-row :gutter="20">
                     <el-col :span="8">
@@ -923,7 +911,7 @@
                           style="
                             display: flex;
                             flex-direction: column;
-                            width: 100%;
+                            width: 80%;
                           "
                         >
                           <div><span style="color: red">*</span> 数据类型</div>
@@ -1055,14 +1043,7 @@
                     >
                       删除该境外接收方
                     </div>
-                    <div
-                      style="
-                        color: #2977ff;
-                        font-size: 15px;
-                        margin-bottom: 20px;
-                        text-align: center;
-                      "
-                    >
+                    <div class="titles">
                       境外接收方情况{{ i + 1 }}-{{ n + 1 }}
                     </div>
                     <el-checkbox
@@ -1078,7 +1059,7 @@
                               style="
                                 display: flex;
                                 flex-direction: column;
-                                width: 100%;
+                                width: 80%;
                               "
                             >
                               <div>
@@ -1121,9 +1102,15 @@
                           </el-form-item>
                         </el-col>
 
-                        <el-col :span="8" style="display: flex">
+                        <el-col :span="8">
                           <el-form-item prop="primaryBusiness">
-                            <div style="display: flex; flex-direction: column">
+                            <div
+                              style="
+                                display: flex;
+                                flex-direction: column;
+                                width: 80%;
+                              "
+                            >
                               <div>
                                 <span style="color: red">*</span> 主营业务
                               </div>
@@ -1137,13 +1124,13 @@
                       </el-row>
 
                       <el-row :gutter="20">
-                        <el-col :span="8" style="display: flex">
+                        <el-col :span="8">
                           <el-form-item prop="principalName">
                             <div
                               style="
                                 display: flex;
                                 flex-direction: column;
-                                width: 150px;
+                                width: 80%;
                               "
                             >
                               <div>
@@ -1156,7 +1143,7 @@
                             </div>
                           </el-form-item>
                         </el-col>
-                        <el-col :span="8" style="display: flex">
+                        <el-col :span="8">
                           <el-form-item prop="principalJob">
                             <div
                               style="
@@ -1178,13 +1165,13 @@
                         </el-col>
                       </el-row>
                       <el-row :gutter="20">
-                        <el-col :span="8" style="display: flex">
+                        <el-col :span="8">
                           <el-form-item prop="contactTel">
                             <div
                               style="
                                 display: flex;
                                 flex-direction: column;
-                                width: 150px;
+                                width: 80%;
                               "
                             >
                               <div>
@@ -1197,7 +1184,7 @@
                             </div>
                           </el-form-item>
                         </el-col>
-                        <el-col :span="8" style="display: flex">
+                        <el-col :span="8">
                           <el-form-item prop="contactEmail">
                             <div
                               style="
@@ -1283,9 +1270,7 @@
           </div>
 
           <div v-if="active == 7">
-            <div style="color: #2977ff; font-size: 15px; margin-bottom: 20px">
-              文件上传
-            </div>
+            <div class="titles">文件上传</div>
             <div style="margin: 0 0 20px 20px">
               <el-form ref="ruleFormRef7" :model="ruleForm7" :rules="rules7">
                 <el-row :gutter="20">
@@ -3079,6 +3064,12 @@ const getDataunit = () => {
     border: none;
     padding: 0;
   }
+}
+.titles {
+  color: #2977ff;
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 .topImg {
   position: relative;

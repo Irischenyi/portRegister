@@ -128,20 +128,20 @@
 
         <div style="margin-top: 20px">
           <el-table :data="tableData" stripe style="width: 100%">
-            <el-table-column prop="date" label="序号" />
-            <el-table-column prop="date" label="备案号" />
+            <el-table-column type="index" label="序号" width="80"/>
+            <el-table-column prop="createUserId" label="备案号" />
             <el-table-column prop="createUserId" label="流水号" />
-            <el-table-column prop="unitName" label="备案省份" />
-            <el-table-column prop="unitName" label="备案单位" />
+            <el-table-column prop="createUserName" label="备案省份" />
+            <el-table-column prop="createUserName" label="备案单位" />
             <el-table-column prop="createDate" label="创建时间" />
-            <el-table-column prop="createDate" label="提交时间" />
-            <el-table-column prop="status" label="状态">
-              <template #default="{ row }">
+            <el-table-column prop="submitDate" label="提交时间" />
+            <el-table-column prop="statusName" label="状态">
+              <!-- <template #default="{ row }">
                 <div v-if="row.status == 0" class="">填报中</div>
                 <div v-if="row.status == 1" class="">预检查审核中</div>
                 <div v-if="row.status == 2" class="">预检查通过</div>
                 <div v-if="row.status == 3" class="">预检查未通过</div>
-              </template>
+              </template> -->
             </el-table-column>
 
             <el-table-column prop="address" label="操作">
@@ -292,6 +292,7 @@ const toDetail = (id: any) => {
 .contain {
   padding: 10px;
   width: 1300px;
+  // width: calc(100% - 480px);
   margin: 0 auto;
   .paginations {
     margin-left: auto;
