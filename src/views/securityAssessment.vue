@@ -27,7 +27,7 @@
       <div>
         <div style="font-size: 20px; margin-bottom: 20px">数据出境安全评估</div>
         <el-form label-width="100px">
-          <el-row :gutter="20">
+          <!-- <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="项目编号">
                 <el-input v-model="form.xmbh"></el-input>
@@ -45,7 +45,7 @@
                 <el-input v-model="form.sf"></el-input>
               </el-form-item>
             </el-col>
-          </el-row>
+          </el-row> -->
 
           <el-row style="margin-top: 15px" :gutter="20">
             <el-col :span="8">
@@ -62,7 +62,7 @@
               </el-form-item>
             </el-col>
 
-            <el-col :span="8">
+            <!-- <el-col :span="8">
               <el-form-item label="起止时间">
                 <el-date-picker
                   v-model="form.qzsj"
@@ -71,7 +71,7 @@
                   end-placeholder="结束时间"
                 />
               </el-form-item>
-            </el-col>
+            </el-col> -->
 
             <el-col :span="8">
               <el-button
@@ -124,9 +124,9 @@
         <div style="margin-top: 20px">
           <el-table :data="tableData" stripe style="width: 100%">
             <el-table-column type="index" label="序号" width="80" />
-            <el-table-column prop="createUserId" label="项目编号" />
+            <!-- <el-table-column prop="createUserId" label="项目编号" />
             <el-table-column prop="createUserId" label="流水号" />
-            <el-table-column prop="createUserName" label="省份" />
+            <el-table-column prop="createUserName" label="省份" /> -->
             <el-table-column prop="createUserName" label="单位" />
             <el-table-column prop="createDate" label="创建时间" />
             <el-table-column prop="submitDate" label="申报时间" />

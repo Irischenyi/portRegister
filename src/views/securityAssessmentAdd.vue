@@ -1754,10 +1754,12 @@
       </div>
     </div>
   </div>
+  <Bottom />
 </template>
 <script setup lang="ts">
 import { ref, reactive, onMounted, watch } from "vue";
 import { ElMessage } from "element-plus";
+import Bottom from "@/components/Bottom.vue";
 import type {
   ComponentSize,
   FormInstance,
