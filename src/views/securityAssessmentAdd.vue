@@ -1750,12 +1750,6 @@
             @click="sumit(1)"
             >填写完成</el-button
           >
-          <el-button
-          type="primary"
-          style="border-radius: 50px; margin-top: 12px"
-          @click="loginOut1"
-          >tui</el-button
-        >
         </div>
       </div>
     </div>
@@ -3073,9 +3067,7 @@ watch(
   },
   { deep: true }
 );
-const loginOut1 = () => {
-  mag.value = "认证失败，请重新登录";
-};
+
 const loginOut = () => {
   localStorage.setItem("token", "");
   // // location.reload();
