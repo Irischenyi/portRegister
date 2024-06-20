@@ -57,7 +57,6 @@
                     v-for="(item, index) in statusList"
                     :key="index"
                   />
-                
                 </el-select>
               </el-form-item>
             </el-col>
@@ -144,7 +143,9 @@
 
             <el-table-column prop="address" label="操作">
               <template #default="{ row }">
-                <el-button link type="primary" @click="toEdit(row.id)">编辑</el-button>
+                <el-button link type="primary" @click="toEdit(row.id)"
+                  >编辑</el-button
+                >
                 <!-- <el-button type="text" style="color: red">删除</el-button> -->
               </template>
             </el-table-column>
@@ -165,10 +166,11 @@
       </div>
     </div>
     <Bottom />
+    <LoadingIn :show="loadingShow" />
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, watch } from "vue";
 import {
   Search,
   Refresh,
@@ -179,8 +181,10 @@ import {
 import { useRouter } from "vue-router";
 import Bottom from "@/components/Bottom.vue";
 import http, { setBaseInf, setHttp } from "@/http/httpContentMain";
+import { ElMessage } from "element-plus";
 
 const token = localStorage.getItem("token");
+const mag = ref();
 
 const router = useRouter();
 const form = reactive({
@@ -242,6 +246,9 @@ const getList = () => {
     .then((data: any) => {
       tableData.value = data.items;
       total.value = parseInt(data.total);
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 
@@ -272,9 +279,37 @@ const getStatus = () => {
     })
     .then((data: any) => {
       statusList.value = data;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 getStatus();
+
+const loginOut = () => {
+  localStorage.setItem("token", "");
+  // // location.reload();
+  router.push({
+    path: "/login",
+  });
+};
+const loadingShow = ref(false);
+
+watch(mag, (newValue, oldValue) => {
+  if (newValue == "认证失败，请重新登录") {
+    ElMessage({
+      message: newValue,
+      type: "error",
+    });
+    loadingShow.value = true;
+
+    setTimeout(() => {
+      loadingShow.value = false;
+
+      loginOut();
+    }, 2000);
+  }
+});
 </script>
 <style lang="scss" scoped>
 .contain {

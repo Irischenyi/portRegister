@@ -1750,11 +1750,18 @@
             @click="sumit(1)"
             >填写完成</el-button
           >
+          <el-button
+          type="primary"
+          style="border-radius: 50px; margin-top: 12px"
+          @click="loginOut1"
+          >tui</el-button
+        >
         </div>
       </div>
     </div>
   </div>
   <Bottom />
+  <LoadingIn :show="loadingShow" />
 </template>
 <script setup lang="ts">
 import { ref, reactive, onMounted, watch } from "vue";
@@ -1772,6 +1779,7 @@ import http, { setBaseInf, setHttp } from "@/http/httpContentMain";
 const token = localStorage.getItem("token");
 import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
+const mag = ref();
 
 const route = useRoute();
 // 获取id
@@ -2558,6 +2566,9 @@ const getItems = () => {
         Object.assign(ruleForm7, ruleF7);
 
         console.log(ruleForm1, "ruleForm1ruleForm1");
+      })
+      .fail((data: any) => {
+        mag.value = data;
       });
   }
 };
@@ -2908,6 +2919,9 @@ const getUnitNatureValue = () => {
     })
     .then((data: any) => {
       unitNatureValuelist.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 // 单位类型  unitCategoryValue
@@ -2920,6 +2934,9 @@ const getUnitCategoryValue = () => {
     })
     .then((data: any) => {
       unitCategoryList.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 // 数量单位   empCountUnitValue
@@ -2933,6 +2950,9 @@ const getUnitList = () => {
     })
     .then((data: any) => {
       unitList.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 // 法人国籍   legalNationalValue
@@ -2946,6 +2966,9 @@ const getGuoji = () => {
     })
     .then((data: any) => {
       guoji.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 // 证件类型   legalCertificateTypeValue
@@ -2959,6 +2982,9 @@ const getCertificatetype = () => {
     })
     .then((data: any) => {
       certificatetype.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 // 涉及行业/领域   industryValue
@@ -2972,6 +2998,9 @@ const getIndustryarea = () => {
     })
     .then((data: any) => {
       industryarea.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 // 所在国家或地区   areaValue
@@ -2985,6 +3014,9 @@ const getArea = () => {
     })
     .then((data: any) => {
       area.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 // 法人国籍   legalNationalValue
@@ -2998,6 +3030,9 @@ const getDatatype = () => {
     })
     .then((data: any) => {
       datatype.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 // 数量单位   empCountUnitValue
@@ -3011,6 +3046,9 @@ const getDataunit = () => {
     })
     .then((data: any) => {
       dataunit.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 watch(
@@ -3035,6 +3073,33 @@ watch(
   },
   { deep: true }
 );
+const loginOut1 = () => {
+  mag.value = "认证失败，请重新登录";
+};
+const loginOut = () => {
+  localStorage.setItem("token", "");
+  // // location.reload();
+  router.push({
+    path: "/login",
+  });
+};
+const loadingShow = ref(false);
+
+watch(mag, (newValue, oldValue) => {
+  if (newValue == "认证失败，请重新登录") {
+    ElMessage({
+      message: newValue,
+      type: "error",
+    });
+    loadingShow.value = true;
+
+    setTimeout(() => {
+      loadingShow.value = false;
+
+      loginOut();
+    }, 2000);
+  }
+});
 </script>
 <style lang="scss" scoped>
 ::v-deep .contain {

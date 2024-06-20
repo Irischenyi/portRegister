@@ -1311,10 +1311,13 @@
       </div>
     </div>
   </div>
+  <Bottom />
+  <LoadingIn :show="loadingShow" />
 </template>
 <script setup lang="ts">
 import { ref, reactive, onMounted, watch } from "vue";
 import { ElMessage } from "element-plus";
+import Bottom from "@/components/Bottom.vue";
 import type {
   ComponentSize,
   FormInstance,
@@ -1336,6 +1339,7 @@ const query = route.query as {
 
 const token = localStorage.getItem("token");
 
+const mag = ref();
 const active = ref(0);
 const ruleFormRef1 = ref<FormInstance>();
 const ruleFormRef2 = ref<FormInstance>();
@@ -1482,27 +1486,7 @@ const ruleForm2 = reactive({
   legalCertificateCode: "", //证件号码
   legalEmail: "", //电子邮箱
 });
-watch(
-  () => ruleForm2.legalFlag,
-  (newValue, oldValue) => {
-    if (newValue) {
-      let form = {
-        legalFlag: true,
-        legal: "", //姓名
-        legalTel: "", //联系电话
-        legalNationalValue: "", //国籍 code
-        legalNationalName: "", //国籍 name
-        legalJob: "", //职务
-        legalCertificateTypeValue: "", //证件类型 code
-        legalCertificateTypeName: "", //证件类型  name
-        legalCertificateTypeOther: "", //其他证件类型
-        legalCertificateCode: "", //证件号码
-        legalEmail: "", //电子邮箱
-      };
-      Object.assign(ruleForm2, form);
-    }
-  }
-);
+
 // 表单3
 const ruleForm3 = reactive({
   operator: "", //姓名
@@ -1736,6 +1720,9 @@ const getItems = () => {
         Object.assign(ruleForm8, ruleF8);
 
         console.log(ruleF8, "ruleForm1ruleForm1");
+      })
+      .fail((data: any) => {
+        mag.value = data;
       });
   }
 };
@@ -1824,6 +1811,7 @@ const next = () => {
   }
   // active.value++;
 };
+
 //  上一步
 const last = () => {
   active.value--;
@@ -2007,6 +1995,55 @@ const addScene = () => {
 const closeScene = (index: any) => {
   ruleForm5.splice(index, 1);
 };
+watch(
+  () => ruleForm2.legalFlag,
+  (newValue, oldValue) => {
+    if (newValue) {
+      let form = {
+        legalFlag: true,
+        legal: "", //姓名
+        legalTel: "", //联系电话
+        legalNationalValue: "", //国籍 code
+        legalNationalName: "", //国籍 name
+        legalJob: "", //职务
+        legalCertificateTypeValue: "", //证件类型 code
+        legalCertificateTypeName: "", //证件类型  name
+        legalCertificateTypeOther: "", //其他证件类型
+        legalCertificateCode: "", //证件号码
+        legalEmail: "", //电子邮箱
+      };
+      Object.assign(ruleForm2, form);
+    }
+  }
+);
+
+const loginOut = () => {
+  localStorage.setItem("token", "");
+  // // location.reload();
+  router.push({
+    path: "/login",
+  });
+};
+
+const loadingShow = ref(false);
+
+watch(mag, (newValue, oldValue) => {
+  if (newValue == "认证失败，请重新登录") {
+    ElMessage({
+      message: newValue,
+      type: "error",
+    });
+    loadingShow.value = true;
+
+    setTimeout(() => {
+      loadingShow.value = false;
+
+      loginOut();
+    }, 2000);
+
+    console.log(newValue, "newValuenewValue"); // 输出：401
+  }
+});
 // 校验表单1
 const submitForm1 = async (ruleFormRef1: FormInstance | undefined) => {
   if (!ruleFormRef1) return;
@@ -2308,6 +2345,9 @@ const getUnitNatureValue = () => {
     })
     .then((data: any) => {
       unitNatureValuelist.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 
@@ -2322,6 +2362,9 @@ const getUnitCategoryValue = () => {
     })
     .then((data: any) => {
       unitCategoryList.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 // 数量单位   empCountUnitValue
@@ -2335,6 +2378,9 @@ const getUnitList = () => {
     })
     .then((data: any) => {
       unitList.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 // 数量单位   empCountUnitValue
@@ -2348,6 +2394,9 @@ const getDataunit = () => {
     })
     .then((data: any) => {
       dataunit.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 // 法人国籍   legalNationalValue
@@ -2361,6 +2410,9 @@ const getGuoji = () => {
     })
     .then((data: any) => {
       guoji.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 // 证件类型   legalCertificateTypeValue
@@ -2374,6 +2426,9 @@ const getCertificatetype = () => {
     })
     .then((data: any) => {
       certificatetype.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 // 涉及行业/领域   industryValue
@@ -2387,6 +2442,9 @@ const getIndustryarea = () => {
     })
     .then((data: any) => {
       industryarea.value = data.children;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 const area = ref([]); // 所在国家或地区   areaValue
@@ -2399,7 +2457,10 @@ const getArea = () => {
     })
     .then((data: any) => {
       area.value = data.children;
-    });
+    })
+    .fail((data: any) => {
+      mag.value = data;
+    })
 };
 </script>
 <style lang="scss" scoped>

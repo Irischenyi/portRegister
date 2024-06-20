@@ -155,12 +155,13 @@
     </div>
   </div>
   <Bottom />
+  <LoadingIn :show="loadingShow" />
 </template>
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
 import { setBaseInf, setHttp } from "@/http/httpContentMain";
 import Bottom from "@/components/Bottom.vue";
-
+import { ElMessage } from "element-plus";
 import {
   Search,
   Refresh,
@@ -213,14 +214,17 @@ const getStatus = () => {
     })
     .then((data: any) => {
       statusList.value = data;
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 getStatus();
 
+const mag = ref();
 // 列表
 const getList = () => {
   const http = setHttp();
-
   http
     .get(
       `k2401-personal-exit/exit/paged?current=${page.pageNum}&size=${page.pageSize}&status=${form.status}`,
@@ -229,8 +233,12 @@ const getList = () => {
       }
     )
     .then((data: any) => {
+      console.log(data, "00000");
       tableData.value = data.items;
       total.value = parseInt(data.total);
+    })
+    .fail((data: any) => {
+      mag.value = data;
     });
 };
 
@@ -273,6 +281,31 @@ const toDetail = (id: any) => {
     },
   });
 };
+
+const loginOut = () => {
+  localStorage.setItem("token", "");
+  // // location.reload();
+  router.push({
+    path: "/login",
+  });
+};
+const loadingShow = ref(false);
+
+watch(mag, (newValue, oldValue) => {
+  if (newValue == "认证失败，请重新登录") {
+    ElMessage({
+      message: newValue,
+      type: "error",
+    });
+    loadingShow.value = true;
+
+    setTimeout(() => {
+      loadingShow.value = false;
+
+      loginOut();
+    }, 2000);
+  }
+});
 </script>
 <style lang="scss" scoped>
 .contain {
