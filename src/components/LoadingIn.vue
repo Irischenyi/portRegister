@@ -28,6 +28,7 @@ const attrs = defineProps({
     background-color: rgba(0, 0, 0, 0.4);
     top: 0px;
     left: 0px;
+    z-index: 100;
 }
 .fade-enter-active,
 .fade-leave-active{

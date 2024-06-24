@@ -58,7 +58,7 @@
       <div class="fwjj">
         <div class="fw">服务简介</div>
         <!-- 图片展示 -->
-        <div class="fwjj-main"> 
+        <div class="fwjj-main" @click="goToService()"> 
           <!--  -->
           <!-- active -->
           <div class="item1 active" :style="activeInt">
@@ -372,6 +372,12 @@ const showQuestionPage = () => {
   router.push({
       path: '/index/quastionHome'
     })
+}
+
+const goToService = () => {
+  router.push({
+      path: '/index/serviceHall'
+  })
 }
 
 const isAcitive = ref(0);
