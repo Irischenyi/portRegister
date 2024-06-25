@@ -52,61 +52,8 @@
     </div>
     <!-- 版心 -->
     <div class="contain">
-      
-
-      <!-- 服务简介 -->
-      <div class="fwjj">
-        <div class="fw">服务简介</div>
-        <!-- 图片展示 -->
-        <div class="fwjj-main" @click="goToService()"> 
-          <!--  -->
-          <!-- active -->
-          <div class="item1 active" :style="activeInt">
-            <div class="content">
-                <img src="@/assets/images/fwjj1.png"/>
-                <div class="title">数据安全能力成熟度评估</div>
-                <div class="sub-title" style="width: 230px;">从数据安全管理的角度，以及企业组织的数据为核心，微软数据安全生命周期进行分析发现苏剧安全风险。</div>
-                <div class="click-button">立即体验</div>
-              </div>
-          </div>
-          <div class="item-line" style="order: 1;">
-            <div  class="item1">
-              <div class="content">
-                 <img src="@/assets/images/fwjj2.png"/>
-                 <div class="title">安全评估</div>
-                 <div class="sub-title">专业的评估团队</div>
-              </div>
-            </div>
-            <!-- @mouseenter="changeActive(2)" -->
-            <div  class="item1 item2" >
-              <div class="content">
-                 <img src="@/assets/images/fwjj3.png"/>
-                 <div class="title">安全服务商</div>
-                 <div class="sub-title">您身边的安全服务顾问</div>
-              </div>
-            </div>
-          </div>
-          <div class="item-line" style="order: 2;">
-            <div  class="item1 item2">
-              <div class="content">
-                <img src="@/assets/images/fwjj4.png"/>
-                 <div class="title">安全服务</div>
-                 <div class="sub-title">秒级部署 安全稳定</div>
-              </div>
-            </div>
-            <div  class="item1" >
-              <div class="content">
-                <img src="@/assets/images/fwjj5.png"/>
-                 <div class="title">安全培训</div>
-                 <div class="sub-title">您身边的安全服务顾问</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 合规专题 -->
-      <div class="hgzt">
+       <!-- 合规专题 -->
+       <div class="hgzt">
         <div class="fw">合规专题</div>
         <div class="hgzt-main">
             <div class="simple-line" @click="changeRouter(1)">
@@ -120,18 +67,82 @@
               <div>
                 <img style="width: 100%" src="../assets/images/hgzt2.png" />
               </div>
-              <div class="title">数据出境合规自评估</div>
-              <div class="content">数据出境合规自评估</div>
+              <div class="title">数据出境安全评估材料完备性预检查</div>
+              <div class="content">数据出境安全评估材料完备性预检查</div>
             </div>
             <div class="simple-line" @click="changeRouter(3)">
               <div>
                 <img style="width: 100%" src="../assets/images/hgzt3.png" />
               </div>
-              <div class="title">数据出境合规自评估</div>
-              <div class="content">数据出境合规自评估</div>
+              <div class="title">个人信息出境标准合同备案</div>
+              <div class="content">个人信息出境标准合同备案</div>
             </div>
         </div>
       </div>
+
+      <!-- 服务简介 -->
+      <div class="fwjj">
+        <div class="fw">服务简介</div>
+        <!-- 图片展示 -->
+        <div class="fwjj-main" @click="goToService()"> 
+          <!--  -->
+          <!-- active -->
+          <div class="item1 active" :style="activeInt">
+            <div class="content">
+                <img src="@/assets/images/fwjj1.png"/>
+                <div class="title">数据出境安全咨询服务</div>
+                <div class="sub-title" style="width: 230px;">专注于为企业提供数据出境合规指导，服务内容包括解读相关政策法规，协助开展数据出境风险评估，指导数据合规整改，助力企业数据安全合法出境。
+数据安全风险评估服务：依据国家、行业等有关数据安全技术与管理标准，从风险管理的角度，采用专业工具对客户数据生命周期中存在的安全隐患和威胁风险进行评估。</div>
+                <div class="click-button">立即体验</div>
+              </div>
+          </div>
+          <div class="item-line" style="order: 1;">
+            <div  class="item1">
+              <div class="content">
+                 <img src="@/assets/images/fwjj2.png"/>
+                 <div class="title">数据安全分类分级服务</div>
+                 <div class="sub-title">
+                  依据国家、行业等有关数据安全技术与管理标准，从风险管理的角度，采用专业工具对客户数据生命周期中存在的安全隐患和威胁风险进行评估。
+数据安全分类分级服务：采用“数据分类分级工具+专业服务人员”组合形式，全面开展数据分类分级工作，形成用户的数据分类分级清单。
+                 </div>
+              </div>
+            </div>
+            <!-- @mouseenter="changeActive(2)" -->
+            <div  class="item1 item2" >
+              <div class="content">
+                 <img src="@/assets/images/fwjj3.png"/>
+                 <div class="title">数据安全能力成熟度评估服务</div>
+                 <div class="sub-title">
+                  依据国家标准定义的能力成熟度等级及安全过程域划分定义，聚焦数据安全相关的四大能力:组织建设、制度流程、技术工具、人员能力，针对组织当前的数据安全能力进行评级。
+                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="item-line" style="order: 2;">
+            <div  class="item1 item2">
+              <div class="content">
+                <img src="@/assets/images/fwjj4.png"/>
+                 <div class="title">数据安全治理咨询服务</div>
+                 <div class="sub-title">
+                    从数据资产梳理、安全现状调研、从合规性和数据全生命周期等视角，识别数据安全能力差距和安全风险，助力制定全面且可执行的数据安全计划。
+                 </div>
+              </div>
+            </div>
+            <div  class="item1" >
+              <div class="content">
+                <img src="@/assets/images/fwjj5.png"/>
+                 <div class="title">跨境数据安全合规监测服务</div>
+                 <div class="sub-title">
+                  平台提供了一整套数据跨境合规流程的技术手段和方法，能够清晰掌握业务数据、个人信息、重要数据等敏感数据的跨境流动情况，有效帮助企业避免因数据处理不当导致的数据丢失、经济受损、名誉受损。
+数据安全合规检测服务：通过智能分析网络流量，全面理数据资产暴露面和流转情况，及时发现业务系统的脆弱性和数据流转风险，帮助用户发现当前面临的数据安全风险，有效识别敏感数据，辅助客户进行分类分级管理，帮助用户快速分析合规现状，并提供安全整改建议及解决方案。
+                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     
 
       <!-- 政策咨讯 -->
       <div class="zczx">
@@ -593,8 +604,22 @@ const artDetail = (id?: string) => {
             transform: scale(1.1) translateY(-5%) translateX(-5%);
             
           }
-          .title, .sub-title{
-            transform: translateX(12px) scale(1.06);
+          .title{
+            display: none;
+          }
+          .sub-title{
+            text-wrap: wrap !important;
+            overflow: hidden;
+            text-overflow: unset;
+            font-size: 11px  !important;
+            height:auto !important;
+            width: 80% !important;
+            margin: 0 auto  !important;
+            color: #dad4d4 !important;
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
           }
         }
       .content{
@@ -621,8 +646,12 @@ const artDetail = (id?: string) => {
           margin-top: 10px;
           font-size: 13px;
           margin-left: 30px;
+          text-wrap: nowrap;
+          overflow: hidden;
+          width: 80%;
+          text-overflow: ellipsis;
           z-index: 2;
-          transition: all ease 0.3s 0.12s;
+          transition: all ease 0.25s 0s;
         }
         .title{
           color: white;
@@ -666,6 +695,20 @@ const artDetail = (id?: string) => {
         padding-top: 40%;
         background: #146AFF;
         order: 3;
+        .sub-title{
+          text-wrap: wrap !important;
+          transition: all ease 0.12s 0s !important;
+        }
+        &:hover{
+          .sub-title{
+            font-size: 16px !important;
+            line-height: 28px;
+          }
+
+          .click-button{
+            display: none;
+          }
+        }
     }
     &::after{
       content: '';

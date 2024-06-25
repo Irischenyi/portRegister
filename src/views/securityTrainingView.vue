@@ -5,7 +5,7 @@
           <img class="header" src="@/assets/images/aqpx.png"/>
           <div class="header-center">
               <div>安全培训</div>
-              <div>提供工业互联网安全相关最新行业动态,包括新闻资讯、政策法规、通知告栏等项目； 基于行业内最新动态的梳理与汇聚 </div>
+              <div>数据安全，人才当先，助力用户获取进行数据安全保护实践所需的基础知识与技能，提升数据安全管理与应急能力</div>
           </div>
         </div>
       </template>

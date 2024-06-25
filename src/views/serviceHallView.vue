@@ -5,7 +5,7 @@
           <img class="header" src="@/assets/images/serviceBanner.png"/>
           <div class="header-center">
               <div>服务大厅</div>
-              <div>围绕工业互联网安全管理、安全技术、安全运营体系建设；通过线上线下联动、自动化与专家支撑结合，为客户提供一站式服务体验</div>
+              <div>围绕数据安全评估、管理等维度，通过线上线下联动、自动化与专家入场结合，为用户提供一站式安全赋能</div>
           </div>
         </div>
       </template>
